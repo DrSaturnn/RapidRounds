@@ -36,7 +36,6 @@ describe("design system", () => {
   it("styles educational sections with recognizable visual treatments", () => {
     const tutorMode = readFileSync("components/TutorMode.tsx", "utf8");
 
-    assert.match(tutorMode, /rr-badge-repair/);
     assert.match(tutorMode, /rr-path/);
     assert.match(tutorMode, /rr-table/);
     assert.match(tutorMode, /rr-callout-pivot/);

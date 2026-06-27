@@ -46,18 +46,24 @@ export function TutorMode({
 
   return (
     <section className="space-y-4">
-      <div className="rr-card rr-card-section space-y-3">
+      <div className="rr-card rr-card-section space-y-2.5">
         <p className="rr-section-header">{isUnknown ? "Concept build" : "Decision repair"}</p>
         {isUnknown ? (
-          <div className="space-y-3 text-sm leading-6">
-            <div>
-              <p className="rr-meta">Correct answer</p>
-              <p className="text-base font-semibold">{tutor.repair.correctAnswer}</p>
+          <div className="space-y-2.5 text-sm leading-6">
+            <div className="grid gap-3 sm:grid-cols-2">
+              <div>
+                <p className="rr-meta">Correct answer</p>
+                <p className="text-base font-semibold">{tutor.repair.correctAnswer}</p>
+              </div>
+              <div>
+                <p className="rr-meta">Key clue</p>
+                <p>{tutor.repair.clue}</p>
+              </div>
             </div>
             <p>{tutor.repair.why}</p>
             <div>
               <p className="text-xs text-rr-muted">Recognize it by</p>
-              <ul className="mt-1 list-disc space-y-1 pl-5">
+              <ul className="mt-1 list-disc space-y-0.5 pl-5">
                 {(tutor.repair.recognitionClues ?? [tutor.repair.clue]).map((clue) => (
                   <li key={clue}>{clue}</li>
                 ))}
@@ -66,13 +72,7 @@ export function TutorMode({
           </div>
         ) : (
           <>
-            {tutor.repair.cognitiveError ? (
-              <div>
-                <p className="rr-meta">Your reasoning pattern</p>
-                <p className="rr-badge rr-badge-repair mt-1">Cognitive Error: {tutor.repair.cognitiveError.type}</p>
-              </div>
-            ) : null}
-            <div className="grid gap-3 text-sm leading-6 sm:grid-cols-[minmax(0,0.95fr)_minmax(0,1.05fr)]">
+            <div className="grid gap-3 text-sm leading-6 sm:grid-cols-2">
               <div>
                 <p className="rr-meta">Correct answer</p>
                 <p className="text-base font-semibold">{tutor.repair.correctAnswer}</p>
@@ -83,51 +83,45 @@ export function TutorMode({
               </div>
             </div>
             <p className="text-sm leading-6">{tutor.repair.why}</p>
-            {tutor.repair.cognitiveError ? (
-              <div className="space-y-1 text-sm leading-6">
-                <p>{tutor.repair.cognitiveError.whyAttractive}</p>
-                <p>{tutor.repair.cognitiveError.missedClue}</p>
-                <p>{tutor.repair.cognitiveError.expertCorrection}</p>
-              </div>
-            ) : null}
           </>
         )}
-        <p className="rr-supporting">{tutor.repair.fingerprint}</p>
-      </div>
 
-      {tutor.reinforcement ? (
-        <form onSubmit={onSubmit} className="rr-card rr-card-section space-y-3">
-          <p className="text-sm font-medium leading-6">{tutor.reinforcement.question}</p>
-          <div className="grid gap-3 sm:grid-cols-[1fr_auto]">
-            <input
-              {...inputGuardProps}
-              name={`repair-${tutor.repair.style.toLowerCase()}-response`}
-              value={reinforcementAnswer}
-              onChange={(event) => setReinforcementAnswer(event.target.value)}
-              disabled={reinforcementResult !== null}
-              className="rr-text-input"
-            />
-            {reinforcementResult === null ? (
-              <Button type="submit" disabled={reinforcementAnswer.trim().length === 0}>
-                Check
-              </Button>
-            ) : (
-              <Button type="button" onClick={loadQuestion}>
-                Next
-              </Button>
-            )}
+        {tutor.reinforcement ? (
+          <form onSubmit={onSubmit} className="space-y-2.5 border-t border-rr-soft-line pt-3">
+            <p className="text-sm font-medium leading-6">{tutor.reinforcement.question}</p>
+            <div className="grid gap-3 sm:grid-cols-[1fr_auto]">
+              <input
+                {...inputGuardProps}
+                name={`repair-${tutor.repair.style.toLowerCase()}-response`}
+                value={reinforcementAnswer}
+                onChange={(event) => setReinforcementAnswer(event.target.value)}
+                disabled={reinforcementResult !== null}
+                className="rr-text-input"
+              />
+              {reinforcementResult === null ? (
+                <Button type="submit" disabled={reinforcementAnswer.trim().length === 0}>
+                  Check
+                </Button>
+              ) : (
+                <Button type="button" onClick={loadQuestion}>
+                  Next
+                </Button>
+              )}
+            </div>
+            {reinforcementResult !== null ? (
+              <p className="rr-supporting">
+                {reinforcementResult ? "Correct." : "Not quite."} {tutor.reinforcement.boardPearl}
+              </p>
+            ) : null}
+          </form>
+        ) : (
+          <div className="pt-1">
+            <Button type="button" onClick={loadQuestion}>
+              Next
+            </Button>
           </div>
-          {reinforcementResult !== null ? (
-            <p className="rr-supporting">
-              {reinforcementResult ? "Correct." : "Not quite."} {tutor.reinforcement.boardPearl}
-            </p>
-          ) : null}
-        </form>
-      ) : (
-        <Button type="button" onClick={loadQuestion}>
-          Next
-        </Button>
-      )}
+        )}
+      </div>
 
       <TeachingCard title="Teach me more" defaultOpen={false}>
         <div className="space-y-5">

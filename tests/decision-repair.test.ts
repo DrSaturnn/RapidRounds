@@ -461,11 +461,12 @@ describe("decision repair", () => {
     assert.equal(tutor.repair.cognitiveError, undefined);
   });
 
-  it("renders the cognitive error sections without changing the repair shell", () => {
+  it("keeps cognitive error classification internal to analytics instead of the repair screen", () => {
     const tutorMode = readFileSync("components/TutorMode.tsx", "utf8");
 
-    assert.match(tutorMode, /Your reasoning pattern/);
-    assert.match(tutorMode, /Cognitive Error:/);
+    assert.doesNotMatch(tutorMode, /Your reasoning pattern/);
+    assert.doesNotMatch(tutorMode, /Cognitive Error:/);
+    assert.doesNotMatch(tutorMode, /tutor\.repair\.cognitiveError/);
     assert.match(tutorMode, /Expert Correction/);
   });
 });
