@@ -4,6 +4,59 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import { compareAnswer } from "@/lib/answer-check";
 import type { AnswerResult, PracticeMode, QuestionDto, TutorContent } from "@/types/practice";
 
+const SESSION_STORAGE_KEY = "rapidrounds.practiceSession.v1";
+
+type PersistedPracticeSession = {
+  version: 1;
+  currentRound: number;
+  adaptiveQueuePosition: number;
+  question: QuestionDto;
+  answer: string;
+  result: AnswerResult | null;
+  mode: PracticeMode;
+  tutor: TutorContent | null;
+  reinforcementAnswer: string;
+  reinforcementResult: boolean | null;
+  sessionDecisionCount: number;
+  answeredQuestionIds: string[];
+  updatedAt: number;
+};
+
+function unique(values: string[]) {
+  return Array.from(new Set(values));
+}
+
+function readPersistedSession() {
+  if (typeof window === "undefined") {
+    return null;
+  }
+
+  try {
+    const rawSession = window.localStorage.getItem(SESSION_STORAGE_KEY);
+    if (!rawSession) {
+      return null;
+    }
+
+    const session = JSON.parse(rawSession) as Partial<PersistedPracticeSession>;
+    if (session.version !== 1 || !session.question?.id) {
+      return null;
+    }
+
+    return session as PersistedPracticeSession;
+  } catch {
+    window.localStorage.removeItem(SESSION_STORAGE_KEY);
+    return null;
+  }
+}
+
+function writePersistedSession(session: PersistedPracticeSession) {
+  if (typeof window === "undefined") {
+    return;
+  }
+
+  window.localStorage.setItem(SESSION_STORAGE_KEY, JSON.stringify(session));
+}
+
 export function usePracticeSession() {
   const [question, setQuestion] = useState<QuestionDto | null>(null);
   const [answer, setAnswer] = useState("");
@@ -17,6 +70,8 @@ export function usePracticeSession() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isTeaching, setIsTeaching] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [answeredQuestionIds, setAnsweredQuestionIds] = useState<string[]>([]);
+  const hasHydratedSession = useRef(false);
   const startedAt = useRef(Date.now());
 
   const loadQuestion = useCallback(async () => {
@@ -72,6 +127,7 @@ export function usePracticeSession() {
 
     const data = (await response.json()) as AnswerResult;
     setResult(data);
+    setAnsweredQuestionIds((ids) => unique([...ids, question.id]));
     if (!data.isCorrect && data.tutor) {
       setTutor(data.tutor);
       setMode("tutor");
@@ -120,8 +176,59 @@ export function usePracticeSession() {
   }, [reinforcementAnswer, tutor]);
 
   useEffect(() => {
+    const persisted = readPersistedSession();
+    hasHydratedSession.current = true;
+
+    if (persisted) {
+      setQuestion(persisted.question);
+      setAnswer(persisted.answer);
+      setResult(persisted.result);
+      setMode(persisted.mode);
+      setTutor(persisted.tutor);
+      setReinforcementAnswer(persisted.reinforcementAnswer);
+      setReinforcementResult(persisted.reinforcementResult);
+      setSessionDecisionCount(persisted.sessionDecisionCount);
+      setAnsweredQuestionIds(persisted.answeredQuestionIds ?? []);
+      setIsLoading(false);
+      startedAt.current = Date.now();
+      return;
+    }
+
     void loadQuestion();
   }, [loadQuestion]);
+
+  useEffect(() => {
+    if (!hasHydratedSession.current || isLoading || !question) {
+      return;
+    }
+
+    writePersistedSession({
+      version: 1,
+      currentRound: 1,
+      adaptiveQueuePosition: sessionDecisionCount,
+      question,
+      answer,
+      result,
+      mode,
+      tutor,
+      reinforcementAnswer,
+      reinforcementResult,
+      sessionDecisionCount,
+      answeredQuestionIds,
+      updatedAt: Date.now()
+    });
+  }, [
+    answer,
+    answeredQuestionIds,
+    isLoading,
+    mode,
+    question,
+    reinforcementAnswer,
+    reinforcementResult,
+    result,
+    sessionDecisionCount,
+    tutor
+  ]);
 
   return {
     question,
