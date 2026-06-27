@@ -5,8 +5,8 @@ type MetricProps = {
 
 export function Metric({ label, value }: MetricProps) {
   return (
-    <div className="border-t border-black py-5">
-      <p className="text-sm text-neutral-600">{label}</p>
+    <div className="rr-card px-4 py-5 sm:px-5">
+      <p className="rr-meta">{label}</p>
       <p className="mt-2 text-3xl font-semibold">{value}</p>
     </div>
   );

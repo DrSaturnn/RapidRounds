@@ -45,13 +45,13 @@ export function TutorMode({
   };
 
   return (
-    <section className="space-y-4 border-t border-rr-line bg-rr-surface px-0 py-5 sm:px-5">
-      <div className="space-y-3 border-b border-rr-soft-line pb-4">
-        <p className="text-xs tracking-normal text-rr-muted">{isUnknown ? "Concept build" : "Decision repair"}</p>
+    <section className="space-y-4">
+      <div className="rr-card rr-card-section space-y-3">
+        <p className="rr-section-header">{isUnknown ? "Concept build" : "Decision repair"}</p>
         {isUnknown ? (
           <div className="space-y-3 text-sm leading-6">
             <div>
-              <p className="text-xs text-rr-muted">Correct answer</p>
+              <p className="rr-meta">Correct answer</p>
               <p className="text-base font-semibold">{tutor.repair.correctAnswer}</p>
             </div>
             <p>{tutor.repair.why}</p>
@@ -68,17 +68,17 @@ export function TutorMode({
           <>
             {tutor.repair.cognitiveError ? (
               <div>
-                <p className="text-xs text-rr-muted">Your reasoning pattern</p>
-                <p className="text-base font-semibold">Cognitive Error: {tutor.repair.cognitiveError.type}</p>
+                <p className="rr-meta">Your reasoning pattern</p>
+                <p className="rr-badge rr-badge-repair mt-1">Cognitive Error: {tutor.repair.cognitiveError.type}</p>
               </div>
             ) : null}
             <div className="grid gap-3 text-sm leading-6 sm:grid-cols-[minmax(0,0.95fr)_minmax(0,1.05fr)]">
               <div>
-                <p className="text-xs text-rr-muted">Correct answer</p>
+                <p className="rr-meta">Correct answer</p>
                 <p className="text-base font-semibold">{tutor.repair.correctAnswer}</p>
               </div>
               <div>
-                <p className="text-xs text-rr-muted">Key clue</p>
+                <p className="rr-meta">Key clue</p>
                 <p>{tutor.repair.clue}</p>
               </div>
             </div>
@@ -92,11 +92,11 @@ export function TutorMode({
             ) : null}
           </>
         )}
-        <p className="text-sm leading-6 text-rr-muted">{tutor.repair.fingerprint}</p>
+        <p className="rr-supporting">{tutor.repair.fingerprint}</p>
       </div>
 
       {tutor.reinforcement ? (
-        <form onSubmit={onSubmit} className="space-y-3">
+        <form onSubmit={onSubmit} className="rr-card rr-card-section space-y-3">
           <p className="text-sm font-medium leading-6">{tutor.reinforcement.question}</p>
           <div className="grid gap-3 sm:grid-cols-[1fr_auto]">
             <input
@@ -105,7 +105,7 @@ export function TutorMode({
               value={reinforcementAnswer}
               onChange={(event) => setReinforcementAnswer(event.target.value)}
               disabled={reinforcementResult !== null}
-              className="h-11 w-full border border-black bg-white px-3 outline-none focus-visible:ring-2 focus-visible:ring-black focus-visible:ring-offset-2 disabled:text-neutral-500"
+              className="rr-text-input"
             />
             {reinforcementResult === null ? (
               <Button type="submit" disabled={reinforcementAnswer.trim().length === 0}>
@@ -118,7 +118,7 @@ export function TutorMode({
             )}
           </div>
           {reinforcementResult !== null ? (
-            <p className="text-sm text-neutral-700">
+            <p className="rr-supporting">
               {reinforcementResult ? "Correct." : "Not quite."} {tutor.reinforcement.boardPearl}
             </p>
           ) : null}
@@ -137,10 +137,10 @@ export function TutorMode({
           </div>
           <div>
             <p className="font-medium">Expert Recognition</p>
-            <p>{tutor.recognitionPath ?? tutor.managementPearl}</p>
+            <p className="rr-path mt-2">{tutor.recognitionPath ?? tutor.managementPearl}</p>
           </div>
           {tutor.cognitiveError ? (
-            <div>
+            <div className="rr-callout">
               <p className="font-medium">Expert Correction</p>
               <p>{tutor.cognitiveError.expertCorrection}</p>
             </div>
@@ -148,27 +148,27 @@ export function TutorMode({
           <div>
             <p className="font-medium">Don't Confuse With</p>
             <div className="mt-2 overflow-x-auto">
-              <table className="w-full border-collapse text-left text-sm">
+              <table className="rr-table">
                 <thead>
-                  <tr className="border-b border-black">
-                    <th className="py-2 pr-3 font-semibold">Feature</th>
-                    <th className="py-2 pr-3 font-semibold">{tutor.comparison.correctDiagnosis}</th>
-                    <th className="py-2 font-semibold">{tutor.comparison.competingDiagnosis}</th>
+                  <tr>
+                    <th>Feature</th>
+                    <th>{tutor.comparison.correctDiagnosis}</th>
+                    <th>{tutor.comparison.competingDiagnosis}</th>
                   </tr>
                 </thead>
                 <tbody>
                   {tutor.comparison.rows.map((row) => (
-                    <tr key={row.feature} className="border-b border-neutral-300 last:border-b-0">
-                      <td className="py-2 pr-3 font-medium">{getComparisonFeatureDisplayText(row.feature)}</td>
-                      <td className="py-2 pr-3">{row.correct}</td>
-                      <td className="py-2">{row.competing}</td>
+                    <tr key={row.feature}>
+                      <td className="font-medium">{getComparisonFeatureDisplayText(row.feature)}</td>
+                      <td>{row.correct}</td>
+                      <td>{row.competing}</td>
                     </tr>
                   ))}
                 </tbody>
               </table>
             </div>
           </div>
-          <div>
+          <div className="rr-callout rr-callout-pivot">
             <p className="font-medium">NBME Pivot</p>
             <p>{tutor.nbmePivot}</p>
           </div>
@@ -181,8 +181,8 @@ export function TutorMode({
         </div>
       </TeachingCard>
 
-      <div className="space-y-3 border-t border-rr-soft-line pt-4">
-        <p className="text-xs font-medium uppercase tracking-normal text-rr-muted">Related Concepts</p>
+      <div className="rr-card rr-card-section space-y-3">
+        <p className="rr-section-header">Related Concepts</p>
         <div className="space-y-2 text-sm leading-6">
           <p>
             You just learned: <span className="font-semibold">{conceptGraph.primaryConcept}</span>
@@ -208,7 +208,7 @@ function ConceptChipGroup({ label, concepts }: { label: string; concepts: string
           <button
             key={concept}
             type="button"
-            className="border border-rr-soft-line bg-white px-2 py-1 text-xs text-rr-foreground transition-colors hover:border-rr-line"
+            className="rr-chip"
           >
             {concept}
           </button>

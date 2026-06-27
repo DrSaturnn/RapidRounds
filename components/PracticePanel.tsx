@@ -196,7 +196,7 @@ export function PracticePanel() {
   if (isLoading) {
     return (
       <div className="practice-focus flex min-h-screen items-center justify-center">
-        <p className="text-sm text-rr-muted">Loading...</p>
+        <p className="rr-loading">Loading...</p>
       </div>
     );
   }
@@ -221,9 +221,9 @@ export function PracticePanel() {
           <QuestionMeta question={question} />
         </div>
 
-        <section className="space-y-8 motion-safe:animate-[fadeIn_180ms_var(--rr-ease-standard)]">
+        <section className="rr-card space-y-8 px-5 py-6 motion-safe:animate-[fadeIn_180ms_var(--rr-ease-standard)] sm:px-6 sm:py-7">
           <div className="space-y-5">
-            <h1 className="text-[1.7rem] font-semibold leading-[1.35] tracking-normal text-rr-foreground sm:text-[2.05rem] sm:leading-[1.4]">
+            <h1 className="rr-question-stem">
               {clinicalPrompt}
             </h1>
             <p className="text-lg font-medium leading-7 text-rr-foreground sm:text-xl">
@@ -249,13 +249,13 @@ export function PracticePanel() {
                 autoCorrect="off"
                 autoCapitalize="off"
                 spellCheck={false}
-                className="h-12 w-full border-0 border-b border-rr-line bg-transparent px-0 text-base outline-none transition-colors placeholder:text-rr-muted/70 focus:border-rr-foreground focus-visible:ring-2 focus-visible:ring-black focus-visible:ring-offset-4 disabled:text-rr-muted"
+                className="rr-input"
                 autoFocus
               />
               <Button
                 type="button"
                 variant="secondary"
-                className="border-rr-soft-line px-4 text-rr-muted hover:border-rr-line hover:text-white"
+                className="px-4"
                 onClick={() => void requestTeaching()}
                 disabled={isTeaching || mode === "tutor"}
               >
@@ -314,7 +314,7 @@ export function PracticePanel() {
             aria-labelledby="end-session-title"
             aria-describedby="end-session-body"
             aria-modal="true"
-            className="w-full max-w-sm border border-rr-line bg-white p-5 shadow-sm"
+            className="rr-card w-full max-w-sm p-5"
             role="dialog"
           >
             <h2 id="end-session-title" className="text-lg font-semibold">

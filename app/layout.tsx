@@ -22,13 +22,13 @@ export default function RootLayout({
     <html lang="en">
       <body>
         <div className="app-shell mx-auto flex min-h-screen w-full max-w-5xl flex-col px-5">
-          <header className="global-header flex h-16 items-center justify-between border-b border-black">
+          <header className="global-header flex h-16 items-center justify-between border-b border-rr-soft-line">
             <Link href="/" className="text-base font-semibold tracking-normal">
               RapidRounds
             </Link>
             <nav className="flex items-center gap-5 text-sm">
               {navItems.map((item) => (
-                <Link key={item.href} href={item.href} className="hover:underline">
+                <Link key={item.href} href={item.href} className="text-rr-muted transition-colors hover:text-rr-foreground">
                   {item.label}
                 </Link>
               ))}

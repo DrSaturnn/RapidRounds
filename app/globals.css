@@ -11,6 +11,12 @@
   --rr-color-line: #111111;
   --rr-color-soft-line: #d8d8d8;
   --rr-color-surface: #fafaf8;
+  --rr-color-panel: #ffffff;
+  --rr-color-subtle: #f4f6f5;
+  --rr-color-clinical: #264653;
+  --rr-color-pivot: #7a5c12;
+  --rr-color-repair: #7f1d1d;
+  --rr-color-learning: #245c45;
   --rr-color-success: #137a3a;
   --rr-color-error: #b42318;
   --rr-color-focus: #000000;
@@ -28,10 +34,12 @@
   --rr-radius-none: 0;
   --rr-radius-sm: 0.125rem;
   --rr-radius-md: 0.25rem;
+  --rr-radius-lg: 0.5rem;
 
   --rr-border-thin: 1px solid var(--rr-color-line);
   --rr-border-soft: 1px solid var(--rr-color-soft-line);
   --rr-focus-ring: 0 0 0 2px var(--rr-color-focus);
+  --rr-shadow-card: 0 1px 2px rgb(0 0 0 / 0.05), 0 10px 28px rgb(0 0 0 / 0.04);
 
   --rr-motion-fast: 120ms;
   --rr-motion-standard: 180ms;
@@ -125,6 +133,139 @@ body:has(.practice-focus) .app-main {
 ::selection {
   background: var(--rr-color-foreground);
   color: var(--rr-color-background);
+}
+
+@layer components {
+  .rr-page-title {
+    @apply text-3xl font-semibold leading-tight tracking-normal text-rr-foreground sm:text-4xl;
+  }
+
+  .rr-question-stem {
+    @apply text-[1.7rem] font-semibold leading-[1.38] tracking-normal text-rr-foreground sm:text-[2.05rem] sm:leading-[1.42];
+  }
+
+  .rr-section-title {
+    @apply text-lg font-semibold leading-7 text-rr-foreground;
+  }
+
+  .rr-subheading {
+    @apply text-sm font-semibold leading-6 text-rr-foreground;
+  }
+
+  .rr-body {
+    @apply text-sm leading-6 text-rr-foreground;
+  }
+
+  .rr-supporting {
+    @apply text-sm leading-6 text-rr-muted;
+  }
+
+  .rr-meta {
+    @apply text-xs leading-5 text-rr-muted;
+  }
+
+  .rr-card {
+    @apply rounded-lg border border-rr-soft-line bg-white shadow-[var(--rr-shadow-card)];
+  }
+
+  .rr-card-section {
+    @apply border-b border-rr-soft-line px-4 py-4 last:border-b-0 sm:px-5;
+  }
+
+  .rr-panel {
+    @apply rounded-lg border border-rr-soft-line bg-rr-surface;
+  }
+
+  .rr-section-header {
+    @apply flex items-center gap-2 text-xs font-semibold uppercase tracking-normal text-rr-muted;
+  }
+
+  .rr-badge {
+    @apply inline-flex min-h-7 items-center rounded-md border border-rr-soft-line bg-white px-2.5 py-1 text-xs font-medium leading-4 text-rr-foreground;
+  }
+
+  .rr-badge-repair {
+    color: var(--rr-color-repair);
+    border-color: rgb(127 29 29 / 0.28);
+    background: rgb(127 29 29 / 0.06);
+  }
+
+  .rr-badge-learning {
+    color: var(--rr-color-learning);
+    border-color: rgb(36 92 69 / 0.28);
+    background: rgb(36 92 69 / 0.06);
+  }
+
+  .rr-badge-pivot {
+    color: var(--rr-color-pivot);
+    border-color: rgb(122 92 18 / 0.28);
+    background: rgb(122 92 18 / 0.08);
+  }
+
+  .rr-button {
+    @apply inline-flex h-11 items-center justify-center rounded-md border px-5 text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-black focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:border-rr-soft-line disabled:bg-neutral-100 disabled:text-rr-muted;
+  }
+
+  .rr-button-primary {
+    @apply border-rr-foreground bg-rr-foreground text-white hover:bg-white hover:text-rr-foreground active:bg-rr-surface;
+  }
+
+  .rr-button-secondary {
+    @apply border-rr-soft-line bg-white text-rr-foreground hover:border-rr-foreground hover:bg-rr-foreground hover:text-white active:bg-rr-surface;
+  }
+
+  .rr-button-ghost {
+    @apply border-transparent bg-transparent text-rr-foreground hover:border-rr-soft-line hover:bg-rr-surface;
+  }
+
+  .rr-button-destructive {
+    @apply border-red-800 bg-red-800 text-white hover:bg-white hover:text-red-800;
+  }
+
+  .rr-input {
+    @apply h-12 w-full rounded-none border-0 border-b border-rr-line bg-transparent px-0 text-base outline-none transition-colors placeholder:text-rr-muted focus:border-rr-foreground focus-visible:ring-2 focus-visible:ring-black focus-visible:ring-offset-4 disabled:text-rr-muted;
+  }
+
+  .rr-text-input {
+    @apply h-11 w-full rounded-md border border-rr-soft-line bg-white px-3 text-sm outline-none transition-colors focus:border-rr-foreground focus-visible:ring-2 focus-visible:ring-black focus-visible:ring-offset-2 disabled:text-rr-muted;
+  }
+
+  .rr-table {
+    @apply w-full border-collapse text-left text-sm;
+  }
+
+  .rr-table th {
+    @apply border-b border-rr-line py-2 pr-3 font-semibold;
+  }
+
+  .rr-table td {
+    @apply border-b border-rr-soft-line py-2 pr-3 align-top last:pr-0;
+  }
+
+  .rr-chip {
+    @apply inline-flex min-h-7 items-center rounded-md border border-rr-soft-line bg-white px-2.5 py-1 text-xs font-medium text-rr-foreground transition-colors hover:border-rr-line hover:bg-rr-surface;
+  }
+
+  .rr-callout {
+    @apply rounded-lg border border-rr-soft-line bg-white px-4 py-3;
+  }
+
+  .rr-callout-pivot {
+    border-color: rgb(122 92 18 / 0.28);
+    background: rgb(122 92 18 / 0.06);
+  }
+
+  .rr-path {
+    @apply rounded-lg border border-rr-soft-line bg-white px-4 py-3 font-mono text-xs leading-6 text-rr-foreground;
+  }
+
+  .rr-empty {
+    @apply rounded-lg border border-rr-soft-line bg-white p-6 shadow-[var(--rr-shadow-card)];
+  }
+
+  .rr-loading {
+    @apply rounded-lg border border-rr-soft-line bg-white px-5 py-4 text-sm text-rr-muted shadow-[var(--rr-shadow-card)];
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {

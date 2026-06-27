@@ -4,22 +4,24 @@ import type { ButtonHTMLAttributes, ReactNode } from "react";
 
 type ButtonProps = ButtonHTMLAttributes<HTMLButtonElement> & {
   children: ReactNode;
-  variant?: "primary" | "secondary";
+  variant?: "primary" | "secondary" | "ghost" | "destructive";
 };
 
 export const Button = forwardRef<HTMLButtonElement, ButtonProps>(function Button(
   { children, className = "", variant = "primary", ...props },
   ref
 ) {
-  const variantClass =
-    variant === "primary"
-      ? "border-black bg-black text-white hover:bg-white hover:text-black"
-      : "border-black bg-white text-black hover:bg-black hover:text-white";
+  const variantClass = {
+    primary: "rr-button-primary",
+    secondary: "rr-button-secondary",
+    ghost: "rr-button-ghost",
+    destructive: "rr-button-destructive"
+  }[variant];
 
   return (
     <button
       ref={ref}
-      className={`inline-flex h-11 items-center justify-center border px-5 text-sm font-medium transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-black focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:border-neutral-300 disabled:bg-neutral-200 disabled:text-neutral-500 ${variantClass} ${className}`}
+      className={`rr-button ${variantClass} ${className}`}
       {...props}
     >
       {children}
@@ -31,7 +33,7 @@ export function LinkButton({ href, children }: { href: string; children: ReactNo
   return (
     <Link
       href={href}
-      className="inline-flex h-11 items-center justify-center border border-black bg-black px-5 text-sm font-medium text-white transition hover:bg-white hover:text-black"
+      className="rr-button rr-button-primary"
     >
       {children}
     </Link>

@@ -14,12 +14,12 @@ export function TeachingCard({
   return (
     <details
       open={defaultOpen}
-      className="border border-rr-soft-line bg-white transition-colors open:border-rr-line"
+      className="rr-card transition-colors open:border-rr-line"
     >
-      <summary className="cursor-pointer list-none px-4 py-3 text-sm font-semibold">
+      <summary className="cursor-pointer list-none px-4 py-3 text-sm font-semibold sm:px-5">
         {title}
       </summary>
-      <div className="border-t border-rr-soft-line px-4 py-4 text-sm leading-6">{children}</div>
+      <div className="border-t border-rr-soft-line px-4 py-4 text-sm leading-6 sm:px-5">{children}</div>
     </details>
   );
 }

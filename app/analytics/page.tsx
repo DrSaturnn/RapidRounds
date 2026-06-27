@@ -11,8 +11,8 @@ export default async function AnalyticsPage() {
   return (
     <div className="space-y-10">
       <section>
-        <h1 className="text-4xl font-semibold tracking-normal">Analytics</h1>
-        <p className="mt-3 max-w-2xl text-sm leading-6 text-neutral-600">
+        <h1 className="rr-page-title">Analytics</h1>
+        <p className="rr-supporting mt-3 max-w-2xl">
           Performance by diagnosis, management decision, and illness script.
         </p>
       </section>
@@ -70,18 +70,18 @@ function AnalyticsSection({
   rows: Array<{ id: string; primary: string; secondary: string }>;
 }) {
   return (
-    <section>
-      <div className="border-b border-black pb-3">
-        <h2 className="text-lg font-semibold">{title}</h2>
+    <section className="space-y-3">
+      <div className="border-b border-rr-soft-line pb-3">
+        <h2 className="rr-section-title">{title}</h2>
       </div>
       {rows.length === 0 ? (
         <EmptyState title={emptyTitle} body={emptyBody} />
       ) : (
-        <div className="divide-y divide-black">
+        <div className="rr-card divide-y divide-rr-soft-line overflow-hidden">
           {rows.map((row) => (
-            <div key={row.id} className="grid gap-2 py-4 sm:grid-cols-[1fr_auto]">
+            <div key={row.id} className="grid gap-2 px-4 py-4 sm:grid-cols-[1fr_auto] sm:px-5">
               <p className="font-medium">{row.primary}</p>
-              <p className="text-sm text-neutral-600">{row.secondary}</p>
+              <p className="rr-meta">{row.secondary}</p>
             </div>
           ))}
         </div>
