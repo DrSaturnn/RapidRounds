@@ -1,0 +1,103 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model Question {
+  id              String     @id @default(cuid())
+  specialty       String
+  topicId         String
+  topic           Topic      @relation(fields: [topicId], references: [id])
+  difficulty      Int
+  stem            String
+  correctAnswer   String
+  acceptedAnswers String
+  boardPearl      String
+  explanation     String
+  tags            String
+  pattern         String
+  management      String
+  diagnosis       String
+  createdAt       DateTime   @default(now())
+  progress        Progress[]
+
+  @@index([specialty])
+  @@index([topicId])
+  @@index([difficulty])
+}
+
+model ClinicalDecision {
+  id                 String     @id @default(cuid())
+  specialty          String
+  system             String
+  topic              String
+  clinicalPattern    String
+  decisionType       String
+  prompt             String
+  acceptedAnswers    String
+  boardPearl         String
+  pivotClue          String
+  commonTrap         String
+  managementPearl    String
+  relatedDecisionIds String
+  difficulty         Int
+  tags               String
+  createdAt          DateTime   @default(now())
+  progress           Progress[]
+
+  @@index([specialty])
+  @@index([system])
+  @@index([topic])
+  @@index([decisionType])
+  @@index([difficulty])
+}
+
+model Topic {
+  id        String     @id @default(cuid())
+  name      String
+  specialty String
+  questions Question[]
+  progress  Progress[]
+
+  @@unique([name, specialty])
+}
+
+model Progress {
+  id             String   @id @default(cuid())
+  questionId     String?
+  question       Question? @relation(fields: [questionId], references: [id])
+  clinicalDecisionId String?
+  clinicalDecision   ClinicalDecision? @relation(fields: [clinicalDecisionId], references: [id])
+  topicId        String?
+  topic          Topic?   @relation(fields: [topicId], references: [id])
+  userId         String   @default("default")
+  answer         String
+  isCorrect      Boolean
+  responseTimeMs Int
+  diagnosis      String
+  management     String
+  pattern        String
+  createdAt      DateTime @default(now())
+
+  @@index([userId, createdAt])
+  @@index([clinicalDecisionId])
+  @@index([topicId])
+  @@index([diagnosis])
+  @@index([management])
+  @@index([pattern])
+}
+
+model UserStats {
+  id                    String   @id @default(cuid())
+  userId                String   @unique @default("default")
+  questionsAnswered     Int      @default(0)
+  correctAnswers        Int      @default(0)
+  currentStreak         Int      @default(0)
+  longestStreak         Int      @default(0)
+  averageResponseTimeMs Int      @default(0)
+  updatedAt             DateTime @updatedAt
+}
