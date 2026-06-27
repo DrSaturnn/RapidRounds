@@ -21,6 +21,38 @@ const baseDecision = {
   managementPearl: "Manual extraction is indicated when placenta is retained."
 };
 
+const gestationalHypertensionDecision = {
+  specialty: "Obstetrics",
+  system: "Hypertension in Pregnancy",
+  topic: "Gestational hypertension",
+  prompt: "New hypertension after 20 weeks with no proteinuria or end-organ symptoms.",
+  correctAnswer: "gestational hypertension",
+  acceptedAnswers: JSON.stringify(["gestational hypertension"]),
+  boardPearl: "Hypertension after 20 weeks without proteinuria or severe features is gestational hypertension.",
+  tags: JSON.stringify(["gestational hypertension", "20 weeks", "hypertension"]),
+  pivotClue: "No proteinuria or end-organ symptoms",
+  commonTrap: "preeclampsia",
+  clinicalPattern: "Hypertension in pregnancy",
+  decisionType: "Diagnosis",
+  managementPearl: "Monitor closely because gestational hypertension can progress to preeclampsia."
+};
+
+const carboprostContraindicationDecision = {
+  specialty: "Obstetrics",
+  system: "Postpartum",
+  topic: "Carboprost contraindication",
+  prompt: "Postpartum hemorrhage in a patient with asthma.",
+  correctAnswer: "carboprost",
+  acceptedAnswers: JSON.stringify(["carboprost", "hemabate", "prostaglandin f2 alpha"]),
+  boardPearl: "Carboprost is contraindicated in asthma.",
+  tags: JSON.stringify(["postpartum hemorrhage", "carboprost", "asthma"]),
+  pivotClue: "Asthma",
+  commonTrap: "methylergonovine",
+  clinicalPattern: "Postpartum hemorrhage",
+  decisionType: "Contraindication",
+  managementPearl: "Avoid carboprost because it can cause bronchospasm."
+};
+
 describe("decision repair", () => {
   it("builds a focused TASK_MISMATCH repair", () => {
     const evaluation = evaluateAnswer({
@@ -265,6 +297,176 @@ describe("decision repair", () => {
     assert.match(tutorMode, /tutor\.repair\.style === "UNKNOWN"/);
     assert.match(tutorMode, /<TeachingCard title="Teach me more" defaultOpen=\{false\}>/);
     assert.match(tutorMode, /tutor\.comparison\.rows\.map/);
+  });
+
+  it("renders every Teach Me More panel with the RFC-007 section framework", () => {
+    const tutorMode = readFileSync("components/TutorMode.tsx", "utf8");
+
+    assert.match(tutorMode, /Illness Script/);
+    assert.match(tutorMode, /Expert Recognition/);
+    assert.match(tutorMode, /Don't Confuse With/);
+    assert.match(tutorMode, /NBME Pivot/);
+    assert.match(tutorMode, /Why This Was Tempting/);
+  });
+
+  it("builds objective Teach Me More comparison for gestational hypertension vs preeclampsia", () => {
+    const evaluation = evaluateAnswer({
+      answer: "preeclampsia",
+      acceptedAnswers: ["gestational hypertension"],
+      canonicalAnswer: "gestational hypertension",
+      expectedTask: "Diagnosis",
+      clinicalConcepts: ["Gestational hypertension", "preeclampsia"]
+    });
+    const tutor = buildTutorContent(gestationalHypertensionDecision, "preeclampsia", evaluation);
+    const comparisonText = JSON.stringify(tutor.comparison);
+
+    assert.equal(
+      tutor.illnessScript.classicPresentation,
+      "Gestational hypertension presents after 20 weeks with new hypertension but without proteinuria or severe features."
+    );
+    assert.equal(
+      tutor.recognitionPath,
+      ">=20 weeks gestation -> hypertension -> check proteinuria -> absent -> check severe features -> absent -> gestational hypertension"
+    );
+    assert.equal(tutor.comparison.correctDiagnosis, "Gestational hypertension");
+    assert.equal(tutor.comparison.competingDiagnosis, "Preeclampsia");
+    assert.doesNotMatch(comparisonText, /Different operation/);
+    assert.doesNotMatch(comparisonText, /Missing or misreading that clue/);
+    assert.doesNotMatch(comparisonText, /Different next best step/);
+    assert.doesNotMatch(comparisonText, /Surface-level overlap/);
+    assert.match(comparisonText, /Present, or severe features may establish diagnosis without proteinuria/);
+    assert.match(comparisonText, /thrombocytopenia, elevated LFTs, renal dysfunction/);
+    assert.match(tutor.nbmePivot ?? "", /proteinuria OR any severe feature/i);
+  });
+
+  it("keeps adjacent wrong-answer reasoning separate from the comparison table", () => {
+    const evaluation = evaluateAnswer({
+      answer: "preeclampsia",
+      acceptedAnswers: ["gestational hypertension"],
+      canonicalAnswer: "gestational hypertension",
+      expectedTask: "Diagnosis",
+      clinicalConcepts: ["Gestational hypertension", "preeclampsia"]
+    });
+    const tutor = buildTutorContent(gestationalHypertensionDecision, "preeclampsia", evaluation);
+
+    assert.match(tutor.repair.why, /Refine it using no proteinuria or end-organ symptoms/i);
+    assert.match(tutor.whyTempting ?? "", /jumped to preeclampsia/i);
+    assert.doesNotMatch(JSON.stringify(tutor.comparison), /jumped to preeclampsia/i);
+  });
+
+  it("only shows Why This Was Tempting for non-UNKNOWN incorrect or partial responses", () => {
+    const correctEvaluation = evaluateAnswer({
+      answer: "gestational hypertension",
+      acceptedAnswers: ["gestational hypertension"],
+      canonicalAnswer: "gestational hypertension",
+      expectedTask: "Diagnosis"
+    });
+    const partialEvaluation = evaluateAnswer({
+      answer: "gestational",
+      acceptedAnswers: ["gestational hypertension"],
+      canonicalAnswer: "gestational hypertension",
+      expectedTask: "Diagnosis"
+    });
+    const unknownEvaluation = evaluateAnswer({
+      answer: "idk",
+      acceptedAnswers: ["gestational hypertension"],
+      canonicalAnswer: "gestational hypertension",
+      expectedTask: "Diagnosis"
+    });
+
+    assert.equal(buildTutorContent(gestationalHypertensionDecision, "gestational hypertension", correctEvaluation).whyTempting, undefined);
+    assert.match(buildTutorContent(gestationalHypertensionDecision, "gestational", partialEvaluation).whyTempting ?? "", /separating clue/i);
+    assert.equal(buildTutorContent(gestationalHypertensionDecision, "idk", unknownEvaluation).whyTempting, undefined);
+  });
+
+  it("builds the standardized Teach Me More content for carboprost contraindication", () => {
+    const evaluation = evaluateAnswer({
+      answer: "methylergonovine",
+      acceptedAnswers: ["carboprost", "hemabate", "prostaglandin f2 alpha"],
+      canonicalAnswer: "carboprost",
+      expectedTask: "Contraindication",
+      clinicalConcepts: ["carboprost", "methylergonovine"]
+    });
+    const tutor = buildTutorContent(carboprostContraindicationDecision, "methylergonovine", evaluation);
+    const comparisonText = JSON.stringify(tutor.comparison);
+
+    assert.match(tutor.illnessScript.classicPresentation, /asthma makes it unsafe/i);
+    assert.match(tutor.recognitionPath ?? "", /asthma present -> avoid carboprost/i);
+    assert.match(tutor.nbmePivot ?? "", /Asthma immediately excludes carboprost/i);
+    assert.match(tutor.whyTempting ?? "", /uterotonics feel interchangeable/i);
+    assert.equal(tutor.comparison.correctDiagnosis, "Carboprost contraindication");
+    assert.equal(tutor.comparison.competingDiagnosis, "Methylergonovine contraindication");
+    assert.match(comparisonText, /Asthma excludes carboprost/);
+    assert.match(comparisonText, /Hypertension excludes methylergonovine/);
+  });
+
+  it("classifies Missed Pivot Clue when the answer recognizes the broad pattern but misses the discriminator", () => {
+    const evaluation = evaluateAnswer({
+      answer: "postpartum hemorrhage",
+      acceptedAnswers: ["retained placenta"],
+      canonicalAnswer: "retained placenta",
+      expectedTask: "Diagnosis",
+      clinicalConcepts: ["Postpartum hemorrhage", "retained placenta"]
+    });
+    const tutor = buildTutorContent(baseDecision, "postpartum hemorrhage", evaluation);
+
+    assert.equal(evaluation.classification, "PARTIAL");
+    assert.equal(tutor.cognitiveError?.type, "Missed Pivot Clue");
+    assert.equal(tutor.repair.cognitiveError?.type, "Missed Pivot Clue");
+    assert.match(tutor.cognitiveError?.missedClue ?? "", /Placenta undelivered after 30 minutes/i);
+  });
+
+  it("classifies Premature Closure for jumping from hypertension after 20 weeks to preeclampsia", () => {
+    const evaluation = evaluateAnswer({
+      answer: "preeclampsia",
+      acceptedAnswers: ["gestational hypertension"],
+      canonicalAnswer: "gestational hypertension",
+      expectedTask: "Diagnosis",
+      clinicalConcepts: ["Gestational hypertension", "preeclampsia"]
+    });
+    const tutor = buildTutorContent(gestationalHypertensionDecision, "preeclampsia", evaluation);
+
+    assert.equal(tutor.cognitiveError?.type, "Premature Closure");
+    assert.match(tutor.cognitiveError?.whyAttractive ?? "", /first pattern looked familiar/i);
+    assert.match(tutor.cognitiveError?.expertCorrection ?? "", /confirm the required finding/i);
+  });
+
+  it("classifies Contraindication Error for choosing the neighboring uterotonic", () => {
+    const evaluation = evaluateAnswer({
+      answer: "methylergonovine",
+      acceptedAnswers: ["carboprost", "hemabate", "prostaglandin f2 alpha"],
+      canonicalAnswer: "carboprost",
+      expectedTask: "Contraindication",
+      clinicalConcepts: ["carboprost", "methylergonovine"]
+    });
+    const tutor = buildTutorContent(carboprostContraindicationDecision, "methylergonovine", evaluation);
+
+    assert.equal(tutor.cognitiveError?.type, "Contraindication Error");
+    assert.match(tutor.cognitiveError?.missedClue ?? "", /Asthma/i);
+    assert.match(tutor.cognitiveError?.expertCorrection ?? "", /screen contraindications/i);
+  });
+
+  it("does not assign a cognitive error to correct answers or change grading", () => {
+    const evaluation = evaluateAnswer({
+      answer: "gestational hypertension",
+      acceptedAnswers: ["gestational hypertension"],
+      canonicalAnswer: "gestational hypertension",
+      expectedTask: "Diagnosis"
+    });
+    const tutor = buildTutorContent(gestationalHypertensionDecision, "gestational hypertension", evaluation);
+
+    assert.equal(evaluation.isCorrect, true);
+    assert.equal(evaluation.classification, "EXACT");
+    assert.equal(tutor.cognitiveError, undefined);
+    assert.equal(tutor.repair.cognitiveError, undefined);
+  });
+
+  it("renders the cognitive error sections without changing the repair shell", () => {
+    const tutorMode = readFileSync("components/TutorMode.tsx", "utf8");
+
+    assert.match(tutorMode, /Your reasoning pattern/);
+    assert.match(tutorMode, /Cognitive Error:/);
+    assert.match(tutorMode, /Expert Correction/);
   });
 });
 

@@ -1,6 +1,7 @@
 import { analyzeReasoning } from "@/lib/reasoning-engine";
+import { classifyCognitiveError } from "@/lib/cognitive-error";
 import { findDecisionBoundaryRepair } from "@/lib/decision-boundary-repair";
-import type { AnswerEvaluation, DecisionRepair, TutorContent } from "@/types/practice";
+import type { AnswerEvaluation, CognitiveError, DecisionRepair, TutorContent } from "@/types/practice";
 
 type TutorDecision = {
   specialty: string;
@@ -25,9 +26,64 @@ const comparisonMap: Record<
   string,
   {
     competingDiagnosis: string;
+    illnessScript?: string;
+    recognitionPath?: string;
+    nbmePivot?: string;
+    whyTempting?: string;
     rows: TutorContent["comparison"]["rows"];
   }
 > = {
+  "gestational hypertension": {
+    competingDiagnosis: "Preeclampsia",
+    illnessScript: "Gestational hypertension presents after 20 weeks with new hypertension but without proteinuria or severe features.",
+    recognitionPath:
+      ">=20 weeks gestation -> hypertension -> check proteinuria -> absent -> check severe features -> absent -> gestational hypertension",
+    nbmePivot:
+      "The diagnosis changes from gestational hypertension to preeclampsia when proteinuria OR any severe feature appears.",
+    whyTempting:
+      "Saw hypertension after 20 weeks -> jumped to preeclampsia -> missed absence of proteinuria/severe features -> prove end-organ involvement first.",
+    rows: [
+      { feature: "Timing", correct: "After 20 weeks", competing: "After 20 weeks" },
+      {
+        feature: "Proteinuria",
+        correct: "Absent",
+        competing: "Present, or severe features may establish diagnosis without proteinuria"
+      },
+      {
+        feature: "Severe features",
+        correct: "Absent",
+        competing:
+          "May include thrombocytopenia, elevated LFTs, renal dysfunction, pulmonary edema, cerebral/visual symptoms"
+      },
+      {
+        feature: "Management",
+        correct: "Monitor maternal BP/fetal well-being; treat severe-range BP if present",
+        competing: "Magnesium sulfate if severe features; delivery timing depends on gestational age and severity"
+      },
+      { feature: "Progression", correct: "Can progress to preeclampsia", competing: "Established disease" }
+    ]
+  },
+  "carboprost contraindication": {
+    competingDiagnosis: "Methylergonovine contraindication",
+    illnessScript:
+      "Carboprost is a uterotonic used for postpartum hemorrhage, but asthma makes it unsafe because prostaglandin F2-alpha can trigger bronchospasm.",
+    recognitionPath:
+      "Postpartum hemorrhage -> need uterotonic -> asthma present -> avoid carboprost -> choose another uterotonic",
+    nbmePivot: "Asthma immediately excludes carboprost because of bronchospasm risk.",
+    whyTempting:
+      "Postpartum hemorrhage makes uterotonics feel interchangeable; the corrected heuristic is to check contraindications before choosing the agent.",
+    rows: [
+      { feature: "Clinical use", correct: "Uterotonic for postpartum hemorrhage", competing: "Uterotonic for postpartum hemorrhage" },
+      { feature: "Contraindication", correct: "Asthma", competing: "Hypertension" },
+      { feature: "Mechanism of harm", correct: "Can cause bronchospasm", competing: "Can worsen hypertension" },
+      {
+        feature: "Management",
+        correct: "Avoid carboprost; choose another uterotonic",
+        competing: "Avoid methylergonovine; choose another uterotonic"
+      },
+      { feature: "Board pearl", correct: "Asthma excludes carboprost", competing: "Hypertension excludes methylergonovine" }
+    ]
+  },
   "preeclampsia with severe features": {
     competingDiagnosis: "Gestational hypertension",
     rows: [
@@ -116,8 +172,40 @@ function buildPivotClue(decision: TutorDecision) {
   return `${sentence(getPivotClue(decision))}. This is the clue that changes the decision.`;
 }
 
-function buildClassicPresentation(decision: TutorDecision) {
-  return sentence(getPattern(decision));
+function buildIllnessScript(decision: TutorDecision) {
+  const diagnosis = sentence(getDiagnosis(decision));
+  const pattern = sentence(getPattern(decision));
+  const pivot = sentence(getPivotClue(decision));
+
+  if (pattern && pivot) {
+    return `${diagnosis} is recognized by ${pattern.toLowerCase()} with ${pivot.toLowerCase()}.`;
+  }
+
+  if (pattern) {
+    return `${diagnosis} presents with ${pattern.toLowerCase()}.`;
+  }
+
+  return `${diagnosis} is the best fit for the defining findings in this vignette.`;
+}
+
+function buildRecognitionPath(decision: TutorDecision) {
+  const steps = [
+    sentence(getPattern(decision)) || sentence(decision.prompt ?? ""),
+    sentence(getPivotClue(decision)),
+    sentence(decision.decisionType ?? "Clinical decision"),
+    sentence(decision.correctAnswer)
+  ].filter(Boolean);
+
+  return Array.from(new Set(steps)).join(" -> ");
+}
+
+function buildNbmePivot(decision: TutorDecision) {
+  const diagnosis = sentence(getDiagnosis(decision));
+  const pivot = sentence(getPivotClue(decision));
+
+  return pivot
+    ? `${pivot} is the clue that points to ${diagnosis}.`
+    : `${diagnosis} is established by the defining clue in the stem.`;
 }
 
 function buildComparison(decision: TutorDecision) {
@@ -137,12 +225,69 @@ function buildComparison(decision: TutorDecision) {
     correctDiagnosis: diagnosis,
     competingDiagnosis: decision.commonTrap || "Closest competing decision",
     rows: [
-      { feature: "Cognitive operation", correct: decision.decisionType ?? "Clinical decision", competing: "Different operation" },
-      { feature: "Pivot clue", correct: getPivotClue(decision), competing: "Missing or misreading that clue" },
-      { feature: "Management", correct: getManagement(decision), competing: "Different next best step" },
-      { feature: "Board focus", correct: decision.boardPearl, competing: "Surface-level overlap" }
+      {
+        feature: "Typical pattern",
+        correct: getPattern(decision) || "Defined by its characteristic clinical pattern",
+        competing: decision.commonTrap ? `Requires findings that establish ${decision.commonTrap}` : "Defined by its own characteristic pattern"
+      },
+      {
+        feature: "Key support",
+        correct: getPivotClue(decision),
+        competing: decision.commonTrap ? `Look for findings specific to ${decision.commonTrap}` : "Look for its defining findings"
+      },
+      {
+        feature: "Management",
+        correct: getManagement(decision),
+        competing: decision.commonTrap ? `Treat according to ${decision.commonTrap} criteria` : "Treat according to its diagnosis-specific criteria"
+      },
+      {
+        feature: "Board pivot",
+        correct: decision.boardPearl,
+        competing: decision.commonTrap ? `Do not diagnose ${decision.commonTrap} without its required features` : "Use the finding that establishes the competing diagnosis"
+      }
     ]
   };
+}
+
+function getMappedTeachMore(decision: TutorDecision) {
+  return comparisonMap[getDiagnosis(decision).toLowerCase()];
+}
+
+function isKnownAdjacentAnswer(decision: TutorDecision, userAnswer: string, evaluation?: AnswerEvaluation) {
+  const answer = cleanAnswer(userAnswer).toLowerCase();
+  const trap = sentence(decision.commonTrap ?? "").toLowerCase();
+
+  return (
+    !evaluation?.isCorrect &&
+    evaluation?.classification !== "UNKNOWN" &&
+    trap.length > 0 &&
+    (answer.includes(trap) || trap.includes(answer) || evaluation?.recognizedConcept?.toLowerCase() === trap)
+  );
+}
+
+function shouldShowWhyTempting(evaluation?: AnswerEvaluation) {
+  return Boolean(
+    evaluation &&
+      !evaluation.isCorrect &&
+      evaluation.classification !== "UNKNOWN" &&
+      ["INCORRECT", "PARTIAL", "TASK_MISMATCH", "AMBIGUOUS"].includes(evaluation.classification)
+  );
+}
+
+function buildWhyTempting(decision: TutorDecision, userAnswer: string, evaluation?: AnswerEvaluation, mappedWhy?: string) {
+  if (!shouldShowWhyTempting(evaluation)) {
+    return undefined;
+  }
+
+  if (mappedWhy && isKnownAdjacentAnswer(decision, userAnswer, evaluation)) {
+    return mappedWhy;
+  }
+
+  const learnerAnswer = cleanAnswer(userAnswer);
+  const pivot = sentence(getPivotClue(decision)).toLowerCase();
+  const diagnosis = sentence(getDiagnosis(decision));
+
+  return `${learnerAnswer} was tempting because it overlaps with the stem. The separating clue is ${pivot}; use that clue to choose ${diagnosis}.`;
 }
 
 function cleanAnswer(value: string) {
@@ -186,7 +331,8 @@ function buildPartialWhy(decision: TutorDecision, userAnswer: string) {
 function buildRepair(
   decision: TutorDecision,
   userAnswer: string,
-  evaluation?: AnswerEvaluation
+  evaluation?: AnswerEvaluation,
+  cognitiveError?: CognitiveError
 ): DecisionRepair {
   const classification = evaluation?.classification ?? "INCORRECT";
   const correctAnswer = sentence(decision.correctAnswer);
@@ -201,7 +347,8 @@ function buildRepair(
       clue,
       why: "Looks like this wasn't in memory yet.",
       fingerprint,
-      recognitionClues: buildRecognitionClues(decision)
+      recognitionClues: buildRecognitionClues(decision),
+      cognitiveError
     };
   }
 
@@ -233,7 +380,8 @@ function buildRepair(
       ),
       fingerprint,
       learnerAnswer,
-      followUp: "What is the immediate next step?"
+      followUp: "What is the immediate next step?",
+      cognitiveError
     };
   }
 
@@ -245,7 +393,8 @@ function buildRepair(
       why: withDecisionBoundary(buildPartialWhy(decision, userAnswer)),
       fingerprint,
       learnerAnswer,
-      followUp: clue ? `${clue} should make you think of what answer?` : undefined
+      followUp: clue ? `${clue} should make you think of what answer?` : undefined,
+      cognitiveError
     };
   }
 
@@ -256,7 +405,8 @@ function buildRepair(
       clue,
       why: "Your answer could mean more than one thing. Be more specific.",
       fingerprint,
-      learnerAnswer
+      learnerAnswer,
+      cognitiveError
     };
   }
 
@@ -268,7 +418,8 @@ function buildRepair(
       `You answered: ${learnerAnswer}. Correct answer: ${correctAnswer}. The discriminator is ${clue.toLowerCase()}.`
     ),
     fingerprint,
-    learnerAnswer
+    learnerAnswer,
+    cognitiveError
   };
 }
 
@@ -309,11 +460,14 @@ export function buildTutorContent(
   const buzzwords = [...new Set([diagnosis, ...tags])]
     .filter(Boolean)
     .slice(0, 5);
-  const repair = buildRepair(decision, userAnswer, evaluation);
+  const cognitiveError = classifyCognitiveError(decision, userAnswer, evaluation);
+  const repair = buildRepair(decision, userAnswer, evaluation, cognitiveError);
+  const mappedTeachMore = getMappedTeachMore(decision);
 
   return {
     repair,
     reasoningAnalysis,
+    cognitiveError,
     correctAnswer: decision.correctAnswer,
     whyIncorrect: {
       userAnswer: userAnswer.trim() || "Not answered yet",
@@ -321,10 +475,13 @@ export function buildTutorContent(
     },
     illnessScript: {
       typicalPatient: typicalPatientBySpecialty[decision.specialty] ?? "Patient matching the clinical pattern",
-      classicPresentation: buildClassicPresentation(decision),
+      classicPresentation: mappedTeachMore?.illnessScript ?? buildIllnessScript(decision),
       buzzwords
     },
     managementPearl: sentence(management),
+    recognitionPath: mappedTeachMore?.recognitionPath ?? buildRecognitionPath(decision),
+    nbmePivot: mappedTeachMore?.nbmePivot ?? buildNbmePivot(decision),
+    whyTempting: buildWhyTempting(decision, userAnswer, evaluation, mappedTeachMore?.whyTempting),
     comparison: buildComparison(decision),
     reinforcement: buildReinforcement(decision, acceptedAnswers, repair)
   };

@@ -46,6 +46,25 @@ export type ReasoningAnalysis = {
   adaptiveFocus: string;
 };
 
+export type CognitiveErrorType =
+  | "Missed Pivot Clue"
+  | "Premature Closure"
+  | "Illness Script Confusion"
+  | "Management Error"
+  | "Contraindication Error"
+  | "Timing Error"
+  | "Severity Error"
+  | "Distractor Attraction"
+  | "Overgeneralization"
+  | "Knowledge Gap";
+
+export type CognitiveError = {
+  type: CognitiveErrorType;
+  whyAttractive: string;
+  missedClue: string;
+  expertCorrection: string;
+};
+
 export type AnswerResult = {
   isCorrect: boolean;
   answerOutcome?: AnswerOutcome;
@@ -92,6 +111,7 @@ export type PracticeMode = "rapid" | "tutor";
 export type TutorContent = {
   repair: DecisionRepair;
   reasoningAnalysis: ReasoningAnalysis;
+  cognitiveError?: CognitiveError;
   correctAnswer: string;
   whyIncorrect: {
     userAnswer: string;
@@ -103,6 +123,9 @@ export type TutorContent = {
     buzzwords: string[];
   };
   managementPearl: string;
+  recognitionPath?: string;
+  nbmePivot?: string;
+  whyTempting?: string;
   comparison: {
     correctDiagnosis: string;
     competingDiagnosis: string;
@@ -136,6 +159,7 @@ export type DecisionRepair = {
   learnerAnswer?: string;
   followUp?: string;
   recognitionClues?: string[];
+  cognitiveError?: CognitiveError;
 };
 
 export type DashboardStats = {
