@@ -320,10 +320,9 @@ describe("decision repair", () => {
     const tutor = buildTutorContent(gestationalHypertensionDecision, "preeclampsia", evaluation);
     const comparisonText = JSON.stringify(tutor.comparison);
 
-    assert.equal(
-      tutor.illnessScript.classicPresentation,
-      "Gestational hypertension presents after 20 weeks with new hypertension but without proteinuria or severe features."
-    );
+    assert.match(tutor.illnessScript.classicPresentation, /Pregnant patient after 20 weeks/);
+    assert.match(tutor.illnessScript.classicPresentation, /new-onset hypertension but no proteinuria/);
+    assert.match(tutor.illnessScript.classicPresentation, /progression to preeclampsia can occur/);
     assert.equal(
       tutor.recognitionPath,
       ">=20 weeks gestation -> hypertension -> check proteinuria -> absent -> check severe features -> absent -> gestational hypertension"
@@ -390,7 +389,8 @@ describe("decision repair", () => {
     const tutor = buildTutorContent(carboprostContraindicationDecision, "methylergonovine", evaluation);
     const comparisonText = JSON.stringify(tutor.comparison);
 
-    assert.match(tutor.illnessScript.classicPresentation, /asthma makes it unsafe/i);
+    assert.match(tutor.illnessScript.classicPresentation, /asthma changes the medication choice/i);
+    assert.match(tutor.illnessScript.classicPresentation, /bronchospasm risk becomes the retrieval cue/i);
     assert.match(tutor.recognitionPath ?? "", /asthma present -> avoid carboprost/i);
     assert.match(tutor.nbmePivot ?? "", /Asthma immediately excludes carboprost/i);
     assert.match(tutor.whyTempting ?? "", /uterotonics feel interchangeable/i);

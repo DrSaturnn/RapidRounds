@@ -2,6 +2,7 @@ import { analyzeReasoning } from "@/lib/reasoning-engine";
 import { buildClinicalComparison } from "@/lib/clinical-comparison";
 import { classifyCognitiveError } from "@/lib/cognitive-error";
 import { findDecisionBoundaryRepair } from "@/lib/decision-boundary-repair";
+import { buildExpertIllnessScript } from "@/lib/expert-illness-script";
 import type { AnswerEvaluation, CognitiveError, DecisionRepair, TutorContent } from "@/types/practice";
 
 type TutorDecision = {
@@ -27,7 +28,6 @@ const comparisonMap: Record<
   string,
   {
     competingDiagnosis: string;
-    illnessScript?: string;
     recognitionPath?: string;
     nbmePivot?: string;
     whyTempting?: string;
@@ -36,7 +36,6 @@ const comparisonMap: Record<
 > = {
   "gestational hypertension": {
     competingDiagnosis: "Preeclampsia",
-    illnessScript: "Gestational hypertension presents after 20 weeks with new hypertension but without proteinuria or severe features.",
     recognitionPath:
       ">=20 weeks gestation -> hypertension -> check proteinuria -> absent -> check severe features -> absent -> gestational hypertension",
     nbmePivot:
@@ -66,8 +65,6 @@ const comparisonMap: Record<
   },
   "carboprost contraindication": {
     competingDiagnosis: "Methylergonovine contraindication",
-    illnessScript:
-      "Carboprost is a uterotonic used for postpartum hemorrhage, but asthma makes it unsafe because prostaglandin F2-alpha can trigger bronchospasm.",
     recognitionPath:
       "Postpartum hemorrhage -> need uterotonic -> asthma present -> avoid carboprost -> choose another uterotonic",
     nbmePivot: "Asthma immediately excludes carboprost because of bronchospasm risk.",
@@ -171,22 +168,6 @@ function getPivotClue(decision: TutorDecision) {
 
 function buildPivotClue(decision: TutorDecision) {
   return `${sentence(getPivotClue(decision))}. This is the clue that changes the decision.`;
-}
-
-function buildIllnessScript(decision: TutorDecision) {
-  const diagnosis = sentence(getDiagnosis(decision));
-  const pattern = sentence(getPattern(decision));
-  const pivot = sentence(getPivotClue(decision));
-
-  if (pattern && pivot) {
-    return `${diagnosis} is recognized by ${pattern.toLowerCase()} with ${pivot.toLowerCase()}.`;
-  }
-
-  if (pattern) {
-    return `${diagnosis} presents with ${pattern.toLowerCase()}.`;
-  }
-
-  return `${diagnosis} is the best fit for the defining findings in this vignette.`;
 }
 
 function buildRecognitionPath(decision: TutorDecision) {
@@ -439,7 +420,7 @@ export function buildTutorContent(
     },
     illnessScript: {
       typicalPatient: typicalPatientBySpecialty[decision.specialty] ?? "Patient matching the clinical pattern",
-      classicPresentation: mappedTeachMore?.illnessScript ?? buildIllnessScript(decision),
+      classicPresentation: buildExpertIllnessScript(decision),
       buzzwords
     },
     managementPearl: sentence(management),
