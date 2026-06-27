@@ -24,6 +24,22 @@ pnpm db:seed
 
 Set `OPENAI_API_KEY` in `.env` when you want AI-assisted free-response grading. Without it, RapidRounds uses deterministic accepted-answer matching.
 
+## Database
+
+RapidRounds uses PostgreSQL through Prisma. For production on Vercel with Neon, set `DATABASE_URL` to the Neon Postgres connection string, for example:
+
+```bash
+DATABASE_URL="postgresql://USER:PASSWORD@HOST/DATABASE?sslmode=require"
+```
+
+Do not use a SQLite `file:` URL in production. After changing `DATABASE_URL`, run:
+
+```bash
+pnpm prisma generate
+pnpm prisma db push
+pnpm prisma db seed
+```
+
 ## Run Locally
 
 ```bash

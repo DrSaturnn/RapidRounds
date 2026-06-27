@@ -3,6 +3,8 @@ import { LinkButton } from "@/components/Button";
 import { Metric } from "@/components/Metric";
 import { getDashboardStats } from "@/lib/stats";
 
+export const dynamic = "force-dynamic";
+
 export default async function DashboardPage() {
   const stats = await getDashboardStats();
 
