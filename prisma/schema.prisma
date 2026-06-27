@@ -3,6 +3,7 @@ generator client {
 }
 
 datasource db {
+  // Neon/Vercel production uses PostgreSQL; do not use a SQLite file: URL here.
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }

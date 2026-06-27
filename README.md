@@ -26,7 +26,7 @@ Set `OPENAI_API_KEY` in `.env` when you want AI-assisted free-response grading. 
 
 ## Database
 
-RapidRounds uses PostgreSQL through Prisma. For production on Vercel with Neon, set `DATABASE_URL` to the Neon Postgres connection string, for example:
+RapidRounds uses PostgreSQL through Prisma. For production on Vercel with Neon, set `DATABASE_URL` to the Neon pooled Postgres connection string, for example:
 
 ```bash
 DATABASE_URL="postgresql://USER:PASSWORD@HOST/DATABASE?sslmode=require"

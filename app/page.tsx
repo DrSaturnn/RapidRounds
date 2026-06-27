@@ -3,6 +3,7 @@ import { LinkButton } from "@/components/Button";
 import { Metric } from "@/components/Metric";
 import { getDashboardStats } from "@/lib/stats";
 
+// Dashboard reads Prisma at request time; keep it out of static prerender.
 export const dynamic = "force-dynamic";
 
 export default async function DashboardPage() {

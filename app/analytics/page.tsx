@@ -2,6 +2,7 @@ import { EmptyState } from "@/components/EmptyState";
 import { Metric } from "@/components/Metric";
 import { formatResponseTime, getAnalyticsStats } from "@/lib/stats";
 
+// Analytics reads Prisma at request time; keep it out of static prerender.
 export const dynamic = "force-dynamic";
 
 export default async function AnalyticsPage() {
