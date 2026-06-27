@@ -3,8 +3,8 @@
 import { FormEvent } from "react";
 import { Button } from "@/components/Button";
 import { TeachingCard } from "@/components/TeachingCard";
-import { getConceptGraph } from "@/lib/concept-graph";
 import { getComparisonFeatureDisplayText } from "@/lib/display-language";
+import { getLearningTrajectory } from "@/lib/learning-trajectory";
 import type { TutorContent } from "@/types/practice";
 
 const inputGuardProps = {
@@ -27,11 +27,12 @@ export function TutorMode({
   reinforcementResult: boolean | null;
   setReinforcementAnswer: (answer: string) => void;
   submitReinforcementAnswer: () => void;
-  loadQuestion: () => void;
+  loadQuestion: (targetConcept?: string) => void;
 }) {
   const isUnknown = tutor.repair.style === "UNKNOWN";
-  const conceptGraph = getConceptGraph({
+  const learningTrajectory = getLearningTrajectory({
     correctAnswer: tutor.correctAnswer,
+    wasCorrect: tutor.repair.style === "CORRECT",
     comparisonConcept: tutor.comparison.competingDiagnosis,
     managementConcept: tutor.managementPearl
   });
@@ -103,7 +104,7 @@ export function TutorMode({
                   Check
                 </Button>
               ) : (
-                <Button type="button" onClick={loadQuestion}>
+                <Button type="button" onClick={() => loadQuestion()}>
                   Next
                 </Button>
               )}
@@ -116,7 +117,7 @@ export function TutorMode({
           </form>
         ) : (
           <div className="pt-1">
-            <Button type="button" onClick={loadQuestion}>
+            <Button type="button" onClick={() => loadQuestion()}>
               Next
             </Button>
           </div>
@@ -176,35 +177,62 @@ export function TutorMode({
       </TeachingCard>
 
       <div className="rr-card rr-card-section space-y-3">
-        <p className="rr-section-header">Related Concepts</p>
-        <div className="space-y-2 text-sm leading-6">
+        <p className="rr-section-header">Continue Learning</p>
+        <div className="space-y-3 text-sm leading-6">
           <p>
-            You just learned: <span className="font-semibold">{conceptGraph.primaryConcept}</span>
+            You just learned: <span className="font-semibold">{learningTrajectory.primaryConcept}</span>
           </p>
-          <ConceptChipGroup label="Frequently confused with" concepts={conceptGraph.relatedConcepts} />
-          <ConceptChipGroup label="Next concepts to strengthen" concepts={conceptGraph.managementConcepts} />
+          {learningTrajectory.recommendation ? (
+            <div className="rounded-md border border-rr-soft-line bg-rr-surface px-3 py-2">
+              <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
+                <div>
+                  <p className="font-medium">{learningTrajectory.recommendation.concept}</p>
+                  <p className="rr-meta">{learningTrajectory.recommendation.reason}</p>
+                </div>
+                <Button
+                  type="button"
+                  variant="secondary"
+                  onClick={() => loadQuestion(learningTrajectory.recommendation?.concept)}
+                >
+                  Start
+                </Button>
+              </div>
+            </div>
+          ) : null}
+          <LearningChoiceGroup
+            items={learningTrajectory.items.filter((item) => item.priority !== "recommended")}
+            loadQuestion={loadQuestion}
+          />
         </div>
       </div>
     </section>
   );
 }
 
-function ConceptChipGroup({ label, concepts }: { label: string; concepts: string[] }) {
-  if (concepts.length === 0) {
+function LearningChoiceGroup({
+  items,
+  loadQuestion
+}: {
+  items: Array<{ concept: string; reason: string }>;
+  loadQuestion: (targetConcept?: string) => void;
+}) {
+  if (items.length === 0) {
     return null;
   }
 
   return (
     <div className="space-y-1">
-      <p className="text-rr-muted">{label}</p>
+      <p className="text-rr-muted">Optional exploration</p>
       <div className="flex flex-wrap gap-2">
-        {concepts.map((concept) => (
+        {items.map((item) => (
           <button
-            key={concept}
+            key={item.concept}
             type="button"
             className="rr-chip"
+            title={item.reason}
+            onClick={() => loadQuestion(item.concept)}
           >
-            {concept}
+            {item.concept}
           </button>
         ))}
       </div>

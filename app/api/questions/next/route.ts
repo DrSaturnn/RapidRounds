@@ -1,19 +1,30 @@
 import { NextResponse } from "next/server";
 import { getNextClinicalDecision } from "@/database/clinical-decisions";
+import { getAdaptiveTargetConcept } from "@/lib/learning-trajectory";
 import { prisma } from "@/lib/prisma";
 import { toQuestionDto } from "@/lib/serializers";
 
-export async function GET() {
+export async function GET(request: Request) {
+  const requestedConcept = new URL(request.url).searchParams.get("concept")?.trim();
   const answered = await prisma.progress.findMany({
     where: { userId: "default" },
-    select: { questionId: true, clinicalDecisionId: true }
+    select: {
+      questionId: true,
+      clinicalDecisionId: true,
+      diagnosis: true,
+      answer: true,
+      isCorrect: true
+    },
+    orderBy: { createdAt: "desc" },
+    take: 20
   });
 
   const answeredDecisionIds = new Set(
     answered.map((row) => row.clinicalDecisionId).filter((id): id is string => Boolean(id))
   );
 
-  const decision = await getNextClinicalDecision([...answeredDecisionIds]);
+  const adaptiveTarget = requestedConcept || getAdaptiveTargetConcept(answered)?.concept;
+  const decision = await getNextClinicalDecision([...answeredDecisionIds], adaptiveTarget);
   if (decision) {
     return NextResponse.json({ question: decision });
   }

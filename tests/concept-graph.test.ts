@@ -55,14 +55,13 @@ describe("concept graph", () => {
     assert.ok(graph.managementConcepts.includes("Maternal stabilization"));
   });
 
-  it("renders related concept chips after Teach Me More", () => {
+  it("feeds the learning trajectory after Teach Me More", () => {
     const tutorMode = readFileSync("components/TutorMode.tsx", "utf8");
 
-    assert.match(tutorMode, /Related Concepts/);
+    assert.match(tutorMode, /Continue Learning/);
     assert.match(tutorMode, /You just learned/);
-    assert.match(tutorMode, /Frequently confused with/);
-    assert.match(tutorMode, /Next concepts to strengthen/);
-    assert.match(tutorMode, /ConceptChipGroup/);
+    assert.match(tutorMode, /Optional exploration/);
+    assert.match(tutorMode, /LearningChoiceGroup/);
   });
 
   it("does not change answer grading", () => {

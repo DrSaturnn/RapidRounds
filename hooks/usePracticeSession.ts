@@ -74,7 +74,7 @@ export function usePracticeSession() {
   const hasHydratedSession = useRef(false);
   const startedAt = useRef(Date.now());
 
-  const loadQuestion = useCallback(async () => {
+  const loadQuestion = useCallback(async (targetConcept?: string) => {
     setIsLoading(true);
     setError(null);
     setResult(null);
@@ -84,7 +84,8 @@ export function usePracticeSession() {
     setReinforcementAnswer("");
     setReinforcementResult(null);
 
-    const response = await fetch("/api/questions/next", { cache: "no-store" });
+    const query = targetConcept ? `?concept=${encodeURIComponent(targetConcept)}` : "";
+    const response = await fetch(`/api/questions/next${query}`, { cache: "no-store" });
     if (!response.ok) {
       setQuestion(null);
       setError("No questions found. Database may not be seeded.");
