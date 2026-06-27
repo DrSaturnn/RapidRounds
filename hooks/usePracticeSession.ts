@@ -32,7 +32,7 @@ export function usePracticeSession() {
     const response = await fetch("/api/questions/next", { cache: "no-store" });
     if (!response.ok) {
       setQuestion(null);
-      setError("No questions are available yet.");
+      setError("No questions found. Database may not be seeded.");
       setIsLoading(false);
       return;
     }
