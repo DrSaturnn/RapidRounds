@@ -1,4 +1,5 @@
 import { analyzeReasoning } from "@/lib/reasoning-engine";
+import { buildClinicalComparison } from "@/lib/clinical-comparison";
 import { classifyCognitiveError } from "@/lib/cognitive-error";
 import { findDecisionBoundaryRepair } from "@/lib/decision-boundary-repair";
 import type { AnswerEvaluation, CognitiveError, DecisionRepair, TutorContent } from "@/types/practice";
@@ -209,44 +210,7 @@ function buildNbmePivot(decision: TutorDecision) {
 }
 
 function buildComparison(decision: TutorDecision) {
-  const diagnosis = getDiagnosis(decision);
-  const key = diagnosis.toLowerCase();
-  const mapped = comparisonMap[key];
-
-  if (mapped) {
-    return {
-      correctDiagnosis: diagnosis,
-      competingDiagnosis: mapped.competingDiagnosis,
-      rows: mapped.rows
-    };
-  }
-
-  return {
-    correctDiagnosis: diagnosis,
-    competingDiagnosis: decision.commonTrap || "Closest competing decision",
-    rows: [
-      {
-        feature: "Typical pattern",
-        correct: getPattern(decision) || "Defined by its characteristic clinical pattern",
-        competing: decision.commonTrap ? `Requires findings that establish ${decision.commonTrap}` : "Defined by its own characteristic pattern"
-      },
-      {
-        feature: "Key support",
-        correct: getPivotClue(decision),
-        competing: decision.commonTrap ? `Look for findings specific to ${decision.commonTrap}` : "Look for its defining findings"
-      },
-      {
-        feature: "Management",
-        correct: getManagement(decision),
-        competing: decision.commonTrap ? `Treat according to ${decision.commonTrap} criteria` : "Treat according to its diagnosis-specific criteria"
-      },
-      {
-        feature: "Board pivot",
-        correct: decision.boardPearl,
-        competing: decision.commonTrap ? `Do not diagnose ${decision.commonTrap} without its required features` : "Use the finding that establishes the competing diagnosis"
-      }
-    ]
-  };
+  return buildClinicalComparison(decision);
 }
 
 function getMappedTeachMore(decision: TutorDecision) {
