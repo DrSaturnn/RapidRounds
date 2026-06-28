@@ -148,6 +148,7 @@ export function TutorMode({
   ].filter((step) => step.value.trim().length > 0);
   const compactReasoning = getCompactReasoning(tutor);
   const hasVignetteFindings = Boolean(tutor.vignetteFindings?.length);
+  const showComparisonInRightPanel = hasComparison;
   const hasTeachingContent = Boolean(
     (modules.retrieval && tutor.teachingPlan.retrieval) ||
     (modules.contraindication && tutor.teachingPlan.contraindication) ||
@@ -285,7 +286,7 @@ export function TutorMode({
               <p>{tutor.cognitiveError.expertCorrection}</p>
             </TeachingBlock>
           ) : null}
-          {hasComparison ? (
+          {hasComparison && !showComparisonInRightPanel ? (
             <TeachingBlock title="Don't confuse with" tone="comparison">
               <div className="mt-2 overflow-x-auto">
                 <table className="rr-table">
@@ -381,10 +382,66 @@ export function TutorMode({
       <div className="rr-post-answer-repair">{repairSurface}</div>
       <section className="rr-post-answer-depth" aria-label="Understand the pattern" data-rr-teaching-depth>
         <p className="rr-section-header rr-depth-heading">Understand the pattern</p>
+        <RightPanelExplanation tutor={tutor} showComparison={showComparisonInRightPanel} />
         {teachingSurface}
         <div className="rr-post-answer-next mt-4">{nextChallengeSurface}</div>
       </section>
     </section>
+  );
+}
+
+function RightPanelExplanation({ tutor, showComparison }: { tutor: TutorContent; showComparison: boolean }) {
+  const hasAlternative = Boolean(tutor.comparison.competingDiagnosis?.trim());
+
+  return (
+    <div className="rr-right-explanation-stack">
+      <section className="rr-right-explanation-block">
+        <h2>Why this is correct</h2>
+        <p>{tutor.repair.clueMeaning || tutor.repair.why}</p>
+      </section>
+      {hasAlternative ? (
+        <section className="rr-right-explanation-block">
+          <h2>Why others are wrong</h2>
+          <p>
+            <span>{tutor.comparison.competingDiagnosis}:</span>{" "}
+            {tutor.whyTempting ?? `the pivot clue points to ${tutor.repair.correctAnswer}, not this alternative.`}
+          </p>
+        </section>
+      ) : null}
+      {showComparison ? (
+        <section className="rr-right-explanation-block rr-separate-two">
+          <h2>Separate These Two</h2>
+          <div className="mt-2 overflow-x-auto">
+            <table className="rr-table">
+              <thead>
+                <tr>
+                  <th>Feature</th>
+                  <th>{tutor.comparison.correctDiagnosis}</th>
+                  <th>{tutor.comparison.competingDiagnosis}</th>
+                </tr>
+              </thead>
+              <tbody>
+                {tutor.comparison.rows.map((row) => (
+                  <tr key={row.feature}>
+                    <td className="font-medium">{getComparisonFeatureDisplayText(row.feature)}</td>
+                    <td>{row.correct}</td>
+                    <td>{row.competing}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </section>
+      ) : null}
+      <section className="rr-right-explanation-block">
+        <h2>Reasoning diagnosis</h2>
+        <p>
+          {tutor.cognitiveError
+            ? tutor.cognitiveError.expertCorrection
+            : `You matched the key clue to ${tutor.repair.correctAnswer}. Keep anchoring the decision to the pivot clue.`}
+        </p>
+      </section>
+    </div>
   );
 }
 

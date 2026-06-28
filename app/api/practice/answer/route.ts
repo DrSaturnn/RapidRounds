@@ -212,7 +212,7 @@ export async function POST(request: NextRequest) {
       evaluation,
       boardPearl: decision.boardPearl,
       explanation: decision.pivotClue,
-      tutor: isCorrect ? undefined : tutor
+      tutor
     });
   }
 
@@ -340,6 +340,6 @@ export async function POST(request: NextRequest) {
     evaluation,
     boardPearl: question.boardPearl,
     explanation: question.explanation,
-    tutor: isCorrect ? undefined : tutor
+    tutor
   });
 }

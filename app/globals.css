@@ -309,6 +309,30 @@ a {
   }
 }
 
+@keyframes rrPanelUnfold {
+  from {
+    opacity: 0;
+    clip-path: inset(0 0 0 18%);
+    transform: translateX(10px);
+  }
+  to {
+    opacity: 1;
+    clip-path: inset(0 0 0 0);
+    transform: translateX(0);
+  }
+}
+
+@keyframes rrClueReveal {
+  from {
+    opacity: 0;
+    transform: translateX(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
 .app-shell,
 .global-header,
 .app-main {
@@ -351,6 +375,56 @@ body:has(.practice-focus) .app-main {
 
   .rr-question-stem {
     @apply text-[1.85rem] font-semibold leading-[1.34] tracking-normal text-rr-foreground sm:text-[2.35rem] sm:leading-[1.32];
+  }
+
+  .rr-question-stem-annotated {
+    @apply leading-[1.6] sm:leading-[1.55];
+  }
+
+  .rr-vignette-annotation {
+    @apply relative inline-flex items-baseline gap-2 whitespace-normal rounded-md align-baseline;
+    animation: rrClueReveal 240ms var(--rr-ease-standard) both;
+    animation-delay: calc(var(--rr-annotation-index, 0) * 70ms);
+  }
+
+  .rr-vignette-highlight {
+    @apply rounded-md px-1;
+    background: var(--rr-color-clue-tint);
+    box-shadow: 0 0 0 1px var(--rr-color-clue-border);
+  }
+
+  .rr-vignette-label {
+    @apply hidden text-sm font-semibold italic leading-6 sm:inline-flex sm:items-center sm:gap-1;
+    color: var(--rr-color-clue);
+  }
+
+  .rr-vignette-annotation-supporting .rr-vignette-highlight {
+    background: var(--rr-color-recognition-tint);
+    box-shadow: 0 0 0 1px var(--rr-color-recognition-border);
+  }
+
+  .rr-vignette-annotation-supporting .rr-vignette-label {
+    color: var(--rr-color-recognition);
+  }
+
+  .rr-vignette-annotation-noise .rr-vignette-highlight {
+    background: var(--rr-color-repair-tint);
+    box-shadow: 0 0 0 1px var(--rr-color-repair-border);
+  }
+
+  .rr-vignette-annotation-noise .rr-vignette-label {
+    color: var(--rr-color-repair);
+  }
+
+  .rr-vignette-annotation-context .rr-vignette-highlight,
+  .rr-vignette-annotation-neutral .rr-vignette-highlight {
+    background: var(--rr-color-surface);
+    box-shadow: 0 0 0 1px var(--rr-color-border);
+  }
+
+  .rr-vignette-annotation-context .rr-vignette-label,
+  .rr-vignette-annotation-neutral .rr-vignette-label {
+    color: var(--rr-color-muted);
   }
 
   .rr-section-title {
@@ -805,6 +879,10 @@ body:has(.practice-focus) .app-main {
     min-width: 0;
   }
 
+  .rr-post-answer-depth {
+    animation: rrPanelUnfold 320ms var(--rr-ease-standard) both;
+  }
+
   .rr-post-answer-repair .rr-pivot-panel {
     box-shadow: 0 10px 24px color-mix(in srgb, var(--rr-color-clue) 10%, transparent);
   }
@@ -949,6 +1027,28 @@ body:has(.practice-focus) .app-main {
 
   .rr-explanation-notebook .rr-teaching-card > div {
     @apply px-4 pb-4;
+  }
+
+  .rr-right-explanation-stack {
+    @apply mb-4 grid gap-3;
+  }
+
+  .rr-right-explanation-block {
+    @apply rounded-2xl border border-rr-border bg-rr-surface px-4 py-4 text-sm leading-6 text-rr-foreground;
+  }
+
+  .rr-right-explanation-block h2 {
+    @apply mb-2 text-base font-semibold leading-7 text-rr-foreground;
+  }
+
+  .rr-right-explanation-block p span {
+    @apply font-semibold;
+    color: var(--rr-color-accent);
+  }
+
+  .rr-separate-two {
+    animation: rrPanelUnfold 360ms var(--rr-ease-standard) both;
+    animation-delay: 90ms;
   }
 
   .rr-callout-pivot {
@@ -1120,6 +1220,16 @@ body:has(.practice-focus) .app-main {
 
   .rr-bottom-action {
     @apply inline-flex min-h-11 items-center justify-center rounded-lg border border-transparent px-4 text-sm font-semibold text-rr-accent transition-colors hover:border-rr-border hover:bg-rr-surface;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .rr-post-answer-depth,
+    .rr-separate-two,
+    .rr-vignette-annotation {
+      animation: none;
+      clip-path: none;
+      transform: none;
+    }
   }
 }
 

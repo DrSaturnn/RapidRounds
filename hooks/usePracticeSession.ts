@@ -166,7 +166,7 @@ export function usePracticeSession() {
     const data = (await response.json()) as AnswerResult;
     setResult(data);
     setAnsweredQuestionIds((ids) => unique([...ids, question.id]));
-    if (!data.isCorrect && data.tutor) {
+    if (data.tutor) {
       setTutor(data.tutor);
       setMode("tutor");
     }

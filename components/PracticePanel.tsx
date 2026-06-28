@@ -1,6 +1,6 @@
 "use client";
 
-import { FormEvent, KeyboardEvent, useEffect, useMemo, useRef, useState } from "react";
+import { CSSProperties, FormEvent, KeyboardEvent, ReactNode, useEffect, useMemo, useRef, useState } from "react";
 import { Button } from "@/components/Button";
 import { EmptyState } from "@/components/EmptyState";
 import { QuestionMeta } from "@/components/QuestionMeta";
@@ -8,6 +8,7 @@ import { TutorMode } from "@/components/TutorMode";
 import { getRapidRoundsVariantDisplayText } from "@/lib/rapidrounds-case";
 import { usePracticeSession } from "@/hooks/usePracticeSession";
 import { getClinicalPromptText, getDecisionQuestionText } from "@/lib/decision-question-text";
+import type { VignetteFindingAnnotation } from "@/types/practice";
 
 type PracticeTool = "notes" | "settings" | null;
 type PracticeSkin = "modern-academic" | "warm-notebook" | "dark-clinical" | "editorial";
@@ -281,11 +282,13 @@ export function PracticePanel() {
   const progressDots = Array.from({ length: 18 }, (_, index) => index < Math.round((progressPercent / 100) * 18));
   const topicLabel = question.canonicalProblem ?? question.system ?? question.topic;
   const variantLabel = getRapidRoundsVariantDisplayText(question.variantType);
+  const isExplanationState = mode === "tutor" && Boolean(tutor);
+  const visibleVignetteFindings = isExplanationState ? tutor?.vignetteFindings ?? [] : [];
 
   const showTeaching = () => {
     setActiveTool(null);
-    if (mode !== "tutor") {
-      void requestTeaching();
+    if (!isExplanationState) {
+      answerInputRef.current?.focus();
       return;
     }
 
@@ -322,7 +325,7 @@ export function PracticePanel() {
             className="rr-aster-button"
             aria-label="Ask Aster to explain this decision"
             onClick={showTeaching}
-            disabled={isTeaching}
+            disabled={isTeaching || !isExplanationState}
           >
             ✧ Aster
           </button>
@@ -343,10 +346,12 @@ export function PracticePanel() {
             <span aria-hidden="true">▷</span>
             Continue
           </button>
-          <button type="button" className="rr-tool-button" onClick={showTeaching} disabled={isTeaching}>
-            <span aria-hidden="true">◇</span>
-            Teach Me More
-          </button>
+          {isExplanationState ? (
+            <button type="button" className="rr-tool-button" onClick={showTeaching} disabled={isTeaching}>
+              <span aria-hidden="true">◇</span>
+              Teach Me More
+            </button>
+          ) : null}
           <button
             type="button"
             className={`rr-tool-button ${activeTool === "notes" ? "rr-tool-button-active" : ""}`}
@@ -373,12 +378,10 @@ export function PracticePanel() {
           <section className="rr-card rr-question-card space-y-7 px-5 py-6 motion-safe:animate-[fadeIn_180ms_var(--rr-ease-standard)] sm:space-y-8 sm:px-7 sm:py-8">
             <div className="space-y-5 sm:space-y-6">
               <div className="flex flex-wrap items-center gap-2">
-                <span className="rr-badge rr-badge-learning">{mode === "tutor" ? "Explanation" : "Question"}</span>
+                <span className="rr-badge rr-badge-learning">{isExplanationState ? "Explanation" : "Question"}</span>
                 <span className="rr-meta">Think through the vignette first.</span>
               </div>
-              <h1 className="rr-question-stem">
-                {clinicalPrompt}
-              </h1>
+              <AnnotatedClinicalPrompt prompt={clinicalPrompt} findings={visibleVignetteFindings} />
               <p className="text-lg font-medium leading-7 text-rr-foreground sm:text-xl">
                 {decisionQuestion}
               </p>
@@ -388,7 +391,7 @@ export function PracticePanel() {
               <label className="sr-only" htmlFor="answer">
                 Answer
               </label>
-              <div className="grid gap-3 sm:grid-cols-[1fr_auto_auto]">
+              <div className="grid gap-3 sm:grid-cols-[1fr_auto]">
                 <input
                   ref={answerInputRef}
                   id="answer"
@@ -413,15 +416,6 @@ export function PracticePanel() {
                     {isSubmitting ? "Checking" : "Submit"}
                   </Button>
                 ) : null}
-                <Button
-                  type="button"
-                  variant="secondary"
-                  className="px-4"
-                  onClick={() => void requestTeaching()}
-                  disabled={isTeaching || mode === "tutor"}
-                >
-                  {isTeaching ? "Preparing" : "Teach me why"}
-                </Button>
               </div>
               <div className="flex min-h-11 flex-wrap items-center gap-3 pt-1">
                 {result?.isCorrect ? (
@@ -490,7 +484,7 @@ export function PracticePanel() {
           </section>
         ) : null}
 
-        {mode === "tutor" && tutor ? (
+        {isExplanationState && tutor ? (
           <div className="mt-7 motion-safe:animate-[whiteboardOpen_220ms_var(--rr-ease-standard)] sm:mt-8">
             <TutorMode
               tutor={tutor}
@@ -503,6 +497,7 @@ export function PracticePanel() {
           </div>
         ) : null}
 
+        {isExplanationState ? (
         <nav className="rr-bottom-nav mt-5" aria-label="Practice navigation">
           <button type="button" className="rr-bottom-action" onClick={() => setActiveTool("notes")}>
             □ Add to Notes
@@ -511,6 +506,7 @@ export function PracticePanel() {
             Next Case →
           </Button>
         </nav>
+        ) : null}
         </main>
       </div>
       {showEndSessionConfirm ? (
@@ -549,4 +545,81 @@ export function PracticePanel() {
       ) : null}
     </div>
   );
+}
+
+function getFindingRoleLabel(role: VignetteFindingAnnotation["role"]) {
+  switch (role) {
+    case "pivot_clue":
+      return "Pivot clue";
+    case "supporting":
+      return "Supporting clue";
+    case "noise":
+      return "Distractor";
+    case "context":
+      return "Context";
+    case "neutral":
+      return "Neutral";
+  }
+}
+
+function getOrderedPromptFindings(prompt: string, findings: VignetteFindingAnnotation[]) {
+  return findings
+    .map((finding, originalIndex) => ({
+      finding,
+      originalIndex,
+      index: prompt.toLowerCase().indexOf(finding.text.toLowerCase())
+    }))
+    .filter((entry) => entry.index >= 0)
+    .sort((left, right) => left.index - right.index || left.originalIndex - right.originalIndex)
+    .slice(0, 5);
+}
+
+function AnnotatedClinicalPrompt({
+  prompt,
+  findings
+}: {
+  prompt: string;
+  findings: VignetteFindingAnnotation[];
+}) {
+  const orderedFindings = getOrderedPromptFindings(prompt, findings);
+
+  if (orderedFindings.length === 0) {
+    return <h1 className="rr-question-stem">{prompt}</h1>;
+  }
+
+  const nodes: ReactNode[] = [];
+  let cursor = 0;
+
+  orderedFindings.forEach(({ finding, index }, annotationIndex) => {
+    if (index < cursor) {
+      return;
+    }
+
+    if (index > cursor) {
+      nodes.push(prompt.slice(cursor, index));
+    }
+
+    const end = index + finding.text.length;
+    const displayText = prompt.slice(index, end);
+    nodes.push(
+      <span
+        key={`${finding.role}-${finding.text}-${index}`}
+        className={`rr-vignette-annotation rr-vignette-annotation-${finding.role.replace("_", "-")}`}
+        style={{ "--rr-annotation-index": annotationIndex } as CSSProperties}
+      >
+        <span className="rr-vignette-highlight">{displayText}</span>
+        <span className="rr-vignette-label" aria-label={`${getFindingRoleLabel(finding.role)}: ${finding.explanation ?? finding.text}`}>
+          <span aria-hidden="true">←</span>
+          {getFindingRoleLabel(finding.role)}
+        </span>
+      </span>
+    );
+    cursor = end;
+  });
+
+  if (cursor < prompt.length) {
+    nodes.push(prompt.slice(cursor));
+  }
+
+  return <h1 className="rr-question-stem rr-question-stem-annotated">{nodes}</h1>;
 }
