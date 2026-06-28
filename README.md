@@ -1,13 +1,22 @@
 # RapidRounds
 
-RapidRounds is a rapid-fire retrieval trainer for USMLE Shelf and Step 2 CK. It emphasizes pattern recognition, illness scripts, clinical reasoning, and fast free-response recall.
+RapidRounds is an adaptive clinical reasoning engine for USMLE Shelf and Step 2 CK training. It uses free-response clinical decisions, semantic answer matching, Decision Repair, Teach Me More, and adaptive topic progression to help learners practice NBME-style reasoning rather than passively review a question bank.
+
+The canonical product and architecture authority is [docs/PROJECT_CONSTITUTION.md](docs/PROJECT_CONSTITUTION.md). Future RFCs and implementation work should follow that document unless they explicitly propose a constitutional amendment.
+
+## Documentation Hierarchy
+
+- [README.md](README.md) - project entry point, setup, and orientation.
+- [docs/PROJECT_CONSTITUTION.md](docs/PROJECT_CONSTITUTION.md) - durable product laws, educational philosophy, and non-negotiable design principles.
+- [docs/RAPIDROUNDS_ARCHITECTURE.md](docs/RAPIDROUNDS_ARCHITECTURE.md) - current system architecture overview.
+- [rfc/](rfc/) - individual feature and design proposals.
 
 ## Folder Structure
 
 - `app/` - Next.js App Router pages and API routes.
-- `components/` - Minimal reusable UI components.
+- `components/` - Practice, tutor, repair, and learning UI components.
 - `hooks/` - Client-side practice session state.
-- `lib/` - Prisma client, scoring logic, analytics helpers, and OpenAI client setup.
+- `lib/` - Prisma client, answer evaluation, tutor content, curriculum graph, adaptive learning helpers, analytics helpers, and OpenAI client setup.
 - `database/` - Database query helpers for app-level data access.
 - `prisma/` - Prisma schema and seed data.
 - `types/` - Shared TypeScript DTOs.
@@ -54,6 +63,6 @@ Good next features:
 
 - Add user authentication and per-user stats.
 - Expand question authoring with CSV import or an admin editor.
-- Add specialty/topic filters in Practice Mode.
+- Expand curriculum graph coverage and shelf-filtered views.
 - Store OpenAI grading rationales for review and auditing.
-- Add spaced repetition scheduling once enough progress data exists.
+- Add deeper spaced repetition scheduling once enough progress data exists.
