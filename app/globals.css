@@ -919,8 +919,12 @@ body:has(.practice-focus) .app-main {
     @apply flex min-w-0 flex-wrap items-center gap-3 text-sm leading-6 text-rr-foreground;
   }
 
+  .rr-subject-anchor {
+    @apply relative;
+  }
+
   .rr-subject-pill {
-    @apply inline-flex min-h-10 items-center border border-rr-border bg-rr-elevated px-4 font-semibold;
+    @apply inline-flex min-h-10 items-center gap-2 border border-rr-border bg-rr-elevated px-4 font-semibold transition-colors hover:border-rr-accent hover:text-rr-accent;
     border-radius: var(--rr-radius-md);
     box-shadow: var(--rr-shadow-sm), var(--rr-card-edge);
   }
@@ -988,6 +992,11 @@ body:has(.practice-focus) .app-main {
     @apply flex items-center justify-end gap-3;
   }
 
+  .rr-menu-anchor,
+  .rr-tool-popover-anchor {
+    @apply relative;
+  }
+
   .rr-aster-button,
   .rr-menu-button {
     @apply inline-flex min-h-10 items-center justify-center rounded-lg border border-rr-border bg-rr-elevated px-3 text-sm font-semibold text-rr-foreground transition-colors hover:border-rr-accent hover:text-rr-accent disabled:cursor-not-allowed disabled:text-rr-muted;
@@ -1027,6 +1036,57 @@ body:has(.practice-focus) .app-main {
     color: var(--rr-color-accent);
   }
 
+  .rr-popover {
+    @apply fixed right-4 top-[4.75rem] z-50 w-[min(22rem,calc(100vw-2rem))] border border-rr-border bg-rr-elevated p-4;
+    border-radius: var(--rr-radius-lg);
+    box-shadow: var(--rr-shadow-lg), var(--rr-card-edge);
+  }
+
+  .rr-subject-popover {
+    @apply left-4 right-auto w-[min(46rem,calc(100vw-2rem))];
+  }
+
+  @media (min-width: 1024px) {
+    .rr-subject-anchor .rr-popover {
+      @apply absolute left-0 right-auto top-[calc(100%+0.75rem)];
+    }
+
+    .rr-menu-anchor .rr-popover {
+      @apply absolute right-0 top-[calc(100%+0.75rem)];
+    }
+
+    .rr-tool-popover-anchor .rr-popover {
+      @apply absolute left-[calc(100%+0.75rem)] right-auto top-0;
+    }
+  }
+
+  .rr-skin-list {
+    @apply grid gap-2;
+  }
+
+  .rr-subject-grid {
+    @apply grid gap-2 sm:grid-cols-2 lg:grid-cols-4;
+  }
+
+  .rr-subject-option {
+    @apply grid min-h-20 gap-1 border border-rr-border bg-rr-surface px-3 py-3 text-left text-sm font-semibold text-rr-foreground transition-colors hover:border-rr-accent hover:text-rr-accent disabled:cursor-not-allowed disabled:opacity-55 disabled:hover:border-rr-border disabled:hover:text-rr-foreground;
+    border-radius: var(--rr-radius-md);
+  }
+
+  .rr-subject-option small {
+    @apply text-xs font-normal leading-5 text-rr-muted;
+  }
+
+  .rr-subject-option-active {
+    border-color: var(--rr-color-accent-border);
+    background: var(--rr-color-accent-tint);
+    color: var(--rr-color-accent);
+  }
+
+  .rr-icon-button {
+    @apply inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-lg border border-rr-border bg-rr-surface text-lg font-semibold leading-none text-rr-muted transition-colors hover:border-rr-accent hover:text-rr-accent;
+  }
+
   .rr-tool-panel {
     @apply border border-rr-border bg-rr-elevated p-5;
     border-radius: var(--rr-radius-lg);
@@ -1054,6 +1114,18 @@ body:has(.practice-focus) .app-main {
 
   .rr-notes-input {
     @apply min-h-28 w-full rounded-lg border border-rr-border bg-rr-surface px-4 py-3 text-sm leading-6 text-rr-foreground outline-none transition-colors placeholder:text-rr-muted focus:border-rr-accent focus-visible:ring-2 focus-visible:ring-rr-focus focus-visible:ring-offset-2;
+  }
+
+  .rr-aster-companion {
+    @apply fixed bottom-4 right-4 z-50 w-[min(24rem,calc(100vw-2rem))] border border-rr-border bg-rr-elevated p-5;
+    border-radius: var(--rr-radius-xl);
+    box-shadow: var(--rr-shadow-lg), var(--rr-card-edge);
+  }
+
+  @media (min-width: 1024px) {
+    .rr-aster-companion {
+      @apply bottom-auto top-20;
+    }
   }
 
   .rr-practice-progress {

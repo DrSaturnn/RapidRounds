@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { getNextClinicalDecision } from "@/database/clinical-decisions";
+import { getClinicalDecisionSubjectCounts, getNextClinicalDecision } from "@/database/clinical-decisions";
 import { getAdaptiveDecisionRecommendation } from "@/lib/adaptive-decision";
 import { normalizeLearnerId } from "@/lib/learner-id";
 import { getAdaptiveTargetConcept } from "@/lib/learning-trajectory";
@@ -9,8 +9,9 @@ import { toQuestionDto } from "@/lib/serializers";
 export async function GET(request: Request) {
   const searchParams = new URL(request.url).searchParams;
   const requestedConcept = searchParams.get("concept")?.trim();
+  const requestedSubject = searchParams.get("subject")?.trim();
   const learnerId = normalizeLearnerId(searchParams.get("learnerId"));
-  const [answered, completed, adaptiveRecommendation] = await Promise.all([
+  const [answered, completed, adaptiveRecommendation, subjectCounts] = await Promise.all([
     learnerId
       ? prisma.progress.findMany({
           where: { userId: learnerId },
@@ -34,7 +35,8 @@ export async function GET(request: Request) {
           }
         })
       : Promise.resolve([]),
-    learnerId ? getAdaptiveDecisionRecommendation(learnerId, requestedConcept) : Promise.resolve(undefined)
+    learnerId ? getAdaptiveDecisionRecommendation(learnerId, requestedConcept, requestedSubject) : Promise.resolve(undefined),
+    getClinicalDecisionSubjectCounts()
   ]);
 
   const answeredDecisionIds = new Set(
@@ -44,6 +46,7 @@ export async function GET(request: Request) {
   if (adaptiveRecommendation?.decision) {
     return NextResponse.json({
       question: adaptiveRecommendation.decision,
+      subjectCounts,
       adaptive: {
         actionType: adaptiveRecommendation.actionType,
         explanation: adaptiveRecommendation.explanation
@@ -52,9 +55,9 @@ export async function GET(request: Request) {
   }
 
   const adaptiveTarget = requestedConcept || getAdaptiveTargetConcept(answered)?.concept;
-  const decision = await getNextClinicalDecision([...answeredDecisionIds], adaptiveTarget);
+  const decision = await getNextClinicalDecision([...answeredDecisionIds], adaptiveTarget, requestedSubject);
   if (decision) {
-    return NextResponse.json({ question: decision });
+    return NextResponse.json({ question: decision, subjectCounts });
   }
 
   const answeredQuestionIds = new Set(
@@ -62,23 +65,27 @@ export async function GET(request: Request) {
   );
 
   let questions = await prisma.question.findMany({
-    where: answeredQuestionIds.size > 0 ? { id: { notIn: [...answeredQuestionIds] } } : undefined,
+    where: {
+      ...(requestedSubject ? { specialty: requestedSubject } : {}),
+      ...(answeredQuestionIds.size > 0 ? { id: { notIn: [...answeredQuestionIds] } } : {})
+    },
     include: { topic: true },
     take: 25
   });
 
   if (questions.length === 0) {
     questions = await prisma.question.findMany({
+      where: requestedSubject ? { specialty: requestedSubject } : undefined,
       include: { topic: true },
       take: 25
     });
   }
 
   if (questions.length === 0) {
-    return NextResponse.json({ question: null }, { status: 404 });
+    return NextResponse.json({ question: null, subjectCounts }, { status: 404 });
   }
 
   const question = questions[Math.floor(Math.random() * questions.length)];
 
-  return NextResponse.json({ question: toQuestionDto(question) });
+  return NextResponse.json({ question: toQuestionDto(question), subjectCounts });
 }

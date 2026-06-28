@@ -175,4 +175,58 @@ describe("design system", () => {
       ".rr-vignette-annotation-context"
     ].forEach((className) => assert.match(css, new RegExp(className.replace(".", "\\."))));
   });
+
+  it("keeps settings and Aster controls out of the main content flow", () => {
+    const practicePanel = readFileSync("components/PracticePanel.tsx", "utf8");
+    const css = readFileSync("app/globals.css", "utf8");
+
+    assert.match(practicePanel, /settingsAnchor/);
+    assert.match(practicePanel, /renderThemePopover/);
+    assert.match(practicePanel, /rr-menu-anchor/);
+    assert.match(practicePanel, /rr-tool-popover-anchor/);
+    assert.doesNotMatch(practicePanel, /activeTool === "settings"/);
+    assert.doesNotMatch(practicePanel, /setActiveTool\(.*settings/);
+
+    assert.match(practicePanel, /AsterCompanion/);
+    assert.match(practicePanel, /Case-aware chat is coming soon/);
+    assert.match(practicePanel, /onClick=\{toggleAster\}/);
+    assert.doesNotMatch(practicePanel, /onClick=\{showTeaching\}\\s*>\\s*✧ Aster/);
+
+    assert.match(css, /\.rr-popover/);
+    assert.match(css, /\.rr-aster-companion/);
+  });
+
+  it("renders the shelf selector as an anchored real subject menu", () => {
+    const practicePanel = readFileSync("components/PracticePanel.tsx", "utf8");
+    const hook = readFileSync("hooks/usePracticeSession.ts", "utf8");
+    const route = readFileSync("app/api/questions/next/route.ts", "utf8");
+    const subjectsRoute = readFileSync("app/api/subjects/route.ts", "utf8");
+    const css = readFileSync("app/globals.css", "utf8");
+
+    [
+      "Internal Medicine",
+      "Surgery",
+      "Pediatrics",
+      "OB/GYN",
+      "Psychiatry",
+      "Family Medicine",
+      "Emergency Medicine",
+      "Neurology"
+    ].forEach((subject) => assert.match(practicePanel, new RegExp(subject.replace("/", "\\/"))));
+
+    assert.match(practicePanel, /isSubjectSelectorOpen/);
+    assert.match(practicePanel, /rr-subject-anchor/);
+    assert.match(practicePanel, /rr-subject-popover/);
+    assert.match(practicePanel, /Coming soon/);
+    assert.match(practicePanel, /disabled=\{!isAvailable\}/);
+    assert.match(practicePanel, /selectSubject\(subject\)/);
+    assert.match(hook, /rapidrounds\.activeSubject\.v1/);
+    assert.match(hook, /params\.set\("subject", requestedSubject\)/);
+    assert.match(route, /searchParams\.get\("subject"\)/);
+    assert.match(route, /getClinicalDecisionSubjectCounts/);
+    assert.match(subjectsRoute, /getClinicalDecisionSubjectCounts/);
+    assert.match(css, /\.rr-subject-popover/);
+    assert.match(css, /\.rr-subject-grid/);
+    assert.match(css, /\.rr-subject-option/);
+  });
 });

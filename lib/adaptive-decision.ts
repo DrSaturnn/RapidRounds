@@ -241,11 +241,13 @@ export function selectAdaptiveDecision(
 
 export async function getAdaptiveDecisionRecommendation(
   learnerId: string,
-  requestedConcept?: string
+  requestedConcept?: string,
+  requestedSubject?: string
 ): Promise<AdaptiveDecisionRecommendation> {
   const [learnerState, decisions] = await Promise.all([
     getLearnerState(learnerId),
     prisma.clinicalDecision.findMany({
+      where: requestedSubject ? { specialty: requestedSubject } : undefined,
       orderBy: [{ difficulty: "asc" }, { createdAt: "asc" }],
       take: 250
     })

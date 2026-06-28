@@ -6,10 +6,27 @@ export async function getClinicalDecisionCount() {
   return prisma.clinicalDecision.count();
 }
 
-function searchWhere(concept: string, excludedIds: string[]) {
+export async function getClinicalDecisionSubjectCounts() {
+  const counts = await prisma.clinicalDecision.groupBy({
+    by: ["specialty"],
+    _count: { _all: true }
+  });
+
+  return counts.map((item) => ({
+    subject: item.specialty,
+    count: item._count._all
+  }));
+}
+
+function subjectWhere(subject?: string) {
+  return subject ? { specialty: subject } : {};
+}
+
+function searchWhere(concept: string, excludedIds: string[], subject?: string) {
   const terms = getConceptSearchTerms(concept);
 
   return {
+    ...subjectWhere(subject),
     ...(excludedIds.length > 0 ? { id: { notIn: excludedIds } } : {}),
     OR: terms.flatMap((term) => [
       { topic: { contains: term, mode: "insensitive" as const } },
@@ -20,10 +37,10 @@ function searchWhere(concept: string, excludedIds: string[]) {
   };
 }
 
-export async function getNextClinicalDecision(excludedIds: string[], targetConcept?: string) {
+export async function getNextClinicalDecision(excludedIds: string[], targetConcept?: string, subject?: string) {
   let decisions = targetConcept
     ? await prisma.clinicalDecision.findMany({
-        where: searchWhere(targetConcept, excludedIds),
+        where: searchWhere(targetConcept, excludedIds, subject),
         orderBy: [{ difficulty: "asc" }, { createdAt: "asc" }],
         take: 8
       })
@@ -31,7 +48,10 @@ export async function getNextClinicalDecision(excludedIds: string[], targetConce
 
   if (decisions.length === 0) {
     decisions = await prisma.clinicalDecision.findMany({
-      where: excludedIds.length > 0 ? { id: { notIn: excludedIds } } : undefined,
+      where: {
+        ...subjectWhere(subject),
+        ...(excludedIds.length > 0 ? { id: { notIn: excludedIds } } : {})
+      },
       orderBy: [{ difficulty: "asc" }, { createdAt: "asc" }],
       take: 25
     });
@@ -39,7 +59,7 @@ export async function getNextClinicalDecision(excludedIds: string[], targetConce
 
   if (decisions.length === 0 && targetConcept) {
     decisions = await prisma.clinicalDecision.findMany({
-      where: searchWhere(targetConcept, []),
+      where: searchWhere(targetConcept, [], subject),
       orderBy: [{ difficulty: "asc" }, { createdAt: "asc" }],
       take: 8
     });
@@ -47,6 +67,7 @@ export async function getNextClinicalDecision(excludedIds: string[], targetConce
 
   if (decisions.length === 0) {
     decisions = await prisma.clinicalDecision.findMany({
+      where: subjectWhere(subject),
       orderBy: [{ difficulty: "asc" }, { createdAt: "asc" }],
       take: 25
     });

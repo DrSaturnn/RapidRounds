@@ -1,6 +1,6 @@
 "use client";
 
-import { CSSProperties, FormEvent, KeyboardEvent, ReactNode, useEffect, useMemo, useRef, useState } from "react";
+import { CSSProperties, FormEvent, KeyboardEvent, ReactNode, forwardRef, useEffect, useMemo, useRef, useState } from "react";
 import { Button } from "@/components/Button";
 import { EmptyState } from "@/components/EmptyState";
 import { QuestionMeta } from "@/components/QuestionMeta";
@@ -10,8 +10,20 @@ import { usePracticeSession } from "@/hooks/usePracticeSession";
 import { getClinicalPromptText, getDecisionQuestionText } from "@/lib/decision-question-text";
 import type { VignetteFindingAnnotation } from "@/types/practice";
 
-type PracticeTool = "notes" | "settings" | null;
+type PracticeTool = "notes" | null;
 type PracticeSkin = "modern-academic" | "warm-notebook" | "dark-clinical" | "editorial";
+type SettingsAnchor = "top" | "rail" | null;
+
+const requiredSubjects = [
+  "Internal Medicine",
+  "Surgery",
+  "Pediatrics",
+  "OB/GYN",
+  "Psychiatry",
+  "Family Medicine",
+  "Emergency Medicine",
+  "Neurology"
+];
 
 const SKIN_STORAGE_KEY = "rapidrounds.practiceSkin.v2";
 const practiceSkins: Array<{ value: PracticeSkin; label: string; description: string }> = [
@@ -55,17 +67,28 @@ export function PracticePanel() {
     isSubmitting,
     isTeaching,
     error,
+    activeSubject,
+    subjectSummaries,
     setAnswer,
     setReinforcementAnswer,
     submitAnswer,
     requestTeaching,
     submitReinforcementAnswer,
+    selectSubject,
     loadQuestion
   } = usePracticeSession();
   const answerInputRef = useRef<HTMLInputElement>(null);
   const stayButtonRef = useRef<HTMLButtonElement>(null);
+  const asterButtonRef = useRef<HTMLButtonElement>(null);
+  const asterPanelRef = useRef<HTMLDivElement>(null);
+  const topSettingsRef = useRef<HTMLDivElement>(null);
+  const railSettingsRef = useRef<HTMLDivElement>(null);
+  const subjectSelectorRef = useRef<HTMLDivElement>(null);
   const [showEndSessionConfirm, setShowEndSessionConfirm] = useState(false);
   const [activeTool, setActiveTool] = useState<PracticeTool>(null);
+  const [settingsAnchor, setSettingsAnchor] = useState<SettingsAnchor>(null);
+  const [isSubjectSelectorOpen, setIsSubjectSelectorOpen] = useState(false);
+  const [isAsterOpen, setIsAsterOpen] = useState(false);
   const [notes, setNotes] = useState("");
   const [skin, setSkin] = useState<PracticeSkin>("modern-academic");
 
@@ -177,16 +200,23 @@ export function PracticePanel() {
       if (event.key === "Escape") {
         event.preventDefault();
 
-        if (showEndSessionConfirm) {
+        if (isSubjectSelectorOpen || settingsAnchor || isAsterOpen || activeTool) {
+          setIsSubjectSelectorOpen(false);
+          setSettingsAnchor(null);
+          setIsAsterOpen(false);
+          setActiveTool(null);
+        } else if (showEndSessionConfirm) {
           setShowEndSessionConfirm(false);
-        } else {
-          setShowEndSessionConfirm(true);
         }
 
         return;
       }
 
       if (showEndSessionConfirm) {
+        return;
+      }
+
+      if (isSubjectSelectorOpen || settingsAnchor || isAsterOpen) {
         return;
       }
 
@@ -243,6 +273,9 @@ export function PracticePanel() {
     };
   }, [
     answer,
+    activeTool,
+    isSubjectSelectorOpen,
+    isAsterOpen,
     isLoading,
     isSubmitting,
     loadQuestion,
@@ -250,11 +283,51 @@ export function PracticePanel() {
     reinforcementAnswer,
     reinforcementResult,
     result,
+    settingsAnchor,
     showEndSessionConfirm,
     submitAnswer,
     submitReinforcementAnswer,
     tutor
   ]);
+
+  useEffect(() => {
+    if (!isSubjectSelectorOpen && !settingsAnchor && !isAsterOpen) {
+      return;
+    }
+
+    const onPointerDown = (event: PointerEvent) => {
+      const target = event.target;
+      if (!(target instanceof Node)) {
+        return;
+      }
+
+      if (isSubjectSelectorOpen && !subjectSelectorRef.current?.contains(target)) {
+        setIsSubjectSelectorOpen(false);
+      }
+
+      if (
+        settingsAnchor &&
+        !topSettingsRef.current?.contains(target) &&
+        !railSettingsRef.current?.contains(target)
+      ) {
+        setSettingsAnchor(null);
+      }
+
+      if (
+        isAsterOpen &&
+        !asterPanelRef.current?.contains(target) &&
+        !asterButtonRef.current?.contains(target)
+      ) {
+        setIsAsterOpen(false);
+      }
+    };
+
+    window.addEventListener("pointerdown", onPointerDown);
+
+    return () => {
+      window.removeEventListener("pointerdown", onPointerDown);
+    };
+  }, [isAsterOpen, isSubjectSelectorOpen, settingsAnchor]);
 
   if (isLoading) {
     return (
@@ -278,15 +351,24 @@ export function PracticePanel() {
   const learningGoal = question.topic ? `Learning goal: ${question.topic}` : "Learning goal: make the next clinical decision";
   const displayDecisionCount = Math.max(sessionDecisionCount, 1);
   const totalDecisionCount = 96;
-  const progressPercent = Math.min(100, Math.max(1, (displayDecisionCount / totalDecisionCount) * 100));
-  const progressDots = Array.from({ length: 18 }, (_, index) => index < Math.round((progressPercent / 100) * 18));
   const topicLabel = question.canonicalProblem ?? question.system ?? question.topic;
   const variantLabel = getRapidRoundsVariantDisplayText(question.variantType);
   const isExplanationState = mode === "tutor" && Boolean(tutor);
   const visibleVignetteFindings = isExplanationState ? tutor?.vignetteFindings ?? [] : [];
+  const subjectCountByName = new Map(subjectSummaries.map((item) => [item.subject, item.count]));
+  const subjectOptions = requiredSubjects.map((subject) => ({
+    subject,
+    count: subjectCountByName.get(subject) ?? 0
+  }));
+  const activeSubjectCount = subjectCountByName.get(activeSubject) ?? subjectCountByName.get(question.specialty) ?? 0;
+  const displayedTotalDecisionCount = activeSubjectCount || totalDecisionCount;
+  const progressPercent = Math.min(100, Math.max(1, (displayDecisionCount / displayedTotalDecisionCount) * 100));
+  const progressDots = Array.from({ length: 18 }, (_, index) => index < Math.round((progressPercent / 100) * 18));
 
   const showTeaching = () => {
     setActiveTool(null);
+    setIsSubjectSelectorOpen(false);
+    setSettingsAnchor(null);
     if (!isExplanationState) {
       answerInputRef.current?.focus();
       return;
@@ -297,6 +379,125 @@ export function PracticePanel() {
     });
   };
 
+  const handleContinue = () => {
+    setIsSubjectSelectorOpen(false);
+    setSettingsAnchor(null);
+    setIsAsterOpen(false);
+
+    if (isExplanationState || result?.isCorrect) {
+      void loadQuestion();
+      return;
+    }
+
+    answerInputRef.current?.focus();
+  };
+
+  const toggleSettings = (anchor: Exclude<SettingsAnchor, null>) => {
+    setActiveTool(null);
+    setIsAsterOpen(false);
+    setIsSubjectSelectorOpen(false);
+    setSettingsAnchor(settingsAnchor === anchor ? null : anchor);
+  };
+
+  const selectSkin = (nextSkin: PracticeSkin) => {
+    setSkin(nextSkin);
+    setSettingsAnchor(null);
+  };
+
+  const toggleAster = () => {
+    setActiveTool(null);
+    setSettingsAnchor(null);
+    setIsSubjectSelectorOpen(false);
+    setIsAsterOpen((current) => !current);
+  };
+
+  const toggleSubjectSelector = () => {
+    setActiveTool(null);
+    setSettingsAnchor(null);
+    setIsAsterOpen(false);
+    setIsSubjectSelectorOpen((current) => !current);
+  };
+
+  const handleSubjectSelect = (subject: string) => {
+    setIsSubjectSelectorOpen(false);
+    if (subject !== activeSubject) {
+      selectSubject(subject);
+    }
+  };
+
+  const renderSubjectSelector = () => (
+    <div className="rr-popover rr-subject-popover" role="dialog" aria-label="Choose shelf">
+      <div className="mb-3 flex items-start justify-between gap-3">
+        <div>
+          <p className="rr-section-header">Choose shelf</p>
+          <p className="rr-meta mt-1">Only shelves with real cases are selectable.</p>
+        </div>
+        <button type="button" className="rr-icon-button" aria-label="Close shelf selector" onClick={() => setIsSubjectSelectorOpen(false)}>
+          ×
+        </button>
+      </div>
+      <div className="rr-subject-grid">
+        {subjectOptions.map(({ subject, count }) => {
+          const isSelected = subject === activeSubject;
+          const isAvailable = count > 0;
+
+          return (
+            <button
+              key={subject}
+              type="button"
+              className={`rr-subject-option ${isSelected ? "rr-subject-option-active" : ""}`}
+              onClick={() => handleSubjectSelect(subject)}
+              disabled={!isAvailable}
+              aria-pressed={isSelected}
+            >
+              <span>{subject}</span>
+              <small>{isAvailable ? `${count} cases` : "Coming soon"}</small>
+            </button>
+          );
+        })}
+      </div>
+    </div>
+  );
+
+  const renderThemePopover = () => (
+    <div className="rr-popover rr-theme-popover" role="dialog" aria-label="Choose visual skin">
+      <div className="mb-3 flex items-start justify-between gap-3">
+        <div>
+          <p className="rr-section-header">Visual skin</p>
+          <p className="rr-meta mt-1">Applies immediately and stays on this device.</p>
+        </div>
+        <button type="button" className="rr-icon-button" aria-label="Close visual skin picker" onClick={() => setSettingsAnchor(null)}>
+          ×
+        </button>
+      </div>
+      <div className="rr-skin-list" role="radiogroup" aria-label="Choose visual skin">
+        {practiceSkins.map((practiceSkin) => (
+          <button
+            key={practiceSkin.value}
+            type="button"
+            className={`rr-skin-option ${skin === practiceSkin.value ? "rr-skin-option-active" : ""}`}
+            onClick={() => selectSkin(practiceSkin.value)}
+            role="radio"
+            aria-checked={skin === practiceSkin.value}
+          >
+            <span>{practiceSkin.label}</span>
+            <small>{practiceSkin.description}</small>
+          </button>
+        ))}
+      </div>
+      <button
+        type="button"
+        className="rr-session-link mt-4"
+        onClick={() => {
+          setSettingsAnchor(null);
+          setShowEndSessionConfirm(true);
+        }}
+      >
+        End session
+      </button>
+    </div>
+  );
+
   return (
     <div className="practice-focus rr-practice-shell min-h-screen" data-theme={skin}>
       <header className="rr-product-nav">
@@ -306,13 +507,25 @@ export function PracticePanel() {
           <span className="rr-brand-subtitle">with Aster</span>
         </div>
         <div className="rr-product-context" aria-label="Current training context">
-          <span className="rr-subject-pill">{question.specialty}</span>
+          <div className="rr-subject-anchor" ref={subjectSelectorRef}>
+            <button
+              type="button"
+              className="rr-subject-pill"
+              aria-label="Choose shelf"
+              aria-expanded={isSubjectSelectorOpen}
+              onClick={toggleSubjectSelector}
+            >
+              {activeSubject}
+              <span aria-hidden="true">⌄</span>
+            </button>
+            {isSubjectSelectorOpen ? renderSubjectSelector() : null}
+          </div>
           <span className="rr-context-divider" aria-hidden="true" />
           <span className="rr-context-topic">{topicLabel}</span>
           {variantLabel ? <span className="rr-context-variant">{variantLabel}</span> : null}
         </div>
-        <div className="rr-product-progress" aria-label={`Question ${displayDecisionCount} of ${totalDecisionCount}`}>
-          <span className="rr-progress-count">Q {displayDecisionCount} / {totalDecisionCount}</span>
+        <div className="rr-product-progress" aria-label={`Question ${displayDecisionCount} of ${displayedTotalDecisionCount}`}>
+          <span className="rr-progress-count">Q {displayDecisionCount} / {displayedTotalDecisionCount}</span>
           <span className="rr-progress-dots" aria-hidden="true">
             {progressDots.map((isActive, index) => (
               <span key={index} className={isActive ? "rr-progress-dot-active" : ""} />
@@ -321,28 +534,34 @@ export function PracticePanel() {
         </div>
         <div className="rr-product-actions" aria-label="Session tools">
           <button
+            ref={asterButtonRef}
             type="button"
             className="rr-aster-button"
             aria-label="Ask Aster to explain this decision"
-            onClick={showTeaching}
-            disabled={isTeaching || !isExplanationState}
+            aria-expanded={isAsterOpen}
+            aria-controls="aster-companion"
+            onClick={toggleAster}
           >
             ✧ Aster
           </button>
-          <button
-            type="button"
-            className="rr-menu-button"
-            aria-label="Open session settings"
-            onClick={() => setActiveTool(activeTool === "settings" ? null : "settings")}
-          >
-            ☰
-          </button>
+          <div className="rr-menu-anchor" ref={topSettingsRef}>
+            <button
+              type="button"
+              className="rr-menu-button"
+              aria-label="Open session settings"
+              aria-expanded={settingsAnchor === "top"}
+              onClick={() => toggleSettings("top")}
+            >
+              ☰
+            </button>
+            {settingsAnchor === "top" ? renderThemePopover() : null}
+          </div>
         </div>
       </header>
 
       <div className="rr-notebook-shell">
         <aside className="rr-tool-rail" aria-label="Practice tools">
-          <button type="button" className="rr-tool-button" onClick={() => void loadQuestion()}>
+          <button type="button" className="rr-tool-button" onClick={handleContinue}>
             <span aria-hidden="true">▷</span>
             Continue
           </button>
@@ -355,19 +574,28 @@ export function PracticePanel() {
           <button
             type="button"
             className={`rr-tool-button ${activeTool === "notes" ? "rr-tool-button-active" : ""}`}
-            onClick={() => setActiveTool(activeTool === "notes" ? null : "notes")}
+            onClick={() => {
+              setSettingsAnchor(null);
+              setIsAsterOpen(false);
+              setIsSubjectSelectorOpen(false);
+              setActiveTool(activeTool === "notes" ? null : "notes");
+            }}
           >
             <span aria-hidden="true">□</span>
             Notes
           </button>
-          <button
-            type="button"
-            className={`rr-tool-button ${activeTool === "settings" ? "rr-tool-button-active" : ""}`}
-            onClick={() => setActiveTool(activeTool === "settings" ? null : "settings")}
-          >
-            <span aria-hidden="true">☾</span>
-            Settings
-          </button>
+          <div className="rr-tool-popover-anchor" ref={railSettingsRef}>
+            <button
+              type="button"
+              className={`rr-tool-button w-full ${settingsAnchor === "rail" ? "rr-tool-button-active" : ""}`}
+              aria-expanded={settingsAnchor === "rail"}
+              onClick={() => toggleSettings("rail")}
+            >
+              <span aria-hidden="true">☾</span>
+              Settings
+            </button>
+            {settingsAnchor === "rail" ? renderThemePopover() : null}
+          </div>
         </aside>
 
         <main className={`rr-practice-main ${mode === "tutor" ? "rr-practice-main-wide" : ""}`}>
@@ -440,47 +668,16 @@ export function PracticePanel() {
             </form>
           </section>
 
-        {activeTool ? (
+        {activeTool === "notes" ? (
           <section className="rr-tool-panel mt-5 motion-safe:animate-[fadeIn_180ms_var(--rr-ease-standard)]">
-            {activeTool === "notes" ? (
-              <>
-                <p className="rr-section-header">Notes for this case</p>
-                <textarea
-                  className="rr-notes-input"
-                  value={notes}
-                  onChange={(event) => setNotes(event.target.value)}
-                  placeholder="Capture the clue or heuristic you want to remember."
-                />
-                <p className="rr-meta">Saved on this device for the current case.</p>
-              </>
-            ) : null}
-            {activeTool === "settings" ? (
-              <div className="space-y-5">
-                <p className="rr-section-header">Session settings</p>
-                <p className="rr-supporting">Keyboard: Enter submits. Enter or N moves to the next case after feedback.</p>
-                <div className="space-y-3">
-                  <p className="rr-meta">Visual skin</p>
-                  <div className="rr-skin-grid" role="radiogroup" aria-label="Choose visual skin">
-                    {practiceSkins.map((practiceSkin) => (
-                      <button
-                        key={practiceSkin.value}
-                        type="button"
-                        className={`rr-skin-option ${skin === practiceSkin.value ? "rr-skin-option-active" : ""}`}
-                        onClick={() => setSkin(practiceSkin.value)}
-                        role="radio"
-                        aria-checked={skin === practiceSkin.value}
-                      >
-                        <span>{practiceSkin.label}</span>
-                        <small>{practiceSkin.description}</small>
-                      </button>
-                    ))}
-                  </div>
-                </div>
-                <Button type="button" variant="secondary" onClick={() => setShowEndSessionConfirm(true)}>
-                  End session
-                </Button>
-              </div>
-            ) : null}
+            <p className="rr-section-header">Notes for this case</p>
+            <textarea
+              className="rr-notes-input"
+              value={notes}
+              onChange={(event) => setNotes(event.target.value)}
+              placeholder="Capture the clue or heuristic you want to remember."
+            />
+            <p className="rr-meta">Saved on this device for the current case.</p>
           </section>
         ) : null}
 
@@ -509,6 +706,13 @@ export function PracticePanel() {
         ) : null}
         </main>
       </div>
+      {isAsterOpen ? (
+        <AsterCompanion
+          ref={asterPanelRef}
+          currentCaseTitle={topicLabel}
+          onClose={() => setIsAsterOpen(false)}
+        />
+      ) : null}
       {showEndSessionConfirm ? (
         <div
           className="rr-overlay fixed inset-0 z-50 flex items-center justify-center px-5 motion-safe:animate-[fadeIn_180ms_var(--rr-ease-standard)]"
@@ -546,6 +750,49 @@ export function PracticePanel() {
     </div>
   );
 }
+
+const AsterCompanion = forwardRef<
+  HTMLDivElement,
+  {
+    currentCaseTitle: string;
+    onClose: () => void;
+  }
+>(function AsterCompanion({ currentCaseTitle, onClose }, ref) {
+  return (
+    <aside
+      ref={ref}
+      id="aster-companion"
+      className="rr-aster-companion"
+      aria-label="Aster companion"
+      role="dialog"
+    >
+      <div className="flex items-start justify-between gap-4">
+        <div>
+          <p className="rr-section-header">Aster</p>
+          <h2 className="mt-1 text-lg font-semibold text-rr-foreground">Ask about this case.</h2>
+        </div>
+        <button type="button" className="rr-icon-button" aria-label="Close Aster" onClick={onClose}>
+          ×
+        </button>
+      </div>
+      <p className="mt-4 text-sm leading-6 text-rr-muted">
+        Aster will eventually answer questions about the current case, your reasoning, and the explanation.
+        Case-aware chat is coming soon.
+      </p>
+      <div className="rr-panel-collapsed mt-4">
+        <p className="rr-meta">Current case</p>
+        <p className="mt-1 text-sm font-semibold leading-6 text-rr-foreground">{currentCaseTitle}</p>
+      </div>
+      {/* Future Aster should receive current case, learner answer, correct answer, explanation, decision boundary, and learner state. */}
+      <input
+        className="rr-text-input mt-4"
+        disabled
+        placeholder="Case-aware chat coming soon"
+        aria-label="Aster chat coming soon"
+      />
+    </aside>
+  );
+});
 
 function getFindingRoleLabel(role: VignetteFindingAnnotation["role"]) {
   switch (role) {

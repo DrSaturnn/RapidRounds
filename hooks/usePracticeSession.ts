@@ -7,6 +7,13 @@ import type { AnswerResult, PracticeMode, QuestionDto, TutorContent } from "@/ty
 
 const SESSION_STORAGE_KEY = "rapidrounds.practiceSession.v1";
 const LEARNER_ID_STORAGE_KEY = "rapidrounds.anonymousLearnerId.v1";
+const SUBJECT_STORAGE_KEY = "rapidrounds.activeSubject.v1";
+const DEFAULT_SUBJECT = "OB/GYN";
+
+export type SubjectSummary = {
+  subject: string;
+  count: number;
+};
 
 type PersistedPracticeSession = {
   version: 1;
@@ -21,6 +28,7 @@ type PersistedPracticeSession = {
   reinforcementResult: boolean | null;
   sessionDecisionCount: number;
   answeredQuestionIds: string[];
+  activeSubject?: string;
   updatedAt: number;
 };
 
@@ -97,11 +105,14 @@ export function usePracticeSession() {
   const [isTeaching, setIsTeaching] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [answeredQuestionIds, setAnsweredQuestionIds] = useState<string[]>([]);
+  const [activeSubject, setActiveSubject] = useState(DEFAULT_SUBJECT);
+  const [subjectSummaries, setSubjectSummaries] = useState<SubjectSummary[]>([]);
   const hasHydratedSession = useRef(false);
   const learnerId = useRef("");
+  const activeSubjectRef = useRef(DEFAULT_SUBJECT);
   const startedAt = useRef(Date.now());
 
-  const loadQuestion = useCallback(async (targetConcept?: string) => {
+  const loadQuestion = useCallback(async (targetConcept?: string, subjectOverride?: string) => {
     setIsLoading(true);
     setError(null);
     setResult(null);
@@ -113,9 +124,13 @@ export function usePracticeSession() {
 
     const currentLearnerId = learnerId.current || getOrCreateAnonymousLearnerId();
     learnerId.current = currentLearnerId;
+    const requestedSubject = subjectOverride ?? activeSubjectRef.current;
     const params = new URLSearchParams();
     if (targetConcept) {
       params.set("concept", targetConcept);
+    }
+    if (requestedSubject) {
+      params.set("subject", requestedSubject);
     }
     if (currentLearnerId) {
       params.set("learnerId", currentLearnerId);
@@ -129,9 +144,15 @@ export function usePracticeSession() {
       return;
     }
 
-    const data = (await response.json()) as { question: QuestionDto | null };
+    const data = (await response.json()) as { question: QuestionDto | null; subjectCounts?: SubjectSummary[] };
+    if (data.subjectCounts) {
+      setSubjectSummaries(data.subjectCounts);
+    }
     setQuestion(data.question);
     if (data.question) {
+      activeSubjectRef.current = data.question.specialty;
+      setActiveSubject(data.question.specialty);
+      window.localStorage.setItem(SUBJECT_STORAGE_KEY, data.question.specialty);
       setSessionDecisionCount((count) => count + 1);
     }
     startedAt.current = Date.now();
@@ -214,12 +235,39 @@ export function usePracticeSession() {
     );
   }, [reinforcementAnswer, tutor]);
 
+  const selectSubject = useCallback((subject: string) => {
+    activeSubjectRef.current = subject;
+    setActiveSubject(subject);
+    setSessionDecisionCount(0);
+    setAnsweredQuestionIds([]);
+    if (typeof window !== "undefined") {
+      window.localStorage.setItem(SUBJECT_STORAGE_KEY, subject);
+    }
+    void loadQuestion(undefined, subject);
+  }, [loadQuestion]);
+
   useEffect(() => {
     learnerId.current = getOrCreateAnonymousLearnerId();
+    const savedSubject = window.localStorage.getItem(SUBJECT_STORAGE_KEY) || DEFAULT_SUBJECT;
+    activeSubjectRef.current = savedSubject;
+    setActiveSubject(savedSubject);
+
+    void fetch("/api/subjects", { cache: "no-store" })
+      .then((response) => response.ok ? response.json() as Promise<{ subjectCounts?: SubjectSummary[] }> : undefined)
+      .then((data) => {
+        if (data?.subjectCounts) {
+          setSubjectSummaries(data.subjectCounts);
+        }
+      })
+      .catch(() => undefined);
+
     const persisted = readPersistedSession();
     hasHydratedSession.current = true;
 
     if (persisted) {
+      const restoredSubject = persisted.activeSubject ?? persisted.question.specialty ?? savedSubject;
+      activeSubjectRef.current = restoredSubject;
+      setActiveSubject(restoredSubject);
       setQuestion(persisted.question);
       setAnswer(persisted.answer);
       setResult(persisted.result);
@@ -255,9 +303,11 @@ export function usePracticeSession() {
       reinforcementResult,
       sessionDecisionCount,
       answeredQuestionIds,
+      activeSubject,
       updatedAt: Date.now()
     });
   }, [
+    activeSubject,
     answer,
     answeredQuestionIds,
     isLoading,
@@ -283,11 +333,14 @@ export function usePracticeSession() {
     isSubmitting,
     isTeaching,
     error,
+    activeSubject,
+    subjectSummaries,
     setAnswer,
     setReinforcementAnswer,
     submitAnswer,
     requestTeaching,
     submitReinforcementAnswer,
+    selectSubject,
     loadQuestion
   };
 }

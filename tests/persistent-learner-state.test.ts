@@ -60,11 +60,11 @@ describe("persistent learner state", () => {
 
     assert.match(route, /const learnerId = normalizeLearnerId\(searchParams\.get\("learnerId"\)\)/);
     assert.match(route, /where: \{ userId: learnerId \}/);
-    assert.match(route, /const \[answered, completed, adaptiveRecommendation\] = await Promise\.all/);
-    assert.match(route, /getAdaptiveDecisionRecommendation\(learnerId, requestedConcept\)/);
+    assert.match(route, /const \[answered, completed, adaptiveRecommendation, subjectCounts\] = await Promise\.all/);
+    assert.match(route, /getAdaptiveDecisionRecommendation\(learnerId, requestedConcept, requestedSubject\)/);
     assert.match(route, /completed\.map\(\(row\) => row\.clinicalDecisionId\)/);
     assert.match(route, /adaptiveRecommendation\?\.decision/);
-    assert.match(route, /getNextClinicalDecision\(\[\.{3}answeredDecisionIds\], adaptiveTarget\)/);
+    assert.match(route, /getNextClinicalDecision\(\[\.{3}answeredDecisionIds\], adaptiveTarget, requestedSubject\)/);
     assert.match(route, /completed\.map\(\(row\) => row\.questionId\)/);
   });
 
@@ -159,7 +159,7 @@ describe("persistent learner state", () => {
     const decisionSelection = readFileSync("database/clinical-decisions.ts", "utf8");
 
     assert.match(nextRoute, /const answeredDecisionIds = new Set/);
-    assert.match(nextRoute, /getNextClinicalDecision\(\[\.{3}answeredDecisionIds\], adaptiveTarget\)/);
+    assert.match(nextRoute, /getNextClinicalDecision\(\[\.{3}answeredDecisionIds\], adaptiveTarget, requestedSubject\)/);
     assert.match(decisionSelection, /id: \{ notIn: excludedIds \}/);
   });
 });

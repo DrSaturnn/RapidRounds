@@ -161,7 +161,7 @@ describe("adaptive decision engine v1", () => {
     const route = readFileSync("app/api/questions/next/route.ts", "utf8");
     const service = readFileSync("lib/adaptive-decision.ts", "utf8");
 
-    assert.match(route, /getAdaptiveDecisionRecommendation\(learnerId, requestedConcept\)/);
+    assert.match(route, /getAdaptiveDecisionRecommendation\(learnerId, requestedConcept, requestedSubject\)/);
     assert.match(route, /adaptiveRecommendation\.actionType/);
     assert.match(service, /getLearnerState\(learnerId\)/);
     assert.match(service, /completedClinicalDecisionIds/);

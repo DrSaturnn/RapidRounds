@@ -65,7 +65,7 @@ describe("adaptive learning trajectory", () => {
 
     assert.match(route, /searchParams\.get\("concept"\)/);
     assert.match(route, /getAdaptiveTargetConcept/);
-    assert.match(route, /getNextClinicalDecision\(\[\.{3}answeredDecisionIds\], adaptiveTarget\)/);
+    assert.match(route, /getNextClinicalDecision\(\[\.{3}answeredDecisionIds\], adaptiveTarget, requestedSubject\)/);
     assert.match(hook, /params\.set\("concept", targetConcept\)/);
     assert.match(hook, /params\.set\("learnerId", currentLearnerId\)/);
   });
