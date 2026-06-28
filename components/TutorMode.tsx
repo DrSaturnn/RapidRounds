@@ -57,7 +57,8 @@ export function TutorMode({
     managementConcept: tutor.managementPearl
   });
   const comparisonRows = tutor.comparison.rows;
-  const hasComparison = comparisonRows.length > 0;
+  const modules = tutor.teachingPlan.modules;
+  const hasComparison = modules.comparison && comparisonRows.length > 0;
   const recognitionClues = dedupeDisplayStrings(tutor.repair.recognitionClues ?? [tutor.repair.clue])
     .filter((clue) => clue.toLowerCase() !== tutor.repair.clue.trim().replace(/\s+/g, " ").toLowerCase());
   const visibleRecognitionClues = recognitionClues.length > 0 ? recognitionClues : [tutor.repair.clue];
@@ -191,15 +192,54 @@ export function TutorMode({
 
       <TeachingCard title="Teach me more: illness script and comparison" defaultOpen={false}>
         <div className="space-y-5">
+          {modules.retrieval && tutor.teachingPlan.retrieval ? (
+            <div className="rr-callout">
+              <p className="font-medium">Retrieval Target</p>
+              <div className="mt-2 space-y-2">
+                <p>
+                  <span className="font-medium">What you got right:</span>{" "}
+                  {tutor.teachingPlan.retrieval.whatYouGotRight}
+                </p>
+                <p>
+                  <span className="font-medium">What was missing:</span>{" "}
+                  {tutor.teachingPlan.retrieval.whatWasMissing}
+                </p>
+                <p>
+                  <span className="font-medium">Specific target:</span> {tutor.teachingPlan.retrieval.target}
+                </p>
+                {tutor.teachingPlan.retrieval.memoryHook ? (
+                  <p>
+                    <span className="font-medium">Memory hook:</span> {tutor.teachingPlan.retrieval.memoryHook}
+                  </p>
+                ) : null}
+              </div>
+            </div>
+          ) : null}
+          {modules.contraindication && tutor.teachingPlan.contraindication ? (
+            <div className="rr-callout">
+              <p className="font-medium">Contraindication Rule</p>
+              <div className="mt-2 space-y-2">
+                <p>{tutor.teachingPlan.contraindication.rule}</p>
+                <p>{tutor.teachingPlan.contraindication.whyAvoid}</p>
+                {tutor.teachingPlan.contraindication.alternative ? (
+                  <p>{tutor.teachingPlan.contraindication.alternative}</p>
+                ) : null}
+              </div>
+            </div>
+          ) : null}
+          {modules.illnessScript ? (
           <div>
             <p className="font-medium">Illness Script</p>
             <p>{tutor.illnessScript.classicPresentation}</p>
           </div>
+          ) : null}
+          {modules.expertRecognition ? (
           <div>
             <p className="font-medium">Expert Recognition</p>
             <RecognitionPath value={tutor.recognitionPath ?? tutor.managementPearl} />
           </div>
-          {tutor.cognitiveError ? (
+          ) : null}
+          {modules.expertCorrection && tutor.cognitiveError ? (
             <div className="rr-callout">
               <p className="font-medium">Expert Correction</p>
               <p>{tutor.cognitiveError.expertCorrection}</p>
@@ -230,11 +270,13 @@ export function TutorMode({
               </div>
             </div>
           ) : null}
+          {modules.nbmePivot ? (
           <div className="rr-callout rr-callout-pivot">
             <p className="font-medium">NBME Pivot</p>
             <p>{tutor.nbmePivot}</p>
           </div>
-          {tutor.whyTempting ? (
+          ) : null}
+          {modules.whyTempting && tutor.whyTempting ? (
             <div>
               <p className="font-medium">Why This Was Tempting</p>
               <p>{tutor.whyTempting}</p>

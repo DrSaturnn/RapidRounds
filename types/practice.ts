@@ -116,6 +116,37 @@ export type TutorContent = {
     message: string;
     supportingPattern: string;
   };
+  teachingPlan: {
+    repairType:
+      | "RETRIEVAL_REPAIR"
+      | "MISSED_PIVOT_CLUE"
+      | "DECISION_BOUNDARY_REPAIR"
+      | "CONTRAINDICATION_REPAIR"
+      | "MANAGEMENT_SEQUENCE_REPAIR"
+      | "UNKNOWN_SCAFFOLD"
+      | "GENERIC_REPAIR";
+    modules: {
+      illnessScript: boolean;
+      expertRecognition: boolean;
+      expertCorrection: boolean;
+      comparison: boolean;
+      nbmePivot: boolean;
+      whyTempting: boolean;
+      retrieval: boolean;
+      contraindication: boolean;
+    };
+    retrieval?: {
+      whatYouGotRight: string;
+      whatWasMissing: string;
+      target: string;
+      memoryHook?: string;
+    };
+    contraindication?: {
+      rule: string;
+      whyAvoid: string;
+      alternative?: string;
+    };
+  };
   correctAnswer: string;
   whyIncorrect: {
     userAnswer: string;

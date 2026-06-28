@@ -211,6 +211,31 @@ const comparisonTemplates: Record<string, ComparisonTemplate> = {
       { feature: "Immediate management", correct: "Avoid carboprost and choose another uterotonic", competing: "Avoid methylergonovine and choose another uterotonic" },
       { feature: "NBME discriminator", correct: "Asthma excludes carboprost", competing: "Hypertension excludes methylergonovine" }
     ]
+  },
+  "severe hypertension treatment": {
+    competingDiagnosis: "Magnesium sulfate",
+    rows: [
+      {
+        feature: "Clinical target",
+        correct: "Acute severe-range blood pressure",
+        competing: "Seizure prophylaxis or treatment of eclampsia"
+      },
+      {
+        feature: "Highest-yield distinguishing clue",
+        correct: "Persistent BP at or above 160 systolic or 110 diastolic",
+        competing: "Severe preeclampsia features or eclamptic seizure risk"
+      },
+      {
+        feature: "Immediate management",
+        correct: "IV labetalol, IV hydralazine, or oral nifedipine to reduce maternal stroke risk",
+        competing: "Magnesium sulfate prevents or treats seizures; it does not acutely control BP"
+      },
+      {
+        feature: "NBME discriminator",
+        correct: "Treat the severe BP now",
+        competing: "Add magnesium when the decision is seizure prophylaxis or eclampsia"
+      }
+    ]
   }
 };
 

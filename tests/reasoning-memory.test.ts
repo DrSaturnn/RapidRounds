@@ -25,6 +25,19 @@ const baseTutor = {
     missedClue: "The reasoning should have stopped at no proteinuria or severe features.",
     expertCorrection: "Experts confirm the required finding before closing on the familiar diagnosis."
   },
+  teachingPlan: {
+    repairType: "GENERIC_REPAIR",
+    modules: {
+      illnessScript: true,
+      expertRecognition: false,
+      expertCorrection: false,
+      comparison: false,
+      nbmePivot: true,
+      whyTempting: false,
+      retrieval: false,
+      contraindication: false
+    }
+  },
   correctAnswer: "gestational hypertension",
   whyIncorrect: {
     userAnswer: "preeclampsia",

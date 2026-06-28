@@ -268,7 +268,7 @@ describe("decision repair", () => {
     assert.doesNotMatch(tutor.repair.why, /You answered/i);
     assert.doesNotMatch(tutor.repair.why, /discriminator/i);
     assert.doesNotMatch(tutor.repair.why, /Your answer becomes correct when/i);
-    assert.equal(tutor.comparison.rows.length, 0);
+    assert.equal(tutor.teachingPlan.modules.comparison, false);
   });
 
   it("keeps blank primary submissions available from the Practice flow", () => {

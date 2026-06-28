@@ -10,6 +10,7 @@ import {
 } from "@/lib/decision-education";
 import { findDecisionBoundaryRepair } from "@/lib/decision-boundary-repair";
 import { dedupeDisplayStrings } from "@/lib/display-strings";
+import { buildTeachingPlan } from "@/lib/educational-assembly";
 import { buildExpertIllnessScript } from "@/lib/expert-illness-script";
 import type { AnswerEvaluation, CognitiveError, DecisionRepair, TutorContent } from "@/types/practice";
 
@@ -462,11 +463,30 @@ export function buildTutorContent(
   const cognitiveError = classifyCognitiveError(decision, userAnswer, evaluation);
   const repair = buildRepair(decision, userAnswer, evaluation, cognitiveError);
   const mappedTeachMore = getMappedTeachMore(decision);
+  const comparison = buildComparison(decision);
+  const decisionBoundary = findDecisionBoundaryRepair({
+    learnerAnswer: cleanAnswer(userAnswer),
+    correctAnswer: decision.correctAnswer,
+    acceptedAnswers
+  });
+  const teachingPlan = buildTeachingPlan({
+    decisionType: decision.decisionType,
+    learnerAnswer: userAnswer,
+    correctAnswer: decision.correctAnswer,
+    pivotClue: getPivotClue(decision),
+    managementPearl: management,
+    evaluation,
+    cognitiveError,
+    reasoningAnalysis,
+    hasDecisionBoundary: Boolean(decisionBoundary),
+    hasSpecificComparison: comparison.rows.length > 0
+  });
 
   return {
     repair,
     reasoningAnalysis,
     cognitiveError,
+    teachingPlan,
     correctAnswer: decision.correctAnswer,
     whyIncorrect: {
       userAnswer: userAnswer.trim() || "Not answered yet",
@@ -481,7 +501,7 @@ export function buildTutorContent(
     recognitionPath: mappedTeachMore?.recognitionPath ?? buildRecognitionPath(decision),
     nbmePivot: mappedTeachMore?.nbmePivot ?? buildNbmePivot(decision),
     whyTempting: buildWhyTempting(decision, userAnswer, evaluation, mappedTeachMore?.whyTempting),
-    comparison: buildComparison(decision),
+    comparison,
     reinforcement: buildReinforcement(decision, acceptedAnswers, repair)
   };
 }
