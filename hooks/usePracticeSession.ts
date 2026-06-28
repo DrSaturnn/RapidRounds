@@ -15,7 +15,7 @@ export type SubjectSummary = {
   count: number;
 };
 
-type PersistedPracticeSession = {
+export type PersistedPracticeSession = {
   version: 1;
   currentRound: number;
   adaptiveQueuePosition: number;
@@ -32,6 +32,87 @@ type PersistedPracticeSession = {
   updatedAt: number;
 };
 
+function isRecord(value: unknown): value is Record<string, unknown> {
+  return typeof value === "object" && value !== null;
+}
+
+function isString(value: unknown): value is string {
+  return typeof value === "string";
+}
+
+function isNumber(value: unknown): value is number {
+  return typeof value === "number" && Number.isFinite(value);
+}
+
+function isPracticeMode(value: unknown): value is PracticeMode {
+  return value === "rapid" || value === "tutor";
+}
+
+function hasRestorableQuestionShape(value: unknown): value is QuestionDto {
+  if (!isRecord(value)) {
+    return false;
+  }
+
+  return (
+    isString(value.id) &&
+    isString(value.specialty) &&
+    isString(value.topic) &&
+    isNumber(value.difficulty) &&
+    isString(value.stem) &&
+    isString(value.pattern) &&
+    isString(value.management) &&
+    isString(value.diagnosis)
+  );
+}
+
+function hasRestorableResultShape(value: unknown): value is AnswerResult {
+  if (!isRecord(value)) {
+    return false;
+  }
+
+  return (
+    typeof value.isCorrect === "boolean" &&
+    isString(value.correctAnswer) &&
+    isString(value.boardPearl) &&
+    isString(value.explanation)
+  );
+}
+
+function hasRestorableTutorShape(value: unknown): value is TutorContent {
+  if (!isRecord(value) || !isRecord(value.repair) || !isRecord(value.illnessScript) || !isRecord(value.comparison)) {
+    return false;
+  }
+
+  return (
+    isString(value.correctAnswer) &&
+    isString(value.repair.correctAnswer) &&
+    isString(value.repair.clue) &&
+    isString(value.repair.why) &&
+    isString(value.illnessScript.classicPresentation) &&
+    Array.isArray(value.comparison.rows)
+  );
+}
+
+export function isRestorablePracticeSession(value: unknown): value is PersistedPracticeSession {
+  if (!isRecord(value)) {
+    return false;
+  }
+
+  if (value.version !== 1 || !hasRestorableQuestionShape(value.question) || !isPracticeMode(value.mode)) {
+    return false;
+  }
+
+  if (!isString(value.answer) || !isNumber(value.sessionDecisionCount) || !Array.isArray(value.answeredQuestionIds)) {
+    return false;
+  }
+
+  if (value.mode === "tutor") {
+    return hasRestorableResultShape(value.result) && hasRestorableTutorShape(value.tutor);
+  }
+
+  return value.result === null && value.tutor === null;
+}
+
 function unique(values: string[]) {
   return Array.from(new Set(values));
 }
@@ -47,12 +128,13 @@ function readPersistedSession() {
       return null;
     }
 
-    const session = JSON.parse(rawSession) as Partial<PersistedPracticeSession>;
-    if (session.version !== 1 || !session.question?.id) {
+    const session = JSON.parse(rawSession) as unknown;
+    if (!isRestorablePracticeSession(session)) {
+      window.localStorage.removeItem(SESSION_STORAGE_KEY);
       return null;
     }
 
-    return session as PersistedPracticeSession;
+    return session;
   } catch {
     window.localStorage.removeItem(SESSION_STORAGE_KEY);
     return null;

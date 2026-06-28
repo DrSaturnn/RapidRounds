@@ -26,6 +26,6 @@ export function getDecisionQuestionText(decisionType?: DecisionType | string) {
     : "What is the clinical decision?";
 }
 
-export function getClinicalPromptText(stem: string) {
-  return stem.replace(genericDecisionPromptPattern, "").trim();
+export function getClinicalPromptText(stem?: string | null) {
+  return (stem ?? "").replace(genericDecisionPromptPattern, "").trim();
 }

@@ -242,12 +242,16 @@ describe("design system", () => {
     const moleskineThemeBlock = css.slice(moleskineIndex, darkIndex);
     const darkThemeBlock = css.slice(darkIndex, editorialIndex);
     const editorialThemeBlock = css.slice(editorialIndex, firstComponentIndex);
+    const transparentLeftPageIndex = css.indexOf('[data-theme="warm-notebook"] .rr-moleskine-left-page {\n    border-color: transparent;');
+    const restoredLeftPageIndex = css.lastIndexOf('[data-theme="warm-notebook"] .rr-moleskine-left-page {');
 
-    assert.match(moleskineThemeBlock, /--rr-bg:\s*#f4ead7/i);
-    assert.match(moleskineThemeBlock, /--rr-surface:\s*#fff6de/i);
-    assert.match(moleskineThemeBlock, /--rr-paper-texture-opacity:\s*0\.105/);
-    assert.match(moleskineThemeBlock, /--rr-rule-opacity:\s*0\.1/);
+    assert.match(moleskineThemeBlock, /--rr-bg:\s*#fcfbf8/i);
+    assert.match(moleskineThemeBlock, /--rr-surface:\s*#fffdf8/i);
+    assert.match(moleskineThemeBlock, /--rr-paper-texture-opacity:\s*0\.04/);
+    assert.match(moleskineThemeBlock, /--rr-rule-opacity:\s*0\.045/);
     assert.match(moleskineThemeBlock, /repeating-linear-gradient\(to bottom/);
+    assert.doesNotMatch(moleskineThemeBlock, /--rr-bg:\s*#f4ead7/i);
+    assert.doesNotMatch(moleskineThemeBlock, /--rr-surface:\s*#fff6de/i);
 
     assert.match(css, /\[data-theme="warm-notebook"\] \.rr-practice-shell::after/);
     assert.match(css, /\[data-theme="warm-notebook"\] \.rr-product-nav/);
@@ -262,6 +266,8 @@ describe("design system", () => {
     assert.match(css, /\[data-theme="warm-notebook"\] \.rr-teaching-card\[open\]::before/);
     assert.match(css, /\[data-theme="warm-notebook"\] \.rr-card-paper/);
     assert.match(css, /\[data-theme="warm-notebook"\] \.rr-vignette-label/);
+    assert.match(css, /\[data-theme="warm-notebook"\] \.rr-moleskine-left-page \{[\s\S]*background:[\s\S]*#fffdf8[\s\S]*box-shadow:/);
+    assert.ok(restoredLeftPageIndex > transparentLeftPageIndex);
     assert.doesNotMatch(modernThemeBlock, /rr-question-card::before/);
     assert.doesNotMatch(darkThemeBlock, /rr-question-card::before/);
     assert.doesNotMatch(editorialThemeBlock, /rr-question-card::before/);

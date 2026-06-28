@@ -1,6 +1,8 @@
 import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
 import { describe, it } from "node:test";
+import { isRestorablePracticeSession } from "@/hooks/usePracticeSession";
+import { getClinicalPromptText } from "@/lib/decision-question-text";
 import { normalizeLearnerId } from "@/lib/learner-id";
 
 describe("persistent learner state", () => {
@@ -161,5 +163,67 @@ describe("persistent learner state", () => {
     assert.match(nextRoute, /const answeredDecisionIds = new Set/);
     assert.match(nextRoute, /getNextClinicalDecision\(\[\.{3}answeredDecisionIds\], adaptiveTarget, requestedSubject\)/);
     assert.match(decisionSelection, /id: \{ notIn: excludedIds \}/);
+  });
+
+  it("rejects stale persisted sessions with incomplete question DTOs before render", () => {
+    const staleSession = {
+      version: 1,
+      currentRound: 1,
+      adaptiveQueuePosition: 1,
+      question: {
+        id: "stale-question",
+        specialty: "OB/GYN",
+        topic: "Old topic",
+        difficulty: 1
+      },
+      answer: "",
+      result: null,
+      mode: "rapid",
+      tutor: null,
+      reinforcementAnswer: "",
+      reinforcementResult: null,
+      sessionDecisionCount: 1,
+      answeredQuestionIds: [],
+      activeSubject: "OB/GYN",
+      updatedAt: Date.now()
+    };
+
+    assert.equal(isRestorablePracticeSession(staleSession), false);
+  });
+
+  it("accepts current persisted rapid sessions with the complete question DTO shape", () => {
+    const currentSession = {
+      version: 1,
+      currentRound: 1,
+      adaptiveQueuePosition: 1,
+      question: {
+        id: "question-1",
+        specialty: "OB/GYN",
+        topic: "Placenta previa evaluation",
+        difficulty: 1,
+        stem: "Third-trimester bleeding with suspected placenta previa.",
+        pattern: "Third-trimester bleeding",
+        management: "Localize the placenta before any cervical exam.",
+        diagnosis: "Placenta previa evaluation",
+        decisionType: "Initial Test"
+      },
+      answer: "",
+      result: null,
+      mode: "rapid",
+      tutor: null,
+      reinforcementAnswer: "",
+      reinforcementResult: null,
+      sessionDecisionCount: 1,
+      answeredQuestionIds: [],
+      activeSubject: "OB/GYN",
+      updatedAt: Date.now()
+    };
+
+    assert.equal(isRestorablePracticeSession(currentSession), true);
+  });
+
+  it("does not crash when formatting a missing clinical prompt from malformed data", () => {
+    assert.equal(getClinicalPromptText(undefined), "");
+    assert.equal(getClinicalPromptText(null), "");
   });
 });
