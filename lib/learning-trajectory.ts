@@ -1,5 +1,6 @@
 import { normalizeAnswer } from "@/lib/answer-check";
 import { getConceptGraph } from "@/lib/concept-graph";
+import { getCurriculumLearningItems } from "@/lib/curriculum-graph";
 
 export type LearningTrajectoryItem = {
   concept: string;
@@ -127,15 +128,18 @@ export function getLearningTrajectory({
   managementConcept
 }: LearningTrajectoryInput) {
   const graph = getConceptGraph({ correctAnswer, comparisonConcept, managementConcept });
-  const recommendedConcept = nextInChain(correctAnswer) ?? graph.relatedConcepts[0] ?? graph.managementConcepts[0];
-  const recommendationReason = wasCorrect === false
-    ? `Recommended because you missed ${graph.primaryConcept}.`
-    : recommendedConcept
-      ? `Builds directly on ${graph.primaryConcept}.`
-      : `Continue strengthening ${graph.primaryConcept}.`;
+  const curriculum = getCurriculumLearningItems(correctAnswer, wasCorrect);
+  const curriculumRecommendation = curriculum.items.find((item) => item.priority === "recommended");
+  const recommendedConcept = curriculumRecommendation?.concept ?? nextInChain(correctAnswer) ?? graph.relatedConcepts[0] ?? graph.managementConcepts[0];
+  const recommendationReason = curriculumRecommendation?.reason ??
+    (wasCorrect === false
+      ? `Recommended because you missed ${graph.primaryConcept}.`
+      : recommendedConcept
+        ? `Builds directly on ${graph.primaryConcept}.`
+        : `Continue strengthening ${graph.primaryConcept}.`);
 
   return {
-    primaryConcept: graph.primaryConcept,
+    primaryConcept: curriculum.node?.title ?? graph.primaryConcept,
     recommendation: recommendedConcept
       ? {
           concept: recommendedConcept,
@@ -147,6 +151,11 @@ export function getLearningTrajectory({
       ...(recommendedConcept
         ? [{ concept: recommendedConcept, reason: recommendationReason, priority: "recommended" as const }]
         : []),
+      ...curriculum.items.map((item) => ({
+        concept: item.concept,
+        reason: item.reason,
+        priority: item.priority
+      })),
       ...graph.relatedConcepts.slice(0, 2).map((concept) => ({
         concept,
         reason: `Frequently confused with ${graph.primaryConcept}.`,
@@ -157,7 +166,7 @@ export function getLearningTrajectory({
         reason: `Strengthens management around ${graph.primaryConcept}.`,
         priority: "explore" as const
       }))
-    ]).slice(0, 5)
+    ]).slice(0, 6)
   };
 }
 
