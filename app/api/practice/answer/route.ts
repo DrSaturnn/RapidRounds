@@ -4,6 +4,7 @@ import { evaluateAnswer } from "@/lib/answer-check";
 import { resolveCurriculumContext } from "@/lib/curriculum-resolution";
 import { normalizeLearnerId } from "@/lib/learner-id";
 import { prisma } from "@/lib/prisma";
+import { buildReasoningMemoryCoaching } from "@/lib/reasoning-memory";
 import { buildTutorContent } from "@/lib/tutor-content";
 import type { AnswerEvaluation, AnswerOutcome } from "@/types/practice";
 
@@ -67,6 +68,27 @@ function serializeList(values: string[]) {
   return JSON.stringify(values);
 }
 
+async function loadPriorReasoningAttempts(learnerId: string, answerOutcome: AnswerOutcome) {
+  if (answerOutcome === "CORRECT" || answerOutcome === "UNKNOWN") {
+    return [];
+  }
+
+  return prisma.progress.findMany({
+    where: {
+      userId: learnerId,
+      isCorrect: false,
+      answerOutcome: { not: "UNKNOWN" }
+    },
+    orderBy: { createdAt: "desc" },
+    take: 30,
+    select: {
+      cognitiveErrorType: true,
+      reasoningPattern: true,
+      answerOutcome: true
+    }
+  });
+}
+
 export async function POST(request: NextRequest) {
   const body = (await request.json()) as {
     questionId?: string;
@@ -119,6 +141,8 @@ export async function POST(request: NextRequest) {
       body.answer,
       evaluation
     );
+    const priorReasoningAttempts = await loadPriorReasoningAttempts(learnerId, answerOutcome);
+    tutor.coaching = buildReasoningMemoryCoaching(tutor, answerOutcome, priorReasoningAttempts);
     const curriculumContext = resolveCurriculumContext({
       topic: decision.topic,
       correctAnswer,
@@ -245,6 +269,8 @@ export async function POST(request: NextRequest) {
     body.answer,
     evaluation
   );
+  const priorReasoningAttempts = await loadPriorReasoningAttempts(learnerId, answerOutcome);
+  tutor.coaching = buildReasoningMemoryCoaching(tutor, answerOutcome, priorReasoningAttempts);
   const curriculumContext = resolveCurriculumContext({
     topic: question.diagnosis,
     correctAnswer: question.correctAnswer,

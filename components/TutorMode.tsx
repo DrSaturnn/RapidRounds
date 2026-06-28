@@ -80,17 +80,17 @@ export function TutorMode({
   };
 
   return (
-    <section className="space-y-4">
-      <div className={`rr-card rr-card-section space-y-3 ${isUnknown ? "rr-concept-card" : "rr-repair-card"}`}>
+    <section className="space-y-3.5">
+      <div className={`rr-card rr-card-section space-y-4 ${isUnknown ? "rr-concept-card" : "rr-repair-card"}`}>
         <p className="rr-section-header">{repairTitle}</p>
         {isUnknown ? (
           <div className="space-y-3 text-sm leading-6">
-            <div className="rr-callout rr-callout-clue py-2">
+            <div className="rr-callout rr-callout-clue rr-pivot-panel">
               <p className="rr-meta">Pivot clue</p>
               <p>{tutor.repair.clue}</p>
               <p className="rr-meta mt-1">Meaning: supports {tutor.repair.correctAnswer}.</p>
             </div>
-            <div className="rr-callout py-2">
+            <div className="rr-callout rr-correct-panel">
               <p className="rr-meta">Correct action</p>
               <p className="text-base font-semibold text-rr-mastery">{tutor.repair.correctAnswer}</p>
             </div>
@@ -98,6 +98,12 @@ export function TutorMode({
               <p className="rr-meta">Expert reasoning</p>
               <p>{tutor.repair["why"]}</p>
             </div>
+            {tutor.coaching ? (
+              <div className="rr-callout rr-coaching-callout">
+                <p className="rr-meta">Pattern to watch</p>
+                <p>{tutor.coaching.message}</p>
+              </div>
+            ) : null}
             <div>
               <p className="rr-meta">Recognition path</p>
               <ul className="mt-1 list-disc space-y-0.5 pl-5">
@@ -126,12 +132,12 @@ export function TutorMode({
         ) : (
           <>
             <div className="grid gap-3 text-sm leading-6 sm:grid-cols-2">
-              <div className="rr-callout rr-callout-clue py-2">
+              <div className="rr-callout rr-callout-clue rr-pivot-panel">
                 <p className="rr-meta">Pivot clue</p>
                 <p>{tutor.repair.clue}</p>
                 <p className="rr-meta mt-1">Meaning: supports {tutor.repair.correctAnswer}.</p>
               </div>
-              <div className="rr-callout py-2">
+              <div className="rr-callout rr-correct-panel">
                 <p className="rr-meta">Correct action</p>
                 <p className="text-base font-semibold text-rr-mastery">{tutor.repair.correctAnswer}</p>
               </div>
@@ -140,6 +146,12 @@ export function TutorMode({
               <p className="rr-meta">Expert reasoning</p>
               <p className="text-sm leading-6">{tutor.repair.why}</p>
             </div>
+            {tutor.coaching ? (
+              <div className="rr-callout rr-coaching-callout">
+                <p className="rr-meta">Pattern to watch</p>
+                <p>{tutor.coaching.message}</p>
+              </div>
+            ) : null}
             <div className="rr-callout">
               <p className="rr-meta">Go deeper</p>
               <p>Open Teach me more for the full illness script and comparison.</p>

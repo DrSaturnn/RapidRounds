@@ -112,6 +112,10 @@ export type TutorContent = {
   repair: DecisionRepair;
   reasoningAnalysis: ReasoningAnalysis;
   cognitiveError?: CognitiveError;
+  coaching?: {
+    message: string;
+    supportingPattern: string;
+  };
   correctAnswer: string;
   whyIncorrect: {
     userAnswer: string;

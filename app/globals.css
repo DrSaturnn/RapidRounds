@@ -93,6 +93,7 @@
   --rr-border-soft: 1px solid var(--rr-color-border);
   --rr-focus-ring: 0 0 0 2px var(--rr-color-focus);
   --rr-shadow-card: 0 1px 2px rgb(0 0 0 / 0.05), 0 10px 28px rgb(0 0 0 / 0.04);
+  --rr-shadow-practice: 0 18px 56px rgb(23 37 84 / 0.08), 0 2px 8px rgb(0 0 0 / 0.04);
 
   --rr-motion-fast: 120ms;
   --rr-motion-standard: 180ms;
@@ -194,7 +195,7 @@ body:has(.practice-focus) .app-main {
   }
 
   .rr-question-stem {
-    @apply text-[1.7rem] font-semibold leading-[1.38] tracking-normal text-rr-foreground sm:text-[2.05rem] sm:leading-[1.42];
+    @apply text-[1.85rem] font-semibold leading-[1.34] tracking-normal text-rr-foreground sm:text-[2.35rem] sm:leading-[1.32];
   }
 
   .rr-section-title {
@@ -226,6 +227,7 @@ body:has(.practice-focus) .app-main {
     background:
       linear-gradient(180deg, var(--rr-color-question-surface), var(--rr-color-surface-elevated) 58%),
       var(--rr-color-surface-elevated);
+    box-shadow: var(--rr-shadow-practice);
   }
 
   .rr-repair-card {
@@ -245,10 +247,12 @@ body:has(.practice-focus) .app-main {
   .rr-teaching-card {
     border-color: var(--rr-color-memory-border);
     background: var(--rr-color-teaching-surface);
+    box-shadow: none;
   }
 
   .rr-teaching-card summary {
-    background: color-mix(in srgb, var(--rr-color-memory-tint) 70%, var(--rr-color-surface-elevated));
+    background: color-mix(in srgb, var(--rr-color-memory-tint) 38%, var(--rr-color-surface-elevated));
+    color: var(--rr-color-memory);
   }
 
   .rr-adaptive-card {
@@ -264,7 +268,7 @@ body:has(.practice-focus) .app-main {
   }
 
   .rr-card-section {
-    @apply border-b border-rr-border px-4 py-4 last:border-b-0 sm:px-5;
+    @apply border-b border-rr-border px-5 py-5 last:border-b-0 sm:px-6;
   }
 
   .rr-panel {
@@ -309,6 +313,7 @@ body:has(.practice-focus) .app-main {
 
   .rr-button-primary {
     @apply border-rr-accent bg-rr-accent text-rr-background hover:bg-rr-elevated hover:text-rr-accent active:bg-rr-surface;
+    box-shadow: 0 8px 18px color-mix(in srgb, var(--rr-color-accent) 14%, transparent);
   }
 
   .rr-button-secondary {
@@ -331,7 +336,7 @@ body:has(.practice-focus) .app-main {
   }
 
   .rr-input {
-    @apply h-12 w-full rounded-md border border-rr-border bg-rr-elevated px-3 text-base outline-none transition-colors placeholder:text-rr-muted focus:border-rr-accent focus:bg-rr-surface focus-visible:ring-2 focus-visible:ring-rr-focus focus-visible:ring-offset-2 disabled:text-rr-muted;
+    @apply h-14 w-full rounded-md border border-rr-border bg-rr-elevated px-4 text-base outline-none transition-colors placeholder:text-rr-muted focus:border-rr-accent focus:bg-rr-surface focus-visible:ring-2 focus-visible:ring-rr-focus focus-visible:ring-offset-2 disabled:text-rr-muted;
   }
 
   .rr-text-input {
@@ -356,6 +361,65 @@ body:has(.practice-focus) .app-main {
 
   .rr-callout {
     @apply rounded-lg border border-rr-border bg-rr-elevated px-4 py-3;
+  }
+
+  .rr-practice-shell {
+    background:
+      linear-gradient(180deg, var(--rr-color-observatory-atmosphere), var(--rr-color-background) 34rem),
+      var(--rr-color-background);
+  }
+
+  .rr-practice-topbar {
+    @apply flex flex-col gap-4 rounded-lg border border-rr-soft-line bg-rr-elevated px-4 py-3 shadow-[0_1px_8px_rgb(0_0_0_/_0.035)] sm:flex-row sm:items-center sm:justify-between sm:px-5;
+  }
+
+  .rr-practice-kicker {
+    @apply text-xs font-semibold uppercase leading-5 tracking-normal text-rr-accent;
+  }
+
+  .rr-practice-title {
+    @apply text-sm font-medium leading-6 text-rr-foreground;
+  }
+
+  .rr-session-pill {
+    @apply inline-flex min-h-7 items-center rounded-md border border-rr-border bg-rr-surface px-2.5 py-1 text-xs font-medium text-rr-muted;
+  }
+
+  .rr-practice-main {
+    @apply mx-auto flex w-full max-w-3xl flex-1 flex-col justify-center;
+  }
+
+  .rr-answer-dock {
+    @apply rounded-lg border border-rr-soft-line bg-rr-surface px-3 py-3 sm:px-4 sm:py-4;
+  }
+
+  .rr-correct-inline {
+    @apply rounded-md border px-3 py-2;
+    border-color: var(--rr-color-mastery-border);
+    background: var(--rr-color-mastery-tint);
+  }
+
+  .rr-pivot-panel {
+    border-color: var(--rr-color-clue-border);
+    background:
+      linear-gradient(180deg, var(--rr-color-clue-tint), var(--rr-color-surface-elevated));
+  }
+
+  .rr-pivot-panel > p:not(.rr-meta) {
+    @apply text-base font-semibold leading-7 text-rr-foreground sm:text-lg;
+  }
+
+  .rr-correct-panel {
+    border-color: var(--rr-color-mastery-border);
+    background:
+      linear-gradient(180deg, var(--rr-color-mastery-tint), var(--rr-color-surface-elevated));
+  }
+
+  .rr-coaching-callout {
+    border-color: var(--rr-color-memory-border);
+    background:
+      linear-gradient(180deg, var(--rr-color-memory-tint), var(--rr-color-surface-elevated));
+    color: var(--rr-color-foreground);
   }
 
   .rr-callout-pivot {

@@ -215,90 +215,97 @@ export function PracticePanel() {
   const learningGoal = question.topic ? `Learning goal: ${question.topic}` : "Learning goal: make the next clinical decision";
 
   return (
-    <div className="practice-focus min-h-screen bg-rr-background">
-      <div className="mx-auto flex min-h-screen w-full max-w-practice flex-col justify-center px-4 py-8 sm:px-6 sm:py-14">
-        <div className="mb-8 flex flex-col gap-3 text-xs text-rr-muted sm:mb-12 sm:flex-row sm:items-center sm:justify-between">
-          <span>Decision {String(sessionDecisionCount).padStart(2, "0")}</span>
-          <QuestionMeta question={question} />
-        </div>
-
-        <section className="rr-card rr-question-card space-y-6 px-4 py-5 motion-safe:animate-[fadeIn_180ms_var(--rr-ease-standard)] sm:space-y-8 sm:px-6 sm:py-7">
-          <div className="space-y-4 sm:space-y-5">
-            <div className="flex flex-wrap items-center gap-2">
-              <span className="rr-badge rr-badge-learning">Current focus</span>
-              <span className="rr-meta">{learningGoal}</span>
-            </div>
-            <h1 className="rr-question-stem">
-              {clinicalPrompt}
-            </h1>
-            <p className="text-lg font-medium leading-7 text-rr-foreground sm:text-xl">
-              {decisionQuestion}
-            </p>
+    <div className="practice-focus rr-practice-shell min-h-screen">
+      <div className="mx-auto flex min-h-screen w-full max-w-tutor flex-col px-4 py-5 sm:px-6 sm:py-8 lg:py-10">
+        <header className="rr-practice-topbar mb-8 sm:mb-10">
+          <div>
+            <p className="rr-practice-kicker">RapidRounds</p>
+            <p className="rr-practice-title">Clinical reasoning round</p>
           </div>
+          <div className="flex flex-col items-start gap-2 sm:items-end">
+            <span className="rr-session-pill">Decision {String(sessionDecisionCount).padStart(2, "0")}</span>
+            <QuestionMeta question={question} />
+          </div>
+        </header>
 
-          <form onSubmit={onSubmit} className="space-y-4">
-            <label className="sr-only" htmlFor="answer">
-              Answer
-            </label>
-            <div className="grid gap-3 sm:grid-cols-[1fr_auto]">
-              <input
-                ref={answerInputRef}
-                id="answer"
-                value={answer}
-                onChange={(event) => setAnswer(event.target.value)}
-                onKeyDown={onAnswerKeyDown}
-                disabled={Boolean(result) || mode === "tutor"}
-                placeholder="Type your answer"
-                name={`rr-answer-${question.id.slice(-6)}`}
-                autoComplete="off"
-                autoCorrect="off"
-                autoCapitalize="off"
-                spellCheck={false}
-                className="rr-input"
-                autoFocus
-              />
-              <Button
-                type="button"
-                variant="secondary"
-                className="px-4"
-                onClick={() => void requestTeaching()}
-                disabled={isTeaching || mode === "tutor"}
-              >
-                {isTeaching ? "Preparing" : "Teach me why"}
-              </Button>
+        <main className="rr-practice-main">
+          <section className="rr-card rr-question-card space-y-7 px-5 py-6 motion-safe:animate-[fadeIn_180ms_var(--rr-ease-standard)] sm:space-y-9 sm:px-8 sm:py-8">
+            <div className="space-y-5 sm:space-y-6">
+              <div className="flex flex-wrap items-center gap-2">
+                <span className="rr-badge rr-badge-learning">Current focus</span>
+                <span className="rr-meta">{learningGoal}</span>
+              </div>
+              <h1 className="rr-question-stem">
+                {clinicalPrompt}
+              </h1>
+              <p className="text-lg font-medium leading-7 text-rr-foreground sm:text-xl">
+                {decisionQuestion}
+              </p>
             </div>
-            <div className="flex min-h-11 flex-wrap items-center gap-3 pt-2">
-              {!result ? (
+
+            <form onSubmit={onSubmit} className="rr-answer-dock space-y-4">
+              <label className="sr-only" htmlFor="answer">
+                Answer
+              </label>
+              <div className="grid gap-3 sm:grid-cols-[1fr_auto]">
+                <input
+                  ref={answerInputRef}
+                  id="answer"
+                  value={answer}
+                  onChange={(event) => setAnswer(event.target.value)}
+                  onKeyDown={onAnswerKeyDown}
+                  disabled={Boolean(result) || mode === "tutor"}
+                  placeholder="Type your answer"
+                  name={`rr-answer-${question.id.slice(-6)}`}
+                  autoComplete="off"
+                  autoCorrect="off"
+                  autoCapitalize="off"
+                  spellCheck={false}
+                  className="rr-input"
+                  autoFocus
+                />
                 <Button
-                  type="submit"
-                  disabled={isSubmitting || mode === "tutor"}
+                  type="button"
+                  variant="secondary"
+                  className="px-4"
+                  onClick={() => void requestTeaching()}
+                  disabled={isTeaching || mode === "tutor"}
                 >
-                  {isSubmitting ? "Checking" : "Submit"}
+                  {isTeaching ? "Preparing" : "Teach me why"}
                 </Button>
-              ) : result.isCorrect ? (
-                <Button type="button" onClick={() => void loadQuestion()}>
-                  Next
-                </Button>
-              ) : null}
-              {mode === "rapid" && result?.isCorrect ? (
-                <div className="max-w-xl text-sm leading-6 motion-safe:animate-[fadeIn_180ms_var(--rr-ease-standard)]">
-                  <span className="font-semibold text-rr-correct">Correct.</span>
-                  <span className="ml-3 text-rr-muted">{result.boardPearl}</span>
-                </div>
-              ) : null}
-              {mode === "rapid" && result && !result.isCorrect ? (
-                <p className="text-sm font-medium text-rr-repair">RapidRounds is building a focused repair.</p>
-              ) : null}
-              {error ? <p className="text-sm text-rr-muted">{error}</p> : null}
-            </div>
-            <p className="text-xs text-rr-muted" aria-live="polite">
-              {keyboardHint}
-            </p>
-          </form>
-        </section>
+              </div>
+              <div className="flex min-h-11 flex-wrap items-center gap-3 pt-1">
+                {!result ? (
+                  <Button
+                    type="submit"
+                    disabled={isSubmitting || mode === "tutor"}
+                  >
+                    {isSubmitting ? "Checking" : "Submit"}
+                  </Button>
+                ) : result.isCorrect ? (
+                  <Button type="button" onClick={() => void loadQuestion()}>
+                    Next
+                  </Button>
+                ) : null}
+                {mode === "rapid" && result?.isCorrect ? (
+                  <div className="rr-correct-inline max-w-xl text-sm leading-6 motion-safe:animate-[fadeIn_180ms_var(--rr-ease-standard)]">
+                    <span className="font-semibold text-rr-correct">Correct.</span>
+                    <span className="ml-3 text-rr-muted">{result.boardPearl}</span>
+                  </div>
+                ) : null}
+                {mode === "rapid" && result && !result.isCorrect ? (
+                  <p className="text-sm font-medium text-rr-repair">RapidRounds is building a focused repair.</p>
+                ) : null}
+                {error ? <p className="text-sm text-rr-muted">{error}</p> : null}
+              </div>
+              <p className="text-xs text-rr-muted" aria-live="polite">
+                {keyboardHint}
+              </p>
+            </form>
+          </section>
 
         {mode === "tutor" && tutor ? (
-          <div className="mt-10 motion-safe:animate-[whiteboardOpen_220ms_var(--rr-ease-standard)]">
+          <div className="mt-7 motion-safe:animate-[whiteboardOpen_220ms_var(--rr-ease-standard)] sm:mt-8">
             <TutorMode
               tutor={tutor}
               reinforcementAnswer={reinforcementAnswer}
@@ -309,6 +316,7 @@ export function PracticePanel() {
             />
           </div>
         ) : null}
+        </main>
       </div>
       {showEndSessionConfirm ? (
         <div
