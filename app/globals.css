@@ -12,35 +12,62 @@
   --rr-color-surface-elevated: #ffffff;
   --rr-color-border: #d8d8d8;
   --rr-color-border-strong: #111111;
-  --rr-color-aster: #315c68;
+
+  /* Educational role tokens. Remap these for future themes; components should not depend on fixed color families. */
+  --rr-color-accent: #315c68;
+  --rr-color-recognition: #264653;
+  --rr-color-reasoning: #315c68;
+  --rr-color-comparison: #3f5554;
+  --rr-color-memory: #5d604e;
+  --rr-color-pivot: #7a5c12;
+  --rr-color-clue: #7a5c12;
+  --rr-color-takeaway: #245c45;
+  --rr-color-repair: #7f1d1d;
   --rr-color-correct: #137a3a;
   --rr-color-incorrect: #b42318;
   --rr-color-warning: #7a5c12;
   --rr-color-info: #264653;
-  --rr-color-repair: #7f1d1d;
   --rr-color-mastery: #245c45;
   --rr-color-observatory-atmosphere: #eef3f1;
 
+  --rr-color-aster: var(--rr-color-accent);
   --rr-color-foreground: var(--rr-color-text-primary);
   --rr-color-muted: var(--rr-color-text-muted);
   --rr-color-line: #111111;
   --rr-color-soft-line: var(--rr-color-border);
   --rr-color-panel: var(--rr-color-surface-elevated);
   --rr-color-subtle: #f4f6f5;
-  --rr-color-clinical: var(--rr-color-info);
-  --rr-color-pivot: var(--rr-color-warning);
+  --rr-color-clinical: var(--rr-color-recognition);
   --rr-color-learning: var(--rr-color-mastery);
   --rr-color-success: var(--rr-color-correct);
   --rr-color-error: var(--rr-color-incorrect);
-  --rr-color-focus: var(--rr-color-aster);
+  --rr-color-focus: var(--rr-color-accent);
+
+  --rr-color-accent-tint: color-mix(in srgb, var(--rr-color-accent) 7%, white);
+  --rr-color-accent-border: color-mix(in srgb, var(--rr-color-accent) 26%, white);
+  --rr-color-recognition-tint: color-mix(in srgb, var(--rr-color-recognition) 6%, white);
+  --rr-color-recognition-border: color-mix(in srgb, var(--rr-color-recognition) 24%, white);
+  --rr-color-reasoning-tint: color-mix(in srgb, var(--rr-color-reasoning) 6%, white);
+  --rr-color-reasoning-border: color-mix(in srgb, var(--rr-color-reasoning) 24%, white);
+  --rr-color-comparison-tint: color-mix(in srgb, var(--rr-color-comparison) 5%, white);
+  --rr-color-comparison-border: color-mix(in srgb, var(--rr-color-comparison) 22%, white);
+  --rr-color-memory-tint: color-mix(in srgb, var(--rr-color-memory) 6%, white);
+  --rr-color-memory-border: color-mix(in srgb, var(--rr-color-memory) 24%, white);
+  --rr-color-pivot-tint: color-mix(in srgb, var(--rr-color-pivot) 8%, white);
+  --rr-color-pivot-border: color-mix(in srgb, var(--rr-color-pivot) 28%, white);
+  --rr-color-clue-tint: color-mix(in srgb, var(--rr-color-clue) 8%, white);
+  --rr-color-clue-border: color-mix(in srgb, var(--rr-color-clue) 28%, white);
+  --rr-color-takeaway-tint: color-mix(in srgb, var(--rr-color-takeaway) 7%, white);
+  --rr-color-takeaway-border: color-mix(in srgb, var(--rr-color-takeaway) 28%, white);
   --rr-color-repair-tint: color-mix(in srgb, var(--rr-color-repair) 7%, white);
   --rr-color-repair-border: color-mix(in srgb, var(--rr-color-repair) 28%, white);
   --rr-color-mastery-tint: color-mix(in srgb, var(--rr-color-mastery) 7%, white);
   --rr-color-mastery-border: color-mix(in srgb, var(--rr-color-mastery) 28%, white);
-  --rr-color-warning-tint: color-mix(in srgb, var(--rr-color-warning) 8%, white);
-  --rr-color-warning-border: color-mix(in srgb, var(--rr-color-warning) 28%, white);
-  --rr-color-info-tint: color-mix(in srgb, var(--rr-color-info) 6%, white);
-  --rr-color-info-border: color-mix(in srgb, var(--rr-color-info) 24%, white);
+  --rr-color-warning-tint: var(--rr-color-pivot-tint);
+  --rr-color-warning-border: var(--rr-color-pivot-border);
+  --rr-color-info-tint: var(--rr-color-recognition-tint);
+  --rr-color-info-border: var(--rr-color-recognition-border);
+  --rr-color-overlay: color-mix(in srgb, var(--rr-color-background) 84%, transparent);
   --rr-color-disabled-surface: #f1f2f1;
 
   --rr-space-0: 0;
@@ -219,9 +246,9 @@ body:has(.practice-focus) .app-main {
   }
 
   .rr-badge-pivot {
-    color: var(--rr-color-warning);
-    border-color: var(--rr-color-warning-border);
-    background: var(--rr-color-warning-tint);
+    color: var(--rr-color-pivot);
+    border-color: var(--rr-color-pivot-border);
+    background: var(--rr-color-pivot-tint);
   }
 
   .rr-button {
@@ -252,11 +279,11 @@ body:has(.practice-focus) .app-main {
   }
 
   .rr-input {
-    @apply h-12 w-full rounded-none border-0 border-b border-rr-line bg-transparent px-0 text-base outline-none transition-colors placeholder:text-rr-muted focus:border-rr-aster focus-visible:ring-2 focus-visible:ring-rr-focus focus-visible:ring-offset-4 disabled:text-rr-muted;
+    @apply h-12 w-full rounded-none border-0 border-b border-rr-line bg-transparent px-0 text-base outline-none transition-colors placeholder:text-rr-muted focus:border-rr-accent focus-visible:ring-2 focus-visible:ring-rr-focus focus-visible:ring-offset-4 disabled:text-rr-muted;
   }
 
   .rr-text-input {
-    @apply h-11 w-full rounded-md border border-rr-border bg-rr-elevated px-3 text-sm outline-none transition-colors focus:border-rr-aster focus-visible:ring-2 focus-visible:ring-rr-focus focus-visible:ring-offset-2 disabled:text-rr-muted;
+    @apply h-11 w-full rounded-md border border-rr-border bg-rr-elevated px-3 text-sm outline-none transition-colors focus:border-rr-accent focus-visible:ring-2 focus-visible:ring-rr-focus focus-visible:ring-offset-2 disabled:text-rr-muted;
   }
 
   .rr-table {
@@ -264,7 +291,7 @@ body:has(.practice-focus) .app-main {
   }
 
   .rr-table th {
-    @apply border-b border-rr-line py-2 pr-3 font-semibold;
+    @apply border-b border-rr-comparison py-2 pr-3 font-semibold;
   }
 
   .rr-table td {
@@ -280,16 +307,26 @@ body:has(.practice-focus) .app-main {
   }
 
   .rr-callout-pivot {
-    border-color: var(--rr-color-warning-border);
-    background: var(--rr-color-warning-tint);
+    border-color: var(--rr-color-pivot-border);
+    background: var(--rr-color-pivot-tint);
+  }
+
+  .rr-callout-clue {
+    border-color: var(--rr-color-clue-border);
+    background: var(--rr-color-clue-tint);
+  }
+
+  .rr-overlay {
+    background: var(--rr-color-overlay);
   }
 
   .rr-path {
-    @apply rounded-lg border border-rr-info-border bg-rr-info-tint px-3 py-3 text-sm leading-5 text-rr-foreground;
+    @apply flex flex-col rounded-lg border border-rr-recognition-border bg-rr-recognition-tint px-3 py-3 text-sm leading-5 text-rr-foreground sm:flex-row sm:items-stretch sm:gap-2;
   }
 
+  /* Mobile keeps recognition paths vertical; wider screens read left-to-right like a compact clinical pathway. */
   .rr-path-step {
-    @apply relative flex items-center gap-2 pb-4 last:pb-0;
+    @apply relative flex min-w-0 items-center gap-2 pb-4 last:pb-0 sm:flex-1 sm:flex-col sm:items-start sm:gap-2 sm:pb-0 sm:pr-5 sm:last:pr-0;
   }
 
   .rr-path-step:not(:last-child)::after {
@@ -299,27 +336,38 @@ body:has(.practice-focus) .app-main {
     top: 1.85rem;
     bottom: 0.3rem;
     width: 1px;
-    background: var(--rr-color-info-border);
+    background: var(--rr-color-recognition-border);
   }
 
   .rr-path-marker {
-    @apply z-10 flex h-6 w-6 shrink-0 items-center justify-center rounded-full border border-rr-info-border bg-rr-elevated text-[0.7rem] font-semibold text-rr-info;
+    @apply z-10 flex h-6 w-6 shrink-0 items-center justify-center rounded-full border border-rr-recognition-border bg-rr-elevated text-[0.7rem] font-semibold text-rr-recognition;
   }
 
   .rr-path-node {
-    @apply min-w-0 rounded-md border border-rr-border bg-rr-elevated px-3 py-2;
+    @apply min-w-0 rounded-md border border-rr-border bg-rr-elevated px-3 py-2 sm:w-full;
   }
 
   .rr-path-terminal .rr-path-marker {
-    border-color: var(--rr-color-mastery-border);
-    background: var(--rr-color-mastery-tint);
-    color: var(--rr-color-mastery);
+    border-color: var(--rr-color-takeaway-border);
+    background: var(--rr-color-takeaway-tint);
+    color: var(--rr-color-takeaway);
   }
 
   .rr-path-terminal .rr-path-node {
-    border-color: var(--rr-color-mastery-border);
-    background: var(--rr-color-mastery-tint);
+    border-color: var(--rr-color-takeaway-border);
+    background: var(--rr-color-takeaway-tint);
     font-weight: 600;
+  }
+
+  @media (min-width: 640px) {
+    .rr-path-step:not(:last-child)::after {
+      left: 2rem;
+      right: 0.4rem;
+      top: 0.75rem;
+      bottom: auto;
+      width: auto;
+      height: 1px;
+    }
   }
 
   .rr-empty {

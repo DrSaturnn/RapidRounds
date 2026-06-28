@@ -32,6 +32,14 @@ describe("design system", () => {
       "--rr-color-border",
       "--rr-color-text-muted",
       "--rr-color-text-primary",
+      "--rr-color-accent",
+      "--rr-color-recognition",
+      "--rr-color-reasoning",
+      "--rr-color-comparison",
+      "--rr-color-memory",
+      "--rr-color-pivot",
+      "--rr-color-clue",
+      "--rr-color-takeaway",
       "--rr-color-aster",
       "--rr-color-correct",
       "--rr-color-incorrect",
@@ -42,9 +50,23 @@ describe("design system", () => {
       "--rr-color-observatory-atmosphere"
     ].forEach((token) => assert.match(css, new RegExp(token)));
 
-    ["aster", "correct", "incorrect", "warning", "info", "repair", "mastery", "observatory"].forEach((token) =>
-      assert.match(tailwind, new RegExp(`${token}: "var\\(--rr-color-`))
-    );
+    [
+      "accent",
+      "recognition",
+      "reasoning",
+      "comparison",
+      "memory",
+      "pivot",
+      "clue",
+      "takeaway",
+      "correct",
+      "incorrect",
+      "warning",
+      "info",
+      "repair",
+      "mastery",
+      "observatory"
+    ].forEach((token) => assert.match(tailwind, new RegExp(`${token}: "var\\(--rr-color-`)));
   });
 
   it("uses design-system classes for core reusable components", () => {
@@ -65,6 +87,7 @@ describe("design system", () => {
     assert.match(tutorMode, /rr-path/);
     assert.match(tutorMode, /rr-path-step/);
     assert.match(tutorMode, /rr-path-terminal/);
+    assert.match(tutorMode, /rr-callout-clue/);
     assert.match(tutorMode, /rr-table/);
     assert.match(tutorMode, /rr-callout-pivot/);
     assert.match(tutorMode, /rr-chip/);

@@ -58,7 +58,7 @@ export function TutorMode({
               </div>
               <div>
                 <p className="rr-meta">Key clue</p>
-                <p>{tutor.repair.clue}</p>
+                <p className="rr-callout rr-callout-clue mt-1 py-2">{tutor.repair.clue}</p>
               </div>
             </div>
             <p>{tutor.repair.why}</p>
@@ -80,7 +80,7 @@ export function TutorMode({
               </div>
               <div>
                 <p className="rr-meta">Key clue</p>
-                <p>{tutor.repair.clue}</p>
+                <p className="rr-callout rr-callout-clue mt-1 py-2">{tutor.repair.clue}</p>
               </div>
             </div>
             <p className="text-sm leading-6">{tutor.repair.why}</p>

@@ -277,7 +277,7 @@ export function PracticePanel() {
               ) : null}
               {mode === "rapid" && result?.isCorrect ? (
                 <div className="max-w-xl text-sm leading-6 motion-safe:animate-[fadeIn_180ms_var(--rr-ease-standard)]">
-                  <span className="font-semibold text-rr-success">Correct.</span>
+                  <span className="font-semibold text-rr-correct">Correct.</span>
                   <span className="ml-3 text-rr-muted">{result.boardPearl}</span>
                 </div>
               ) : null}
@@ -307,7 +307,7 @@ export function PracticePanel() {
       </div>
       {showEndSessionConfirm ? (
         <div
-          className="fixed inset-0 z-50 flex items-center justify-center bg-white/80 px-5 motion-safe:animate-[fadeIn_180ms_var(--rr-ease-standard)]"
+          className="rr-overlay fixed inset-0 z-50 flex items-center justify-center px-5 motion-safe:animate-[fadeIn_180ms_var(--rr-ease-standard)]"
           role="presentation"
         >
           <div
