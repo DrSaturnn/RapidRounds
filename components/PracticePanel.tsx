@@ -22,8 +22,8 @@ const practiceSkins: Array<{ value: PracticeSkin; label: string; description: st
   },
   {
     value: "warm-notebook",
-    label: "Warm Notebook",
-    description: "Ivory paper tone with restrained sepia emphasis."
+    label: "Moleskine Notebook",
+    description: "Warm white paper with quiet journal-style emphasis."
   },
   {
     value: "dark-clinical",
@@ -32,7 +32,7 @@ const practiceSkins: Array<{ value: PracticeSkin; label: string; description: st
   },
   {
     value: "editorial",
-    label: "Editorial",
+    label: "Editorial Magazine",
     description: "Article-like spacing with deep navy accents."
   }
 ];

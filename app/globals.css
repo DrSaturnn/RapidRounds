@@ -5,32 +5,70 @@
 :root {
   --font-sans: Arial, Helvetica, sans-serif;
 
-  --rr-color-text-primary: #111827;
-  --rr-color-text-muted: #667085;
-  --rr-color-background: #f7f7fb;
-  --rr-color-surface: #f8f8fc;
-  --rr-color-surface-elevated: #ffffff;
-  --rr-color-border: #e5e3ee;
-  --rr-color-border-strong: #221a4a;
-  --rr-color-button-primary: #5d4bd6;
-  --rr-color-sidebar-background: #ffffff;
-  --rr-card-shadow: 0 24px 70px rgb(46 37 115 / 0.09), 0 2px 12px rgb(17 24 39 / 0.04);
-  --rr-card-shadow-soft: 0 14px 36px rgb(46 37 115 / 0.07), 0 1px 4px rgb(17 24 39 / 0.035);
-  --rr-radius-card: 1rem;
+  --rr-font-sans: Inter, Geist, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --rr-font-serif: "Source Serif 4", Charter, Georgia, ui-serif, serif;
+  --rr-font-mono: "IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+  --font-sans: var(--rr-font-sans);
+
+  --rr-bg: #ffffff;
+  --rr-bg-subtle: #f8fafc;
+  --rr-surface: #ffffff;
+  --rr-surface-elevated: #ffffff;
+  --rr-surface-muted: #f8fafc;
+  --rr-border: rgb(15 23 42 / 0.08);
+  --rr-border-strong: rgb(15 23 42 / 0.22);
+  --rr-text: #111827;
+  --rr-text-muted: #64748b;
+  --rr-text-soft: #94a3b8;
+  --rr-accent: #635bff;
+  --rr-accent-soft: rgb(99 91 255 / 0.09);
+  --rr-accent-strong: #4f46e5;
+  --rr-success: #137a3a;
+  --rr-success-soft: rgb(19 122 58 / 0.1);
+  --rr-warning: #b7791f;
+  --rr-warning-soft: rgb(183 121 31 / 0.12);
+  --rr-danger: #b42318;
+  --rr-danger-soft: rgb(180 35 24 / 0.1);
+  --rr-shadow-sm: 0 1px 2px rgb(15 23 42 / 0.04), 0 1px 0 rgb(255 255 255 / 0.72) inset;
+  --rr-shadow-md: 0 12px 40px rgb(15 23 42 / 0.06), 0 1px 0 rgb(255 255 255 / 0.72) inset;
+  --rr-shadow-lg: 0 24px 70px rgb(46 37 115 / 0.09), 0 2px 12px rgb(15 23 42 / 0.04);
+  --rr-radius-sm: 0.5rem;
+  --rr-radius-md: 0.875rem;
+  --rr-radius-lg: 1.125rem;
+  --rr-radius-xl: 1.35rem;
+  --rr-paper-texture: none;
+  --rr-rule-opacity: 0;
+  --rr-gradient-bg:
+    radial-gradient(circle at top left, rgb(99 102 241 / 0.06), transparent 32rem),
+    linear-gradient(180deg, #ffffff, #f8fafc);
+  --rr-card-edge: inset 0 1px 0 rgb(255 255 255 / 0.78);
+
+  --rr-color-text-primary: var(--rr-text);
+  --rr-color-text-muted: var(--rr-text-muted);
+  --rr-color-background: var(--rr-bg);
+  --rr-color-surface: var(--rr-surface-muted);
+  --rr-color-surface-elevated: var(--rr-surface-elevated);
+  --rr-color-border: var(--rr-border);
+  --rr-color-border-strong: var(--rr-border-strong);
+  --rr-color-button-primary: var(--rr-accent);
+  --rr-color-sidebar-background: var(--rr-surface-elevated);
+  --rr-card-shadow: var(--rr-shadow-lg);
+  --rr-card-shadow-soft: var(--rr-shadow-md);
+  --rr-radius-card: var(--rr-radius-xl);
 
   /* Educational role tokens. Remap these for future themes; components should not depend on fixed color families. */
-  --rr-color-accent: #5d4bd6;
-  --rr-color-recognition: #4f46b8;
-  --rr-color-reasoning: #5145cd;
+  --rr-color-accent: var(--rr-accent);
+  --rr-color-recognition: var(--rr-accent-strong);
+  --rr-color-reasoning: var(--rr-accent-strong);
   --rr-color-comparison: #315b89;
   --rr-color-memory: #6b55cc;
-  --rr-color-pivot: #b7791f;
-  --rr-color-clue: #b7791f;
+  --rr-color-pivot: var(--rr-warning);
+  --rr-color-clue: var(--rr-warning);
   --rr-color-takeaway: #245c45;
   --rr-color-repair: #8b5cf6;
-  --rr-color-correct: #137a3a;
-  --rr-color-incorrect: #b42318;
-  --rr-color-warning: #b7791f;
+  --rr-color-correct: var(--rr-success);
+  --rr-color-incorrect: var(--rr-danger);
+  --rr-color-warning: var(--rr-warning);
   --rr-color-info: #315b89;
   --rr-color-mastery: #245c45;
   --rr-color-observatory-atmosphere: #f2f0ff;
@@ -90,9 +128,10 @@
   --rr-space-16: 4rem;
 
   --rr-radius-none: 0;
-  --rr-radius-sm: 0.125rem;
-  --rr-radius-md: 0.25rem;
-  --rr-radius-lg: 0.5rem;
+  --rr-radius-sm: 0.5rem;
+  --rr-radius-md: 0.875rem;
+  --rr-radius-lg: 1.125rem;
+  --rr-radius-xl: 1.35rem;
 
   --rr-border-thin: 1px solid var(--rr-color-border-strong);
   --rr-border-soft: 1px solid var(--rr-color-border);
@@ -107,85 +146,191 @@
 }
 
 [data-theme="modern-academic"] {
-  --font-sans: Arial, Helvetica, sans-serif;
-  --rr-color-text-primary: #111827;
-  --rr-color-text-muted: #667085;
-  --rr-color-background: #f7f7fb;
-  --rr-color-surface: #f8f8fc;
-  --rr-color-surface-elevated: #ffffff;
-  --rr-color-border: #e5e3ee;
-  --rr-color-border-strong: #221a4a;
-  --rr-color-button-primary: #5d4bd6;
-  --rr-color-sidebar-background: #ffffff;
-  --rr-card-shadow: 0 24px 70px rgb(46 37 115 / 0.09), 0 2px 12px rgb(17 24 39 / 0.04);
-  --rr-card-shadow-soft: 0 14px 36px rgb(46 37 115 / 0.07), 0 1px 4px rgb(17 24 39 / 0.035);
-  --rr-radius-card: 1rem;
-  --rr-color-accent: #5d4bd6;
-  --rr-color-recognition: #4f46b8;
-  --rr-color-reasoning: #5145cd;
+  --rr-font-sans: Inter, Geist, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --font-sans: var(--rr-font-sans);
+  --rr-bg: #ffffff;
+  --rr-bg-subtle: #f8fafc;
+  --rr-surface: #ffffff;
+  --rr-surface-elevated: #ffffff;
+  --rr-surface-muted: #f8fafc;
+  --rr-border: rgb(15 23 42 / 0.08);
+  --rr-border-strong: rgb(15 23 42 / 0.22);
+  --rr-text: #111827;
+  --rr-text-muted: #64748b;
+  --rr-text-soft: #94a3b8;
+  --rr-accent: #635bff;
+  --rr-accent-soft: rgb(99 91 255 / 0.09);
+  --rr-accent-strong: #4f46e5;
+  --rr-success: #137a3a;
+  --rr-success-soft: rgb(19 122 58 / 0.1);
+  --rr-warning: #b7791f;
+  --rr-warning-soft: rgb(183 121 31 / 0.12);
+  --rr-danger: #b42318;
+  --rr-danger-soft: rgb(180 35 24 / 0.1);
+  --rr-shadow-sm: 0 1px 2px rgb(15 23 42 / 0.04), 0 1px 0 rgb(255 255 255 / 0.72) inset;
+  --rr-shadow-md: 0 12px 40px rgb(15 23 42 / 0.06), 0 1px 0 rgb(255 255 255 / 0.72) inset;
+  --rr-shadow-lg: 0 24px 70px rgb(46 37 115 / 0.09), 0 2px 12px rgb(15 23 42 / 0.04);
+  --rr-radius-sm: 0.5rem;
+  --rr-radius-md: 0.875rem;
+  --rr-radius-lg: 1.125rem;
+  --rr-radius-xl: 1.35rem;
+  --rr-paper-texture: none;
+  --rr-rule-opacity: 0;
+  --rr-gradient-bg:
+    radial-gradient(circle at top left, rgb(99 102 241 / 0.06), transparent 32rem),
+    linear-gradient(180deg, #ffffff, #f8fafc);
+  --rr-card-edge: inset 0 1px 0 rgb(255 255 255 / 0.78);
+  --rr-color-text-primary: var(--rr-text);
+  --rr-color-text-muted: var(--rr-text-muted);
+  --rr-color-background: var(--rr-bg);
+  --rr-color-surface: var(--rr-surface-muted);
+  --rr-color-surface-elevated: var(--rr-surface-elevated);
+  --rr-color-border: var(--rr-border);
+  --rr-color-border-strong: var(--rr-border-strong);
+  --rr-color-button-primary: var(--rr-accent);
+  --rr-color-sidebar-background: var(--rr-surface-elevated);
+  --rr-card-shadow: var(--rr-shadow-lg);
+  --rr-card-shadow-soft: var(--rr-shadow-md);
+  --rr-radius-card: var(--rr-radius-xl);
+  --rr-color-accent: var(--rr-accent);
+  --rr-color-recognition: var(--rr-accent-strong);
+  --rr-color-reasoning: var(--rr-accent-strong);
   --rr-color-comparison: #315b89;
   --rr-color-memory: #6b55cc;
-  --rr-color-pivot: #b7791f;
-  --rr-color-clue: #b7791f;
+  --rr-color-pivot: var(--rr-warning);
+  --rr-color-clue: var(--rr-warning);
   --rr-color-repair: #8b5cf6;
   --rr-color-info: #315b89;
   --rr-color-observatory-atmosphere: #f2f0ff;
 }
 
 [data-theme="warm-notebook"] {
-  --font-sans: Arial, Helvetica, sans-serif;
-  --rr-color-text-primary: #2a2520;
-  --rr-color-text-muted: #746b61;
-  --rr-color-background: #fcfbf8;
-  --rr-color-surface: #faf8f4;
-  --rr-color-surface-elevated: #ffffff;
-  --rr-color-border: #ebe4d8;
-  --rr-color-border-strong: #4f3828;
-  --rr-color-button-primary: #7f4b2c;
-  --rr-color-sidebar-background: #fffdf8;
-  --rr-card-shadow: 0 24px 78px rgb(74 52 30 / 0.09), 0 2px 10px rgb(74 52 30 / 0.035);
-  --rr-card-shadow-soft: 0 16px 44px rgb(74 52 30 / 0.06), 0 1px 4px rgb(74 52 30 / 0.025);
-  --rr-radius-card: 0.95rem;
-  --rr-color-accent: #7f4b2c;
+  --rr-font-sans: Inter, Geist, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --font-sans: var(--rr-font-sans);
+  --rr-bg: #fcfbf8;
+  --rr-bg-subtle: #f7f4ee;
+  --rr-surface: #fffefa;
+  --rr-surface-elevated: #ffffff;
+  --rr-surface-muted: #faf8f4;
+  --rr-border: rgb(120 80 40 / 0.16);
+  --rr-border-strong: rgb(78 56 40 / 0.34);
+  --rr-text: #2a2520;
+  --rr-text-muted: #746b61;
+  --rr-text-soft: #9b9186;
+  --rr-accent: #7f4b2c;
+  --rr-accent-soft: rgb(127 75 44 / 0.09);
+  --rr-accent-strong: #5f3821;
+  --rr-success: #446a46;
+  --rr-success-soft: rgb(68 106 70 / 0.1);
+  --rr-warning: #95602d;
+  --rr-warning-soft: rgb(149 96 45 / 0.12);
+  --rr-danger: #9f3f34;
+  --rr-danger-soft: rgb(159 63 52 / 0.1);
+  --rr-shadow-sm: 0 1px 2px rgb(80 50 20 / 0.035), inset 0 1px 0 rgb(255 255 255 / 0.82);
+  --rr-shadow-md: 0 10px 30px rgb(80 50 20 / 0.08), inset 0 1px 0 rgb(255 255 255 / 0.75);
+  --rr-shadow-lg: 0 24px 78px rgb(74 52 30 / 0.09), 0 2px 10px rgb(74 52 30 / 0.035), inset 0 1px 0 rgb(255 255 255 / 0.78);
+  --rr-radius-sm: 0.45rem;
+  --rr-radius-md: 0.8rem;
+  --rr-radius-lg: 1rem;
+  --rr-radius-xl: 1.1rem;
+  --rr-paper-texture:
+    radial-gradient(circle at 20% 10%, rgb(90 68 45 / 0.03) 0 1px, transparent 1px),
+    radial-gradient(circle at 80% 50%, rgb(90 68 45 / 0.025) 0 1px, transparent 1px);
+  --rr-rule-opacity: 0.16;
+  --rr-gradient-bg:
+    repeating-linear-gradient(to bottom, transparent 0, transparent 31px, rgb(120 80 40 / var(--rr-rule-opacity)) 32px),
+    radial-gradient(circle at top left, rgb(120 70 30 / 0.045), transparent 34rem),
+    linear-gradient(180deg, #fcfbf8, #f7f4ee);
+  --rr-card-edge: inset 0 1px 0 rgb(255 255 255 / 0.78), inset 0 -1px 0 rgb(120 80 40 / 0.035);
+  --rr-color-text-primary: var(--rr-text);
+  --rr-color-text-muted: var(--rr-text-muted);
+  --rr-color-background: var(--rr-bg);
+  --rr-color-surface: var(--rr-surface-muted);
+  --rr-color-surface-elevated: var(--rr-surface-elevated);
+  --rr-color-border: var(--rr-border);
+  --rr-color-border-strong: var(--rr-border-strong);
+  --rr-color-button-primary: var(--rr-accent);
+  --rr-color-sidebar-background: var(--rr-surface-elevated);
+  --rr-card-shadow: var(--rr-shadow-lg);
+  --rr-card-shadow-soft: var(--rr-shadow-md);
+  --rr-radius-card: var(--rr-radius-xl);
+  --rr-color-accent: var(--rr-accent);
   --rr-color-recognition: #446a46;
-  --rr-color-reasoning: #7f4b2c;
+  --rr-color-reasoning: var(--rr-accent);
   --rr-color-comparison: #6a5948;
   --rr-color-memory: #765b2f;
-  --rr-color-pivot: #95602d;
-  --rr-color-clue: #95602d;
-  --rr-color-repair: #7f4b2c;
+  --rr-color-pivot: var(--rr-warning);
+  --rr-color-clue: var(--rr-warning);
+  --rr-color-repair: var(--rr-accent);
+  --rr-color-correct: var(--rr-success);
+  --rr-color-incorrect: var(--rr-danger);
+  --rr-color-warning: var(--rr-warning);
   --rr-color-info: #4b6f8c;
   --rr-color-observatory-atmosphere: #f7f4ee;
 }
 
 [data-theme="dark-clinical"] {
-  --font-sans: Arial, Helvetica, sans-serif;
-  --rr-color-text-primary: #f5f7fb;
-  --rr-color-text-muted: #a8b0c2;
-  --rr-color-background: #0b1020;
-  --rr-color-surface: #111827;
-  --rr-color-surface-elevated: #141b2d;
-  --rr-color-border: #263149;
-  --rr-color-border-strong: #c8d0e5;
-  --rr-color-button-primary: #7765ff;
-  --rr-color-sidebar-background: #0f1628;
-  --rr-card-shadow: 0 26px 80px rgb(0 0 0 / 0.34), 0 1px 0 rgb(255 255 255 / 0.03) inset;
-  --rr-card-shadow-soft: 0 16px 42px rgb(0 0 0 / 0.26), 0 1px 0 rgb(255 255 255 / 0.025) inset;
-  --rr-radius-card: 1rem;
-  --rr-color-accent: #8b7cff;
-  --rr-color-recognition: #9c8cff;
-  --rr-color-reasoning: #8b7cff;
+  --rr-font-sans: Inter, Geist, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --font-sans: var(--rr-font-sans);
+  --rr-bg: #0b1020;
+  --rr-bg-subtle: #111827;
+  --rr-surface: #111827;
+  --rr-surface-elevated: #141b2d;
+  --rr-surface-muted: #0f1628;
+  --rr-border: rgb(148 163 184 / 0.16);
+  --rr-border-strong: rgb(203 213 225 / 0.34);
+  --rr-text: #f5f7fb;
+  --rr-text-muted: #a8b0c2;
+  --rr-text-soft: #748099;
+  --rr-accent: #8b7cff;
+  --rr-accent-soft: rgb(139 124 255 / 0.14);
+  --rr-accent-strong: #a69bff;
+  --rr-success: #75d59a;
+  --rr-success-soft: rgb(117 213 154 / 0.13);
+  --rr-warning: #f0b75a;
+  --rr-warning-soft: rgb(240 183 90 / 0.14);
+  --rr-danger: #ff7d7d;
+  --rr-danger-soft: rgb(255 125 125 / 0.12);
+  --rr-shadow-sm: 0 1px 2px rgb(0 0 0 / 0.22), inset 0 1px 0 rgb(255 255 255 / 0.025);
+  --rr-shadow-md: 0 16px 48px rgb(0 0 0 / 0.35), inset 0 1px 0 rgb(255 255 255 / 0.035);
+  --rr-shadow-lg: 0 26px 80px rgb(0 0 0 / 0.42), inset 0 1px 0 rgb(255 255 255 / 0.04);
+  --rr-radius-sm: 0.5rem;
+  --rr-radius-md: 0.875rem;
+  --rr-radius-lg: 1.125rem;
+  --rr-radius-xl: 1.125rem;
+  --rr-paper-texture: none;
+  --rr-rule-opacity: 0;
+  --rr-gradient-bg:
+    radial-gradient(circle at top left, rgb(99 102 241 / 0.14), transparent 34rem),
+    radial-gradient(circle at 90% 8%, rgb(30 64 175 / 0.12), transparent 24rem),
+    linear-gradient(180deg, #0b1020, #111827);
+  --rr-card-edge: inset 0 1px 0 rgb(255 255 255 / 0.04);
+  --rr-color-text-primary: var(--rr-text);
+  --rr-color-text-muted: var(--rr-text-muted);
+  --rr-color-background: var(--rr-bg);
+  --rr-color-surface: var(--rr-surface-muted);
+  --rr-color-surface-elevated: var(--rr-surface-elevated);
+  --rr-color-border: var(--rr-border);
+  --rr-color-border-strong: var(--rr-border-strong);
+  --rr-color-button-primary: var(--rr-accent);
+  --rr-color-sidebar-background: var(--rr-surface-muted);
+  --rr-card-shadow: var(--rr-shadow-lg);
+  --rr-card-shadow-soft: var(--rr-shadow-md);
+  --rr-radius-card: var(--rr-radius-xl);
+  --rr-color-accent: var(--rr-accent);
+  --rr-color-recognition: var(--rr-accent-strong);
+  --rr-color-reasoning: var(--rr-accent);
   --rr-color-comparison: #80b7ff;
   --rr-color-memory: #b39cff;
-  --rr-color-pivot: #f0b75a;
-  --rr-color-clue: #f0b75a;
-  --rr-color-takeaway: #75d59a;
+  --rr-color-pivot: var(--rr-warning);
+  --rr-color-clue: var(--rr-warning);
+  --rr-color-takeaway: var(--rr-success);
   --rr-color-repair: #b39cff;
-  --rr-color-correct: #75d59a;
-  --rr-color-incorrect: #ff7d7d;
-  --rr-color-warning: #f0b75a;
+  --rr-color-correct: var(--rr-success);
+  --rr-color-incorrect: var(--rr-danger);
+  --rr-color-warning: var(--rr-warning);
   --rr-color-info: #80b7ff;
-  --rr-color-mastery: #75d59a;
+  --rr-color-mastery: var(--rr-success);
   --rr-color-observatory-atmosphere: #151a30;
   --rr-color-accent-tint: color-mix(in srgb, var(--rr-color-accent) 16%, var(--rr-color-surface-elevated));
   --rr-color-accent-border: color-mix(in srgb, var(--rr-color-accent) 42%, var(--rr-color-border));
@@ -210,50 +355,63 @@
 }
 
 [data-theme="editorial"] {
-  --font-sans: Arial, Helvetica, sans-serif;
-  --rr-color-text-primary: #0f172a;
-  --rr-color-text-muted: #64748b;
-  --rr-color-background: #ffffff;
-  --rr-color-surface: #f7f9fc;
-  --rr-color-surface-elevated: #ffffff;
-  --rr-color-border: #e3e8f1;
-  --rr-color-border-strong: #0f2a4a;
-  --rr-color-button-primary: #123f73;
-  --rr-color-sidebar-background: #fbfcff;
-  --rr-card-shadow: 0 18px 56px rgb(15 42 74 / 0.08), 0 1px 5px rgb(15 42 74 / 0.04);
-  --rr-card-shadow-soft: 0 12px 32px rgb(15 42 74 / 0.06), 0 1px 4px rgb(15 42 74 / 0.035);
-  --rr-radius-card: 0.875rem;
-  --rr-color-accent: #123f73;
+  --rr-font-sans: Inter, Geist, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --font-sans: var(--rr-font-sans);
+  --rr-bg: #ffffff;
+  --rr-bg-subtle: #f6f7f9;
+  --rr-surface: #ffffff;
+  --rr-surface-elevated: #ffffff;
+  --rr-surface-muted: #f7f9fc;
+  --rr-border: rgb(15 23 42 / 0.09);
+  --rr-border-strong: rgb(15 42 74 / 0.28);
+  --rr-text: #0f172a;
+  --rr-text-muted: #64748b;
+  --rr-text-soft: #94a3b8;
+  --rr-accent: #123f73;
+  --rr-accent-soft: rgb(18 63 115 / 0.08);
+  --rr-accent-strong: #0f2a4a;
+  --rr-success: #176642;
+  --rr-success-soft: rgb(23 102 66 / 0.09);
+  --rr-warning: #b36b16;
+  --rr-warning-soft: rgb(179 107 22 / 0.1);
+  --rr-danger: #b42318;
+  --rr-danger-soft: rgb(180 35 24 / 0.08);
+  --rr-shadow-sm: 0 1px 2px rgb(15 42 74 / 0.035);
+  --rr-shadow-md: 0 8px 26px rgb(15 42 74 / 0.055);
+  --rr-shadow-lg: 0 18px 56px rgb(15 42 74 / 0.08), 0 1px 5px rgb(15 42 74 / 0.04);
+  --rr-radius-sm: 0.35rem;
+  --rr-radius-md: 0.65rem;
+  --rr-radius-lg: 0.8rem;
+  --rr-radius-xl: 0.875rem;
+  --rr-paper-texture: none;
+  --rr-rule-opacity: 0;
+  --rr-gradient-bg: linear-gradient(180deg, #ffffff, #f6f7f9);
+  --rr-card-edge: inset 0 1px 0 rgb(255 255 255 / 0.64);
+  --rr-color-text-primary: var(--rr-text);
+  --rr-color-text-muted: var(--rr-text-muted);
+  --rr-color-background: var(--rr-bg);
+  --rr-color-surface: var(--rr-surface-muted);
+  --rr-color-surface-elevated: var(--rr-surface-elevated);
+  --rr-color-border: var(--rr-border);
+  --rr-color-border-strong: var(--rr-border-strong);
+  --rr-color-button-primary: var(--rr-accent);
+  --rr-color-sidebar-background: var(--rr-surface-elevated);
+  --rr-card-shadow: var(--rr-shadow-lg);
+  --rr-card-shadow-soft: var(--rr-shadow-md);
+  --rr-radius-card: var(--rr-radius-xl);
+  --rr-color-accent: var(--rr-accent);
   --rr-color-recognition: #165a8f;
-  --rr-color-reasoning: #123f73;
+  --rr-color-reasoning: var(--rr-accent);
   --rr-color-comparison: #32557d;
   --rr-color-memory: #3e4c7a;
-  --rr-color-pivot: #b36b16;
-  --rr-color-clue: #b36b16;
+  --rr-color-pivot: var(--rr-warning);
+  --rr-color-clue: var(--rr-warning);
   --rr-color-repair: #3552a3;
   --rr-color-info: #165a8f;
+  --rr-color-correct: var(--rr-success);
+  --rr-color-incorrect: var(--rr-danger);
+  --rr-color-warning: var(--rr-warning);
   --rr-color-observatory-atmosphere: #eef4fb;
-}
-
-.rr-practice-shell[data-theme="warm-notebook"] {
-  background:
-    linear-gradient(to bottom, color-mix(in srgb, var(--rr-color-border) 18%, transparent) 1px, transparent 1px),
-    radial-gradient(circle at top left, color-mix(in srgb, var(--rr-color-aster) 5%, transparent), transparent 28rem),
-    radial-gradient(circle at 20% 10%, rgb(90 68 45 / 0.025) 0 1px, transparent 1px),
-    var(--rr-color-background);
-  background-size: 100% 2.15rem, auto, 7px 7px, auto;
-}
-
-.rr-practice-shell[data-theme="dark-clinical"] {
-  background:
-    radial-gradient(circle at top left, color-mix(in srgb, var(--rr-color-aster) 18%, transparent), transparent 32rem),
-    linear-gradient(180deg, #0b1020, #080c17);
-}
-
-.rr-practice-shell[data-theme="editorial"] {
-  background:
-    linear-gradient(90deg, color-mix(in srgb, var(--rr-color-observatory-atmosphere) 70%, transparent), transparent 18rem),
-    var(--rr-color-background);
 }
 
 * {
@@ -392,6 +550,10 @@ body:has(.practice-focus) .app-main {
     animation-delay: calc(var(--rr-annotation-index, 0) * 70ms);
   }
 
+  .rr-annotation {
+    @apply relative inline-flex items-baseline gap-2 whitespace-normal rounded-md align-baseline;
+  }
+
   .rr-vignette-highlight {
     @apply rounded-md px-1;
     background: var(--rr-color-clue-tint);
@@ -403,33 +565,79 @@ body:has(.practice-focus) .app-main {
     color: var(--rr-color-clue);
   }
 
+  .rr-annotation-pivot .rr-vignette-highlight,
+  .rr-vignette-annotation-pivot-clue .rr-vignette-highlight {
+    background: var(--rr-color-clue-tint);
+    box-shadow: 0 0 0 1px var(--rr-color-clue-border);
+  }
+
+  .rr-annotation-pivot .rr-vignette-label,
+  .rr-vignette-annotation-pivot-clue .rr-vignette-label {
+    color: var(--rr-color-clue);
+  }
+
+  .rr-annotation-supporting .rr-vignette-highlight,
   .rr-vignette-annotation-supporting .rr-vignette-highlight {
     background: var(--rr-color-recognition-tint);
     box-shadow: 0 0 0 1px var(--rr-color-recognition-border);
   }
 
+  .rr-annotation-supporting .rr-vignette-label,
   .rr-vignette-annotation-supporting .rr-vignette-label {
     color: var(--rr-color-recognition);
   }
 
+  .rr-annotation-distractor .rr-vignette-highlight,
   .rr-vignette-annotation-noise .rr-vignette-highlight {
     background: var(--rr-color-repair-tint);
     box-shadow: 0 0 0 1px var(--rr-color-repair-border);
   }
 
+  .rr-annotation-distractor .rr-vignette-label,
   .rr-vignette-annotation-noise .rr-vignette-label {
     color: var(--rr-color-repair);
   }
 
+  .rr-annotation-context .rr-vignette-highlight,
+  .rr-annotation-neutral .rr-vignette-highlight,
   .rr-vignette-annotation-context .rr-vignette-highlight,
   .rr-vignette-annotation-neutral .rr-vignette-highlight {
     background: var(--rr-color-surface);
     box-shadow: 0 0 0 1px var(--rr-color-border);
   }
 
+  .rr-annotation-context .rr-vignette-label,
+  .rr-annotation-neutral .rr-vignette-label,
   .rr-vignette-annotation-context .rr-vignette-label,
   .rr-vignette-annotation-neutral .rr-vignette-label {
     color: var(--rr-color-muted);
+  }
+
+  [data-theme="warm-notebook"] .rr-vignette-highlight {
+    border-radius: 0.28rem;
+    box-shadow:
+      0 1px 0 rgb(255 255 255 / 0.7) inset,
+      0 -0.35em 0 color-mix(in srgb, currentColor 10%, transparent) inset;
+  }
+
+  [data-theme="warm-notebook"] .rr-vignette-label {
+    font-family: var(--rr-font-serif);
+    font-size: 0.78rem;
+    font-weight: 500;
+    letter-spacing: 0;
+    opacity: 0.78;
+  }
+
+  [data-theme="dark-clinical"] .rr-vignette-highlight {
+    box-shadow:
+      0 0 0 1px color-mix(in srgb, currentColor 42%, transparent),
+      0 0 18px color-mix(in srgb, currentColor 10%, transparent);
+  }
+
+  [data-theme="editorial"] .rr-vignette-label {
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0;
   }
 
   .rr-section-title {
@@ -455,13 +663,37 @@ body:has(.practice-focus) .app-main {
   .rr-card {
     @apply border border-rr-border bg-rr-elevated;
     border-radius: var(--rr-radius-card);
-    box-shadow: var(--rr-card-shadow-soft);
+    box-shadow: var(--rr-shadow-md), var(--rr-card-edge);
+  }
+
+  .rr-card-soft {
+    @apply border border-rr-border;
+    border-radius: var(--rr-radius-lg);
+    background: var(--rr-surface);
+    box-shadow: var(--rr-shadow-sm), var(--rr-card-edge);
+  }
+
+  .rr-card-paper {
+    @apply border border-rr-border;
+    border-radius: var(--rr-radius-lg);
+    background:
+      var(--rr-paper-texture),
+      linear-gradient(180deg, var(--rr-surface-elevated), var(--rr-surface-muted));
+    box-shadow: var(--rr-shadow-md), var(--rr-card-edge);
+  }
+
+  .rr-card-clinical {
+    @apply border border-rr-border;
+    border-radius: var(--rr-radius-lg);
+    background:
+      linear-gradient(180deg, color-mix(in srgb, var(--rr-accent) 5%, var(--rr-surface-elevated)), var(--rr-surface-elevated));
+    box-shadow: var(--rr-shadow-md), var(--rr-card-edge);
   }
 
   .rr-question-card {
     border-color: var(--rr-color-border);
     background: var(--rr-color-surface-elevated);
-    box-shadow: var(--rr-card-shadow-soft);
+    box-shadow: var(--rr-shadow-md), var(--rr-card-edge);
   }
 
   .rr-repair-card {
@@ -477,7 +709,7 @@ body:has(.practice-focus) .app-main {
   .rr-teaching-card {
     border-color: var(--rr-color-border);
     background: var(--rr-color-surface-elevated);
-    box-shadow: none;
+    box-shadow: var(--rr-shadow-sm), var(--rr-card-edge);
   }
 
   .rr-teaching-card summary {
@@ -516,7 +748,33 @@ body:has(.practice-focus) .app-main {
   }
 
   .rr-panel {
-    @apply rounded-lg border border-rr-border bg-rr-surface;
+    @apply border border-rr-border;
+    border-radius: var(--rr-radius-lg);
+    background: var(--rr-surface);
+    box-shadow: var(--rr-shadow-sm), var(--rr-card-edge);
+  }
+
+  .rr-panel-collapsed {
+    @apply border border-rr-border px-4 py-3;
+    border-radius: var(--rr-radius-md);
+    background: var(--rr-surface-elevated);
+    box-shadow: var(--rr-shadow-sm), var(--rr-card-edge);
+  }
+
+  .rr-explanation-card {
+    @apply border border-rr-border;
+    border-radius: var(--rr-radius-lg);
+    background: var(--rr-surface-elevated);
+    box-shadow: var(--rr-shadow-md), var(--rr-card-edge);
+  }
+
+  .rr-vignette-card {
+    @apply border border-rr-border;
+    border-radius: var(--rr-radius-xl);
+    background:
+      var(--rr-paper-texture),
+      var(--rr-surface-elevated);
+    box-shadow: var(--rr-shadow-lg), var(--rr-card-edge);
   }
 
   .rr-section-header {
@@ -622,15 +880,26 @@ body:has(.practice-focus) .app-main {
   }
 
   .rr-practice-shell {
-    background:
-      radial-gradient(circle at top left, color-mix(in srgb, var(--rr-color-aster) 4%, transparent), transparent 30rem),
-      linear-gradient(180deg, color-mix(in srgb, var(--rr-color-observatory-atmosphere) 28%, transparent), transparent 16rem),
-      var(--rr-color-background);
+    position: relative;
+    isolation: isolate;
+    background: var(--rr-gradient-bg);
+    color: var(--rr-text);
+  }
+
+  .rr-practice-shell::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
+    background-image: var(--rr-paper-texture);
+    background-size: 7px 7px, 11px 11px;
   }
 
   .rr-product-nav {
     @apply sticky top-0 z-40 grid min-h-16 grid-cols-1 gap-2 border-b border-rr-border px-4 py-2 backdrop-blur sm:px-6 lg:grid-cols-[auto_minmax(12rem,1fr)_auto_auto] lg:items-center lg:gap-6;
-    background: color-mix(in srgb, var(--rr-color-surface-elevated) 94%, transparent);
+    background: color-mix(in srgb, var(--rr-surface-elevated) 92%, transparent);
+    box-shadow: var(--rr-shadow-sm);
   }
 
   .rr-product-brand {
@@ -651,7 +920,9 @@ body:has(.practice-focus) .app-main {
   }
 
   .rr-subject-pill {
-    @apply inline-flex min-h-10 items-center rounded-lg border border-rr-border bg-rr-elevated px-4 font-semibold shadow-[0_1px_10px_rgb(0_0_0_/_0.035)];
+    @apply inline-flex min-h-10 items-center border border-rr-border bg-rr-elevated px-4 font-semibold;
+    border-radius: var(--rr-radius-md);
+    box-shadow: var(--rr-shadow-sm), var(--rr-card-edge);
   }
 
   .rr-context-divider {
@@ -720,7 +991,7 @@ body:has(.practice-focus) .app-main {
   .rr-aster-button,
   .rr-menu-button {
     @apply inline-flex min-h-10 items-center justify-center rounded-lg border border-rr-border bg-rr-elevated px-3 text-sm font-semibold text-rr-foreground transition-colors hover:border-rr-accent hover:text-rr-accent disabled:cursor-not-allowed disabled:text-rr-muted;
-    box-shadow: 0 1px 10px rgb(0 0 0 / 0.035);
+    box-shadow: var(--rr-shadow-sm), var(--rr-card-edge);
   }
 
   .rr-menu-button {
@@ -737,9 +1008,9 @@ body:has(.practice-focus) .app-main {
 
   .rr-tool-rail {
     @apply order-2 grid gap-1 border border-rr-border p-1.5 lg:order-1 lg:sticky lg:top-20 lg:self-start;
-    background: var(--rr-color-sidebar-background);
-    border-radius: 0.9rem;
-    box-shadow: none;
+    background: color-mix(in srgb, var(--rr-color-sidebar-background) 96%, transparent);
+    border-radius: var(--rr-radius-lg);
+    box-shadow: var(--rr-shadow-sm), var(--rr-card-edge);
   }
 
   .rr-tool-button {
@@ -757,8 +1028,9 @@ body:has(.practice-focus) .app-main {
   }
 
   .rr-tool-panel {
-    @apply rounded-2xl border border-rr-border bg-rr-elevated p-5;
-    box-shadow: var(--rr-card-shadow-soft);
+    @apply border border-rr-border bg-rr-elevated p-5;
+    border-radius: var(--rr-radius-lg);
+    box-shadow: var(--rr-shadow-md), var(--rr-card-edge);
   }
 
   .rr-skin-grid {
@@ -766,7 +1038,8 @@ body:has(.practice-focus) .app-main {
   }
 
   .rr-skin-option {
-    @apply grid gap-1 rounded-xl border border-rr-border bg-rr-surface px-3 py-3 text-left text-sm font-semibold text-rr-foreground transition-colors hover:border-rr-accent hover:text-rr-accent;
+    @apply grid gap-1 border border-rr-border bg-rr-surface px-3 py-3 text-left text-sm font-semibold text-rr-foreground transition-colors hover:border-rr-accent hover:text-rr-accent;
+    border-radius: var(--rr-radius-md);
   }
 
   .rr-skin-option small {
@@ -887,7 +1160,7 @@ body:has(.practice-focus) .app-main {
   .rr-explanation-notebook {
     @apply border border-rr-border bg-rr-elevated p-4 sm:p-5 lg:grid-cols-[minmax(0,1fr)_minmax(21rem,0.9fr)] lg:gap-5;
     border-radius: var(--rr-radius-card);
-    box-shadow: var(--rr-card-shadow);
+    box-shadow: var(--rr-shadow-lg), var(--rr-card-edge);
   }
 
   .rr-explanation-column {
@@ -930,7 +1203,7 @@ body:has(.practice-focus) .app-main {
     background:
       linear-gradient(180deg, var(--rr-color-recognition-tint), var(--rr-color-surface-elevated) 66%),
       var(--rr-color-surface-elevated);
-    box-shadow: none;
+    box-shadow: var(--rr-shadow-sm), var(--rr-card-edge);
   }
 
   .rr-clinical-flow-title {
@@ -1049,8 +1322,9 @@ body:has(.practice-focus) .app-main {
   }
 
   .rr-explanation-notebook .rr-teaching-card {
-    @apply border border-rr-border bg-rr-elevated shadow-none;
-    border-radius: 0.875rem;
+    @apply border border-rr-border bg-rr-elevated;
+    border-radius: var(--rr-radius-md);
+    box-shadow: var(--rr-shadow-sm), var(--rr-card-edge);
   }
 
   .rr-explanation-notebook .rr-teaching-card summary {
@@ -1067,6 +1341,7 @@ body:has(.practice-focus) .app-main {
 
   .rr-right-explanation-block {
     @apply rounded-xl border border-rr-border bg-rr-surface px-3 py-3 text-sm leading-6 text-rr-foreground;
+    box-shadow: var(--rr-shadow-sm), var(--rr-card-edge);
   }
 
   .rr-right-explanation-block h2 {
@@ -1247,7 +1522,7 @@ body:has(.practice-focus) .app-main {
 
   .rr-bottom-nav {
     @apply flex flex-col gap-3 rounded-2xl border border-rr-border bg-rr-elevated p-3 sm:flex-row sm:items-center sm:justify-between;
-    box-shadow: var(--rr-card-shadow-soft);
+    box-shadow: var(--rr-shadow-md), var(--rr-card-edge);
   }
 
   .rr-bottom-action {

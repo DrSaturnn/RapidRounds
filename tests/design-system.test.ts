@@ -7,6 +7,13 @@ describe("design system", () => {
     const css = readFileSync("app/globals.css", "utf8");
 
     [
+      ".rr-card-soft",
+      ".rr-card-paper",
+      ".rr-card-clinical",
+      ".rr-panel",
+      ".rr-panel-collapsed",
+      ".rr-explanation-card",
+      ".rr-vignette-card",
       ".rr-page-title",
       ".rr-question-stem",
       ".rr-card",
@@ -48,6 +55,42 @@ describe("design system", () => {
       "--rr-color-repair",
       "--rr-color-mastery",
       "--rr-color-observatory-atmosphere"
+    ].forEach((token) => assert.match(css, new RegExp(token)));
+
+    [
+      "--rr-bg",
+      "--rr-bg-subtle",
+      "--rr-surface",
+      "--rr-surface-elevated",
+      "--rr-surface-muted",
+      "--rr-border",
+      "--rr-border-strong",
+      "--rr-text",
+      "--rr-text-muted",
+      "--rr-text-soft",
+      "--rr-accent",
+      "--rr-accent-soft",
+      "--rr-accent-strong",
+      "--rr-success",
+      "--rr-success-soft",
+      "--rr-warning",
+      "--rr-warning-soft",
+      "--rr-danger",
+      "--rr-danger-soft",
+      "--rr-shadow-sm",
+      "--rr-shadow-md",
+      "--rr-shadow-lg",
+      "--rr-radius-sm",
+      "--rr-radius-md",
+      "--rr-radius-lg",
+      "--rr-radius-xl",
+      "--rr-font-sans",
+      "--rr-font-serif",
+      "--rr-font-mono",
+      "--rr-paper-texture",
+      "--rr-rule-opacity",
+      "--rr-gradient-bg",
+      "--rr-card-edge"
     ].forEach((token) => assert.match(css, new RegExp(token)));
 
     [
@@ -111,6 +154,25 @@ describe("design system", () => {
     assert.match(practicePanel, /SKIN_STORAGE_KEY/);
     assert.match(practicePanel, /window\.localStorage\.setItem\(SKIN_STORAGE_KEY, skin\)/);
     assert.match(practicePanel, /role="radiogroup"/);
+    assert.match(practicePanel, /Moleskine Notebook/);
+    assert.match(practicePanel, /Editorial Magazine/);
     assert.doesNotMatch(practicePanel, /Repair a Miss/);
+  });
+
+  it("defines theme-aware vignette annotation roles", () => {
+    const css = readFileSync("app/globals.css", "utf8");
+
+    [
+      ".rr-annotation",
+      ".rr-annotation-pivot",
+      ".rr-annotation-supporting",
+      ".rr-annotation-distractor",
+      ".rr-annotation-context",
+      ".rr-annotation-neutral",
+      ".rr-vignette-annotation-pivot-clue",
+      ".rr-vignette-annotation-supporting",
+      ".rr-vignette-annotation-noise",
+      ".rr-vignette-annotation-context"
+    ].forEach((className) => assert.match(css, new RegExp(className.replace(".", "\\."))));
   });
 });
