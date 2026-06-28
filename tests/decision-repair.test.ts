@@ -299,18 +299,18 @@ describe("decision repair", () => {
     const tutorMode = readFileSync("components/TutorMode.tsx", "utf8");
 
     assert.match(tutorMode, /tutor\.repair\.style === "UNKNOWN"/);
-    assert.match(tutorMode, /<TeachingCard title="Teach me more: illness script and comparison" defaultOpen>/);
+    assert.match(tutorMode, /<TeachingCard title="Teach me more" defaultOpen="desktop">/);
     assert.match(tutorMode, /hasComparison/);
   });
 
   it("renders every Teach Me More panel with the RFC-007 section framework", () => {
     const tutorMode = readFileSync("components/TutorMode.tsx", "utf8");
 
-    assert.match(tutorMode, /Illness Script/);
-    assert.match(tutorMode, /Expert Recognition/);
-    assert.match(tutorMode, /Don't Confuse With/);
-    assert.match(tutorMode, /NBME Pivot/);
-    assert.match(tutorMode, /Why This Was Tempting/);
+    assert.match(tutorMode, /Illness script/);
+    assert.match(tutorMode, /Expert recognition/);
+    assert.match(tutorMode, /Don't confuse with/);
+    assert.match(tutorMode, /NBME pivot/);
+    assert.match(tutorMode, /Why this was tempting/);
   });
 
   it("builds objective Teach Me More comparison for gestational hypertension vs preeclampsia", () => {
@@ -471,7 +471,7 @@ describe("decision repair", () => {
     assert.doesNotMatch(tutorMode, /Your reasoning pattern/);
     assert.doesNotMatch(tutorMode, /Cognitive Error:/);
     assert.doesNotMatch(tutorMode, /tutor\.repair\.cognitiveError/);
-    assert.match(tutorMode, /Expert Correction/);
+    assert.match(tutorMode, /Expert correction/);
   });
 });
 

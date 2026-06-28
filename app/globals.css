@@ -255,6 +255,22 @@ body:has(.practice-focus) .app-main {
     color: var(--rr-color-memory);
   }
 
+  .rr-teaching-card summary::-webkit-details-marker {
+    display: none;
+  }
+
+  .rr-teaching-card summary::after {
+    content: "Open";
+    float: right;
+    font-size: 0.75rem;
+    font-weight: 500;
+    color: var(--rr-color-muted);
+  }
+
+  .rr-teaching-card[open] summary::after {
+    content: "Close";
+  }
+
   .rr-adaptive-card {
     border-color: var(--rr-color-takeaway-border);
     background:
@@ -476,17 +492,77 @@ body:has(.practice-focus) .app-main {
     background: var(--rr-color-clue-tint);
   }
 
+  .rr-teaching-blocks {
+    @apply space-y-3;
+  }
+
+  .rr-teaching-block {
+    @apply rounded-lg border bg-rr-elevated px-3.5 py-3;
+    border-color: var(--rr-color-border);
+  }
+
+  .rr-teaching-block-title {
+    @apply text-xs font-semibold uppercase leading-5 tracking-normal;
+    color: var(--rr-color-muted);
+  }
+
+  .rr-teaching-block-body {
+    @apply mt-2 text-sm leading-6 text-rr-foreground;
+  }
+
+  .rr-teaching-facts {
+    @apply space-y-2;
+  }
+
+  .rr-teaching-fact {
+    @apply grid gap-0.5 text-sm leading-6;
+  }
+
+  .rr-teaching-fact span {
+    @apply text-xs font-semibold uppercase leading-5 tracking-normal text-rr-muted;
+  }
+
+  .rr-teaching-block-recognition {
+    border-color: var(--rr-color-recognition-border);
+    background: var(--rr-color-recognition-tint);
+  }
+
+  .rr-teaching-block-comparison {
+    border-color: var(--rr-color-comparison-border);
+    background: var(--rr-color-comparison-tint);
+  }
+
+  .rr-teaching-block-memory {
+    border-color: var(--rr-color-memory-border);
+    background: var(--rr-color-memory-tint);
+  }
+
+  .rr-teaching-block-pivot {
+    border-color: var(--rr-color-pivot-border);
+    background: var(--rr-color-pivot-tint);
+  }
+
+  .rr-teaching-block-repair {
+    border-color: var(--rr-color-repair-border);
+    background: var(--rr-color-repair-tint);
+  }
+
+  .rr-teaching-block-takeaway {
+    border-color: var(--rr-color-takeaway-border);
+    background: var(--rr-color-takeaway-tint);
+  }
+
   .rr-overlay {
     background: var(--rr-color-overlay);
   }
 
   .rr-path {
-    @apply flex flex-col rounded-lg border border-rr-recognition-border bg-rr-recognition-tint px-3 py-3 text-sm leading-5 text-rr-foreground sm:flex-row sm:items-stretch sm:gap-2;
+    @apply flex flex-col rounded-lg border border-rr-recognition-border bg-rr-elevated px-3 py-3 text-sm leading-5 text-rr-foreground sm:flex-row sm:items-stretch sm:gap-2;
   }
 
   /* Mobile keeps recognition paths vertical; wider screens read left-to-right like a compact clinical pathway. */
   .rr-path-step {
-    @apply relative flex min-w-0 items-center gap-2 pb-4 last:pb-0 sm:flex-1 sm:flex-col sm:items-start sm:gap-2 sm:pb-0 sm:pr-5 sm:last:pr-0;
+    @apply relative flex min-w-0 items-start gap-2 pb-4 last:pb-0 sm:flex-1 sm:flex-col sm:gap-2 sm:pb-0 sm:pr-5 sm:last:pr-0;
   }
 
   .rr-path-step:not(:last-child)::after {
@@ -499,12 +575,23 @@ body:has(.practice-focus) .app-main {
     background: var(--rr-color-recognition-border);
   }
 
+  .rr-path-step:not(:last-child)::before {
+    content: "↓";
+    position: absolute;
+    left: 0.36rem;
+    bottom: 0.1rem;
+    z-index: 1;
+    font-size: 0.75rem;
+    line-height: 1;
+    color: var(--rr-color-recognition);
+  }
+
   .rr-path-marker {
     @apply z-10 flex h-6 w-6 shrink-0 items-center justify-center rounded-full border border-rr-recognition-border bg-rr-elevated text-[0.7rem] font-semibold text-rr-recognition;
   }
 
   .rr-path-node {
-    @apply min-w-0 rounded-md border border-rr-border bg-rr-elevated px-3 py-2 sm:w-full;
+    @apply min-w-0 flex-1 rounded-md border border-rr-border bg-rr-elevated px-3 py-2 shadow-[0_1px_2px_rgb(0_0_0_/_0.035)] sm:w-full sm:flex-none;
   }
 
   .rr-path-terminal .rr-path-marker {
@@ -527,6 +614,14 @@ body:has(.practice-focus) .app-main {
       bottom: auto;
       width: auto;
       height: 1px;
+    }
+
+    .rr-path-step:not(:last-child)::before {
+      content: "→";
+      left: auto;
+      right: 0.35rem;
+      top: 0.38rem;
+      bottom: auto;
     }
   }
 

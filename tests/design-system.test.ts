@@ -83,13 +83,14 @@ describe("design system", () => {
 
   it("styles educational sections with recognizable visual treatments", () => {
     const tutorMode = readFileSync("components/TutorMode.tsx", "utf8");
+    const css = readFileSync("app/globals.css", "utf8");
 
     assert.match(tutorMode, /rr-path/);
     assert.match(tutorMode, /rr-path-step/);
     assert.match(tutorMode, /rr-path-terminal/);
     assert.match(tutorMode, /rr-callout-clue/);
     assert.match(tutorMode, /rr-table/);
-    assert.match(tutorMode, /rr-callout-pivot/);
+    assert.match(css, /rr-teaching-block-pivot/);
     assert.match(tutorMode, /rr-chip/);
   });
 });

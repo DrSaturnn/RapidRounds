@@ -1,6 +1,6 @@
 "use client";
 
-import { FormEvent } from "react";
+import type { FormEvent, ReactNode } from "react";
 import { Button } from "@/components/Button";
 import { TeachingCard } from "@/components/TeachingCard";
 import { getComparisonFeatureDisplayText } from "@/lib/display-language";
@@ -14,6 +14,15 @@ const inputGuardProps = {
   autoCapitalize: "off",
   spellCheck: false
 } as const;
+
+type TeachingBlockTone =
+  | "default"
+  | "recognition"
+  | "comparison"
+  | "memory"
+  | "pivot"
+  | "repair"
+  | "takeaway";
 
 function formatNextChallenge(concept?: string) {
   const value = concept?.trim();
@@ -64,6 +73,10 @@ export function TutorMode({
   const visibleRecognitionClues = recognitionClues.length > 0 ? recognitionClues : [tutor.repair.clue];
   const hasCommonConfusion = Boolean(tutor.comparison.competingDiagnosis?.trim());
   const nextChallenge = formatNextChallenge(learningTrajectory.recommendation?.concept);
+  const hasMeaningfulBoardPearl =
+    Boolean(tutor.repair.fingerprint?.trim()) &&
+    tutor.repair.fingerprint.trim() !== tutor.nbmePivot?.trim() &&
+    tutor.repair.fingerprint.trim() !== tutor.illnessScript.classicPresentation.trim();
 
   const onSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -177,64 +190,52 @@ export function TutorMode({
   );
 
   const teachingSurface = (
-      <TeachingCard title="Teach me more: illness script and comparison" defaultOpen>
-        <div className="space-y-5">
+      <TeachingCard title="Teach me more" defaultOpen="desktop">
+        <div className="rr-teaching-blocks">
           {modules.retrieval && tutor.teachingPlan.retrieval ? (
-            <div className="rr-callout">
-              <p className="font-medium">Retrieval Target</p>
-              <div className="mt-2 space-y-2">
-                <p>
-                  <span className="font-medium">What you got right:</span>{" "}
-                  {tutor.teachingPlan.retrieval.whatYouGotRight}
-                </p>
-                <p>
-                  <span className="font-medium">What was missing:</span>{" "}
-                  {tutor.teachingPlan.retrieval.whatWasMissing}
-                </p>
-                <p>
-                  <span className="font-medium">Specific target:</span> {tutor.teachingPlan.retrieval.target}
-                </p>
+            <TeachingBlock title="Retrieval target" tone="memory">
+              <div className="rr-teaching-facts">
+                <TeachingFact label="What you got right" value={tutor.teachingPlan.retrieval.whatYouGotRight} />
+                <TeachingFact label="What was missing" value={tutor.teachingPlan.retrieval.whatWasMissing} />
+                <TeachingFact label="Specific target" value={tutor.teachingPlan.retrieval.target} />
                 {tutor.teachingPlan.retrieval.memoryHook ? (
-                  <p>
-                    <span className="font-medium">Memory hook:</span> {tutor.teachingPlan.retrieval.memoryHook}
-                  </p>
+                  <TeachingFact label="Memory hook" value={tutor.teachingPlan.retrieval.memoryHook} />
                 ) : null}
               </div>
-            </div>
+            </TeachingBlock>
           ) : null}
           {modules.contraindication && tutor.teachingPlan.contraindication ? (
-            <div className="rr-callout">
-              <p className="font-medium">Contraindication Rule</p>
-              <div className="mt-2 space-y-2">
-                <p>{tutor.teachingPlan.contraindication.rule}</p>
-                <p>{tutor.teachingPlan.contraindication.whyAvoid}</p>
+            <TeachingBlock title="Contraindication rule" tone="repair">
+              <div className="rr-teaching-facts">
+                <TeachingFact label="Rule" value={tutor.teachingPlan.contraindication.rule} />
+                <TeachingFact label="Why avoid it" value={tutor.teachingPlan.contraindication.whyAvoid} />
                 {tutor.teachingPlan.contraindication.alternative ? (
-                  <p>{tutor.teachingPlan.contraindication.alternative}</p>
+                  <TeachingFact label="Safer direction" value={tutor.teachingPlan.contraindication.alternative} />
                 ) : null}
               </div>
-            </div>
+            </TeachingBlock>
           ) : null}
           {modules.illnessScript ? (
-          <div>
-            <p className="font-medium">Illness Script</p>
+          <TeachingBlock title="Illness script" tone="recognition">
             <p>{tutor.illnessScript.classicPresentation}</p>
-          </div>
+            <div className="rr-teaching-facts mt-3">
+              <TeachingFact label="Typical patient" value={tutor.illnessScript.typicalPatient} />
+            </div>
+          </TeachingBlock>
           ) : null}
           {modules.expertRecognition ? (
-          <div>
-            <p className="font-medium">Expert Recognition</p>
+          <TeachingBlock title="Expert recognition" tone="recognition">
+            <TeachingFact label="Recognition goal" value={tutor.repair.clueMeaning} />
             <RecognitionPath value={tutor.recognitionPath ?? tutor.managementPearl} />
-          </div>
+          </TeachingBlock>
           ) : null}
           {modules.expertCorrection && tutor.cognitiveError ? (
-            <div className="rr-callout">
-              <p className="font-medium">Expert Correction</p>
+            <TeachingBlock title="Expert correction" tone="repair">
               <p>{tutor.cognitiveError.expertCorrection}</p>
-            </div>
+            </TeachingBlock>
           ) : null}
           {hasComparison ? (
-            <div>
-              <p className="font-medium">Don't Confuse With</p>
+            <TeachingBlock title="Don't confuse with" tone="comparison">
               <div className="mt-2 overflow-x-auto">
                 <table className="rr-table">
                   <thead>
@@ -255,19 +256,22 @@ export function TutorMode({
                   </tbody>
                 </table>
               </div>
-            </div>
+            </TeachingBlock>
           ) : null}
           {modules.nbmePivot ? (
-          <div className="rr-callout rr-callout-pivot">
-            <p className="font-medium">NBME Pivot</p>
+          <TeachingBlock title="NBME pivot" tone="pivot">
             <p>{tutor.nbmePivot}</p>
-          </div>
+          </TeachingBlock>
           ) : null}
           {modules.whyTempting && tutor.whyTempting ? (
-            <div>
-              <p className="font-medium">Why This Was Tempting</p>
+            <TeachingBlock title="Why this was tempting" tone="memory">
               <p>{tutor.whyTempting}</p>
-            </div>
+            </TeachingBlock>
+          ) : null}
+          {hasMeaningfulBoardPearl ? (
+            <TeachingBlock title="Board pearl" tone="takeaway">
+              <p>{tutor.repair.fingerprint}</p>
+            </TeachingBlock>
           ) : null}
         </div>
       </TeachingCard>
@@ -309,19 +313,19 @@ export function TutorMode({
   return (
     <section className="rr-post-answer-workspace">
       <div className="rr-post-answer-repair">{repairSurface}</div>
+      <div className="rr-post-answer-next">{nextChallengeSurface}</div>
       <aside className="rr-post-answer-depth" aria-label="Teach me more">
         {teachingSurface}
       </aside>
-      <div className="rr-post-answer-next">{nextChallengeSurface}</div>
     </section>
   );
 }
 
 function RecognitionPath({ value }: { value: string }) {
-  const steps = value
+  const steps = dedupeDisplayStrings(value
     .split(/\s*(?:->|\u2192|=>)\s*/)
     .map((step) => step.trim())
-    .filter(Boolean);
+    .filter(Boolean));
 
   const visibleSteps = steps.length > 0 ? steps : [value];
 
@@ -340,6 +344,38 @@ function RecognitionPath({ value }: { value: string }) {
         );
       })}
     </div>
+  );
+}
+
+function TeachingBlock({
+  title,
+  tone = "default",
+  children
+}: {
+  title: string;
+  tone?: TeachingBlockTone;
+  children: ReactNode;
+}) {
+  return (
+    <section className={`rr-teaching-block rr-teaching-block-${tone}`}>
+      <p className="rr-teaching-block-title">{title}</p>
+      <div className="rr-teaching-block-body">{children}</div>
+    </section>
+  );
+}
+
+function TeachingFact({ label, value }: { label: string; value?: string }) {
+  const cleaned = value?.trim();
+
+  if (!cleaned) {
+    return null;
+  }
+
+  return (
+    <p className="rr-teaching-fact">
+      <span>{label}</span>
+      {cleaned}
+    </p>
   );
 }
 

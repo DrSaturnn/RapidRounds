@@ -130,9 +130,9 @@ describe("dynamic educational assembly", () => {
     const source = readFileSync("components/TutorMode.tsx", "utf8");
 
     assert.match(source, /modules\.retrieval/);
-    assert.match(source, /Retrieval Target/);
+    assert.match(source, /Retrieval target/);
     assert.match(source, /modules\.contraindication/);
-    assert.match(source, /Contraindication Rule/);
+    assert.match(source, /Contraindication rule/);
     assert.match(source, /modules\.comparison/);
     assert.match(source, /modules\.whyTempting/);
   });

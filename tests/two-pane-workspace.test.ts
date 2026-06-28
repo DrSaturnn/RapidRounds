@@ -23,15 +23,15 @@ describe("two-pane educational workspace", () => {
     assert.match(styles, /@media \(min-width: 1024px\)/);
   });
 
-  it("keeps mobile source order as repair, Teach Me More, then next challenge", () => {
+  it("keeps mobile source order as repair, next challenge, then Teach Me More", () => {
     const tutorMode = readFileSync("components/TutorMode.tsx", "utf8");
     const repairIndex = tutorMode.indexOf("rr-post-answer-repair");
-    const depthIndex = tutorMode.indexOf("rr-post-answer-depth");
     const nextIndex = tutorMode.indexOf("rr-post-answer-next");
+    const depthIndex = tutorMode.indexOf("rr-post-answer-depth");
 
     assert.ok(repairIndex > -1);
-    assert.ok(depthIndex > repairIndex);
-    assert.ok(nextIndex > depthIndex);
+    assert.ok(nextIndex > repairIndex);
+    assert.ok(depthIndex > nextIndex);
   });
 
   it("removes redundant go-deeper prompt now that Teach Me More is beside repair", () => {
