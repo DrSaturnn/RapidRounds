@@ -98,10 +98,13 @@ describe("reasoning memory surfacing", () => {
 
   it("keeps learner-specific memory scoped to the anonymous learner id", () => {
     const route = readFileSync("app/api/practice/answer/route.ts", "utf8");
+    const learnerState = readFileSync("lib/learner-state.ts", "utf8");
 
-    assert.match(route, /loadPriorReasoningAttempts\(learnerId, answerOutcome\)/);
-    assert.match(route, /where: \{\s*userId: learnerId,\s*isCorrect: false,\s*answerOutcome: \{ not: "UNKNOWN" \}/);
+    assert.match(route, /getLearnerState\(learnerId\)/);
+    assert.match(route, /learnerState\.recentReasoningAttempts/);
+    assert.match(learnerState, /where: \{\s*userId: normalizedLearnerId\s*\}/);
     assert.doesNotMatch(route, /userId: "default"/);
+    assert.doesNotMatch(learnerState, /userId: "default"/);
   });
 
   it("renders learner-facing coaching without exposing raw cognitive labels", () => {

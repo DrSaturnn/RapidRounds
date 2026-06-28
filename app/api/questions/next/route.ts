@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { getNextClinicalDecision } from "@/database/clinical-decisions";
+import { getAdaptiveDecisionRecommendation } from "@/lib/adaptive-decision";
 import { normalizeLearnerId } from "@/lib/learner-id";
 import { getAdaptiveTargetConcept } from "@/lib/learning-trajectory";
 import { prisma } from "@/lib/prisma";
@@ -9,7 +10,7 @@ export async function GET(request: Request) {
   const searchParams = new URL(request.url).searchParams;
   const requestedConcept = searchParams.get("concept")?.trim();
   const learnerId = normalizeLearnerId(searchParams.get("learnerId"));
-  const [answered, completed] = await Promise.all([
+  const [answered, completed, adaptiveRecommendation] = await Promise.all([
     learnerId
       ? prisma.progress.findMany({
           where: { userId: learnerId },
@@ -32,12 +33,23 @@ export async function GET(request: Request) {
             clinicalDecisionId: true
           }
         })
-      : Promise.resolve([])
+      : Promise.resolve([]),
+    learnerId ? getAdaptiveDecisionRecommendation(learnerId, requestedConcept) : Promise.resolve(undefined)
   ]);
 
   const answeredDecisionIds = new Set(
     completed.map((row) => row.clinicalDecisionId).filter((id): id is string => Boolean(id))
   );
+
+  if (adaptiveRecommendation?.decision) {
+    return NextResponse.json({
+      question: adaptiveRecommendation.decision,
+      adaptive: {
+        actionType: adaptiveRecommendation.actionType,
+        explanation: adaptiveRecommendation.explanation
+      }
+    });
+  }
 
   const adaptiveTarget = requestedConcept || getAdaptiveTargetConcept(answered)?.concept;
   const decision = await getNextClinicalDecision([...answeredDecisionIds], adaptiveTarget);

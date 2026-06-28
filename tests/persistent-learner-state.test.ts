@@ -60,8 +60,10 @@ describe("persistent learner state", () => {
 
     assert.match(route, /const learnerId = normalizeLearnerId\(searchParams\.get\("learnerId"\)\)/);
     assert.match(route, /where: \{ userId: learnerId \}/);
-    assert.match(route, /const \[answered, completed\] = await Promise\.all/);
+    assert.match(route, /const \[answered, completed, adaptiveRecommendation\] = await Promise\.all/);
+    assert.match(route, /getAdaptiveDecisionRecommendation\(learnerId, requestedConcept\)/);
     assert.match(route, /completed\.map\(\(row\) => row\.clinicalDecisionId\)/);
+    assert.match(route, /adaptiveRecommendation\?\.decision/);
     assert.match(route, /getNextClinicalDecision\(\[\.{3}answeredDecisionIds\], adaptiveTarget\)/);
     assert.match(route, /completed\.map\(\(row\) => row\.questionId\)/);
   });
