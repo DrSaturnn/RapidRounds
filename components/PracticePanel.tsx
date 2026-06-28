@@ -559,8 +559,8 @@ export function PracticePanel() {
         </div>
       </header>
 
-      <div className="rr-notebook-shell">
-        <aside className="rr-tool-rail" aria-label="Practice tools">
+      <div className="rr-notebook-shell rr-notebook-surface">
+        <aside className="rr-tool-rail rr-panel" aria-label="Practice tools">
           <button type="button" className="rr-tool-button" onClick={handleContinue}>
             <span aria-hidden="true">▷</span>
             Continue
@@ -603,7 +603,7 @@ export function PracticePanel() {
             <QuestionMeta question={question} />
             <p className="rr-meta">{learningGoal}</p>
           </div>
-          <section className={`rr-card rr-question-card space-y-5 px-5 py-5 motion-safe:animate-[fadeIn_180ms_var(--rr-ease-standard)] sm:px-7 ${isExplanationState ? "rr-question-card-compact" : "sm:py-7"}`}>
+          <section className={`rr-card rr-question-card rr-vignette-card rr-card-paper space-y-5 px-5 py-5 motion-safe:animate-[fadeIn_180ms_var(--rr-ease-standard)] sm:px-7 ${isExplanationState ? "rr-question-card-compact" : "sm:py-7"}`}>
             <div className="space-y-4">
               <div className="flex flex-wrap items-center gap-2">
                 <span className="rr-badge rr-badge-learning">{isExplanationState ? "Explanation" : "Question"}</span>
@@ -669,7 +669,7 @@ export function PracticePanel() {
           </section>
 
         {activeTool === "notes" ? (
-          <section className="rr-tool-panel mt-5 motion-safe:animate-[fadeIn_180ms_var(--rr-ease-standard)]">
+          <section className="rr-tool-panel rr-panel mt-5 motion-safe:animate-[fadeIn_180ms_var(--rr-ease-standard)]">
             <p className="rr-section-header">Notes for this case</p>
             <textarea
               className="rr-notes-input"
@@ -695,7 +695,7 @@ export function PracticePanel() {
         ) : null}
 
         {isExplanationState ? (
-        <nav className="rr-bottom-nav mt-5" aria-label="Practice navigation">
+        <nav className="rr-bottom-nav rr-panel mt-5" aria-label="Practice navigation">
           <button type="button" className="rr-bottom-action" onClick={() => setActiveTool("notes")}>
             □ Add to Notes
           </button>

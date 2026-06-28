@@ -243,18 +243,43 @@ describe("design system", () => {
     const darkThemeBlock = css.slice(darkIndex, editorialIndex);
     const editorialThemeBlock = css.slice(editorialIndex, firstComponentIndex);
 
-    assert.match(moleskineThemeBlock, /--rr-bg:\s*#fcfbf8/i);
-    assert.match(moleskineThemeBlock, /--rr-surface:\s*#fffdf8/i);
-    assert.match(moleskineThemeBlock, /--rr-paper-texture-opacity:\s*0\.035/);
-    assert.match(moleskineThemeBlock, /--rr-rule-opacity:\s*0\.045/);
+    assert.match(moleskineThemeBlock, /--rr-bg:\s*#f4ead7/i);
+    assert.match(moleskineThemeBlock, /--rr-surface:\s*#fff6de/i);
+    assert.match(moleskineThemeBlock, /--rr-paper-texture-opacity:\s*0\.105/);
+    assert.match(moleskineThemeBlock, /--rr-rule-opacity:\s*0\.1/);
     assert.match(moleskineThemeBlock, /repeating-linear-gradient\(to bottom/);
 
+    assert.match(css, /\[data-theme="warm-notebook"\] \.rr-practice-shell::after/);
+    assert.match(css, /\[data-theme="warm-notebook"\] \.rr-product-nav/);
+    assert.match(css, /\[data-theme="warm-notebook"\] \.rr-tool-rail/);
+    assert.match(css, /\[data-theme="warm-notebook"\] \.rr-button-primary/);
     assert.match(css, /\[data-theme="warm-notebook"\] \.rr-question-card::before/);
     assert.match(css, /\[data-theme="warm-notebook"\] \.rr-explanation-notebook::before/);
+    assert.match(css, /\[data-theme="warm-notebook"\] \.rr-teaching-card\[open\]::before/);
     assert.match(css, /\[data-theme="warm-notebook"\] \.rr-card-paper/);
     assert.match(css, /\[data-theme="warm-notebook"\] \.rr-vignette-label/);
     assert.doesNotMatch(modernThemeBlock, /rr-question-card::before/);
     assert.doesNotMatch(darkThemeBlock, /rr-question-card::before/);
     assert.doesNotMatch(editorialThemeBlock, /rr-question-card::before/);
+  });
+
+  it("wires Moleskine material classes into visible practice surfaces", () => {
+    const practicePanel = readFileSync("components/PracticePanel.tsx", "utf8");
+    const tutorMode = readFileSync("components/TutorMode.tsx", "utf8");
+    const teachingCard = readFileSync("components/TeachingCard.tsx", "utf8");
+
+    assert.match(practicePanel, /rr-notebook-shell rr-notebook-surface/);
+    assert.match(practicePanel, /rr-tool-rail rr-panel/);
+    assert.match(practicePanel, /rr-question-card rr-vignette-card rr-card-paper/);
+    assert.match(practicePanel, /rr-tool-panel rr-panel/);
+    assert.match(practicePanel, /rr-bottom-nav rr-panel/);
+
+    assert.match(tutorMode, /rr-explanation-notebook rr-notebook-surface/);
+    assert.match(tutorMode, /rr-explanation-card rr-card-paper rr-explanation-column/);
+    assert.match(tutorMode, /rr-right-explanation-block rr-explanation-card rr-card-paper/);
+    assert.match(tutorMode, /rr-explanation-card rr-card-paper rr-adaptive-card/);
+
+    assert.match(teachingCard, /rr-teaching-card rr-explanation-card rr-card-paper/);
+    assert.match(teachingCard, /rr-panel-collapsed/);
   });
 });
