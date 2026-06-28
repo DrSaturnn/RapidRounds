@@ -554,6 +554,23 @@ function relationshipItems(
     }));
 }
 
+function crossShelfParentItems(nodeForConcept: CurriculumNode): CurriculumLearningItem[] {
+  return (nodeForConcept.parentIds ?? [])
+    .map((id) => getCurriculumNode(id))
+    .filter((item): item is CurriculumNode => Boolean(item))
+    .filter((item) =>
+      item.disciplineTags.some((tag) =>
+        ["internal medicine", "surgery", "psychiatry", "pediatrics", "family medicine", "emergency medicine", "ethics"].includes(tag)
+      )
+    )
+    .map((item) => ({
+      nodeId: item.id,
+      concept: item.title,
+      reason: `Cross-shelf overlap: ${item.title}.`,
+      priority: "explore" as const
+    }));
+}
+
 export function getCurriculumLearningItems(correctAnswer: string, wasCorrect?: boolean) {
   const nodeForConcept = getCurriculumNodeForConcept(correctAnswer);
   if (!nodeForConcept) {
@@ -583,6 +600,7 @@ export function getCurriculumLearningItems(correctAnswer: string, wasCorrect?: b
       (item) => `Cross-shelf overlap: ${item.disciplineTags[0] ?? item.title}.`,
       "explore"
     ),
+    ...crossShelfParentItems(nodeForConcept),
     ...relationshipItems(
       nodeForConcept.prerequisiteIds,
       (item) => `Prerequisite for ${nodeForConcept.title}.`,

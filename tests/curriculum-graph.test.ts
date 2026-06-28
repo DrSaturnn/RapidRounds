@@ -115,6 +115,7 @@ describe("master curriculum graph", () => {
 
     assert.equal(severePreeclampsia.recommendation?.concept, "Magnesium sulfate");
     assert.match(severePreeclampsia.recommendation?.reason ?? "", /Builds directly on Preeclampsia with severe features/);
+    assert.ok(severePreeclampsia.items.some((item) => /Cross-shelf overlap/.test(item.reason)));
     assert.ok(abruption.items.some((item) => item.concept === "Placenta previa"));
     assert.ok(abruption.items.some((item) => /Frequently confused/.test(item.reason)));
   });

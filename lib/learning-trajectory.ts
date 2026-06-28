@@ -156,6 +156,13 @@ export function getLearningTrajectory({
         reason: item.reason,
         priority: item.priority
       })),
+      ...(managementConcept
+        ? [{
+            concept: managementConcept,
+            reason: `Strengthens management around ${curriculum.node?.title ?? graph.primaryConcept}.`,
+            priority: "explore" as const
+          }]
+        : []),
       ...graph.relatedConcepts.slice(0, 2).map((concept) => ({
         concept,
         reason: `Frequently confused with ${graph.primaryConcept}.`,
