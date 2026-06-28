@@ -21,16 +21,62 @@ describe("answer intelligence", () => {
     assert.ok(["trans vaginal us", "trans-vaginal us"].includes(evaluation.matchedAlias ?? ""));
   });
 
+  it("maps older GSM terminology to the preferred term", () => {
+    ["vulvar atrophy", "vaginal atrophy", "atrophic vaginitis"].forEach((answer) => {
+      const evaluation = evaluateAnswer({
+        answer,
+        acceptedAnswers: ["genitourinary syndrome of menopause", "vaginal atrophy", "atrophic vaginitis"],
+        canonicalAnswer: "genitourinary syndrome of menopause",
+        expectedTask: "Diagnosis"
+      });
+
+      assert.equal(evaluation.isCorrect, true);
+      assert.equal(evaluation.classification, "EQUIVALENT");
+      assert.equal(evaluation.learnerFacingClassification?.category, "Preferred terminology");
+      assert.match(evaluation.learnerFacingClassification?.message ?? "", /preferred term is genitourinary syndrome of menopause/i);
+    });
+  });
+
   it("accepts conservative spelling variations without guessing broadly", () => {
     const evaluation = evaluateAnswer({
-      answer: "methotrxate",
-      acceptedAnswers: ["methotrexate", "medical management with methotrexate"],
+      answer: "Methylergonovin",
+      acceptedAnswers: ["methylergonovine"],
       expectedTask: "Management"
     });
 
     assert.equal(evaluation.isCorrect, true);
     assert.equal(evaluation.classification, "SPELLING_VARIATION");
+    assert.equal(evaluation.learnerFacingClassification?.category, "Misspelled but acceptable");
     assert.equal(evaluation.spellingCorrected, true);
+  });
+
+  it("recognizes broad but incomplete answers", () => {
+    const evaluation = evaluateAnswer({
+      answer: "IUD",
+      acceptedAnswers: ["IUD placement"],
+      canonicalAnswer: "IUD placement",
+      expectedTask: "Management"
+    });
+
+    assert.equal(evaluation.isCorrect, false);
+    assert.equal(evaluation.classification, "PARTIAL");
+    assert.equal(evaluation.learnerFacingClassification?.category, "Broad but incomplete");
+    assert.match(evaluation.reason, /complete action/i);
+  });
+
+  it("recognizes treatment family answers that need a specific regimen", () => {
+    const evaluation = evaluateAnswer({
+      answer: "Antibiotics",
+      acceptedAnswers: ["clindamycin and gentamicin"],
+      canonicalAnswer: "clindamycin and gentamicin",
+      expectedTask: "Management"
+    });
+
+    assert.equal(evaluation.isCorrect, false);
+    assert.equal(evaluation.classification, "PARTIAL");
+    assert.equal(evaluation.partialCredit, 0.45);
+    assert.equal(evaluation.learnerFacingClassification?.category, "Correct category / insufficient specificity");
+    assert.match(evaluation.reason, /specific treatment/i);
   });
 
   it("recognizes a diagnosis when the task asks for management", () => {
@@ -58,7 +104,50 @@ describe("answer intelligence", () => {
 
     assert.equal(evaluation.isCorrect, false);
     assert.equal(evaluation.classification, "PARTIAL");
+    assert.equal(evaluation.learnerFacingClassification?.category, "Broad but incomplete");
     assert.equal(evaluation.partialCredit, 0.5);
+  });
+
+  it("identifies answers that need more specificity", () => {
+    const evaluation = evaluateAnswer({
+      answer: "cervical examination speculum",
+      acceptedAnswers: ["digital cervical examination"],
+      canonicalAnswer: "digital cervical examination",
+      expectedTask: "Contraindication"
+    });
+
+    assert.equal(evaluation.isCorrect, false);
+    assert.equal(evaluation.classification, "PARTIAL");
+    assert.equal(evaluation.learnerFacingClassification?.category, "Needs more specificity");
+  });
+
+  it("classifies neighboring diagnoses as related but incorrect", () => {
+    const evaluation = evaluateAnswer({
+      answer: "placental abruption",
+      acceptedAnswers: ["placenta previa"],
+      canonicalAnswer: "placenta previa",
+      expectedTask: "Diagnosis",
+      clinicalConcepts: ["placental abruption", "painless vaginal bleeding", "third trimester bleeding"]
+    });
+
+    assert.equal(evaluation.isCorrect, false);
+    assert.equal(evaluation.classification, "PARTIAL");
+    assert.equal(evaluation.partialCredit, 0.35);
+    assert.equal(evaluation.learnerFacingClassification?.category, "Related but incorrect");
+  });
+
+  it("keeps truly wrong unrelated answers incorrect", () => {
+    const evaluation = evaluateAnswer({
+      answer: "appendicitis",
+      acceptedAnswers: ["placenta previa"],
+      canonicalAnswer: "placenta previa",
+      expectedTask: "Diagnosis",
+      clinicalConcepts: ["placental abruption", "painless vaginal bleeding", "third trimester bleeding"]
+    });
+
+    assert.equal(evaluation.isCorrect, false);
+    assert.equal(evaluation.classification, "INCORRECT");
+    assert.equal(evaluation.learnerFacingClassification?.category, "Incorrect");
   });
 
   it("classifies unknown responses before clinical matching", () => {
@@ -72,6 +161,7 @@ describe("answer intelligence", () => {
 
       assert.equal(evaluation.isCorrect, false);
       assert.equal(evaluation.classification, "UNKNOWN");
+      assert.equal(evaluation.learnerFacingClassification?.category, "Unknown");
       assert.equal(evaluation.requiresTeaching, true);
       assert.equal(evaluation.partialCredit, 0);
     });

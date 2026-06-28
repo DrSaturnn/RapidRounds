@@ -213,23 +213,49 @@ export function PracticePanel() {
   const clinicalPrompt = getClinicalPromptText(question.stem);
   const decisionQuestion = getDecisionQuestionText(question.decisionType);
   const learningGoal = question.topic ? `Learning goal: ${question.topic}` : "Learning goal: make the next clinical decision";
+  const displayDecisionCount = Math.max(sessionDecisionCount, 1);
+  const progressPercent = Math.min(100, Math.max(1, (displayDecisionCount / 86) * 100));
 
   return (
-    <div className="practice-focus rr-practice-shell min-h-screen">
-      <div className="mx-auto flex min-h-screen w-full max-w-tutor flex-col px-4 py-5 sm:px-6 sm:py-8 lg:py-10">
-        <header className="rr-practice-topbar mb-8 sm:mb-10">
-          <div>
-            <p className="rr-practice-kicker">RapidRounds</p>
-            <p className="rr-practice-title">Clinical reasoning round</p>
+    <div className="practice-focus rr-practice-shell min-h-screen pb-16">
+      <header className="rr-product-nav">
+        <div className="rr-product-brand">RapidRounds</div>
+        <nav className="rr-product-tabs" aria-label="Primary">
+          <a className="rr-product-tab rr-product-tab-active" href="/">Practice</a>
+          <a className="rr-product-tab" href="/analytics">Progress</a>
+          <span className="rr-product-tab rr-product-tab-muted">Library</span>
+          <a className="rr-product-tab" href="/analytics">Analytics</a>
+        </nav>
+        <div className="rr-product-actions" aria-label="Session tools">
+          <span className="rr-keycap">⌘ K</span>
+          <span className="rr-icon-button" aria-hidden="true">☾</span>
+          <button
+            type="button"
+            className="rr-icon-button"
+            aria-label="End session"
+            onClick={() => setShowEndSessionConfirm(true)}
+          >
+            ☰
+          </button>
+        </div>
+      </header>
+
+      <div className="mx-auto flex w-full max-w-[92rem] flex-col px-4 py-6 sm:px-6 lg:px-8">
+        <header className="rr-practice-progress mb-5">
+          <div className="rr-progress-left">
+            <p className="rr-progress-label">Question {displayDecisionCount} of 86</p>
+            <div className="rr-progress-track" aria-hidden="true">
+              <span style={{ width: `${progressPercent}%` }} />
+            </div>
           </div>
-          <div className="flex flex-col items-start gap-2 sm:items-end">
-            <span className="rr-session-pill">Decision {String(sessionDecisionCount).padStart(2, "0")}</span>
+          <div className="rr-progress-right">
             <QuestionMeta question={question} />
+            <span className="rr-bookmark" aria-hidden="true">♡</span>
           </div>
         </header>
 
         <main className={`rr-practice-main ${mode === "tutor" ? "rr-practice-main-wide" : ""}`}>
-          <section className="rr-card rr-question-card space-y-7 px-5 py-6 motion-safe:animate-[fadeIn_180ms_var(--rr-ease-standard)] sm:space-y-9 sm:px-8 sm:py-8">
+          <section className="rr-card rr-question-card space-y-7 px-5 py-6 motion-safe:animate-[fadeIn_180ms_var(--rr-ease-standard)] sm:space-y-8 sm:px-7 sm:py-7">
             <div className="space-y-5 sm:space-y-6">
               <div className="flex flex-wrap items-center gap-2">
                 <span className="rr-badge rr-badge-learning">Clinical pattern</span>
@@ -247,7 +273,7 @@ export function PracticePanel() {
               <label className="sr-only" htmlFor="answer">
                 Answer
               </label>
-              <div className="grid gap-3 sm:grid-cols-[1fr_auto]">
+              <div className="grid gap-3 sm:grid-cols-[1fr_auto_auto]">
                 <input
                   ref={answerInputRef}
                   id="answer"
@@ -264,6 +290,14 @@ export function PracticePanel() {
                   className="rr-input"
                   autoFocus
                 />
+                {!result ? (
+                  <Button
+                    type="submit"
+                    disabled={isSubmitting || mode === "tutor"}
+                  >
+                    {isSubmitting ? "Checking" : "Submit"}
+                  </Button>
+                ) : null}
                 <Button
                   type="button"
                   variant="secondary"
@@ -275,14 +309,7 @@ export function PracticePanel() {
                 </Button>
               </div>
               <div className="flex min-h-11 flex-wrap items-center gap-3 pt-1">
-                {!result ? (
-                  <Button
-                    type="submit"
-                    disabled={isSubmitting || mode === "tutor"}
-                  >
-                    {isSubmitting ? "Checking" : "Submit"}
-                  </Button>
-                ) : result.isCorrect ? (
+                {result?.isCorrect ? (
                   <Button type="button" onClick={() => void loadQuestion()}>
                     Next
                   </Button>
@@ -318,6 +345,19 @@ export function PracticePanel() {
         ) : null}
         </main>
       </div>
+      <footer className="rr-session-footer">
+        <div className="rr-session-footer-left">
+          <span>Session: <strong>Adaptive</strong></span>
+          <span>Decisions Today: <strong>{displayDecisionCount}</strong></span>
+          <span>Progress saved</span>
+        </div>
+        <div className="rr-session-footer-right">
+          <span>Need a break?</span>
+          <button type="button" onClick={() => setShowEndSessionConfirm(true)}>
+            End Session
+          </button>
+        </div>
+      </footer>
       {showEndSessionConfirm ? (
         <div
           className="rr-overlay fixed inset-0 z-50 flex items-center justify-center px-5 motion-safe:animate-[fadeIn_180ms_var(--rr-ease-standard)]"

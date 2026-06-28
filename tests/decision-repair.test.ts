@@ -106,6 +106,88 @@ describe("decision repair", () => {
     assert.match(tutor.repair.why, /Open cervical os/i);
   });
 
+  it("acknowledges treatment-family answers before asking for specificity", () => {
+    const evaluation = evaluateAnswer({
+      answer: "antibiotics",
+      acceptedAnswers: ["clindamycin and gentamicin"],
+      canonicalAnswer: "clindamycin and gentamicin",
+      expectedTask: "Management"
+    });
+    const tutor = buildTutorContent(
+      {
+        ...baseDecision,
+        topic: "Endometritis treatment",
+        correctAnswer: "clindamycin and gentamicin",
+        acceptedAnswers: JSON.stringify(["clindamycin and gentamicin"]),
+        pivotClue: "Postpartum fever with uterine tenderness",
+        decisionType: "Management",
+        boardPearl: "Postpartum endometritis is treated with clindamycin plus gentamicin.",
+        clinicalPattern: "Postpartum fever and uterine tenderness",
+        managementPearl: "Use broad anaerobic and gram-negative coverage."
+      },
+      "antibiotics",
+      evaluation
+    );
+
+    assert.equal(tutor.repair.style, "PARTIAL");
+    assert.match(tutor.repair.why, /recognized the antibiotic family/i);
+    assert.match(tutor.repair.why, /specific answer here is clindamycin and gentamicin/i);
+  });
+
+  it("acknowledges older accepted terminology for preferred terms", () => {
+    const evaluation = evaluateAnswer({
+      answer: "vulvar atrophy",
+      acceptedAnswers: ["genitourinary syndrome of menopause", "vaginal atrophy", "atrophic vaginitis"],
+      canonicalAnswer: "genitourinary syndrome of menopause",
+      expectedTask: "Diagnosis"
+    });
+    const tutor = buildTutorContent(
+      {
+        ...baseDecision,
+        topic: "Genitourinary syndrome of menopause",
+        correctAnswer: "genitourinary syndrome of menopause",
+        acceptedAnswers: JSON.stringify(["genitourinary syndrome of menopause", "vaginal atrophy", "atrophic vaginitis"]),
+        pivotClue: "Postmenopausal vaginal dryness",
+        decisionType: "Diagnosis",
+        boardPearl: "Hypoestrogenism causes genital and urinary symptoms after menopause.",
+        clinicalPattern: "Postmenopausal dryness and dyspareunia"
+      },
+      "vulvar atrophy",
+      evaluation
+    );
+
+    assert.equal(tutor.repair.style, "CORRECT");
+    assert.match(tutor.repair.why, /older accepted term/i);
+    assert.match(tutor.repair.why, /preferred term is genitourinary syndrome of menopause/i);
+  });
+
+  it("explains broad device answers that need the contraindicated action", () => {
+    const evaluation = evaluateAnswer({
+      answer: "IUD",
+      acceptedAnswers: ["IUD placement"],
+      canonicalAnswer: "IUD placement",
+      expectedTask: "Contraindication"
+    });
+    const tutor = buildTutorContent(
+      {
+        ...baseDecision,
+        topic: "IUD contraindication",
+        correctAnswer: "IUD placement",
+        acceptedAnswers: JSON.stringify(["IUD placement"]),
+        pivotClue: "Active pelvic infection",
+        decisionType: "Contraindication",
+        boardPearl: "Do not place an IUD with active pelvic infection.",
+        clinicalPattern: "Contraception request with active PID"
+      },
+      "IUD",
+      evaluation
+    );
+
+    assert.equal(tutor.repair.style, "PARTIAL");
+    assert.match(tutor.repair.why, /right broad concept/i);
+    assert.match(tutor.repair.why, /complete action/i);
+  });
+
   it("compares against the learner answer for incorrect repairs", () => {
     const evaluation = evaluateAnswer({
       answer: "uterine atony",

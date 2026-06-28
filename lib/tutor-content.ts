@@ -153,6 +153,42 @@ const typicalPatientBySpecialty: Record<string, string> = {
   Psychiatry: "Patient whose symptoms cluster by duration and impairment"
 };
 
+const structuredIllnessScriptMap: Record<
+  string,
+  {
+    typicalPatientFindings: string[];
+    recognitionGoal: string;
+    recognitionGoalContrast?: string;
+    keyNegativeFindings?: string[];
+  }
+> = {
+  "genitourinary syndrome of menopause": {
+    typicalPatientFindings: [
+      "postmenopausal patient",
+      "vaginal dryness",
+      "dyspareunia",
+      "urinary irritation"
+    ],
+    recognitionGoal: "Distinguish hypoestrogenic atrophy from infectious vaginitis.",
+    keyNegativeFindings: ["no thick discharge", "no vulvar plaques", "no focal lesion"]
+  },
+  "gestational hypertension": {
+    typicalPatientFindings: [
+      "hypertension after 20 weeks",
+      "no proteinuria",
+      "no severe features",
+      "stable mother and fetus"
+    ],
+    recognitionGoal: "Distinguish from preeclampsia.",
+    keyNegativeFindings: ["no proteinuria", "no severe features"]
+  },
+  "breast abscess": {
+    typicalPatientFindings: ["lactating or postpartum patient", "breast pain", "fever", "fluctuant breast mass"],
+    recognitionGoal: "Distinguish breast abscess from uncomplicated mastitis.",
+    keyNegativeFindings: ["not just diffuse erythema", "not improving with mastitis treatment"]
+  }
+};
+
 const VIGNETTE_FINDING_TAG_PREFIX = "vignette_finding::";
 const findingRoles = new Set<VignetteFindingRole>(["context", "supporting", "pivot_clue", "neutral", "noise"]);
 
@@ -253,6 +289,10 @@ function getMappedTeachMore(decision: TutorDecision) {
   return comparisonMap[getDiagnosis(decision).toLowerCase()];
 }
 
+function getStructuredIllnessScript(decision: TutorDecision) {
+  return structuredIllnessScriptMap[getDiagnosis(decision).toLowerCase()];
+}
+
 function isKnownAdjacentAnswer(decision: TutorDecision, userAnswer: string, evaluation?: AnswerEvaluation) {
   const answer = cleanAnswer(userAnswer).toLowerCase();
   const trap = sentence(decision.commonTrap ?? "").toLowerCase();
@@ -313,10 +353,11 @@ function isLikelyEtiology(answer: string, correctAnswer: string) {
   return normalizedAnswer.includes("increta") && normalizedCorrect.includes("retained placenta");
 }
 
-function buildPartialWhy(decision: TutorDecision, userAnswer: string) {
+function buildPartialWhy(decision: TutorDecision, userAnswer: string, evaluation?: AnswerEvaluation) {
   const answer = cleanAnswer(userAnswer);
   const correctAnswer = sentence(decision.correctAnswer);
   const clue = sentence(getPivotClue(decision));
+  const specificity = evaluation?.learnerFacingClassification;
 
   if (isLikelyEtiology(answer, correctAnswer)) {
     return `${answer} is one cause of ${correctAnswer}, but the vignette only proves ${correctAnswer}.`;
@@ -324,6 +365,28 @@ function buildPartialWhy(decision: TutorDecision, userAnswer: string) {
 
   if (answer.toLowerCase().includes("abortion") && correctAnswer.toLowerCase().includes("abortion")) {
     return `You recognized spontaneous abortion. Now identify the subtype: ${clue.toLowerCase()} points to ${correctAnswer}.`;
+  }
+
+  if (specificity?.category === "Correct category / insufficient specificity") {
+    return `${specificity.message} The specific answer here is ${correctAnswer}.`;
+  }
+
+  if (specificity?.category === "Broad but incomplete" || specificity?.category === "Needs more specificity") {
+    return `${specificity.message} Refine it using ${clue.toLowerCase()}: ${buildDecisionMeaning({
+      decisionType: decision.decisionType,
+      correctAnswer: decision.correctAnswer,
+      pivotClue: getPivotClue(decision),
+      topic: getDiagnosis(decision)
+    })}`;
+  }
+
+  if (specificity?.category === "Related but incorrect") {
+    return `${specificity.message} Refine it using ${clue.toLowerCase()}: ${buildDecisionMeaning({
+      decisionType: decision.decisionType,
+      correctAnswer: decision.correctAnswer,
+      pivotClue: getPivotClue(decision),
+      topic: getDiagnosis(decision)
+    })}`;
   }
 
   return `You are on the right branch. Refine it using ${clue.toLowerCase()}: ${buildDecisionMeaning({
@@ -388,13 +451,18 @@ function buildRepair(
   const withDecisionBoundary = (why: string) => (decisionBoundary ? `${why} ${decisionBoundary}` : why);
 
   if (["EXACT", "EQUIVALENT", "SPELLING_VARIATION"].includes(classification)) {
+    const acceptedWhy = evaluation?.learnerFacingClassification?.category === "Preferred terminology" ||
+      evaluation?.learnerFacingClassification?.category === "Misspelled but acceptable"
+      ? evaluation.learnerFacingClassification.message
+      : "Correct.";
+
     return {
       style: "CORRECT",
       correctAnswer,
       clue,
       clueMeaning,
       answerLabel,
-      why: "Correct.",
+      why: acceptedWhy,
       fingerprint
     };
   }
@@ -428,7 +496,7 @@ function buildRepair(
       clue,
       clueMeaning,
       answerLabel,
-      why: withDecisionBoundary(buildPartialWhy(decision, userAnswer)),
+      why: withDecisionBoundary(buildPartialWhy(decision, userAnswer, evaluation)),
       fingerprint,
       learnerAnswer,
       followUp: buildDecisionRepairPrompt({
@@ -461,7 +529,11 @@ function buildRepair(
     clue,
     clueMeaning,
     answerLabel,
-    why: withDecisionBoundary(buildPivotFeedback(decision, userAnswer)),
+    why: withDecisionBoundary(
+      evaluation?.learnerFacingClassification?.category === "Related but incorrect"
+        ? `${evaluation.learnerFacingClassification.message} ${buildPivotFeedback(decision, userAnswer)}`
+        : buildPivotFeedback(decision, userAnswer)
+    ),
     fingerprint,
     learnerAnswer,
     cognitiveError
@@ -510,6 +582,7 @@ export function buildTutorContent(
   const cognitiveError = classifyCognitiveError(decision, userAnswer, evaluation);
   const repair = buildRepair(decision, userAnswer, evaluation, cognitiveError);
   const mappedTeachMore = getMappedTeachMore(decision);
+  const structuredIllnessScript = getStructuredIllnessScript(decision);
   const comparison = buildComparison(decision);
   const decisionBoundary = findDecisionBoundaryRepair({
     learnerAnswer: cleanAnswer(userAnswer),
@@ -542,6 +615,10 @@ export function buildTutorContent(
     },
     illnessScript: {
       typicalPatient: typicalPatientBySpecialty[decision.specialty] ?? "Patient matching the clinical pattern",
+      typicalPatientFindings: structuredIllnessScript?.typicalPatientFindings,
+      recognitionGoal: structuredIllnessScript?.recognitionGoal,
+      recognitionGoalContrast: structuredIllnessScript?.recognitionGoalContrast,
+      keyNegativeFindings: structuredIllnessScript?.keyNegativeFindings,
       classicPresentation: buildExpertIllnessScript(decision),
       buzzwords
     },

@@ -133,6 +133,13 @@ export function TutorMode({
     Boolean(tutor.repair.fingerprint?.trim()) &&
     tutor.repair.fingerprint.trim() !== tutor.nbmePivot?.trim() &&
     tutor.repair.fingerprint.trim() !== tutor.illnessScript.classicPresentation.trim();
+  const hasTypicalPatientFindings = Boolean(tutor.illnessScript.typicalPatientFindings?.length);
+  const hasRecognitionGoal = Boolean(tutor.illnessScript.recognitionGoal?.trim());
+  const hasKeyNegativeFindings = Boolean(tutor.illnessScript.keyNegativeFindings?.length);
+  const shouldShowIllnessScriptProse =
+    Boolean(tutor.illnessScript.classicPresentation?.trim()) &&
+    !hasTypicalPatientFindings &&
+    !hasRecognitionGoal;
   const visualFlowSteps = dedupeDisplayStrings([
     visibleRecognitionClues[0],
     tutor.repair.clue,
@@ -155,6 +162,7 @@ export function TutorMode({
         <p className="rr-section-header">{repairTitle}</p>
         {isUnknown ? (
           <div className="space-y-3 text-sm leading-6">
+            <RepairSummary tutor={tutor} />
             <ClinicalReasoningFlow steps={visualFlowSteps} />
             {hasVignetteFindings ? <VignetteAttentionMap findings={tutor.vignetteFindings ?? []} /> : null}
             <TeachingFact label="What mattered" value={tutor.repair.clueMeaning} />
@@ -174,6 +182,7 @@ export function TutorMode({
           </div>
         ) : (
           <>
+            <RepairSummary tutor={tutor} />
             <ClinicalReasoningFlow steps={visualFlowSteps} />
             {hasVignetteFindings ? <VignetteAttentionMap findings={tutor.vignetteFindings ?? []} /> : null}
             <div className="grid gap-3 text-sm leading-6 sm:grid-cols-2">
@@ -255,15 +264,21 @@ export function TutorMode({
           ) : null}
           {modules.illnessScript ? (
           <TeachingBlock title="Illness script" tone="recognition">
-            <p>{tutor.illnessScript.classicPresentation}</p>
-            <div className="rr-teaching-facts mt-3">
-              <TeachingFact label="Typical patient" value={tutor.illnessScript.typicalPatient} />
-            </div>
+            {shouldShowIllnessScriptProse ? <p>{tutor.illnessScript.classicPresentation}</p> : null}
+            {hasTypicalPatientFindings ? (
+              <TeachingList title="Typical patient" items={tutor.illnessScript.typicalPatientFindings ?? []} />
+            ) : null}
+            {hasRecognitionGoal ? (
+              <TeachingFact label="Recognition goal" value={tutor.illnessScript.recognitionGoal} />
+            ) : null}
+            {hasKeyNegativeFindings ? (
+              <TeachingList title="Key negatives" items={tutor.illnessScript.keyNegativeFindings ?? []} />
+            ) : null}
           </TeachingBlock>
           ) : null}
           {modules.expertRecognition ? (
           <TeachingBlock title="Expert recognition" tone="recognition">
-            <TeachingFact label="Recognition goal" value={tutor.repair.clueMeaning} />
+            {!hasRecognitionGoal ? <TeachingFact label="Recognition goal" value={tutor.repair.clueMeaning} /> : null}
             <RecognitionPath value={tutor.recognitionPath ?? tutor.managementPearl} />
           </TeachingBlock>
           ) : null}
@@ -356,6 +371,21 @@ export function TutorMode({
         {teachingSurface}
       </aside>
     </section>
+  );
+}
+
+function RepairSummary({ tutor }: { tutor: TutorContent }) {
+  return (
+    <div className="rr-repair-summary">
+      <div>
+        <p className="rr-meta">Correct answer</p>
+        <p className="rr-repair-summary-value rr-repair-summary-correct">{tutor.repair.correctAnswer}</p>
+      </div>
+      <div>
+        <p className="rr-meta">Key clue</p>
+        <p className="rr-repair-summary-value rr-repair-summary-clue">{tutor.repair.clue}</p>
+      </div>
+    </div>
   );
 }
 
@@ -474,6 +504,25 @@ function TeachingFact({ label, value }: { label: string; value?: string }) {
       <span>{label}</span>
       {cleaned}
     </p>
+  );
+}
+
+function TeachingList({ title, items }: { title: string; items: string[] }) {
+  const visibleItems = dedupeDisplayStrings(items).filter(Boolean);
+
+  if (visibleItems.length === 0) {
+    return null;
+  }
+
+  return (
+    <div className="rr-teaching-list">
+      <p className="rr-meta">{title}</p>
+      <ul>
+        {visibleItems.map((item) => (
+          <li key={item}>{item}</li>
+        ))}
+      </ul>
+    </div>
   );
 }
 

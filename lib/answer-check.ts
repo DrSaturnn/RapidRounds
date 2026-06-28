@@ -1,4 +1,4 @@
-import type { AnswerEvaluation, AnswerEvaluationClassification } from "@/types/practice";
+import type { AnswerEvaluation, AnswerEvaluationClassification, AnswerSpecificityClassification } from "@/types/practice";
 
 const TASK_ALIASES = {
   Diagnosis: ["diagnosis", "diagnose", "condition", "disease"],
@@ -28,6 +28,7 @@ type EvaluationInput = {
 
 type MatchResult = {
   classification: AnswerEvaluationClassification;
+  learnerFacingClassification?: AnswerSpecificityClassification;
   canonicalAnswer: string;
   recognizedConcept: string;
   confidence: number;
@@ -57,6 +58,10 @@ function normalizeToken(token: string) {
 }
 
 const tokenSet = (value: string) => new Set(normalizeAnswer(value).split(" ").filter(Boolean));
+
+function specificity(category: AnswerSpecificityClassification["category"], message: string): AnswerSpecificityClassification {
+  return { category, message };
+}
 
 function tokenSimilarity(answer: string, expected: string) {
   const answerTokens = tokenSet(answer);
@@ -134,6 +139,82 @@ function aliasesFor(acceptedAnswers: string[], canonicalAnswer: string) {
   return Array.from(new Set([canonicalAnswer, ...acceptedAnswers].map((value) => value.trim()).filter(Boolean)));
 }
 
+const preferredTerminologyAliases = [
+  {
+    preferred: "genitourinary syndrome of menopause",
+    olderTerms: ["vulvar atrophy", "vaginal atrophy", "atrophic vaginitis"]
+  }
+];
+
+const treatmentFamilies = [
+  {
+    family: "antibiotic",
+    answerTerms: ["antibiotic", "antibiotics", "abx"],
+    expectedTerms: [
+      "ampicillin",
+      "azithromycin",
+      "cefazolin",
+      "ceftriaxone",
+      "cephalexin",
+      "clindamycin",
+      "doxycycline",
+      "gentamicin",
+      "metronidazole",
+      "penicillin",
+      "vancomycin"
+    ]
+  },
+  {
+    family: "uterotonic",
+    answerTerms: ["uterotonic", "uterotonics"],
+    expectedTerms: ["oxytocin", "carboprost", "methylergonovine", "misoprostol"]
+  },
+  {
+    family: "antihypertensive",
+    answerTerms: ["antihypertensive", "blood pressure medication", "bp medication"],
+    expectedTerms: ["labetalol", "hydralazine", "nifedipine"]
+  }
+];
+
+function isAnswerSubsetOfExpected(answer: string, expected: string) {
+  const answerTokens = tokenSet(answer);
+  const expectedTokens = tokenSet(expected);
+
+  return (
+    answerTokens.size > 0 &&
+    answerTokens.size < expectedTokens.size &&
+    [...answerTokens].every((token) => expectedTokens.has(token))
+  );
+}
+
+function findTreatmentFamilyMatch(answer: string, aliases: string[]) {
+  const normalizedAnswer = normalizeAnswer(answer);
+
+  return treatmentFamilies.find((family) => {
+    const answerMatchesFamily = family.answerTerms.some((term) => normalizedAnswer === normalizeAnswer(term));
+    const expectedMatchesFamily = aliases.some((alias) => {
+      const normalizedAlias = normalizeAnswer(alias);
+      return family.expectedTerms.some((term) => normalizedAlias.includes(normalizeAnswer(term)));
+    });
+
+    return answerMatchesFamily && expectedMatchesFamily;
+  });
+}
+
+function findPreferredTerminologyMatch(answer: string, canonicalAnswer: string, aliases: string[]) {
+  const normalizedAnswer = normalizeAnswer(answer);
+  const normalizedCanonical = normalizeAnswer(canonicalAnswer);
+  const normalizedAliases = aliases.map(normalizeAnswer);
+
+  return preferredTerminologyAliases.find((entry) => {
+    const preferred = normalizeAnswer(entry.preferred);
+    const expectedMatchesPreferred = normalizedCanonical === preferred || normalizedAliases.includes(preferred);
+    const answerMatchesOlderTerm = entry.olderTerms.some((term) => normalizeAnswer(term) === normalizedAnswer);
+
+    return expectedMatchesPreferred && answerMatchesOlderTerm;
+  });
+}
+
 function isUnknownResponse(answer: string) {
   const trimmed = answer.trim();
   const normalized = normalizeAnswer(answer);
@@ -190,9 +271,27 @@ function classifyAgainstAliases(answer: string, aliases: string[], canonicalAnsw
   const normalizedAnswer = normalizeAnswer(answer);
   const normalizedCanonical = normalizeAnswer(canonicalAnswer);
 
+  const preferredTerminology = findPreferredTerminologyMatch(answer, canonicalAnswer, aliases);
+  if (preferredTerminology) {
+    return {
+      classification: "EQUIVALENT",
+      learnerFacingClassification: specificity(
+        "Preferred terminology",
+        `You used an older accepted term; the preferred term is ${canonicalAnswer}.`
+      ),
+      canonicalAnswer,
+      recognizedConcept: canonicalAnswer,
+      confidence: 0.96,
+      spellingCorrected: false,
+      matchedAlias: answer,
+      reason: `Older accepted terminology maps to the preferred term ${canonicalAnswer}.`
+    };
+  }
+
   if (normalizedAnswer === normalizedCanonical) {
     return {
       classification: "EXACT",
+      learnerFacingClassification: specificity("Exact", "Exact answer."),
       canonicalAnswer,
       recognizedConcept: canonicalAnswer,
       confidence: 1,
@@ -203,8 +302,12 @@ function classifyAgainstAliases(answer: string, aliases: string[], canonicalAnsw
 
   const alias = aliases.find((candidate) => normalizeAnswer(candidate) === normalizedAnswer);
   if (alias) {
+    const preferredAlias = findPreferredTerminologyMatch(alias, canonicalAnswer, aliases);
     return {
       classification: "EQUIVALENT",
+      learnerFacingClassification: preferredAlias
+        ? specificity("Preferred terminology", `You used an older accepted term; the preferred term is ${canonicalAnswer}.`)
+        : specificity("Equivalent", "Semantically equivalent answer."),
       canonicalAnswer,
       recognizedConcept: canonicalAnswer,
       confidence: 0.97,
@@ -218,6 +321,7 @@ function classifyAgainstAliases(answer: string, aliases: string[], canonicalAnsw
   if (spellingMatches.length === 1) {
     return {
       classification: "SPELLING_VARIATION",
+      learnerFacingClassification: specificity("Misspelled but acceptable", "Spelling is close enough to the expected answer."),
       canonicalAnswer,
       recognizedConcept: canonicalAnswer,
       confidence: 0.92,
@@ -239,6 +343,7 @@ function classifyAgainstAliases(answer: string, aliases: string[], canonicalAnsw
   if (containedAlias && normalizedAnswer.length >= 3) {
     return {
       classification: "EQUIVALENT",
+      learnerFacingClassification: specificity("Equivalent", "Answer contains the expected concept without changing the decision."),
       canonicalAnswer,
       recognizedConcept: canonicalAnswer,
       confidence: 0.88,
@@ -252,6 +357,7 @@ function classifyAgainstAliases(answer: string, aliases: string[], canonicalAnsw
   if (bestSimilarity >= 0.75) {
     return {
       classification: "EQUIVALENT",
+      learnerFacingClassification: specificity("Equivalent", "Answer is semantically close enough to the accepted answer."),
       canonicalAnswer,
       recognizedConcept: canonicalAnswer,
       confidence: 0.82,
@@ -262,14 +368,20 @@ function classifyAgainstAliases(answer: string, aliases: string[], canonicalAnsw
   }
 
   if (bestSimilarity >= 0.5) {
+    const matchedAlias = aliases.find((candidate) => tokenSimilarity(answer, candidate) === bestSimilarity);
+    const broadCategory = matchedAlias && isAnswerSubsetOfExpected(answer, matchedAlias)
+      ? specificity("Broad but incomplete", "You named the right broad concept, but the answer needs the complete action.")
+      : specificity("Needs more specificity", "You were close, but the answer needs more specificity.");
+
     return {
       classification: "PARTIAL",
+      learnerFacingClassification: broadCategory,
       canonicalAnswer,
       recognizedConcept: canonicalAnswer,
       confidence: 0.56,
       spellingCorrected: false,
-      matchedAlias: aliases.find((candidate) => tokenSimilarity(answer, candidate) === bestSimilarity),
-      reason: "Answer captures part of the expected concept but is incomplete."
+      matchedAlias,
+      reason: broadCategory.message
     };
   }
 
@@ -283,10 +395,14 @@ function buildEvaluation(
   overrides: Partial<AnswerEvaluation>
 ): AnswerEvaluation {
   const isCorrect = ["EXACT", "EQUIVALENT", "SPELLING_VARIATION"].includes(classification);
+  const defaultSpecificity = isCorrect
+    ? specificity(classification === "SPELLING_VARIATION" ? "Misspelled but acceptable" : classification === "EXACT" ? "Exact" : "Equivalent", "Answer is accepted.")
+    : specificity(classification === "INCORRECT" ? "Incorrect" : "Needs more specificity", "Answer needs teaching.");
 
   return {
     isCorrect,
     classification,
+    learnerFacingClassification: overrides.learnerFacingClassification ?? defaultSpecificity,
     canonicalAnswer,
     recognizedConcept: overrides.recognizedConcept,
     recognizedTask,
@@ -315,6 +431,7 @@ export function evaluateAnswer({
       confidence: 1,
       requiresTeaching: true,
       partialCredit: 0,
+      learnerFacingClassification: specificity("Unknown", "No answer submitted."),
       reason: "Learner indicated the concept is not in memory yet."
     });
   }
@@ -324,14 +441,46 @@ export function evaluateAnswer({
     return buildEvaluation(aliasMatch.classification, canonical, recognizedTask, aliasMatch);
   }
 
+  const treatmentFamily = findTreatmentFamilyMatch(answer, aliases);
+  if (treatmentFamily) {
+    return buildEvaluation("PARTIAL", canonical, recognizedTask, {
+      recognizedConcept: treatmentFamily.family,
+      confidence: 0.62,
+      partialCredit: 0.45,
+      learnerFacingClassification: specificity(
+        "Correct category / insufficient specificity",
+        `You recognized the ${treatmentFamily.family} family, but the answer needs the specific regimen.`
+      ),
+      reason: `Recognized the ${treatmentFamily.family} family, but the expected answer requires the specific treatment.`
+    });
+  }
+
   const recognizedConcept = findConcept(answer, clinicalConcepts);
   const expected = taskFrom(expectedTask);
+  const recognizedIsAccepted = recognizedConcept
+    ? aliases.some((alias) => normalizeAnswer(alias) === normalizeAnswer(recognizedConcept))
+    : false;
+
   if (recognizedConcept && expected && expected !== "Diagnosis") {
     return buildEvaluation("TASK_MISMATCH", canonical, recognizedTask, {
       recognizedConcept,
       confidence: 0.86,
       requiresTeaching: true,
+      learnerFacingClassification: specificity("Broad but incomplete", "You recognized the clinical concept, but the task asks for a different action."),
       reason: `Recognized ${recognizedConcept}, but the task asks for ${expected}.`
+    });
+  }
+
+  if (recognizedConcept && !recognizedIsAccepted) {
+    return buildEvaluation("PARTIAL", canonical, recognizedTask, {
+      recognizedConcept,
+      confidence: 0.68,
+      partialCredit: 0.35,
+      learnerFacingClassification: specificity(
+        "Related but incorrect",
+        `You named a related concept (${recognizedConcept}), but it is not the answer this stem supports.`
+      ),
+      reason: `Answer names a related concept (${recognizedConcept}) but not the expected answer.`
     });
   }
 
@@ -340,6 +489,7 @@ export function evaluateAnswer({
       recognizedConcept,
       confidence: 0.6,
       partialCredit: 0.4,
+      learnerFacingClassification: specificity("Broad but incomplete", "You recognized a related concept, but the answer is incomplete for this decision."),
       reason: "Answer recognizes a related clinical concept but not the expected answer."
     });
   }
@@ -359,6 +509,7 @@ export function evaluateAnswer({
 
   return buildEvaluation("INCORRECT", canonical, recognizedTask, {
     confidence: 0.72,
+    learnerFacingClassification: specificity("Incorrect", "Answer does not match the expected clinical concept or task."),
     reason: "Answer does not match the expected clinical concept or task."
   });
 }

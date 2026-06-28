@@ -38,6 +38,10 @@ function applyAiEquivalent(evaluation: AnswerEvaluation, aiMatch: boolean | null
     ...evaluation,
     isCorrect: true,
     classification: "EQUIVALENT",
+    learnerFacingClassification: {
+      category: "Equivalent",
+      message: "Semantically equivalent answer."
+    },
     confidence: Math.max(evaluation.confidence, 0.8),
     requiresTeaching: false,
     partialCredit: 1,

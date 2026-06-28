@@ -12,6 +12,7 @@
   --rr-color-surface-elevated: #ffffff;
   --rr-color-border: #d8d8d8;
   --rr-color-border-strong: #111111;
+  --rr-color-button-primary: #050505;
 
   /* Educational role tokens. Remap these for future themes; components should not depend on fixed color families. */
   --rr-color-accent: #315c68;
@@ -219,15 +220,14 @@ body:has(.practice-focus) .app-main {
   }
 
   .rr-card {
-    @apply rounded-lg border border-rr-border bg-rr-elevated shadow-[var(--rr-shadow-card)];
+    @apply rounded-lg border border-rr-border bg-rr-elevated;
+    box-shadow: 0 1px 1px rgb(0 0 0 / 0.03);
   }
 
   .rr-question-card {
-    border-color: var(--rr-color-question-border);
-    background:
-      linear-gradient(180deg, var(--rr-color-question-surface), var(--rr-color-surface-elevated) 58%),
-      var(--rr-color-surface-elevated);
-    box-shadow: var(--rr-shadow-practice);
+    border-color: var(--rr-color-border);
+    background: var(--rr-color-surface-elevated);
+    box-shadow: none;
   }
 
   .rr-repair-card {
@@ -245,14 +245,14 @@ body:has(.practice-focus) .app-main {
   }
 
   .rr-teaching-card {
-    border-color: var(--rr-color-memory-border);
-    background: var(--rr-color-teaching-surface);
+    border-color: var(--rr-color-border);
+    background: var(--rr-color-surface-elevated);
     box-shadow: none;
   }
 
   .rr-teaching-card summary {
-    background: color-mix(in srgb, var(--rr-color-memory-tint) 38%, var(--rr-color-surface-elevated));
-    color: var(--rr-color-memory);
+    background: var(--rr-color-surface-elevated);
+    color: var(--rr-color-foreground);
   }
 
   .rr-teaching-card summary::-webkit-details-marker {
@@ -260,15 +260,15 @@ body:has(.practice-focus) .app-main {
   }
 
   .rr-teaching-card summary::after {
-    content: "Open";
+    content: "v";
     float: right;
-    font-size: 0.75rem;
-    font-weight: 500;
-    color: var(--rr-color-muted);
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--rr-color-foreground);
   }
 
   .rr-teaching-card[open] summary::after {
-    content: "Close";
+    content: "^";
   }
 
   .rr-adaptive-card {
@@ -328,8 +328,15 @@ body:has(.practice-focus) .app-main {
   }
 
   .rr-button-primary {
-    @apply border-rr-accent bg-rr-accent text-rr-background hover:bg-rr-elevated hover:text-rr-accent active:bg-rr-surface;
-    box-shadow: 0 8px 18px color-mix(in srgb, var(--rr-color-accent) 14%, transparent);
+    border-color: var(--rr-color-button-primary);
+    background: var(--rr-color-button-primary);
+    color: var(--rr-color-background);
+    box-shadow: 0 8px 18px rgb(0 0 0 / 0.12);
+  }
+
+  .rr-button-primary:hover {
+    background: var(--rr-color-surface-elevated);
+    color: var(--rr-color-button-primary);
   }
 
   .rr-button-secondary {
@@ -380,9 +387,82 @@ body:has(.practice-focus) .app-main {
   }
 
   .rr-practice-shell {
-    background:
-      linear-gradient(180deg, var(--rr-color-observatory-atmosphere), var(--rr-color-background) 34rem),
-      var(--rr-color-background);
+    background: var(--rr-color-background);
+  }
+
+  .rr-product-nav {
+    @apply sticky top-0 z-40 grid min-h-[4.25rem] grid-cols-[1fr_auto] items-center border-b border-rr-border bg-rr-elevated px-5 sm:px-8 lg:grid-cols-[1fr_auto_1fr];
+  }
+
+  .rr-product-brand {
+    @apply text-lg font-semibold leading-7 text-rr-foreground;
+  }
+
+  .rr-product-tabs {
+    @apply order-3 col-span-2 flex min-h-10 items-end justify-center gap-7 overflow-x-auto text-sm leading-6 sm:gap-10 lg:order-none lg:col-span-1;
+  }
+
+  .rr-product-tab {
+    @apply relative inline-flex min-h-10 items-center whitespace-nowrap text-rr-muted no-underline;
+  }
+
+  .rr-product-tab-active {
+    @apply font-semibold text-rr-foreground;
+  }
+
+  .rr-product-tab-active::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: -1px;
+    height: 3px;
+    border-radius: 999px;
+    background: var(--rr-color-foreground);
+  }
+
+  .rr-product-tab-muted {
+    @apply cursor-default;
+  }
+
+  .rr-product-actions {
+    @apply flex items-center justify-end gap-3;
+  }
+
+  .rr-keycap {
+    @apply hidden rounded-md border border-rr-border bg-rr-surface px-2 py-1 text-xs font-medium text-rr-muted sm:inline-flex;
+  }
+
+  .rr-icon-button {
+    @apply inline-flex h-9 min-w-9 items-center justify-center rounded-md border border-transparent bg-transparent px-2 text-base text-rr-foreground transition-colors hover:border-rr-border hover:bg-rr-surface;
+  }
+
+  .rr-practice-progress {
+    @apply flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between;
+  }
+
+  .rr-progress-left {
+    @apply grid w-full max-w-[31rem] gap-3;
+  }
+
+  .rr-progress-label {
+    @apply text-sm leading-6 text-rr-foreground;
+  }
+
+  .rr-progress-track {
+    @apply h-1 rounded-full bg-rr-border;
+  }
+
+  .rr-progress-track span {
+    @apply block h-full rounded-full bg-rr-foreground;
+  }
+
+  .rr-progress-right {
+    @apply flex items-center gap-4;
+  }
+
+  .rr-bookmark {
+    @apply text-2xl leading-none text-rr-foreground;
   }
 
   .rr-practice-topbar {
@@ -402,7 +482,7 @@ body:has(.practice-focus) .app-main {
   }
 
   .rr-practice-main {
-    @apply mx-auto flex w-full max-w-3xl flex-1 flex-col justify-center;
+    @apply mx-auto flex w-full max-w-[52rem] flex-1 flex-col;
   }
 
   .rr-practice-main-wide {
@@ -410,7 +490,24 @@ body:has(.practice-focus) .app-main {
   }
 
   .rr-answer-dock {
-    @apply rounded-lg border border-rr-soft-line bg-rr-surface px-3 py-3 sm:px-4 sm:py-4;
+    @apply rounded-lg bg-rr-elevated;
+  }
+
+  .rr-session-footer {
+    @apply fixed bottom-0 left-0 right-0 z-30 flex min-h-14 flex-col gap-2 border-t border-rr-border bg-rr-elevated px-5 py-3 text-xs text-rr-muted sm:flex-row sm:items-center sm:justify-between sm:px-8;
+  }
+
+  .rr-session-footer-left,
+  .rr-session-footer-right {
+    @apply flex flex-wrap items-center gap-x-6 gap-y-1;
+  }
+
+  .rr-session-footer strong {
+    @apply font-semibold text-rr-foreground;
+  }
+
+  .rr-session-footer button {
+    @apply font-semibold text-rr-foreground;
   }
 
   .rr-correct-inline {
@@ -454,6 +551,22 @@ body:has(.practice-focus) .app-main {
 
   .rr-post-answer-repair .rr-pivot-panel {
     box-shadow: 0 10px 24px color-mix(in srgb, var(--rr-color-clue) 10%, transparent);
+  }
+
+  .rr-repair-summary {
+    @apply grid gap-4 rounded-lg border border-rr-border bg-rr-elevated px-4 py-3 sm:grid-cols-2;
+  }
+
+  .rr-repair-summary-value {
+    @apply mt-1 text-sm font-semibold leading-6 text-rr-foreground;
+  }
+
+  .rr-repair-summary-correct {
+    color: var(--rr-color-correct);
+  }
+
+  .rr-repair-summary-clue {
+    color: var(--rr-color-mastery);
   }
 
   .rr-clinical-flow {
@@ -602,16 +715,15 @@ body:has(.practice-focus) .app-main {
   }
 
   .rr-teaching-blocks {
-    @apply space-y-3;
+    @apply divide-y divide-rr-border;
   }
 
   .rr-teaching-block {
-    @apply rounded-lg border bg-rr-elevated px-3.5 py-3;
-    border-color: var(--rr-color-border);
+    @apply border-0 bg-transparent px-0 py-4 first:pt-0 last:pb-0;
   }
 
   .rr-teaching-block-title {
-    @apply text-xs font-semibold uppercase leading-5 tracking-normal;
+    @apply text-xs font-bold uppercase leading-5 tracking-normal;
     color: var(--rr-color-muted);
   }
 
@@ -631,34 +743,41 @@ body:has(.practice-focus) .app-main {
     @apply text-xs font-semibold uppercase leading-5 tracking-normal text-rr-muted;
   }
 
+  .rr-teaching-list {
+    @apply space-y-1.5;
+  }
+
+  .rr-teaching-list ul {
+    @apply grid gap-1 pl-4 text-sm leading-6;
+    list-style: disc;
+  }
+
+  .rr-teaching-list li::marker {
+    color: var(--rr-color-recognition);
+  }
+
   .rr-teaching-block-recognition {
-    border-color: var(--rr-color-recognition-border);
-    background: var(--rr-color-recognition-tint);
+    color: var(--rr-color-recognition);
   }
 
   .rr-teaching-block-comparison {
-    border-color: var(--rr-color-comparison-border);
-    background: var(--rr-color-comparison-tint);
+    color: var(--rr-color-comparison);
   }
 
   .rr-teaching-block-memory {
-    border-color: var(--rr-color-memory-border);
-    background: var(--rr-color-memory-tint);
+    color: var(--rr-color-memory);
   }
 
   .rr-teaching-block-pivot {
-    border-color: var(--rr-color-pivot-border);
-    background: var(--rr-color-pivot-tint);
+    color: var(--rr-color-pivot);
   }
 
   .rr-teaching-block-repair {
-    border-color: var(--rr-color-repair-border);
-    background: var(--rr-color-repair-tint);
+    color: var(--rr-color-repair);
   }
 
   .rr-teaching-block-takeaway {
-    border-color: var(--rr-color-takeaway-border);
-    background: var(--rr-color-takeaway-tint);
+    color: var(--rr-color-takeaway);
   }
 
   .rr-overlay {

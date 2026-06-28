@@ -95,6 +95,7 @@ export type AnswerEvaluationClassification =
 export type AnswerEvaluation = {
   isCorrect: boolean;
   classification: AnswerEvaluationClassification;
+  learnerFacingClassification?: AnswerSpecificityClassification;
   canonicalAnswer: string;
   recognizedConcept?: string;
   recognizedTask?: string;
@@ -104,6 +105,21 @@ export type AnswerEvaluation = {
   requiresTeaching: boolean;
   partialCredit: number;
   reason: string;
+};
+
+export type AnswerSpecificityClassification = {
+  category:
+    | "Exact"
+    | "Equivalent"
+    | "Preferred terminology"
+    | "Broad but incomplete"
+    | "Needs more specificity"
+    | "Correct category / insufficient specificity"
+    | "Related but incorrect"
+    | "Misspelled but acceptable"
+    | "Incorrect"
+    | "Unknown";
+  message: string;
 };
 
 export type PracticeMode = "rapid" | "tutor";
@@ -155,6 +171,10 @@ export type TutorContent = {
   };
   illnessScript: {
     typicalPatient: string;
+    typicalPatientFindings?: string[];
+    recognitionGoal?: string;
+    recognitionGoalContrast?: string;
+    keyNegativeFindings?: string[];
     classicPresentation: string;
     buzzwords: string[];
   };
