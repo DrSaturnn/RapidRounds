@@ -217,30 +217,26 @@ export function PracticePanel() {
   const progressPercent = Math.min(100, Math.max(1, (displayDecisionCount / 86) * 100));
 
   return (
-    <div className="practice-focus rr-practice-shell min-h-screen pb-16">
+    <div className="practice-focus rr-practice-shell min-h-screen">
       <header className="rr-product-nav">
         <div className="rr-product-brand">RapidRounds</div>
         <nav className="rr-product-tabs" aria-label="Primary">
           <a className="rr-product-tab rr-product-tab-active" href="/">Practice</a>
           <a className="rr-product-tab" href="/analytics">Progress</a>
-          <span className="rr-product-tab rr-product-tab-muted">Library</span>
-          <a className="rr-product-tab" href="/analytics">Analytics</a>
         </nav>
         <div className="rr-product-actions" aria-label="Session tools">
-          <span className="rr-keycap">⌘ K</span>
-          <span className="rr-icon-button" aria-hidden="true">☾</span>
           <button
             type="button"
-            className="rr-icon-button"
+            className="rr-session-link"
             aria-label="End session"
             onClick={() => setShowEndSessionConfirm(true)}
           >
-            ☰
+            End session
           </button>
         </div>
       </header>
 
-      <div className="mx-auto flex w-full max-w-[92rem] flex-col px-4 py-6 sm:px-6 lg:px-8">
+      <div className="mx-auto flex w-full max-w-[64rem] flex-col px-4 py-6 sm:px-6 lg:px-8">
         <header className="rr-practice-progress mb-5">
           <div className="rr-progress-left">
             <p className="rr-progress-label">Question {displayDecisionCount} of 86</p>
@@ -250,7 +246,6 @@ export function PracticePanel() {
           </div>
           <div className="rr-progress-right">
             <QuestionMeta question={question} />
-            <span className="rr-bookmark" aria-hidden="true">♡</span>
           </div>
         </header>
 
@@ -321,7 +316,7 @@ export function PracticePanel() {
                   </div>
                 ) : null}
                 {mode === "rapid" && result && !result.isCorrect ? (
-                  <p className="text-sm font-medium text-rr-repair">RapidRounds is building a focused repair.</p>
+                  <p className="text-sm font-medium text-rr-repair">Not quite. Let&apos;s refine this decision.</p>
                 ) : null}
                 {error ? <p className="text-sm text-rr-muted">{error}</p> : null}
               </div>
@@ -345,19 +340,6 @@ export function PracticePanel() {
         ) : null}
         </main>
       </div>
-      <footer className="rr-session-footer">
-        <div className="rr-session-footer-left">
-          <span>Session: <strong>Adaptive</strong></span>
-          <span>Decisions Today: <strong>{displayDecisionCount}</strong></span>
-          <span>Progress saved</span>
-        </div>
-        <div className="rr-session-footer-right">
-          <span>Need a break?</span>
-          <button type="button" onClick={() => setShowEndSessionConfirm(true)}>
-            End Session
-          </button>
-        </div>
-      </footer>
       {showEndSessionConfirm ? (
         <div
           className="rr-overlay fixed inset-0 z-50 flex items-center justify-center px-5 motion-safe:animate-[fadeIn_180ms_var(--rr-ease-standard)]"

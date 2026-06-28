@@ -114,7 +114,7 @@ export function TutorMode({
   loadQuestion: (targetConcept?: string) => void;
 }) {
   const isUnknown = tutor.repair.style === "UNKNOWN";
-  const repairTitle = isUnknown ? "Build the pattern" : "Repair this decision";
+  const repairTitle = "Build the pattern";
   const learningTrajectory = getLearningTrajectory({
     correctAnswer: tutor.correctAnswer,
     wasCorrect: tutor.repair.style === "CORRECT",
@@ -140,12 +140,12 @@ export function TutorMode({
     Boolean(tutor.illnessScript.classicPresentation?.trim()) &&
     !hasTypicalPatientFindings &&
     !hasRecognitionGoal;
-  const visualFlowSteps = dedupeDisplayStrings([
-    visibleRecognitionClues[0],
-    tutor.repair.clue,
-    getDecisionTaskLabel(tutor),
-    tutor.repair.correctAnswer
-  ]);
+  const visualFlowSteps = [
+    { label: "Clinical pattern", value: visibleRecognitionClues[0] },
+    { label: "Pivot clue", value: tutor.repair.clue },
+    { label: "Decision", value: getDecisionTaskLabel(tutor) },
+    { label: "Correct answer", value: tutor.repair.correctAnswer }
+  ].filter((step) => step.value.trim().length > 0);
   const compactReasoning = getCompactReasoning(tutor);
   const hasVignetteFindings = Boolean(tutor.vignetteFindings?.length);
 
@@ -158,12 +158,12 @@ export function TutorMode({
   };
 
   const repairSurface = (
-    <div className={`rr-card rr-card-section space-y-4 ${isUnknown ? "rr-concept-card" : "rr-repair-card"}`}>
+    <div className={`rr-card rr-card-section rr-notebook-section space-y-4 ${isUnknown ? "rr-concept-card" : "rr-repair-card"}`}>
         <p className="rr-section-header">{repairTitle}</p>
         {isUnknown ? (
           <div className="space-y-3 text-sm leading-6">
-            <RepairSummary tutor={tutor} />
             <ClinicalReasoningFlow steps={visualFlowSteps} />
+            <RepairSummary tutor={tutor} />
             {hasVignetteFindings ? <VignetteAttentionMap findings={tutor.vignetteFindings ?? []} /> : null}
             <TeachingFact label="What mattered" value={tutor.repair.clueMeaning} />
             {compactReasoning ? <TeachingFact label="What to remember" value={compactReasoning} /> : null}
@@ -182,8 +182,8 @@ export function TutorMode({
           </div>
         ) : (
           <>
-            <RepairSummary tutor={tutor} />
             <ClinicalReasoningFlow steps={visualFlowSteps} />
+            <RepairSummary tutor={tutor} />
             {hasVignetteFindings ? <VignetteAttentionMap findings={tutor.vignetteFindings ?? []} /> : null}
             <div className="grid gap-3 text-sm leading-6 sm:grid-cols-2">
               <TeachingFact label="What mattered" value={tutor.repair.clueMeaning} />
@@ -237,7 +237,7 @@ export function TutorMode({
   );
 
   const teachingSurface = (
-      <TeachingCard title="Teach me more" defaultOpen="desktop">
+      <TeachingCard title="Understand the pattern" defaultOpen="desktop">
         <div className="rr-teaching-blocks">
           {modules.retrieval && tutor.teachingPlan.retrieval ? (
             <TeachingBlock title="Retrieval target" tone="memory">
@@ -261,20 +261,6 @@ export function TutorMode({
                 ) : null}
               </div>
             </TeachingBlock>
-          ) : null}
-          {modules.illnessScript ? (
-          <TeachingBlock title="Illness script" tone="recognition">
-            {shouldShowIllnessScriptProse ? <p>{tutor.illnessScript.classicPresentation}</p> : null}
-            {hasTypicalPatientFindings ? (
-              <TeachingList title="Typical patient" items={tutor.illnessScript.typicalPatientFindings ?? []} />
-            ) : null}
-            {hasRecognitionGoal ? (
-              <TeachingFact label="Recognition goal" value={tutor.illnessScript.recognitionGoal} />
-            ) : null}
-            {hasKeyNegativeFindings ? (
-              <TeachingList title="Key negatives" items={tutor.illnessScript.keyNegativeFindings ?? []} />
-            ) : null}
-          </TeachingBlock>
           ) : null}
           {modules.expertRecognition ? (
           <TeachingBlock title="Expert recognition" tone="recognition">
@@ -316,6 +302,20 @@ export function TutorMode({
             <TeachingFact label="NBME pivot" value={tutor.nbmePivot} />
           </TeachingBlock>
           ) : null}
+          {modules.illnessScript ? (
+          <TeachingBlock title="Illness script" tone="recognition">
+            {shouldShowIllnessScriptProse ? <p>{tutor.illnessScript.classicPresentation}</p> : null}
+            {hasTypicalPatientFindings ? (
+              <TeachingList title="Typical patient" items={tutor.illnessScript.typicalPatientFindings ?? []} />
+            ) : null}
+            {hasRecognitionGoal ? (
+              <TeachingFact label="Recognition goal" value={tutor.illnessScript.recognitionGoal} />
+            ) : null}
+            {hasKeyNegativeFindings ? (
+              <TeachingList title="Key negatives" items={tutor.illnessScript.keyNegativeFindings ?? []} />
+            ) : null}
+          </TeachingBlock>
+          ) : null}
           {modules.whyTempting && tutor.whyTempting ? (
             <TeachingBlock title="Why this was tempting" tone="memory">
               <p>{tutor.whyTempting}</p>
@@ -331,7 +331,7 @@ export function TutorMode({
   );
 
   const nextChallengeSurface = (
-      <div className="rr-card rr-card-section rr-adaptive-card space-y-3">
+      <div className="rr-card rr-card-section rr-notebook-section rr-adaptive-card space-y-3">
         <p className="rr-section-header">Next challenge</p>
         <div className="space-y-3 text-sm leading-6">
           <p>
@@ -366,10 +366,10 @@ export function TutorMode({
   return (
     <section className="rr-post-answer-workspace">
       <div className="rr-post-answer-repair">{repairSurface}</div>
-      <div className="rr-post-answer-next">{nextChallengeSurface}</div>
-      <aside className="rr-post-answer-depth" aria-label="Teach me more">
+      <section className="rr-post-answer-depth" aria-label="Understand the pattern">
         {teachingSurface}
-      </aside>
+      </section>
+      <div className="rr-post-answer-next">{nextChallengeSurface}</div>
     </section>
   );
 }
@@ -382,7 +382,7 @@ function RepairSummary({ tutor }: { tutor: TutorContent }) {
         <p className="rr-repair-summary-value rr-repair-summary-correct">{tutor.repair.correctAnswer}</p>
       </div>
       <div>
-        <p className="rr-meta">Key clue</p>
+        <p className="rr-meta">Pivot clue</p>
         <p className="rr-repair-summary-value rr-repair-summary-clue">{tutor.repair.clue}</p>
       </div>
     </div>
@@ -413,34 +413,26 @@ function VignetteAttentionMap({ findings }: { findings: VignetteFindingAnnotatio
   );
 }
 
-function ClinicalReasoningFlow({ steps }: { steps: string[] }) {
-  const visibleSteps = steps.filter(Boolean);
+function ClinicalReasoningFlow({ steps }: { steps: Array<{ label: string; value: string }> }) {
+  const visibleSteps = steps.filter((step) => step.value.trim().length > 0);
 
   return (
     <div className="rr-clinical-flow" aria-label="Clinical reasoning flow">
       <p className="rr-clinical-flow-title">Clinical pattern</p>
       <div className="rr-clinical-flow-steps">
         {visibleSteps.map((step, index) => {
-          const isPivot = index === 1;
+          const isPivot = step.label === "Pivot clue";
           const isTerminal = index === visibleSteps.length - 1;
 
           return (
             <div
-              key={`${step}-${index}`}
+              key={`${step.label}-${step.value}-${index}`}
               className={`rr-clinical-flow-step ${isPivot ? "rr-clinical-flow-pivot" : ""} ${
                 isTerminal ? "rr-clinical-flow-terminal" : ""
               }`}
             >
-              <span className="rr-clinical-flow-label">
-                {index === 0
-                  ? "Pattern"
-                  : isPivot
-                    ? "What mattered"
-                    : isTerminal
-                      ? "Correct answer"
-                      : "Decision task"}
-              </span>
-              <span className="rr-clinical-flow-node">{step}</span>
+              <span className="rr-clinical-flow-label">{step.label}</span>
+              <span className="rr-clinical-flow-node">{step.value}</span>
             </div>
           );
         })}

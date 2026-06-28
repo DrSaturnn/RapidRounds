@@ -5,7 +5,7 @@ import { describe, it } from "node:test";
 describe("decision repair information hierarchy", () => {
   it("renders the visual reasoning flow before optional prose", () => {
     const tutorMode = readFileSync("components/TutorMode.tsx", "utf8");
-    const headingIndex = tutorMode.indexOf("Repair this decision");
+    const headingIndex = tutorMode.indexOf("Build the pattern");
     const flowIndex = tutorMode.indexOf("<ClinicalReasoningFlow", headingIndex);
     const whatMatteredIndex = tutorMode.indexOf("What mattered", headingIndex);
     const rememberIndex = tutorMode.indexOf("What to remember", headingIndex);
@@ -21,8 +21,8 @@ describe("decision repair information hierarchy", () => {
 
     assert.match(tutorMode, /function ClinicalReasoningFlow/);
     assert.match(tutorMode, /Clinical pattern/);
-    assert.match(tutorMode, /What mattered/);
-    assert.match(tutorMode, /Decision task/);
+    assert.match(tutorMode, /Pivot clue/);
+    assert.match(tutorMode, /Decision/);
     assert.match(tutorMode, /Correct answer/);
     assert.match(tutorMode, /border-t border-rr-soft-line pt-3/);
     assert.doesNotMatch(tutorMode, /rr-card rr-card-section space-y-3">\s*<p className="text-sm font-medium leading-6">\{tutor\.reinforcement\.question\}/);

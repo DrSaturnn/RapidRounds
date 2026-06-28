@@ -23,7 +23,7 @@
   --rr-color-pivot: #7a5c12;
   --rr-color-clue: #7a5c12;
   --rr-color-takeaway: #245c45;
-  --rr-color-repair: #7f1d1d;
+  --rr-color-repair: #8a5a12;
   --rr-color-correct: #137a3a;
   --rr-color-incorrect: #b42318;
   --rr-color-warning: #7a5c12;
@@ -231,17 +231,13 @@ body:has(.practice-focus) .app-main {
   }
 
   .rr-repair-card {
-    border-color: var(--rr-color-repair-border);
-    background:
-      linear-gradient(180deg, var(--rr-color-repair-tint), var(--rr-color-surface-elevated) 48%),
-      var(--rr-color-surface-elevated);
+    border-color: var(--rr-color-clue-border);
+    background: var(--rr-color-surface-elevated);
   }
 
   .rr-concept-card {
     border-color: var(--rr-color-memory-border);
-    background:
-      linear-gradient(180deg, var(--rr-color-memory-tint), var(--rr-color-surface-elevated) 48%),
-      var(--rr-color-surface-elevated);
+    background: var(--rr-color-surface-elevated);
   }
 
   .rr-teaching-card {
@@ -272,10 +268,8 @@ body:has(.practice-focus) .app-main {
   }
 
   .rr-adaptive-card {
-    border-color: var(--rr-color-takeaway-border);
-    background:
-      linear-gradient(180deg, var(--rr-color-adaptive-surface), var(--rr-color-surface-elevated) 54%),
-      var(--rr-color-surface-elevated);
+    border-color: var(--rr-color-border);
+    background: var(--rr-color-surface-elevated);
   }
 
   .rr-adaptive-action {
@@ -391,7 +385,7 @@ body:has(.practice-focus) .app-main {
   }
 
   .rr-product-nav {
-    @apply sticky top-0 z-40 grid min-h-[4.25rem] grid-cols-[1fr_auto] items-center border-b border-rr-border bg-rr-elevated px-5 sm:px-8 lg:grid-cols-[1fr_auto_1fr];
+    @apply sticky top-0 z-40 grid min-h-14 grid-cols-[1fr_auto_1fr] items-center border-b border-rr-border bg-rr-elevated px-5 sm:px-8;
   }
 
   .rr-product-brand {
@@ -399,7 +393,7 @@ body:has(.practice-focus) .app-main {
   }
 
   .rr-product-tabs {
-    @apply order-3 col-span-2 flex min-h-10 items-end justify-center gap-7 overflow-x-auto text-sm leading-6 sm:gap-10 lg:order-none lg:col-span-1;
+    @apply flex min-h-10 items-end justify-center gap-7 overflow-x-auto text-sm leading-6 sm:gap-10;
   }
 
   .rr-product-tab {
@@ -429,12 +423,8 @@ body:has(.practice-focus) .app-main {
     @apply flex items-center justify-end gap-3;
   }
 
-  .rr-keycap {
-    @apply hidden rounded-md border border-rr-border bg-rr-surface px-2 py-1 text-xs font-medium text-rr-muted sm:inline-flex;
-  }
-
-  .rr-icon-button {
-    @apply inline-flex h-9 min-w-9 items-center justify-center rounded-md border border-transparent bg-transparent px-2 text-base text-rr-foreground transition-colors hover:border-rr-border hover:bg-rr-surface;
+  .rr-session-link {
+    @apply text-xs font-medium text-rr-muted transition-colors hover:text-rr-foreground;
   }
 
   .rr-practice-progress {
@@ -461,10 +451,6 @@ body:has(.practice-focus) .app-main {
     @apply flex items-center gap-4;
   }
 
-  .rr-bookmark {
-    @apply text-2xl leading-none text-rr-foreground;
-  }
-
   .rr-practice-topbar {
     @apply flex flex-col gap-4 rounded-lg border border-rr-soft-line bg-rr-elevated px-4 py-3 shadow-[0_1px_8px_rgb(0_0_0_/_0.035)] sm:flex-row sm:items-center sm:justify-between sm:px-5;
   }
@@ -486,28 +472,11 @@ body:has(.practice-focus) .app-main {
   }
 
   .rr-practice-main-wide {
-    max-width: 90rem;
+    max-width: 64rem;
   }
 
   .rr-answer-dock {
     @apply rounded-lg bg-rr-elevated;
-  }
-
-  .rr-session-footer {
-    @apply fixed bottom-0 left-0 right-0 z-30 flex min-h-14 flex-col gap-2 border-t border-rr-border bg-rr-elevated px-5 py-3 text-xs text-rr-muted sm:flex-row sm:items-center sm:justify-between sm:px-8;
-  }
-
-  .rr-session-footer-left,
-  .rr-session-footer-right {
-    @apply flex flex-wrap items-center gap-x-6 gap-y-1;
-  }
-
-  .rr-session-footer strong {
-    @apply font-semibold text-rr-foreground;
-  }
-
-  .rr-session-footer button {
-    @apply font-semibold text-rr-foreground;
   }
 
   .rr-correct-inline {
@@ -540,7 +509,7 @@ body:has(.practice-focus) .app-main {
   }
 
   .rr-post-answer-workspace {
-    @apply grid gap-3.5;
+    @apply grid gap-4;
   }
 
   .rr-post-answer-repair,
@@ -554,7 +523,7 @@ body:has(.practice-focus) .app-main {
   }
 
   .rr-repair-summary {
-    @apply grid gap-4 rounded-lg border border-rr-border bg-rr-elevated px-4 py-3 sm:grid-cols-2;
+    @apply grid gap-4 border-b border-rr-border pb-4 sm:grid-cols-2;
   }
 
   .rr-repair-summary-value {
@@ -575,7 +544,7 @@ body:has(.practice-focus) .app-main {
     background:
       linear-gradient(180deg, var(--rr-color-recognition-tint), var(--rr-color-surface-elevated) 66%),
       var(--rr-color-surface-elevated);
-    box-shadow: 0 12px 28px color-mix(in srgb, var(--rr-color-recognition) 8%, transparent);
+    box-shadow: none;
   }
 
   .rr-clinical-flow-title {
@@ -627,7 +596,7 @@ body:has(.practice-focus) .app-main {
 
   .rr-attention-map {
     @apply rounded-lg border bg-rr-elevated px-4 py-3;
-    border-color: var(--rr-color-reasoning-border);
+    border-color: var(--rr-color-border);
   }
 
   .rr-attention-map-title {
@@ -678,30 +647,8 @@ body:has(.practice-focus) .app-main {
     color: var(--rr-color-recognition);
   }
 
-  @media (min-width: 1024px) {
-    .rr-post-answer-workspace {
-      grid-template-columns: minmax(0, 1.45fr) minmax(22rem, 1fr);
-      grid-template-areas:
-        "repair depth"
-        "next depth";
-      align-items: start;
-      column-gap: 1rem;
-      row-gap: 1rem;
-    }
-
-    .rr-post-answer-repair {
-      grid-area: repair;
-    }
-
-    .rr-post-answer-depth {
-      grid-area: depth;
-      position: sticky;
-      top: 1rem;
-    }
-
-    .rr-post-answer-next {
-      grid-area: next;
-    }
+  .rr-notebook-section {
+    @apply rounded-lg;
   }
 
   .rr-callout-pivot {

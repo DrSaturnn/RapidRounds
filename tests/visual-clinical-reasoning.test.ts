@@ -6,7 +6,11 @@ describe("visual clinical reasoning renderer", () => {
   it("renders the repair flow from existing tutor metadata", () => {
     const tutorMode = readFileSync("components/TutorMode.tsx", "utf8");
 
-    assert.match(tutorMode, /const visualFlowSteps = dedupeDisplayStrings/);
+    assert.match(tutorMode, /const visualFlowSteps = \[/);
+    assert.match(tutorMode, /label: "Clinical pattern"/);
+    assert.match(tutorMode, /label: "Pivot clue"/);
+    assert.match(tutorMode, /label: "Decision"/);
+    assert.match(tutorMode, /label: "Correct answer"/);
     assert.match(tutorMode, /visibleRecognitionClues\[0\]/);
     assert.match(tutorMode, /tutor\.repair\.clue/);
     assert.match(tutorMode, /getDecisionTaskLabel\(tutor\)/);
@@ -38,6 +42,6 @@ describe("visual clinical reasoning renderer", () => {
     assert.match(css, /rr-clinical-flow-pivot/);
     assert.match(css, /rr-clinical-flow-terminal/);
     assert.match(css, /content: "↓"/);
-    assert.match(css, /max-width: 90rem/);
+    assert.match(css, /max-width: 64rem/);
   });
 });

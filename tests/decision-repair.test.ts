@@ -381,7 +381,7 @@ describe("decision repair", () => {
     const tutorMode = readFileSync("components/TutorMode.tsx", "utf8");
 
     assert.match(tutorMode, /tutor\.repair\.style === "UNKNOWN"/);
-    assert.match(tutorMode, /<TeachingCard title="Teach me more" defaultOpen="desktop">/);
+    assert.match(tutorMode, /<TeachingCard title="Understand the pattern" defaultOpen="desktop">/);
     assert.match(tutorMode, /hasComparison/);
   });
 
