@@ -247,34 +247,10 @@ export function buildClinicalComparison(decision: ComparisonDecision): ClinicalC
   }
 
   const competingDiagnosis = sentence(decision.commonTrap) || "Closest competing diagnosis";
-  const pattern = getPattern(decision) || sentence(decision.boardPearl);
-  const pivot = getPivot(decision) || sentence(decision.boardPearl);
-  const management = getManagement(decision) || "Management follows the confirmed diagnosis and patient stability";
 
   return {
     correctDiagnosis: diagnosis,
     competingDiagnosis,
-    rows: [
-      {
-        feature: "Typical presentation",
-        correct: pattern,
-        competing: `${competingDiagnosis} has its own defining presentation; it is not established by this vignette alone`
-      },
-      {
-        feature: "Highest-yield distinguishing clue",
-        correct: pivot,
-        competing: `The stem would need the defining clue for ${competingDiagnosis}, not just overlapping symptoms`
-      },
-      {
-        feature: "Immediate management",
-        correct: management,
-        competing: `Management changes only after the evidence supports ${competingDiagnosis}`
-      },
-      {
-        feature: "NBME discriminator",
-        correct: sentence(decision.boardPearl),
-        competing: `Do not switch answers unless the vignette gives the discriminator for ${competingDiagnosis}`
-      }
-    ]
+    rows: []
   };
 }

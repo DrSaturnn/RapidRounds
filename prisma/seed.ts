@@ -1225,14 +1225,16 @@ const decisions: ClinicalDecisionSeed[] = [
 ];
 
 async function main() {
-  await prisma.progress.deleteMany();
-  await prisma.clinicalDecision.deleteMany();
-  await prisma.question.deleteMany();
-  await prisma.topic.deleteMany();
-  await prisma.userStats.deleteMany();
-
-  await prisma.clinicalDecision.createMany({
-    data: decisions.map((decision) => ({
+  for (const decision of decisions) {
+    const existingDecision = await prisma.clinicalDecision.findFirst({
+      where: {
+        specialty: "OB/GYN",
+        system: decision.system,
+        topic: decision.topic
+      },
+      select: { id: true }
+    });
+    const data = {
       specialty: "OB/GYN",
       system: decision.system,
       topic: decision.topic,
@@ -1247,8 +1249,19 @@ async function main() {
       relatedDecisionIds: JSON.stringify([]),
       difficulty: decision.difficulty,
       tags: JSON.stringify(decision.tags)
-    }))
-  });
+    };
+
+    if (existingDecision) {
+      await prisma.clinicalDecision.update({
+        where: { id: existingDecision.id },
+        data
+      });
+    } else {
+      await prisma.clinicalDecision.create({
+        data
+      });
+    }
+  }
 
   console.log(`Seeded ${decisions.length} OB/GYN clinical decisions.`);
 }

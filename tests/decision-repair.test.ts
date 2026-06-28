@@ -268,7 +268,7 @@ describe("decision repair", () => {
     assert.doesNotMatch(tutor.repair.why, /You answered/i);
     assert.doesNotMatch(tutor.repair.why, /discriminator/i);
     assert.doesNotMatch(tutor.repair.why, /Your answer becomes correct when/i);
-    assert.equal(tutor.comparison.rows.length > 0, true);
+    assert.equal(tutor.comparison.rows.length, 0);
   });
 
   it("keeps blank primary submissions available from the Practice flow", () => {
@@ -300,7 +300,7 @@ describe("decision repair", () => {
 
     assert.match(tutorMode, /tutor\.repair\.style === "UNKNOWN"/);
     assert.match(tutorMode, /<TeachingCard title="Teach me more: illness script and comparison" defaultOpen=\{false\}>/);
-    assert.match(tutorMode, /tutor\.comparison\.rows\.map/);
+    assert.match(tutorMode, /hasComparison/);
   });
 
   it("renders every Teach Me More panel with the RFC-007 section framework", () => {

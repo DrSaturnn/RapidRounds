@@ -9,6 +9,7 @@ import {
   getDecisionEducationProfile
 } from "@/lib/decision-education";
 import { findDecisionBoundaryRepair } from "@/lib/decision-boundary-repair";
+import { dedupeDisplayStrings } from "@/lib/display-strings";
 import { buildExpertIllnessScript } from "@/lib/expert-illness-script";
 import type { AnswerEvaluation, CognitiveError, DecisionRepair, TutorContent } from "@/types/practice";
 
@@ -248,31 +249,15 @@ function cleanAnswer(value: string) {
   return sentence(value.trim() || "Not answered yet");
 }
 
-function normalizeCue(value: string) {
-  return value.trim().replace(/\s+/g, " ").toLowerCase();
-}
-
 function buildRecognitionClues(decision: TutorDecision) {
   const tags = parseJsonArray(decision.tags);
-  const seen = new Set<string>();
   const clues = [
     sentence(getPivotClue(decision)),
     sentence(getPattern(decision)),
     ...tags.map(sentence)
-  ].filter((clue) => clue.length > 0);
+  ];
 
-  return clues
-    .filter((clue) => {
-      const normalized = normalizeCue(clue);
-
-      if (!normalized || seen.has(normalized)) {
-        return false;
-      }
-
-      seen.add(normalized);
-      return true;
-    })
-    .slice(0, 3);
+  return dedupeDisplayStrings(clues).slice(0, 3);
 }
 
 function isLikelyEtiology(answer: string, correctAnswer: string) {

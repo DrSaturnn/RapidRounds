@@ -90,8 +90,18 @@ describe("persistent learner state", () => {
     assert.match(session, /rapidrounds\.anonymousLearnerId\.v1/);
     assert.match(session, /getOrCreateAnonymousLearnerId/);
     assert.match(session, /crypto\.randomUUID/);
+    assert.match(session, /normalizeLearnerId\(existing\)/);
     assert.match(session, /params\.set\("learnerId", currentLearnerId\)/);
     assert.match(session, /learnerId: learnerId\.current \|\| getOrCreateAnonymousLearnerId\(\)/);
+  });
+
+  it("reuses the stored anonymous learner id across simulated reloads and deployments", () => {
+    const session = readFileSync("hooks/usePracticeSession.ts", "utf8");
+
+    assert.match(session, /const existing = window\.localStorage\.getItem\(LEARNER_ID_STORAGE_KEY\)/);
+    assert.match(session, /if \(existingLearnerId\) \{\s*return existingLearnerId;\s*\}/);
+    assert.doesNotMatch(session, /localStorage\.removeItem\(LEARNER_ID_STORAGE_KEY\)/);
+    assert.doesNotMatch(session, /rapidrounds\.anonymousLearnerId\.v2/);
   });
 
   it("handles missing learner id safely without falling back to shared progress", () => {
@@ -112,10 +122,42 @@ describe("persistent learner state", () => {
     assert.equal(normalizeLearnerId(undefined), undefined);
   });
 
-  it("does not seed a global shared learner account", () => {
+  it("does not seed a global shared learner account or delete learner progress", () => {
     const seed = readFileSync("prisma/seed.ts", "utf8");
 
     assert.doesNotMatch(seed, /userId: "default"/);
     assert.doesNotMatch(seed, /userStats\.create/);
+    assert.doesNotMatch(seed, /progress\.deleteMany/);
+    assert.doesNotMatch(seed, /userStats\.deleteMany/);
+  });
+
+  it("production seed updates clinical decisions in place instead of replacing ids", () => {
+    const seed = readFileSync("prisma/seed.ts", "utf8");
+
+    assert.match(seed, /clinicalDecision\.findFirst/);
+    assert.match(seed, /clinicalDecision\.update/);
+    assert.match(seed, /clinicalDecision\.create/);
+    assert.doesNotMatch(seed, /clinicalDecision\.deleteMany/);
+    assert.doesNotMatch(seed, /clinicalDecision\.createMany/);
+  });
+
+  it("writes and reads learner progress from persistent storage by anonymous learner id", () => {
+    const answerRoute = readFileSync("app/api/practice/answer/route.ts", "utf8");
+    const nextRoute = readFileSync("app/api/questions/next/route.ts", "utf8");
+
+    assert.match(answerRoute, /prisma\.progress\.create\(\{\s*data: progressData\s*\}\)/);
+    assert.match(answerRoute, /userId: learnerId/);
+    assert.match(nextRoute, /prisma\.progress\.findMany\(\{/);
+    assert.match(nextRoute, /where: \{ userId: learnerId \}/);
+    assert.match(nextRoute, /completed\.map\(\(row\) => row\.clinicalDecisionId\)/);
+  });
+
+  it("completed decisions remain completed after deployment because persisted ids are excluded", () => {
+    const nextRoute = readFileSync("app/api/questions/next/route.ts", "utf8");
+    const decisionSelection = readFileSync("database/clinical-decisions.ts", "utf8");
+
+    assert.match(nextRoute, /const answeredDecisionIds = new Set/);
+    assert.match(nextRoute, /getNextClinicalDecision\(\[\.{3}answeredDecisionIds\], adaptiveTarget\)/);
+    assert.match(decisionSelection, /id: \{ notIn: excludedIds \}/);
   });
 });

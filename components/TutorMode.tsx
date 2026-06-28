@@ -4,6 +4,7 @@ import { FormEvent } from "react";
 import { Button } from "@/components/Button";
 import { TeachingCard } from "@/components/TeachingCard";
 import { getComparisonFeatureDisplayText } from "@/lib/display-language";
+import { dedupeDisplayStrings } from "@/lib/display-strings";
 import { getLearningTrajectory } from "@/lib/learning-trajectory";
 import type { TutorContent } from "@/types/practice";
 
@@ -13,10 +14,6 @@ const inputGuardProps = {
   autoCapitalize: "off",
   spellCheck: false
 } as const;
-
-function normalizeCue(value: string) {
-  return value.trim().replace(/\s+/g, " ").toLowerCase();
-}
 
 function formatNextChallenge(concept?: string) {
   const value = concept?.trim();
@@ -59,14 +56,10 @@ export function TutorMode({
     comparisonConcept: tutor.comparison.competingDiagnosis,
     managementConcept: tutor.managementPearl
   });
-  const recognitionClues = Array.from(
-    new Map(
-      (tutor.repair.recognitionClues ?? [tutor.repair.clue])
-        .map((clue) => clue.trim())
-        .filter(Boolean)
-        .map((clue) => [normalizeCue(clue), clue] as const)
-    ).values()
-  ).filter((clue) => normalizeCue(clue) !== normalizeCue(tutor.repair.clue));
+  const comparisonRows = tutor.comparison.rows;
+  const hasComparison = comparisonRows.length > 0;
+  const recognitionClues = dedupeDisplayStrings(tutor.repair.recognitionClues ?? [tutor.repair.clue])
+    .filter((clue) => clue.toLowerCase() !== tutor.repair.clue.trim().replace(/\s+/g, " ").toLowerCase());
   const visibleRecognitionClues = recognitionClues.length > 0 ? recognitionClues : [tutor.repair.clue];
   const hasCommonConfusion = Boolean(tutor.comparison.competingDiagnosis?.trim());
   const nextChallenge = formatNextChallenge(learningTrajectory.recommendation?.concept);
@@ -212,29 +205,31 @@ export function TutorMode({
               <p>{tutor.cognitiveError.expertCorrection}</p>
             </div>
           ) : null}
-          <div>
-            <p className="font-medium">Don't Confuse With</p>
-            <div className="mt-2 overflow-x-auto">
-              <table className="rr-table">
-                <thead>
-                  <tr>
-                    <th>Feature</th>
-                    <th>{tutor.comparison.correctDiagnosis}</th>
-                    <th>{tutor.comparison.competingDiagnosis}</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {tutor.comparison.rows.map((row) => (
-                    <tr key={row.feature}>
-                      <td className="font-medium">{getComparisonFeatureDisplayText(row.feature)}</td>
-                      <td>{row.correct}</td>
-                      <td>{row.competing}</td>
+          {hasComparison ? (
+            <div>
+              <p className="font-medium">Don't Confuse With</p>
+              <div className="mt-2 overflow-x-auto">
+                <table className="rr-table">
+                  <thead>
+                    <tr>
+                      <th>Feature</th>
+                      <th>{tutor.comparison.correctDiagnosis}</th>
+                      <th>{tutor.comparison.competingDiagnosis}</th>
                     </tr>
-                  ))}
-                </tbody>
-              </table>
+                  </thead>
+                  <tbody>
+                    {comparisonRows.map((row) => (
+                      <tr key={row.feature}>
+                        <td className="font-medium">{getComparisonFeatureDisplayText(row.feature)}</td>
+                        <td>{row.correct}</td>
+                        <td>{row.competing}</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
             </div>
-          </div>
+          ) : null}
           <div className="rr-callout rr-callout-pivot">
             <p className="font-medium">NBME Pivot</p>
             <p>{tutor.nbmePivot}</p>

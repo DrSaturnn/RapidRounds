@@ -68,7 +68,8 @@ describe("clinical comparison engine", () => {
       comparisonText("Placental abruption"),
       comparisonText("Category I fetal tracing"),
       comparisonText("Vulvovaginal candidiasis"),
-      comparisonText("Bacterial vaginosis")
+      comparisonText("Bacterial vaginosis"),
+      comparisonText("Unmapped diagnosis")
     ].join("\n");
     const source = [
       readFileSync("lib/clinical-comparison.ts", "utf8"),
@@ -78,12 +79,44 @@ describe("clinical comparison engine", () => {
       /Requires findings that establish/,
       /Different next best step/,
       /Look for findings specific to/,
-      /Surface-level overlap/
+      /Surface-level overlap/,
+      /has its own defining presentation/,
+      /the stem would need the defining clue/i,
+      /not just overlapping symptoms/,
+      /management changes only after the evidence supports/i,
+      /do not switch answers unless/i
     ];
 
     for (const phrase of forbidden) {
       assert.doesNotMatch(generated, phrase);
       assert.doesNotMatch(source, phrase);
     }
+  });
+
+  it("omits weak fallback comparison rows when no authored discriminator exists", () => {
+    const comparison = buildClinicalComparison({
+      ...baseDecision,
+      topic: "Unmapped diagnosis",
+      correctAnswer: "unmapped diagnosis",
+      commonTrap: "nearby diagnosis",
+      clinicalPattern: "Generic overlapping symptoms",
+      pivotClue: "Generic clue"
+    });
+
+    assert.equal(comparison.competingDiagnosis, "nearby diagnosis");
+    assert.deepEqual(comparison.rows, []);
+  });
+
+  it("still renders strong authored comparison rows", () => {
+    const comparison = buildClinicalComparison({
+      ...baseDecision,
+      topic: "Gestational hypertension",
+      correctAnswer: "gestational hypertension",
+      commonTrap: "preeclampsia"
+    });
+
+    assert.equal(comparison.competingDiagnosis, "Preeclampsia");
+    assert.ok(comparison.rows.length >= 4);
+    assert.match(JSON.stringify(comparison), /Proteinuria or any severe feature converts the diagnosis/);
   });
 });

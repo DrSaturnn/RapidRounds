@@ -2,6 +2,7 @@
 
 import { useCallback, useEffect, useRef, useState } from "react";
 import { compareAnswer } from "@/lib/answer-check";
+import { normalizeLearnerId } from "@/lib/learner-id";
 import type { AnswerResult, PracticeMode, QuestionDto, TutorContent } from "@/types/practice";
 
 const SESSION_STORAGE_KEY = "rapidrounds.practiceSession.v1";
@@ -72,8 +73,9 @@ function getOrCreateAnonymousLearnerId() {
   }
 
   const existing = window.localStorage.getItem(LEARNER_ID_STORAGE_KEY);
-  if (existing) {
-    return existing;
+  const existingLearnerId = normalizeLearnerId(existing);
+  if (existingLearnerId) {
+    return existingLearnerId;
   }
 
   const learnerId = createAnonymousLearnerId();
