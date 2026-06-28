@@ -9,8 +9,8 @@ export function QuestionMeta({ question }: { question: QuestionDto }) {
       className="flex flex-wrap items-center gap-x-3 gap-y-2"
       aria-label={`${decisionType} in ${question.specialty}${question.system ? `, ${question.system}` : ""}, ${question.topic}`}
     >
-      <span className="rr-badge">
-        Task: {decisionType}
+      <span className="rr-badge rr-badge-task">
+        Decision type: {decisionType}
       </span>
     </div>
   );

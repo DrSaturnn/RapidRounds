@@ -212,17 +212,22 @@ export function PracticePanel() {
 
   const clinicalPrompt = getClinicalPromptText(question.stem);
   const decisionQuestion = getDecisionQuestionText(question.decisionType);
+  const learningGoal = question.topic ? `Learning goal: ${question.topic}` : "Learning goal: make the next clinical decision";
 
   return (
     <div className="practice-focus min-h-screen bg-rr-background">
-      <div className="mx-auto flex min-h-screen w-full max-w-practice flex-col justify-center px-5 py-10 sm:px-6 sm:py-14">
-        <div className="mb-12 flex items-center justify-between text-xs text-rr-muted sm:mb-16">
+      <div className="mx-auto flex min-h-screen w-full max-w-practice flex-col justify-center px-4 py-8 sm:px-6 sm:py-14">
+        <div className="mb-8 flex flex-col gap-3 text-xs text-rr-muted sm:mb-12 sm:flex-row sm:items-center sm:justify-between">
           <span>Decision {String(sessionDecisionCount).padStart(2, "0")}</span>
           <QuestionMeta question={question} />
         </div>
 
-        <section className="rr-card space-y-8 px-5 py-6 motion-safe:animate-[fadeIn_180ms_var(--rr-ease-standard)] sm:px-6 sm:py-7">
-          <div className="space-y-5">
+        <section className="rr-card rr-question-card space-y-6 px-4 py-5 motion-safe:animate-[fadeIn_180ms_var(--rr-ease-standard)] sm:space-y-8 sm:px-6 sm:py-7">
+          <div className="space-y-4 sm:space-y-5">
+            <div className="flex flex-wrap items-center gap-2">
+              <span className="rr-badge rr-badge-learning">Current focus</span>
+              <span className="rr-meta">{learningGoal}</span>
+            </div>
             <h1 className="rr-question-stem">
               {clinicalPrompt}
             </h1>
@@ -259,7 +264,7 @@ export function PracticePanel() {
                 onClick={() => void requestTeaching()}
                 disabled={isTeaching || mode === "tutor"}
               >
-                {isTeaching ? "Loading" : "Teach Me"}
+                {isTeaching ? "Preparing" : "Teach me why"}
               </Button>
             </div>
             <div className="flex min-h-11 flex-wrap items-center gap-3 pt-2">
@@ -282,7 +287,7 @@ export function PracticePanel() {
                 </div>
               ) : null}
               {mode === "rapid" && result && !result.isCorrect ? (
-                <p className="text-sm font-medium">Let's slow down for one teaching pass.</p>
+                <p className="text-sm font-medium text-rr-repair">RapidRounds is building a focused repair.</p>
               ) : null}
               {error ? <p className="text-sm text-rr-muted">{error}</p> : null}
             </div>

@@ -36,6 +36,10 @@ export function TutorMode({
     comparisonConcept: tutor.comparison.competingDiagnosis,
     managementConcept: tutor.managementPearl
   });
+  const recognitionClues = Array.from(
+    new Set((tutor.repair.recognitionClues ?? [tutor.repair.clue]).map((clue) => clue.trim()).filter(Boolean))
+  ).filter((clue) => clue.toLowerCase() !== tutor.repair.clue.trim().toLowerCase());
+  const visibleRecognitionClues = recognitionClues.length > 0 ? recognitionClues : [tutor.repair.clue];
 
   const onSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -47,40 +51,43 @@ export function TutorMode({
 
   return (
     <section className="space-y-4">
-      <div className="rr-card rr-card-section space-y-2.5">
+      <div className={`rr-card rr-card-section space-y-3 ${isUnknown ? "rr-concept-card" : "rr-repair-card"}`}>
         <p className="rr-section-header">{isUnknown ? "Concept build" : "Decision repair"}</p>
         {isUnknown ? (
-          <div className="space-y-2.5 text-sm leading-6">
-            <div className="grid gap-3 sm:grid-cols-2">
-              <div>
-                <p className="rr-meta">Correct answer</p>
-                <p className="text-base font-semibold">{tutor.repair.correctAnswer}</p>
-              </div>
-              <div>
-                <p className="rr-meta">Key clue</p>
-                <p className="rr-callout rr-callout-clue mt-1 py-2">{tutor.repair.clue}</p>
-              </div>
-            </div>
-            <p>{tutor.repair.why}</p>
+          <div className="space-y-3 text-sm leading-6">
             <div>
-              <p className="text-xs text-rr-muted">Recognize it by</p>
+              <p className="rr-meta">Recognition</p>
               <ul className="mt-1 list-disc space-y-0.5 pl-5">
-                {(tutor.repair.recognitionClues ?? [tutor.repair.clue]).map((clue) => (
+                {visibleRecognitionClues.map((clue) => (
                   <li key={clue}>{clue}</li>
                 ))}
               </ul>
+            </div>
+            <div className="grid gap-3 sm:grid-cols-2">
+              <div className="rr-callout rr-callout-clue py-2">
+                <p className="rr-meta">Correct action</p>
+                <p className="text-base font-semibold text-rr-mastery">{tutor.repair.correctAnswer}</p>
+              </div>
+              <div className="rr-callout rr-callout-clue py-2">
+                <p className="rr-meta">Key clue</p>
+                <p>{tutor.repair.clue}</p>
+              </div>
+            </div>
+            <div>
+              <p className="rr-meta">Clinical reasoning</p>
+              <p>{tutor.repair["why"]}</p>
             </div>
           </div>
         ) : (
           <>
             <div className="grid gap-3 text-sm leading-6 sm:grid-cols-2">
-              <div>
+              <div className="rr-callout py-2">
                 <p className="rr-meta">Correct answer</p>
-                <p className="text-base font-semibold">{tutor.repair.correctAnswer}</p>
+                <p className="text-base font-semibold text-rr-mastery">{tutor.repair.correctAnswer}</p>
               </div>
-              <div>
+              <div className="rr-callout rr-callout-clue py-2">
                 <p className="rr-meta">Key clue</p>
-                <p className="rr-callout rr-callout-clue mt-1 py-2">{tutor.repair.clue}</p>
+                <p>{tutor.repair.clue}</p>
               </div>
             </div>
             <p className="text-sm leading-6">{tutor.repair.why}</p>
@@ -176,16 +183,17 @@ export function TutorMode({
         </div>
       </TeachingCard>
 
-      <div className="rr-card rr-card-section space-y-3">
+      <div className="rr-card rr-card-section rr-adaptive-card space-y-3">
         <p className="rr-section-header">Continue Learning</p>
         <div className="space-y-3 text-sm leading-6">
           <p>
             You just learned: <span className="font-semibold">{learningTrajectory.primaryConcept}</span>
           </p>
           {learningTrajectory.recommendation ? (
-            <div className="rounded-md border border-rr-soft-line bg-rr-surface px-3 py-2">
+            <div className="rr-adaptive-action rounded-md border px-3 py-2">
               <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
                 <div>
+                  <p className="rr-meta">Recommended next action</p>
                   <p className="font-medium">{learningTrajectory.recommendation.concept}</p>
                   <p className="rr-meta">{learningTrajectory.recommendation.reason}</p>
                 </div>

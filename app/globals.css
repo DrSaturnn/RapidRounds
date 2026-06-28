@@ -69,6 +69,10 @@
   --rr-color-info-border: var(--rr-color-recognition-border);
   --rr-color-overlay: color-mix(in srgb, var(--rr-color-background) 84%, transparent);
   --rr-color-disabled-surface: #f1f2f1;
+  --rr-color-question-surface: color-mix(in srgb, var(--rr-color-surface-elevated) 94%, var(--rr-color-recognition));
+  --rr-color-question-border: color-mix(in srgb, var(--rr-color-recognition) 20%, var(--rr-color-border));
+  --rr-color-teaching-surface: color-mix(in srgb, var(--rr-color-surface-elevated) 94%, var(--rr-color-memory));
+  --rr-color-adaptive-surface: color-mix(in srgb, var(--rr-color-surface-elevated) 93%, var(--rr-color-takeaway));
 
   --rr-space-0: 0;
   --rr-space-1: 0.25rem;
@@ -217,6 +221,48 @@ body:has(.practice-focus) .app-main {
     @apply rounded-lg border border-rr-border bg-rr-elevated shadow-[var(--rr-shadow-card)];
   }
 
+  .rr-question-card {
+    border-color: var(--rr-color-question-border);
+    background:
+      linear-gradient(180deg, var(--rr-color-question-surface), var(--rr-color-surface-elevated) 58%),
+      var(--rr-color-surface-elevated);
+  }
+
+  .rr-repair-card {
+    border-color: var(--rr-color-repair-border);
+    background:
+      linear-gradient(180deg, var(--rr-color-repair-tint), var(--rr-color-surface-elevated) 48%),
+      var(--rr-color-surface-elevated);
+  }
+
+  .rr-concept-card {
+    border-color: var(--rr-color-memory-border);
+    background:
+      linear-gradient(180deg, var(--rr-color-memory-tint), var(--rr-color-surface-elevated) 48%),
+      var(--rr-color-surface-elevated);
+  }
+
+  .rr-teaching-card {
+    border-color: var(--rr-color-memory-border);
+    background: var(--rr-color-teaching-surface);
+  }
+
+  .rr-teaching-card summary {
+    background: color-mix(in srgb, var(--rr-color-memory-tint) 70%, var(--rr-color-surface-elevated));
+  }
+
+  .rr-adaptive-card {
+    border-color: var(--rr-color-takeaway-border);
+    background:
+      linear-gradient(180deg, var(--rr-color-adaptive-surface), var(--rr-color-surface-elevated) 54%),
+      var(--rr-color-surface-elevated);
+  }
+
+  .rr-adaptive-action {
+    border-color: var(--rr-color-takeaway-border);
+    background: var(--rr-color-takeaway-tint);
+  }
+
   .rr-card-section {
     @apply border-b border-rr-border px-4 py-4 last:border-b-0 sm:px-5;
   }
@@ -231,6 +277,12 @@ body:has(.practice-focus) .app-main {
 
   .rr-badge {
     @apply inline-flex min-h-7 items-center rounded-md border border-rr-border bg-rr-elevated px-2.5 py-1 text-xs font-medium leading-4 text-rr-foreground;
+  }
+
+  .rr-badge-task {
+    border-color: var(--rr-color-reasoning-border);
+    background: var(--rr-color-reasoning-tint);
+    color: var(--rr-color-reasoning);
   }
 
   .rr-badge-repair {
@@ -256,7 +308,7 @@ body:has(.practice-focus) .app-main {
   }
 
   .rr-button-primary {
-    @apply border-rr-foreground bg-rr-foreground text-rr-background hover:bg-rr-elevated hover:text-rr-foreground active:bg-rr-surface;
+    @apply border-rr-accent bg-rr-accent text-rr-background hover:bg-rr-elevated hover:text-rr-accent active:bg-rr-surface;
   }
 
   .rr-button-secondary {
@@ -279,7 +331,7 @@ body:has(.practice-focus) .app-main {
   }
 
   .rr-input {
-    @apply h-12 w-full rounded-none border-0 border-b border-rr-line bg-transparent px-0 text-base outline-none transition-colors placeholder:text-rr-muted focus:border-rr-accent focus-visible:ring-2 focus-visible:ring-rr-focus focus-visible:ring-offset-4 disabled:text-rr-muted;
+    @apply h-12 w-full rounded-md border border-rr-border bg-rr-elevated px-3 text-base outline-none transition-colors placeholder:text-rr-muted focus:border-rr-accent focus:bg-rr-surface focus-visible:ring-2 focus-visible:ring-rr-focus focus-visible:ring-offset-2 disabled:text-rr-muted;
   }
 
   .rr-text-input {
