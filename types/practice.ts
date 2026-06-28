@@ -158,6 +158,8 @@ export type DecisionRepair = {
   style: DecisionRepairStyle;
   correctAnswer: string;
   clue: string;
+  clueMeaning?: string;
+  answerLabel?: string;
   why: string;
   fingerprint: string;
   learnerAnswer?: string;

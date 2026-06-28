@@ -88,10 +88,10 @@ export function TutorMode({
             <div className="rr-callout rr-callout-clue rr-pivot-panel">
               <p className="rr-meta">Pivot clue</p>
               <p>{tutor.repair.clue}</p>
-              <p className="rr-meta mt-1">Meaning: supports {tutor.repair.correctAnswer}.</p>
+              <p className="rr-meta mt-1">Meaning: {tutor.repair.clueMeaning}</p>
             </div>
             <div className="rr-callout rr-correct-panel">
-              <p className="rr-meta">Correct action</p>
+              <p className="rr-meta">{tutor.repair.answerLabel ?? "Correct action"}</p>
               <p className="text-base font-semibold text-rr-mastery">{tutor.repair.correctAnswer}</p>
             </div>
             <div>
@@ -135,10 +135,10 @@ export function TutorMode({
               <div className="rr-callout rr-callout-clue rr-pivot-panel">
                 <p className="rr-meta">Pivot clue</p>
                 <p>{tutor.repair.clue}</p>
-                <p className="rr-meta mt-1">Meaning: supports {tutor.repair.correctAnswer}.</p>
+                <p className="rr-meta mt-1">Meaning: {tutor.repair.clueMeaning}</p>
               </div>
               <div className="rr-callout rr-correct-panel">
-                <p className="rr-meta">Correct action</p>
+                <p className="rr-meta">{tutor.repair.answerLabel ?? "Correct action"}</p>
                 <p className="text-base font-semibold text-rr-mastery">{tutor.repair.correctAnswer}</p>
               </div>
             </div>

@@ -1,6 +1,13 @@
 import { analyzeReasoning } from "@/lib/reasoning-engine";
 import { buildClinicalComparison } from "@/lib/clinical-comparison";
 import { classifyCognitiveError } from "@/lib/cognitive-error";
+import {
+  buildDecisionMeaning,
+  buildDecisionNbmePivot,
+  buildDecisionRepairFeedback,
+  buildDecisionRepairPrompt,
+  getDecisionEducationProfile
+} from "@/lib/decision-education";
 import { findDecisionBoundaryRepair } from "@/lib/decision-boundary-repair";
 import { buildExpertIllnessScript } from "@/lib/expert-illness-script";
 import type { AnswerEvaluation, CognitiveError, DecisionRepair, TutorContent } from "@/types/practice";
@@ -171,10 +178,11 @@ function buildPivotClue(decision: TutorDecision) {
 }
 
 function buildRecognitionPath(decision: TutorDecision) {
+  const profile = getDecisionEducationProfile(decision.decisionType);
   const steps = [
     sentence(getPattern(decision)) || sentence(decision.prompt ?? ""),
     sentence(getPivotClue(decision)),
-    sentence(decision.decisionType ?? "Clinical decision"),
+    profile.recognitionOperation,
     sentence(decision.correctAnswer)
   ].filter(Boolean);
 
@@ -182,12 +190,12 @@ function buildRecognitionPath(decision: TutorDecision) {
 }
 
 function buildNbmePivot(decision: TutorDecision) {
-  const diagnosis = sentence(getDiagnosis(decision));
-  const pivot = sentence(getPivotClue(decision));
-
-  return pivot
-    ? `${pivot} is the clue that points to ${diagnosis}.`
-    : `${diagnosis} is established by the defining clue in the stem.`;
+  return buildDecisionNbmePivot({
+    decisionType: decision.decisionType,
+    correctAnswer: decision.correctAnswer,
+    pivotClue: getPivotClue(decision),
+    topic: getDiagnosis(decision)
+  });
 }
 
 function buildComparison(decision: TutorDecision) {
@@ -230,9 +238,10 @@ function buildWhyTempting(decision: TutorDecision, userAnswer: string, evaluatio
 
   const learnerAnswer = cleanAnswer(userAnswer);
   const pivot = sentence(getPivotClue(decision)).toLowerCase();
-  const diagnosis = sentence(getDiagnosis(decision));
+  const profile = getDecisionEducationProfile(decision.decisionType);
+  const correctAnswer = sentence(decision.correctAnswer);
 
-  return `${learnerAnswer} was tempting because it overlaps with the stem. The separating clue is ${pivot}; use that clue to choose ${diagnosis}.`;
+  return `${learnerAnswer} was tempting because it overlaps with the stem. The separating clue is ${pivot}; use that clue to ${profile.recognitionOperation} and choose ${correctAnswer}.`;
 }
 
 function cleanAnswer(value: string) {
@@ -286,21 +295,24 @@ function buildPartialWhy(decision: TutorDecision, userAnswer: string) {
     return `You recognized spontaneous abortion. Now identify the subtype: ${clue.toLowerCase()} points to ${correctAnswer}.`;
   }
 
-  return `You are on the right branch. Refine it using ${clue.toLowerCase()}.`;
+  return `You are on the right branch. Refine it using ${clue.toLowerCase()}: ${buildDecisionMeaning({
+    decisionType: decision.decisionType,
+    correctAnswer: decision.correctAnswer,
+    pivotClue: getPivotClue(decision),
+    topic: getDiagnosis(decision)
+  })}`;
 }
 
 function buildPivotFeedback(decision: TutorDecision, userAnswer?: string) {
-  const answer = userAnswer ? cleanAnswer(userAnswer) : "";
-  const correctAnswer = sentence(decision.correctAnswer);
-  const clue = sentence(getPivotClue(decision));
-
-  if (clue && correctAnswer) {
-    return answer && answer !== "Not answered yet"
-      ? `You selected ${answer}. The pivot clue was ${clue}, which supports ${correctAnswer}.`
-      : `The pivot clue was ${clue}, which supports ${correctAnswer}.`;
-  }
-
-  return "Focus on the pivot clue before choosing the next step.";
+  return buildDecisionRepairFeedback(
+    {
+      decisionType: decision.decisionType,
+      correctAnswer: decision.correctAnswer,
+      pivotClue: getPivotClue(decision),
+      topic: getDiagnosis(decision)
+    },
+    userAnswer ? cleanAnswer(userAnswer) : undefined
+  );
 }
 
 function buildRepair(
@@ -314,12 +326,21 @@ function buildRepair(
   const learnerAnswer = cleanAnswer(userAnswer);
   const clue = sentence(getPivotClue(decision));
   const fingerprint = sentence(decision.boardPearl);
+  const clueMeaning = buildDecisionMeaning({
+    decisionType: decision.decisionType,
+    correctAnswer,
+    pivotClue: clue,
+    topic: getDiagnosis(decision)
+  });
+  const answerLabel = getDecisionEducationProfile(decision.decisionType).answerLabel;
 
   if (classification === "UNKNOWN") {
     return {
       style: "UNKNOWN",
       correctAnswer,
       clue,
+      clueMeaning,
+      answerLabel,
       why: buildPivotFeedback(decision),
       fingerprint,
       recognitionClues: buildRecognitionClues(decision),
@@ -340,6 +361,8 @@ function buildRepair(
       style: "CORRECT",
       correctAnswer,
       clue,
+      clueMeaning,
+      answerLabel,
       why: "Correct.",
       fingerprint
     };
@@ -350,12 +373,19 @@ function buildRepair(
       style: "TASK_MISMATCH",
       correctAnswer,
       clue,
+      clueMeaning,
+      answerLabel,
       why: withDecisionBoundary(
-        `You recognized ${evaluation?.recognizedConcept ?? learnerAnswer}. This question is asking for ${String(decision.decisionType ?? "the clinical decision").toLowerCase()}.`
+        `You recognized ${evaluation?.recognizedConcept ?? learnerAnswer}. This question is asking you to ${getDecisionEducationProfile(decision.decisionType).recognitionOperation}.`
       ),
       fingerprint,
       learnerAnswer,
-      followUp: "What is the immediate next step?",
+      followUp: buildDecisionRepairPrompt({
+        decisionType: decision.decisionType,
+        correctAnswer,
+        pivotClue: clue,
+        topic: getDiagnosis(decision)
+      }),
       cognitiveError
     };
   }
@@ -365,10 +395,17 @@ function buildRepair(
       style: "PARTIAL",
       correctAnswer,
       clue,
+      clueMeaning,
+      answerLabel,
       why: withDecisionBoundary(buildPartialWhy(decision, userAnswer)),
       fingerprint,
       learnerAnswer,
-      followUp: clue ? `${clue} should make you think of what answer?` : undefined,
+      followUp: buildDecisionRepairPrompt({
+        decisionType: decision.decisionType,
+        correctAnswer,
+        pivotClue: clue,
+        topic: getDiagnosis(decision)
+      }),
       cognitiveError
     };
   }
@@ -378,6 +415,8 @@ function buildRepair(
       style: "AMBIGUOUS",
       correctAnswer,
       clue,
+      clueMeaning,
+      answerLabel,
       why: "Your answer could mean more than one thing. Be more specific.",
       fingerprint,
       learnerAnswer,
@@ -389,6 +428,8 @@ function buildRepair(
     style: "INCORRECT",
     correctAnswer,
     clue,
+    clueMeaning,
+    answerLabel,
     why: withDecisionBoundary(buildPivotFeedback(decision, userAnswer)),
     fingerprint,
     learnerAnswer,

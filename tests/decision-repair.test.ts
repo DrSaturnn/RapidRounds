@@ -258,7 +258,7 @@ describe("decision repair", () => {
     assert.equal(tutor.repair.style, "UNKNOWN");
     assert.equal(
       tutor.repair.why,
-      "The pivot clue was Persistent severe-range blood pressure, which supports iv labetalol."
+      "Persistent severe-range blood pressure points to iv labetalol as the immediate action."
     );
     assert.deepEqual(tutor.repair.recognitionClues, [
       "Persistent severe-range blood pressure",
