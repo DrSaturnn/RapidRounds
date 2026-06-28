@@ -5,31 +5,35 @@
 :root {
   --font-sans: Arial, Helvetica, sans-serif;
 
-  --rr-color-text-primary: #0a0a0a;
-  --rr-color-text-muted: #626866;
-  --rr-color-background: #ffffff;
-  --rr-color-surface: #fafaf8;
+  --rr-color-text-primary: #111827;
+  --rr-color-text-muted: #667085;
+  --rr-color-background: #f7f7fb;
+  --rr-color-surface: #f8f8fc;
   --rr-color-surface-elevated: #ffffff;
-  --rr-color-border: #d8d8d8;
-  --rr-color-border-strong: #111111;
-  --rr-color-button-primary: #050505;
+  --rr-color-border: #e5e3ee;
+  --rr-color-border-strong: #221a4a;
+  --rr-color-button-primary: #5d4bd6;
+  --rr-color-sidebar-background: #ffffff;
+  --rr-card-shadow: 0 24px 70px rgb(46 37 115 / 0.09), 0 2px 12px rgb(17 24 39 / 0.04);
+  --rr-card-shadow-soft: 0 14px 36px rgb(46 37 115 / 0.07), 0 1px 4px rgb(17 24 39 / 0.035);
+  --rr-radius-card: 1rem;
 
   /* Educational role tokens. Remap these for future themes; components should not depend on fixed color families. */
-  --rr-color-accent: #315c68;
-  --rr-color-recognition: #264653;
-  --rr-color-reasoning: #315c68;
-  --rr-color-comparison: #3f5554;
-  --rr-color-memory: #5d604e;
-  --rr-color-pivot: #7a5c12;
-  --rr-color-clue: #7a5c12;
+  --rr-color-accent: #5d4bd6;
+  --rr-color-recognition: #4f46b8;
+  --rr-color-reasoning: #5145cd;
+  --rr-color-comparison: #315b89;
+  --rr-color-memory: #6b55cc;
+  --rr-color-pivot: #b7791f;
+  --rr-color-clue: #b7791f;
   --rr-color-takeaway: #245c45;
-  --rr-color-repair: #8a5a12;
+  --rr-color-repair: #8b5cf6;
   --rr-color-correct: #137a3a;
   --rr-color-incorrect: #b42318;
-  --rr-color-warning: #7a5c12;
-  --rr-color-info: #264653;
+  --rr-color-warning: #b7791f;
+  --rr-color-info: #315b89;
   --rr-color-mastery: #245c45;
-  --rr-color-observatory-atmosphere: #eef3f1;
+  --rr-color-observatory-atmosphere: #f2f0ff;
 
   --rr-color-aster: var(--rr-color-accent);
   --rr-color-foreground: var(--rr-color-text-primary);
@@ -93,13 +97,162 @@
   --rr-border-thin: 1px solid var(--rr-color-border-strong);
   --rr-border-soft: 1px solid var(--rr-color-border);
   --rr-focus-ring: 0 0 0 2px var(--rr-color-focus);
-  --rr-shadow-card: 0 1px 2px rgb(0 0 0 / 0.05), 0 10px 28px rgb(0 0 0 / 0.04);
-  --rr-shadow-practice: 0 18px 56px rgb(23 37 84 / 0.08), 0 2px 8px rgb(0 0 0 / 0.04);
+  --rr-shadow-card: var(--rr-card-shadow-soft);
+  --rr-shadow-practice: var(--rr-card-shadow);
 
   --rr-motion-fast: 120ms;
   --rr-motion-standard: 180ms;
   --rr-motion-slow: 240ms;
   --rr-ease-standard: cubic-bezier(0.2, 0, 0, 1);
+}
+
+[data-theme="modern-academic"] {
+  --font-sans: Arial, Helvetica, sans-serif;
+  --rr-color-text-primary: #111827;
+  --rr-color-text-muted: #667085;
+  --rr-color-background: #f7f7fb;
+  --rr-color-surface: #f8f8fc;
+  --rr-color-surface-elevated: #ffffff;
+  --rr-color-border: #e5e3ee;
+  --rr-color-border-strong: #221a4a;
+  --rr-color-button-primary: #5d4bd6;
+  --rr-color-sidebar-background: #ffffff;
+  --rr-card-shadow: 0 24px 70px rgb(46 37 115 / 0.09), 0 2px 12px rgb(17 24 39 / 0.04);
+  --rr-card-shadow-soft: 0 14px 36px rgb(46 37 115 / 0.07), 0 1px 4px rgb(17 24 39 / 0.035);
+  --rr-radius-card: 1rem;
+  --rr-color-accent: #5d4bd6;
+  --rr-color-recognition: #4f46b8;
+  --rr-color-reasoning: #5145cd;
+  --rr-color-comparison: #315b89;
+  --rr-color-memory: #6b55cc;
+  --rr-color-pivot: #b7791f;
+  --rr-color-clue: #b7791f;
+  --rr-color-repair: #8b5cf6;
+  --rr-color-info: #315b89;
+  --rr-color-observatory-atmosphere: #f2f0ff;
+}
+
+[data-theme="warm-notebook"] {
+  --font-sans: Georgia, "Times New Roman", serif;
+  --rr-color-text-primary: #2e2118;
+  --rr-color-text-muted: #7c6754;
+  --rr-color-background: #f6efe4;
+  --rr-color-surface: #fbf3e5;
+  --rr-color-surface-elevated: #fff8ea;
+  --rr-color-border: #e4d3b7;
+  --rr-color-border-strong: #5e3218;
+  --rr-color-button-primary: #8a4b1f;
+  --rr-color-sidebar-background: #fbf0dc;
+  --rr-card-shadow: 0 24px 70px rgb(92 57 20 / 0.12), 0 2px 10px rgb(92 57 20 / 0.05);
+  --rr-card-shadow-soft: 0 14px 38px rgb(92 57 20 / 0.08), 0 1px 4px rgb(92 57 20 / 0.04);
+  --rr-radius-card: 0.75rem;
+  --rr-color-accent: #a35a1f;
+  --rr-color-recognition: #446a46;
+  --rr-color-reasoning: #8a4b1f;
+  --rr-color-comparison: #7a4d2f;
+  --rr-color-memory: #8a641e;
+  --rr-color-pivot: #b25b1d;
+  --rr-color-clue: #b25b1d;
+  --rr-color-repair: #9a4e23;
+  --rr-color-info: #4b6f8c;
+  --rr-color-observatory-atmosphere: #f8edd8;
+}
+
+[data-theme="dark-clinical"] {
+  --font-sans: Arial, Helvetica, sans-serif;
+  --rr-color-text-primary: #f5f7fb;
+  --rr-color-text-muted: #a8b0c2;
+  --rr-color-background: #0b1020;
+  --rr-color-surface: #111827;
+  --rr-color-surface-elevated: #141b2d;
+  --rr-color-border: #263149;
+  --rr-color-border-strong: #c8d0e5;
+  --rr-color-button-primary: #7765ff;
+  --rr-color-sidebar-background: #0f1628;
+  --rr-card-shadow: 0 26px 80px rgb(0 0 0 / 0.34), 0 1px 0 rgb(255 255 255 / 0.03) inset;
+  --rr-card-shadow-soft: 0 16px 42px rgb(0 0 0 / 0.26), 0 1px 0 rgb(255 255 255 / 0.025) inset;
+  --rr-radius-card: 1rem;
+  --rr-color-accent: #8b7cff;
+  --rr-color-recognition: #9c8cff;
+  --rr-color-reasoning: #8b7cff;
+  --rr-color-comparison: #80b7ff;
+  --rr-color-memory: #b39cff;
+  --rr-color-pivot: #f0b75a;
+  --rr-color-clue: #f0b75a;
+  --rr-color-takeaway: #75d59a;
+  --rr-color-repair: #b39cff;
+  --rr-color-correct: #75d59a;
+  --rr-color-incorrect: #ff7d7d;
+  --rr-color-warning: #f0b75a;
+  --rr-color-info: #80b7ff;
+  --rr-color-mastery: #75d59a;
+  --rr-color-observatory-atmosphere: #151a30;
+  --rr-color-accent-tint: color-mix(in srgb, var(--rr-color-accent) 16%, var(--rr-color-surface-elevated));
+  --rr-color-accent-border: color-mix(in srgb, var(--rr-color-accent) 42%, var(--rr-color-border));
+  --rr-color-recognition-tint: color-mix(in srgb, var(--rr-color-recognition) 14%, var(--rr-color-surface-elevated));
+  --rr-color-recognition-border: color-mix(in srgb, var(--rr-color-recognition) 42%, var(--rr-color-border));
+  --rr-color-reasoning-tint: color-mix(in srgb, var(--rr-color-reasoning) 14%, var(--rr-color-surface-elevated));
+  --rr-color-reasoning-border: color-mix(in srgb, var(--rr-color-reasoning) 42%, var(--rr-color-border));
+  --rr-color-comparison-tint: color-mix(in srgb, var(--rr-color-comparison) 14%, var(--rr-color-surface-elevated));
+  --rr-color-comparison-border: color-mix(in srgb, var(--rr-color-comparison) 42%, var(--rr-color-border));
+  --rr-color-memory-tint: color-mix(in srgb, var(--rr-color-memory) 14%, var(--rr-color-surface-elevated));
+  --rr-color-memory-border: color-mix(in srgb, var(--rr-color-memory) 42%, var(--rr-color-border));
+  --rr-color-pivot-tint: color-mix(in srgb, var(--rr-color-pivot) 15%, var(--rr-color-surface-elevated));
+  --rr-color-pivot-border: color-mix(in srgb, var(--rr-color-pivot) 42%, var(--rr-color-border));
+  --rr-color-clue-tint: color-mix(in srgb, var(--rr-color-clue) 15%, var(--rr-color-surface-elevated));
+  --rr-color-clue-border: color-mix(in srgb, var(--rr-color-clue) 42%, var(--rr-color-border));
+  --rr-color-takeaway-tint: color-mix(in srgb, var(--rr-color-takeaway) 14%, var(--rr-color-surface-elevated));
+  --rr-color-takeaway-border: color-mix(in srgb, var(--rr-color-takeaway) 42%, var(--rr-color-border));
+  --rr-color-repair-tint: color-mix(in srgb, var(--rr-color-repair) 14%, var(--rr-color-surface-elevated));
+  --rr-color-repair-border: color-mix(in srgb, var(--rr-color-repair) 42%, var(--rr-color-border));
+  --rr-color-mastery-tint: color-mix(in srgb, var(--rr-color-mastery) 14%, var(--rr-color-surface-elevated));
+  --rr-color-mastery-border: color-mix(in srgb, var(--rr-color-mastery) 42%, var(--rr-color-border));
+}
+
+[data-theme="editorial"] {
+  --font-sans: Arial, Helvetica, sans-serif;
+  --rr-color-text-primary: #0f172a;
+  --rr-color-text-muted: #64748b;
+  --rr-color-background: #ffffff;
+  --rr-color-surface: #f7f9fc;
+  --rr-color-surface-elevated: #ffffff;
+  --rr-color-border: #e3e8f1;
+  --rr-color-border-strong: #0f2a4a;
+  --rr-color-button-primary: #123f73;
+  --rr-color-sidebar-background: #fbfcff;
+  --rr-card-shadow: 0 18px 56px rgb(15 42 74 / 0.08), 0 1px 5px rgb(15 42 74 / 0.04);
+  --rr-card-shadow-soft: 0 12px 32px rgb(15 42 74 / 0.06), 0 1px 4px rgb(15 42 74 / 0.035);
+  --rr-radius-card: 0.875rem;
+  --rr-color-accent: #123f73;
+  --rr-color-recognition: #165a8f;
+  --rr-color-reasoning: #123f73;
+  --rr-color-comparison: #32557d;
+  --rr-color-memory: #3e4c7a;
+  --rr-color-pivot: #b36b16;
+  --rr-color-clue: #b36b16;
+  --rr-color-repair: #3552a3;
+  --rr-color-info: #165a8f;
+  --rr-color-observatory-atmosphere: #eef4fb;
+}
+
+.rr-practice-shell[data-theme="warm-notebook"] {
+  background:
+    linear-gradient(to bottom, color-mix(in srgb, var(--rr-color-border) 30%, transparent) 1px, transparent 1px),
+    radial-gradient(circle at top left, color-mix(in srgb, var(--rr-color-aster) 9%, transparent), transparent 28rem),
+    var(--rr-color-background);
+  background-size: 100% 2rem, auto, auto;
+}
+
+.rr-practice-shell[data-theme="dark-clinical"] {
+  background:
+    radial-gradient(circle at top left, color-mix(in srgb, var(--rr-color-aster) 18%, transparent), transparent 32rem),
+    linear-gradient(180deg, #0b1020, #080c17);
+}
+
+.rr-practice-shell[data-theme="editorial"] {
+  background:
+    linear-gradient(90deg, color-mix(in srgb, var(--rr-color-observatory-atmosphere) 70%, transparent), transparent 18rem),
+    var(--rr-color-background);
 }
 
 * {
@@ -116,6 +269,7 @@ body {
   min-height: 100vh;
   background: var(--rr-color-background);
   color: var(--rr-color-foreground);
+  font-family: var(--font-sans);
 }
 
 button,
@@ -220,14 +374,15 @@ body:has(.practice-focus) .app-main {
   }
 
   .rr-card {
-    @apply rounded-lg border border-rr-border bg-rr-elevated;
-    box-shadow: 0 1px 1px rgb(0 0 0 / 0.03);
+    @apply border border-rr-border bg-rr-elevated;
+    border-radius: var(--rr-radius-card);
+    box-shadow: var(--rr-card-shadow-soft);
   }
 
   .rr-question-card {
     border-color: var(--rr-color-border);
     background: var(--rr-color-surface-elevated);
-    box-shadow: none;
+    box-shadow: var(--rr-card-shadow-soft);
   }
 
   .rr-repair-card {
@@ -318,23 +473,24 @@ body:has(.practice-focus) .app-main {
   }
 
   .rr-button {
-    @apply inline-flex h-11 items-center justify-center rounded-md border px-5 text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-rr-focus focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:border-rr-border disabled:bg-rr-disabled disabled:text-rr-muted;
+    @apply inline-flex h-11 items-center justify-center rounded-lg border px-5 text-sm font-semibold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-rr-focus focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:border-rr-border disabled:bg-rr-disabled disabled:text-rr-muted;
   }
 
   .rr-button-primary {
     border-color: var(--rr-color-button-primary);
     background: var(--rr-color-button-primary);
-    color: var(--rr-color-background);
-    box-shadow: 0 8px 18px rgb(0 0 0 / 0.12);
+    color: #ffffff;
+    box-shadow: 0 12px 26px color-mix(in srgb, var(--rr-color-button-primary) 22%, transparent);
   }
 
   .rr-button-primary:hover {
-    background: var(--rr-color-surface-elevated);
-    color: var(--rr-color-button-primary);
+    border-color: color-mix(in srgb, var(--rr-color-button-primary) 84%, black);
+    background: color-mix(in srgb, var(--rr-color-button-primary) 88%, black);
+    color: #ffffff;
   }
 
   .rr-button-secondary {
-    @apply border-rr-border bg-rr-elevated text-rr-foreground hover:border-rr-foreground hover:bg-rr-foreground hover:text-rr-background active:bg-rr-surface;
+    @apply border-rr-border bg-rr-elevated text-rr-foreground hover:border-rr-accent hover:bg-rr-surface hover:text-rr-accent active:bg-rr-surface;
   }
 
   .rr-button-ghost {
@@ -353,7 +509,7 @@ body:has(.practice-focus) .app-main {
   }
 
   .rr-input {
-    @apply h-14 w-full rounded-md border border-rr-border bg-rr-elevated px-4 text-base outline-none transition-colors placeholder:text-rr-muted focus:border-rr-accent focus:bg-rr-surface focus-visible:ring-2 focus-visible:ring-rr-focus focus-visible:ring-offset-2 disabled:text-rr-muted;
+    @apply h-14 w-full rounded-xl border border-rr-border bg-rr-elevated px-4 text-base outline-none transition-colors placeholder:text-rr-muted focus:border-rr-accent focus:bg-rr-surface focus-visible:ring-2 focus-visible:ring-rr-focus focus-visible:ring-offset-2 disabled:text-rr-muted;
   }
 
   .rr-text-input {
@@ -361,15 +517,21 @@ body:has(.practice-focus) .app-main {
   }
 
   .rr-table {
-    @apply w-full border-collapse text-left text-sm;
+    @apply w-full border-separate border-spacing-0 overflow-hidden rounded-xl text-left text-sm;
+    border: 1px solid var(--rr-color-border);
   }
 
   .rr-table th {
-    @apply border-b border-rr-comparison py-2 pr-3 font-semibold;
+    @apply border-b border-rr-border bg-rr-surface px-3 py-2 font-semibold;
+    color: var(--rr-color-comparison);
   }
 
   .rr-table td {
-    @apply border-b border-rr-border py-2 pr-3 align-top last:pr-0;
+    @apply border-b border-rr-border px-3 py-2 align-top last:pr-3;
+  }
+
+  .rr-table tbody tr:last-child td {
+    border-bottom: 0;
   }
 
   .rr-chip {
@@ -382,12 +544,14 @@ body:has(.practice-focus) .app-main {
 
   .rr-practice-shell {
     background:
-      radial-gradient(circle at top left, color-mix(in srgb, var(--rr-color-aster) 7%, transparent), transparent 26rem),
+      radial-gradient(circle at top left, color-mix(in srgb, var(--rr-color-aster) 8%, transparent), transparent 30rem),
+      linear-gradient(180deg, color-mix(in srgb, var(--rr-color-observatory-atmosphere) 50%, transparent), transparent 18rem),
       var(--rr-color-background);
   }
 
   .rr-product-nav {
-    @apply sticky top-0 z-40 grid min-h-16 grid-cols-1 gap-3 border-b border-rr-border bg-rr-elevated px-4 py-3 backdrop-blur sm:px-6 lg:grid-cols-[auto_minmax(12rem,1fr)_auto_auto] lg:items-center lg:gap-6;
+    @apply sticky top-0 z-40 grid min-h-20 grid-cols-1 gap-3 border-b border-rr-border px-4 py-3 backdrop-blur sm:px-6 lg:grid-cols-[auto_minmax(12rem,1fr)_auto_auto] lg:items-center lg:gap-6;
+    background: color-mix(in srgb, var(--rr-color-surface-elevated) 88%, transparent);
   }
 
   .rr-product-brand {
@@ -408,7 +572,7 @@ body:has(.practice-focus) .app-main {
   }
 
   .rr-subject-pill {
-    @apply inline-flex min-h-9 items-center rounded-md border border-rr-border bg-rr-elevated px-4 font-medium shadow-[0_1px_10px_rgb(0_0_0_/_0.035)];
+    @apply inline-flex min-h-10 items-center rounded-lg border border-rr-border bg-rr-elevated px-4 font-semibold shadow-[0_1px_10px_rgb(0_0_0_/_0.035)];
   }
 
   .rr-context-divider {
@@ -476,7 +640,8 @@ body:has(.practice-focus) .app-main {
 
   .rr-aster-button,
   .rr-menu-button {
-    @apply inline-flex min-h-10 items-center justify-center rounded-md border border-rr-border bg-rr-elevated px-3 text-sm font-medium text-rr-foreground transition-colors hover:border-rr-accent hover:text-rr-accent disabled:cursor-not-allowed disabled:text-rr-muted;
+    @apply inline-flex min-h-10 items-center justify-center rounded-lg border border-rr-border bg-rr-elevated px-3 text-sm font-semibold text-rr-foreground transition-colors hover:border-rr-accent hover:text-rr-accent disabled:cursor-not-allowed disabled:text-rr-muted;
+    box-shadow: 0 1px 10px rgb(0 0 0 / 0.035);
   }
 
   .rr-menu-button {
@@ -488,19 +653,22 @@ body:has(.practice-focus) .app-main {
   }
 
   .rr-notebook-shell {
-    @apply mx-auto grid w-full max-w-[94rem] gap-5 px-4 py-5 sm:px-6 lg:grid-cols-[5.5rem_minmax(0,1fr)] lg:px-8;
+    @apply mx-auto grid w-full max-w-[95rem] gap-5 px-4 py-5 sm:px-6 lg:grid-cols-[9rem_minmax(0,1fr)] lg:px-8;
   }
 
   .rr-tool-rail {
-    @apply order-2 grid gap-2 rounded-xl border border-rr-border bg-rr-elevated p-2 shadow-[0_12px_40px_rgb(0_0_0_/_0.05)] lg:order-1 lg:sticky lg:top-24 lg:self-start;
+    @apply order-2 grid gap-2 border border-rr-border p-2 lg:order-1 lg:sticky lg:top-24 lg:self-start;
+    background: var(--rr-color-sidebar-background);
+    border-radius: var(--rr-radius-card);
+    box-shadow: var(--rr-card-shadow-soft);
   }
 
   .rr-tool-button {
-    @apply flex min-h-14 items-center justify-start gap-3 rounded-lg border border-transparent px-3 text-left text-sm font-medium text-rr-foreground transition-colors hover:border-rr-border hover:bg-rr-surface disabled:cursor-not-allowed disabled:text-rr-muted lg:flex-col lg:justify-center lg:gap-1 lg:px-2 lg:text-center lg:text-xs;
+    @apply flex min-h-16 items-center justify-start gap-3 rounded-xl border border-transparent px-3 text-left text-sm font-semibold text-rr-foreground transition-colors hover:border-rr-border hover:bg-rr-surface disabled:cursor-not-allowed disabled:text-rr-muted lg:min-h-14;
   }
 
   .rr-tool-button span {
-    @apply text-2xl leading-none text-rr-accent;
+    @apply text-xl leading-none text-rr-accent;
   }
 
   .rr-tool-button-active {
@@ -510,7 +678,26 @@ body:has(.practice-focus) .app-main {
   }
 
   .rr-tool-panel {
-    @apply rounded-xl border border-rr-border bg-rr-elevated p-5 shadow-[0_14px_42px_rgb(0_0_0_/_0.045)];
+    @apply rounded-2xl border border-rr-border bg-rr-elevated p-5;
+    box-shadow: var(--rr-card-shadow-soft);
+  }
+
+  .rr-skin-grid {
+    @apply grid gap-2 sm:grid-cols-2;
+  }
+
+  .rr-skin-option {
+    @apply grid gap-1 rounded-xl border border-rr-border bg-rr-surface px-3 py-3 text-left text-sm font-semibold text-rr-foreground transition-colors hover:border-rr-accent hover:text-rr-accent;
+  }
+
+  .rr-skin-option small {
+    @apply text-xs font-normal leading-5 text-rr-muted;
+  }
+
+  .rr-skin-option-active {
+    border-color: var(--rr-color-accent-border);
+    background: var(--rr-color-accent-tint);
+    color: var(--rr-color-accent);
   }
 
   .rr-notes-input {
@@ -566,7 +753,7 @@ body:has(.practice-focus) .app-main {
   }
 
   .rr-answer-dock {
-    @apply rounded-lg bg-rr-elevated;
+    @apply rounded-xl bg-rr-elevated;
   }
 
   .rr-correct-inline {
@@ -603,7 +790,9 @@ body:has(.practice-focus) .app-main {
   }
 
   .rr-explanation-notebook {
-    @apply rounded-2xl border border-rr-border bg-rr-elevated p-5 shadow-[0_24px_70px_rgb(28_25_84_/_0.08)] sm:p-6 lg:grid-cols-[minmax(0,1.15fr)_minmax(22rem,0.85fr)] lg:gap-8;
+    @apply border border-rr-border bg-rr-elevated p-5 sm:p-6 lg:grid-cols-[minmax(0,1.05fr)_minmax(22rem,0.95fr)] lg:gap-8;
+    border-radius: var(--rr-radius-card);
+    box-shadow: var(--rr-card-shadow);
   }
 
   .rr-explanation-column {
@@ -621,7 +810,7 @@ body:has(.practice-focus) .app-main {
   }
 
   .rr-repair-summary {
-    @apply grid gap-4 rounded-xl border border-rr-border bg-rr-surface px-4 py-3 sm:grid-cols-2;
+    @apply grid gap-4 rounded-2xl border border-rr-border bg-rr-surface px-4 py-3 sm:grid-cols-2;
   }
 
   .rr-repair-summary-value {
@@ -637,7 +826,7 @@ body:has(.practice-focus) .app-main {
   }
 
   .rr-clinical-flow {
-    @apply rounded-xl border px-4 py-4;
+    @apply rounded-2xl border px-4 py-4;
     border-color: var(--rr-color-recognition-border);
     background:
       linear-gradient(180deg, var(--rr-color-recognition-tint), var(--rr-color-surface-elevated) 66%),
@@ -654,7 +843,7 @@ body:has(.practice-focus) .app-main {
   }
 
   .rr-clinical-flow-step {
-    @apply relative grid gap-1 rounded-lg border bg-rr-elevated px-3.5 py-3;
+    @apply relative grid gap-1 rounded-xl border bg-rr-elevated px-3.5 py-3;
     border-color: var(--rr-color-border);
   }
 
@@ -693,7 +882,7 @@ body:has(.practice-focus) .app-main {
   }
 
   .rr-attention-map {
-    @apply rounded-xl border bg-rr-elevated px-4 py-3;
+    @apply rounded-2xl border bg-rr-elevated px-4 py-3;
     border-color: var(--rr-color-border);
   }
 
@@ -750,15 +939,16 @@ body:has(.practice-focus) .app-main {
   }
 
   .rr-explanation-notebook .rr-teaching-card {
-    @apply border-0 bg-transparent shadow-none;
+    @apply border border-rr-border bg-rr-elevated shadow-none;
+    border-radius: 0.875rem;
   }
 
   .rr-explanation-notebook .rr-teaching-card summary {
-    @apply px-0 py-0;
+    @apply px-4 py-3;
   }
 
   .rr-explanation-notebook .rr-teaching-card > div {
-    @apply px-0 pb-0;
+    @apply px-4 pb-4;
   }
 
   .rr-callout-pivot {
@@ -916,6 +1106,20 @@ body:has(.practice-focus) .app-main {
 
   .rr-loading {
     @apply rounded-lg border border-rr-border bg-rr-elevated px-5 py-4 text-sm text-rr-muted shadow-[var(--rr-shadow-card)];
+  }
+
+  .rr-depth-heading {
+    @apply mb-3;
+    color: var(--rr-color-accent);
+  }
+
+  .rr-bottom-nav {
+    @apply flex flex-col gap-3 rounded-2xl border border-rr-border bg-rr-elevated p-3 sm:flex-row sm:items-center sm:justify-between;
+    box-shadow: var(--rr-card-shadow-soft);
+  }
+
+  .rr-bottom-action {
+    @apply inline-flex min-h-11 items-center justify-center rounded-lg border border-transparent px-4 text-sm font-semibold text-rr-accent transition-colors hover:border-rr-border hover:bg-rr-surface;
   }
 }
 

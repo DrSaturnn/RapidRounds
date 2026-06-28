@@ -148,6 +148,17 @@ export function TutorMode({
   ].filter((step) => step.value.trim().length > 0);
   const compactReasoning = getCompactReasoning(tutor);
   const hasVignetteFindings = Boolean(tutor.vignetteFindings?.length);
+  const hasTeachingContent = Boolean(
+    (modules.retrieval && tutor.teachingPlan.retrieval) ||
+    (modules.contraindication && tutor.teachingPlan.contraindication) ||
+    modules.expertRecognition ||
+    (modules.expertCorrection && tutor.cognitiveError) ||
+    hasComparison ||
+    modules.nbmePivot ||
+    modules.illnessScript ||
+    (modules.whyTempting && tutor.whyTempting) ||
+    hasMeaningfulBoardPearl
+  );
 
   const onSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -237,7 +248,8 @@ export function TutorMode({
   );
 
   const teachingSurface = (
-      <TeachingCard title="Understand the pattern" defaultOpen="desktop">
+      hasTeachingContent ? (
+      <TeachingCard title="Teach Me More" defaultOpen={false}>
         <div className="rr-teaching-blocks">
           {modules.retrieval && tutor.teachingPlan.retrieval ? (
             <TeachingBlock title="Retrieval target" tone="memory">
@@ -328,6 +340,7 @@ export function TutorMode({
           ) : null}
         </div>
       </TeachingCard>
+      ) : null
   );
 
   const nextChallengeSurface = (
@@ -367,6 +380,7 @@ export function TutorMode({
     <section className="rr-post-answer-workspace rr-explanation-notebook">
       <div className="rr-post-answer-repair">{repairSurface}</div>
       <section className="rr-post-answer-depth" aria-label="Understand the pattern" data-rr-teaching-depth>
+        <p className="rr-section-header rr-depth-heading">Understand the pattern</p>
         {teachingSurface}
         <div className="rr-post-answer-next mt-4">{nextChallengeSurface}</div>
       </section>

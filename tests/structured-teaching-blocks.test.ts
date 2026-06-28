@@ -40,12 +40,12 @@ describe("structured teaching blocks", () => {
     assert.match(tutorMode, /rr-path-terminal/);
   });
 
-  it("defaults Teach Me More open on desktop and collapsed on mobile", () => {
-    const teachingCard = readFileSync("components/TeachingCard.tsx", "utf8");
+  it("keeps Teach Me More as a real collapsed section", () => {
+    const tutorMode = readFileSync("components/TutorMode.tsx", "utf8");
 
-    assert.match(teachingCard, /defaultOpen\?: boolean \| "desktop"/);
-    assert.match(teachingCard, /window\.matchMedia\("\(min-width: 1024px\)"\)/);
-    assert.match(teachingCard, /setIsOpen\(media\.matches\)/);
+    assert.match(tutorMode, /hasTeachingContent/);
+    assert.match(tutorMode, /<TeachingCard title="Teach Me More" defaultOpen=\{false\}>/);
+    assert.doesNotMatch(tutorMode, /defaultOpen="desktop"/);
   });
 
   it("styles structured blocks and visual recognition pathways", () => {

@@ -93,4 +93,24 @@ describe("design system", () => {
     assert.match(css, /rr-teaching-block-pivot/);
     assert.match(tutorMode, /rr-chip/);
   });
+
+  it("provides real theme skins and removes unimplemented sidebar repair controls", () => {
+    const practicePanel = readFileSync("components/PracticePanel.tsx", "utf8");
+    const css = readFileSync("app/globals.css", "utf8");
+
+    [
+      "modern-academic",
+      "warm-notebook",
+      "dark-clinical",
+      "editorial"
+    ].forEach((theme) => {
+      assert.match(practicePanel, new RegExp(theme));
+      assert.match(css, new RegExp(`data-theme="${theme}"`));
+    });
+
+    assert.match(practicePanel, /SKIN_STORAGE_KEY/);
+    assert.match(practicePanel, /window\.localStorage\.setItem\(SKIN_STORAGE_KEY, skin\)/);
+    assert.match(practicePanel, /role="radiogroup"/);
+    assert.doesNotMatch(practicePanel, /Repair a Miss/);
+  });
 });

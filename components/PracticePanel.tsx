@@ -9,7 +9,36 @@ import { getRapidRoundsVariantDisplayText } from "@/lib/rapidrounds-case";
 import { usePracticeSession } from "@/hooks/usePracticeSession";
 import { getClinicalPromptText, getDecisionQuestionText } from "@/lib/decision-question-text";
 
-type PracticeTool = "repair" | "notes" | "settings" | null;
+type PracticeTool = "notes" | "settings" | null;
+type PracticeSkin = "modern-academic" | "warm-notebook" | "dark-clinical" | "editorial";
+
+const SKIN_STORAGE_KEY = "rapidrounds.practiceSkin.v1";
+const practiceSkins: Array<{ value: PracticeSkin; label: string; description: string }> = [
+  {
+    value: "modern-academic",
+    label: "Modern Academic",
+    description: "Clean light workspace with purple academic accents."
+  },
+  {
+    value: "warm-notebook",
+    label: "Warm Notebook",
+    description: "Ivory paper tone with restrained sepia emphasis."
+  },
+  {
+    value: "dark-clinical",
+    label: "Dark Clinical",
+    description: "Low-glare clinical workstation for focused review."
+  },
+  {
+    value: "editorial",
+    label: "Editorial",
+    description: "Article-like spacing with deep navy accents."
+  }
+];
+
+function isPracticeSkin(value: string | null): value is PracticeSkin {
+  return Boolean(value && practiceSkins.some((skin) => skin.value === value));
+}
 
 export function PracticePanel() {
   const {
@@ -37,13 +66,7 @@ export function PracticePanel() {
   const [showEndSessionConfirm, setShowEndSessionConfirm] = useState(false);
   const [activeTool, setActiveTool] = useState<PracticeTool>(null);
   const [notes, setNotes] = useState("");
-  const [repairSource, setRepairSource] = useState("");
-  const [repairTopic, setRepairTopic] = useState("");
-  const [repairAnswer, setRepairAnswer] = useState("");
-  const [repairCorrectAnswer, setRepairCorrectAnswer] = useState("");
-  const [repairReasoning, setRepairReasoning] = useState("");
-  const [repairClues, setRepairClues] = useState("");
-  const [repairSaved, setRepairSaved] = useState<string | null>(null);
+  const [skin, setSkin] = useState<PracticeSkin>("modern-academic");
 
   const keyboardHint = useMemo(() => {
     if (mode === "tutor") {
@@ -98,8 +121,6 @@ export function PracticePanel() {
     }
 
     setNotes(window.localStorage.getItem(`rr-notes-${question.id}`) ?? "");
-    setRepairTopic(question.topic);
-    setRepairSaved(null);
   }, [question]);
 
   useEffect(() => {
@@ -109,6 +130,17 @@ export function PracticePanel() {
 
     window.localStorage.setItem(`rr-notes-${question.id}`, notes);
   }, [notes, question]);
+
+  useEffect(() => {
+    const savedSkin = window.localStorage.getItem(SKIN_STORAGE_KEY);
+    if (isPracticeSkin(savedSkin)) {
+      setSkin(savedSkin);
+    }
+  }, []);
+
+  useEffect(() => {
+    window.localStorage.setItem(SKIN_STORAGE_KEY, skin);
+  }, [skin]);
 
   useEffect(() => {
     if (showEndSessionConfirm) {
@@ -262,27 +294,8 @@ export function PracticePanel() {
     });
   };
 
-  const saveRepairMiss = (event: FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    const target = repairTopic.trim() || repairCorrectAnswer.trim() || question.topic;
-    const payload = {
-      source: repairSource.trim(),
-      topic: target,
-      learnerAnswer: repairAnswer.trim(),
-      correctAnswer: repairCorrectAnswer.trim(),
-      why: repairReasoning.trim(),
-      clues: repairClues.trim(),
-      createdAt: new Date().toISOString()
-    };
-
-    window.localStorage.setItem(`rr-repair-miss-${Date.now()}`, JSON.stringify(payload));
-    setRepairSaved(`Saved. Launching a repair case for ${target}.`);
-    setActiveTool(null);
-    void loadQuestion(target);
-  };
-
   return (
-    <div className="practice-focus rr-practice-shell min-h-screen">
+    <div className="practice-focus rr-practice-shell min-h-screen" data-theme={skin}>
       <header className="rr-product-nav">
         <div className="rr-product-brand">
           <span className="rr-brand-mark" aria-hidden="true">✳</span>
@@ -330,14 +343,6 @@ export function PracticePanel() {
             <span aria-hidden="true">▷</span>
             Continue
           </button>
-          <button
-            type="button"
-            className={`rr-tool-button ${activeTool === "repair" ? "rr-tool-button-active" : ""}`}
-            onClick={() => setActiveTool(activeTool === "repair" ? null : "repair")}
-          >
-            <span aria-hidden="true">↺</span>
-            Repair a Miss
-          </button>
           <button type="button" className="rr-tool-button" onClick={showTeaching} disabled={isTeaching}>
             <span aria-hidden="true">◇</span>
             Teach Me More
@@ -365,7 +370,7 @@ export function PracticePanel() {
             <QuestionMeta question={question} />
             <p className="rr-meta">{learningGoal}</p>
           </div>
-          <section className="rr-card rr-question-card space-y-7 px-5 py-6 motion-safe:animate-[fadeIn_180ms_var(--rr-ease-standard)] sm:space-y-8 sm:px-7 sm:py-7">
+          <section className="rr-card rr-question-card space-y-7 px-5 py-6 motion-safe:animate-[fadeIn_180ms_var(--rr-ease-standard)] sm:space-y-8 sm:px-7 sm:py-8">
             <div className="space-y-5 sm:space-y-6">
               <div className="flex flex-wrap items-center gap-2">
                 <span className="rr-badge rr-badge-learning">{mode === "tutor" ? "Explanation" : "Question"}</span>
@@ -455,25 +460,28 @@ export function PracticePanel() {
                 <p className="rr-meta">Saved on this device for the current case.</p>
               </>
             ) : null}
-            {activeTool === "repair" ? (
-              <form className="space-y-3" onSubmit={saveRepairMiss}>
-                <p className="rr-section-header">Repair a miss</p>
-                <p className="rr-supporting">Summarize your reasoning. RapidRounds will launch a related repair case without storing a copied question stem.</p>
-                <div className="grid gap-3 sm:grid-cols-2">
-                  <input className="rr-text-input" value={repairSource} onChange={(event) => setRepairSource(event.target.value)} placeholder="Source, optional" />
-                  <input className="rr-text-input" value={repairTopic} onChange={(event) => setRepairTopic(event.target.value)} placeholder="Topic" />
-                  <input className="rr-text-input" value={repairAnswer} onChange={(event) => setRepairAnswer(event.target.value)} placeholder="Your answer" />
-                  <input className="rr-text-input" value={repairCorrectAnswer} onChange={(event) => setRepairCorrectAnswer(event.target.value)} placeholder="Correct answer" />
-                </div>
-                <textarea className="rr-notes-input" value={repairReasoning} onChange={(event) => setRepairReasoning(event.target.value)} placeholder="Why did you choose it?" />
-                <textarea className="rr-notes-input" value={repairClues} onChange={(event) => setRepairClues(event.target.value)} placeholder="Key clues you remember" />
-                <Button type="submit">Launch repair case</Button>
-              </form>
-            ) : null}
             {activeTool === "settings" ? (
-              <div className="space-y-3">
+              <div className="space-y-5">
                 <p className="rr-section-header">Session settings</p>
                 <p className="rr-supporting">Keyboard: Enter submits. Enter or N moves to the next case after feedback.</p>
+                <div className="space-y-3">
+                  <p className="rr-meta">Visual skin</p>
+                  <div className="rr-skin-grid" role="radiogroup" aria-label="Choose visual skin">
+                    {practiceSkins.map((practiceSkin) => (
+                      <button
+                        key={practiceSkin.value}
+                        type="button"
+                        className={`rr-skin-option ${skin === practiceSkin.value ? "rr-skin-option-active" : ""}`}
+                        onClick={() => setSkin(practiceSkin.value)}
+                        role="radio"
+                        aria-checked={skin === practiceSkin.value}
+                      >
+                        <span>{practiceSkin.label}</span>
+                        <small>{practiceSkin.description}</small>
+                      </button>
+                    ))}
+                  </div>
+                </div>
                 <Button type="button" variant="secondary" onClick={() => setShowEndSessionConfirm(true)}>
                   End session
                 </Button>
@@ -481,7 +489,6 @@ export function PracticePanel() {
             ) : null}
           </section>
         ) : null}
-        {repairSaved ? <p className="mt-3 rr-meta">{repairSaved}</p> : null}
 
         {mode === "tutor" && tutor ? (
           <div className="mt-7 motion-safe:animate-[whiteboardOpen_220ms_var(--rr-ease-standard)] sm:mt-8">
@@ -495,6 +502,15 @@ export function PracticePanel() {
             />
           </div>
         ) : null}
+
+        <nav className="rr-bottom-nav mt-5" aria-label="Practice navigation">
+          <button type="button" className="rr-bottom-action" onClick={() => setActiveTool("notes")}>
+            □ Add to Notes
+          </button>
+          <Button type="button" onClick={() => void loadQuestion()}>
+            Next Case →
+          </Button>
+        </nav>
         </main>
       </div>
       {showEndSessionConfirm ? (
