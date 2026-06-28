@@ -1158,6 +1158,345 @@ body:has(.practice-focus) .app-main {
     color: rgb(70 47 28 / 0.94);
   }
 
+  [data-theme="warm-notebook"] .rr-moleskine-shell {
+    width: min(96rem, calc(100vw - 1.5rem));
+    max-width: none;
+    margin: 1rem auto;
+    gap: 0;
+    padding: 0;
+    overflow: visible;
+    border: 1px solid rgb(92 60 34 / 0.28);
+    border-radius: 1.15rem;
+    background:
+      linear-gradient(90deg, rgb(31 31 31 / 0.9) 0, rgb(31 31 31 / 0.9) 1.45rem, rgb(93 72 49 / 0.36) 1.45rem, transparent 2.4rem),
+      repeating-linear-gradient(to bottom, transparent 0, transparent 31px, rgb(112 76 42 / 0.065) 32px),
+      var(--rr-paper-texture),
+      linear-gradient(180deg, #f8ebce, #efdcb7);
+    box-shadow:
+      0 42px 90px rgb(42 24 12 / 0.26),
+      0 14px 28px rgb(42 24 12 / 0.12),
+      inset 0 1px 0 rgb(255 255 255 / 0.58),
+      inset 1.55rem 0 0 rgb(31 31 31 / 0.72);
+  }
+
+  [data-theme="warm-notebook"] .rr-moleskine-shell::before,
+  [data-theme="warm-notebook"] .rr-moleskine-shell::after {
+    content: "";
+    position: absolute;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  [data-theme="warm-notebook"] .rr-moleskine-shell::before {
+    left: 1.85rem;
+    top: 0.4rem;
+    bottom: 0.45rem;
+    width: 0.9rem;
+    border-radius: 999px;
+    background:
+      linear-gradient(90deg, rgb(255 255 255 / 0.2), transparent),
+      linear-gradient(180deg, rgb(65 45 29 / 0.2), rgb(255 255 255 / 0.16), rgb(65 45 29 / 0.18));
+    box-shadow:
+      0.5rem 0 1.2rem rgb(60 38 20 / 0.16),
+      inset -1px 0 0 rgb(255 255 255 / 0.26);
+  }
+
+  [data-theme="warm-notebook"] .rr-moleskine-shell::after {
+    inset: 0.85rem 0.85rem 0.85rem 2.8rem;
+    border-radius: 0.9rem;
+    background:
+      radial-gradient(circle at 94% 4%, rgb(112 76 42 / 0.08), transparent 8rem),
+      linear-gradient(90deg, rgb(83 55 31 / 0.08), transparent 3.2rem, transparent calc(100% - 2rem), rgb(83 55 31 / 0.06));
+    mix-blend-mode: multiply;
+  }
+
+  [data-theme="warm-notebook"] .rr-moleskine-sidebar-page,
+  [data-theme="warm-notebook"] .rr-moleskine-main-spread {
+    position: relative;
+    z-index: 1;
+  }
+
+  [data-theme="warm-notebook"] .rr-moleskine-sidebar-page {
+    order: 1;
+    align-content: start;
+    gap: 0.65rem;
+    min-height: auto;
+    border: 0;
+    border-right: 1px solid rgb(112 76 42 / 0.2);
+    border-radius: 0;
+    padding: 1.25rem 1rem 1.25rem 2.35rem;
+    background:
+      radial-gradient(circle at 35% 90%, rgb(112 76 42 / 0.13), transparent 5rem),
+      repeating-linear-gradient(to bottom, transparent 0, transparent 31px, rgb(112 76 42 / 0.075) 32px),
+      var(--rr-paper-texture),
+      linear-gradient(180deg, #f4e4c2, #ead6ad);
+    box-shadow:
+      inset -1px 0 0 rgb(255 255 255 / 0.34),
+      inset -0.8rem 0 1.4rem rgb(79 52 30 / 0.06);
+  }
+
+  [data-theme="warm-notebook"] .rr-moleskine-sidebar-page::after {
+    content: "";
+    position: absolute;
+    left: 1.2rem;
+    bottom: 1.2rem;
+    width: 5.6rem;
+    height: 5.6rem;
+    pointer-events: none;
+    opacity: 0.12;
+    background:
+      radial-gradient(circle, transparent 0 28%, rgb(89 66 42 / 0.8) 29% 30%, transparent 31% 100%),
+      conic-gradient(from 0deg, transparent 0 7%, rgb(89 66 42 / 0.7) 8% 9%, transparent 10% 22%, rgb(89 66 42 / 0.7) 23% 24%, transparent 25% 100%);
+    border-radius: 999px;
+  }
+
+  [data-theme="warm-notebook"] .rr-moleskine-sidebar-page .rr-tool-button {
+    min-height: 2.85rem;
+    justify-content: flex-start;
+    padding-inline: 0.65rem;
+    font-family: var(--rr-font-serif);
+    font-size: 0.98rem;
+    font-style: italic;
+    font-weight: 500;
+    background: transparent;
+    box-shadow: none;
+  }
+
+  [data-theme="warm-notebook"] .rr-moleskine-main-spread {
+    order: 2;
+    width: 100%;
+    max-width: none;
+    padding: 1.35rem;
+    display: grid;
+    gap: 1rem;
+    background:
+      repeating-linear-gradient(to bottom, transparent 0, transparent 31px, rgb(112 76 42 / 0.06) 32px),
+      var(--rr-paper-texture),
+      linear-gradient(180deg, #f8ebce, #f0dcba);
+  }
+
+  [data-theme="warm-notebook"] .rr-moleskine-page-goal {
+    margin-bottom: 0;
+    padding-inline: 0.35rem;
+  }
+
+  [data-theme="warm-notebook"] .rr-moleskine-left-page {
+    border-color: transparent;
+    background: transparent;
+    box-shadow: none;
+  }
+
+  [data-theme="warm-notebook"] .rr-moleskine-left-page::before,
+  [data-theme="warm-notebook"] .rr-moleskine-left-page::after {
+    display: block;
+  }
+
+  [data-theme="warm-notebook"] .rr-moleskine-left-page::before {
+    top: -0.9rem;
+    right: -0.95rem;
+    width: 5.6rem;
+    height: 5.6rem;
+    opacity: 0.78;
+    background:
+      linear-gradient(135deg, rgb(255 255 255 / 0.88), rgb(242 224 190 / 0.64) 45%, rgb(112 76 42 / 0.16) 49%, transparent 52%);
+    box-shadow:
+      -1rem 1rem 1.4rem rgb(58 34 16 / 0.16),
+      inset 1px -1px 0 rgb(112 76 42 / 0.18);
+  }
+
+  [data-theme="warm-notebook"] .rr-moleskine-left-page::after {
+    left: 0.5rem;
+    right: -0.5rem;
+    bottom: -0.95rem;
+    height: 0.9rem;
+    opacity: 0.78;
+    background:
+      linear-gradient(90deg, transparent, rgb(58 34 16 / 0.18), transparent);
+  }
+
+  [data-theme="warm-notebook"] .rr-moleskine-page-section {
+    border: 0;
+    border-top: 1px solid rgb(112 76 42 / 0.18);
+    border-radius: 0;
+    background: transparent;
+    box-shadow: none;
+  }
+
+  [data-theme="warm-notebook"] .rr-moleskine-left-reasoning {
+    padding: 1.15rem 0 0;
+  }
+
+  [data-theme="warm-notebook"] .rr-moleskine-left-reasoning .rr-clinical-flow {
+    border: 0;
+    padding: 0;
+    background: transparent;
+    box-shadow: none;
+  }
+
+  [data-theme="warm-notebook"] .rr-moleskine-left-reasoning .rr-clinical-flow-title {
+    margin-bottom: 0.75rem;
+  }
+
+  [data-theme="warm-notebook"] .rr-moleskine-left-reasoning .rr-clinical-flow-steps {
+    gap: 0.8rem;
+  }
+
+  [data-theme="warm-notebook"] .rr-moleskine-left-reasoning .rr-clinical-flow-step {
+    min-height: 5.1rem;
+    align-content: center;
+    padding: 0.75rem 0.9rem;
+    border-radius: 0.55rem;
+    background:
+      linear-gradient(180deg, rgb(255 248 231 / 0.58), rgb(240 223 189 / 0.32));
+  }
+
+  [data-theme="warm-notebook"] .rr-moleskine-left-reasoning .rr-repair-summary {
+    margin-top: 0.5rem;
+    border-color: rgb(112 76 42 / 0.2);
+    background: rgb(255 248 231 / 0.32);
+  }
+
+  [data-theme="warm-notebook"] .rr-moleskine-right-page {
+    position: relative;
+    z-index: 1;
+  }
+
+  [data-theme="warm-notebook"] .rr-moleskine-right-page .rr-depth-heading {
+    margin-bottom: 0.55rem;
+  }
+
+  [data-theme="warm-notebook"] .rr-moleskine-right-page .rr-moleskine-page-section {
+    border: 1px solid rgb(112 76 42 / 0.22);
+    border-radius: 0.65rem;
+    padding: 0.85rem 1rem;
+    background:
+      repeating-linear-gradient(to bottom, transparent 0, transparent 31px, rgb(112 76 42 / 0.04) 32px),
+      rgb(255 248 231 / 0.32);
+    box-shadow:
+      inset 0 1px 0 rgb(255 255 255 / 0.38),
+      0 1px 0 rgb(112 76 42 / 0.05);
+  }
+
+  [data-theme="warm-notebook"] .rr-moleskine-insert {
+    border-color: rgb(112 76 42 / 0.28);
+    border-radius: 0.65rem;
+    background:
+      repeating-linear-gradient(to bottom, transparent 0, transparent 31px, rgb(112 76 42 / 0.045) 32px),
+      rgb(255 248 231 / 0.38);
+    box-shadow:
+      inset 0 1px 0 rgb(255 255 255 / 0.42),
+      0 2px 0 rgb(112 76 42 / 0.04);
+  }
+
+  [data-theme="warm-notebook"] .rr-moleskine-insert summary {
+    border: 0;
+    border-radius: 0;
+    background: transparent;
+    box-shadow: none;
+  }
+
+  [data-theme="warm-notebook"] .rr-moleskine-footer-strip {
+    border: 0;
+    border-top: 1px solid rgb(112 76 42 / 0.22);
+    border-radius: 0 0 0.9rem 0;
+    margin-top: 0;
+    background:
+      repeating-linear-gradient(to bottom, transparent 0, transparent 31px, rgb(112 76 42 / 0.055) 32px),
+      linear-gradient(180deg, #f7e8c9, #edd7ad);
+    box-shadow:
+      inset 0 1px 0 rgb(255 255 255 / 0.48),
+      0 -8px 18px rgb(58 34 16 / 0.06);
+  }
+
+  @media (min-width: 1024px) {
+    [data-theme="warm-notebook"] .rr-moleskine-shell {
+      grid-template-columns: 12.5rem minmax(0, 1fr);
+    }
+
+    [data-theme="warm-notebook"] .rr-moleskine-sidebar-page {
+      min-height: calc(100vh - 6.5rem);
+      position: sticky;
+      top: 4.5rem;
+      align-self: stretch;
+    }
+
+    [data-theme="warm-notebook"] .rr-moleskine-main-spread {
+      grid-template-columns: minmax(0, 1.1fr) minmax(24rem, 0.82fr);
+      column-gap: 2.2rem;
+      row-gap: 1rem;
+      padding: 1.8rem 1.6rem 0;
+      min-height: calc(100vh - 6.5rem);
+      overflow: visible;
+    }
+
+    [data-theme="warm-notebook"] .rr-moleskine-main-spread::before,
+    [data-theme="warm-notebook"] .rr-moleskine-main-spread::after {
+      content: "";
+      position: absolute;
+      top: 4rem;
+      bottom: 4.6rem;
+      pointer-events: none;
+      z-index: 0;
+      border: 1px solid rgb(112 76 42 / 0.18);
+      background:
+        radial-gradient(circle at 20% 0%, rgb(255 255 255 / 0.42), transparent 14rem),
+        repeating-linear-gradient(to bottom, transparent 0, transparent 31px, rgb(112 76 42 / 0.06) 32px),
+        var(--rr-paper-texture),
+        linear-gradient(180deg, #fff5dd, #f5e4c1);
+      box-shadow:
+        0 22px 48px rgb(58 34 16 / 0.14),
+        0 5px 10px rgb(58 34 16 / 0.08),
+        inset 0 1px 0 rgb(255 255 255 / 0.5);
+    }
+
+    [data-theme="warm-notebook"] .rr-moleskine-main-spread::before {
+      left: 1.05rem;
+      right: calc(38% + 1.6rem);
+      border-radius: 0.85rem 0.35rem 0.35rem 0.85rem;
+    }
+
+    [data-theme="warm-notebook"] .rr-moleskine-main-spread::after {
+      left: calc(62% + 0.6rem);
+      right: 1.05rem;
+      border-radius: 0.35rem 0.85rem 0.85rem 0.35rem;
+    }
+
+    [data-theme="warm-notebook"] .rr-moleskine-main-spread > * {
+      position: relative;
+      z-index: 1;
+    }
+
+    [data-theme="warm-notebook"] .rr-moleskine-page-goal {
+      grid-column: 1 / -1;
+    }
+
+    [data-theme="warm-notebook"] .rr-moleskine-left-page {
+      grid-column: 1;
+      grid-row: 2;
+    }
+
+    [data-theme="warm-notebook"] .rr-moleskine-learning-layer,
+    [data-theme="warm-notebook"] .rr-moleskine-teaching-spread {
+      display: contents;
+    }
+
+    [data-theme="warm-notebook"] .rr-post-answer-repair {
+      grid-column: 1;
+      grid-row: 3;
+    }
+
+    [data-theme="warm-notebook"] .rr-moleskine-right-page {
+      grid-column: 2;
+      grid-row: 2 / span 2;
+      align-self: start;
+    }
+
+    [data-theme="warm-notebook"] .rr-moleskine-footer-strip,
+    [data-theme="warm-notebook"] .rr-tool-panel {
+      grid-column: 1 / -1;
+    }
+  }
+
   .rr-section-header {
     @apply flex items-center gap-2 text-xs font-semibold uppercase tracking-normal text-rr-muted;
   }

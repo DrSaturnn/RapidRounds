@@ -499,8 +499,8 @@ export function PracticePanel() {
   );
 
   return (
-    <div className="practice-focus rr-practice-shell min-h-screen" data-theme={skin}>
-      <header className="rr-product-nav">
+    <div className="practice-focus rr-practice-shell rr-moleskine-root min-h-screen" data-theme={skin}>
+      <header className="rr-product-nav rr-moleskine-topbar">
         <div className="rr-product-brand">
           <span className="rr-brand-mark" aria-hidden="true">✳</span>
           <span>RapidRounds</span>
@@ -559,8 +559,8 @@ export function PracticePanel() {
         </div>
       </header>
 
-      <div className="rr-notebook-shell rr-notebook-surface">
-        <aside className="rr-tool-rail rr-panel" aria-label="Practice tools">
+      <div className="rr-notebook-shell rr-notebook-surface rr-moleskine-shell">
+        <aside className="rr-tool-rail rr-panel rr-moleskine-sidebar-page" aria-label="Practice tools">
           <button type="button" className="rr-tool-button" onClick={handleContinue}>
             <span aria-hidden="true">▷</span>
             Continue
@@ -598,12 +598,12 @@ export function PracticePanel() {
           </div>
         </aside>
 
-        <main className={`rr-practice-main ${mode === "tutor" ? "rr-practice-main-wide" : ""}`}>
-          <div className="mb-5 flex flex-wrap items-center justify-between gap-3">
+        <main className={`rr-practice-main rr-moleskine-main-spread ${mode === "tutor" ? "rr-practice-main-wide" : ""}`}>
+          <div className="rr-moleskine-page-goal mb-5 flex flex-wrap items-center justify-between gap-3">
             <QuestionMeta question={question} />
             <p className="rr-meta">{learningGoal}</p>
           </div>
-          <section className={`rr-card rr-question-card rr-vignette-card rr-card-paper space-y-5 px-5 py-5 motion-safe:animate-[fadeIn_180ms_var(--rr-ease-standard)] sm:px-7 ${isExplanationState ? "rr-question-card-compact" : "sm:py-7"}`}>
+          <section className={`rr-card rr-question-card rr-vignette-card rr-card-paper rr-moleskine-left-page space-y-5 px-5 py-5 motion-safe:animate-[fadeIn_180ms_var(--rr-ease-standard)] sm:px-7 ${isExplanationState ? "rr-question-card-compact" : "sm:py-7"}`}>
             <div className="space-y-4">
               <div className="flex flex-wrap items-center gap-2">
                 <span className="rr-badge rr-badge-learning">{isExplanationState ? "Explanation" : "Question"}</span>
@@ -669,7 +669,7 @@ export function PracticePanel() {
           </section>
 
         {activeTool === "notes" ? (
-          <section className="rr-tool-panel rr-panel mt-5 motion-safe:animate-[fadeIn_180ms_var(--rr-ease-standard)]">
+          <section className="rr-tool-panel rr-panel rr-moleskine-page-section mt-5 motion-safe:animate-[fadeIn_180ms_var(--rr-ease-standard)]">
             <p className="rr-section-header">Notes for this case</p>
             <textarea
               className="rr-notes-input"
@@ -682,7 +682,7 @@ export function PracticePanel() {
         ) : null}
 
         {isExplanationState && tutor ? (
-          <div className="mt-7 motion-safe:animate-[whiteboardOpen_220ms_var(--rr-ease-standard)] sm:mt-8">
+          <div className="rr-moleskine-learning-layer mt-7 motion-safe:animate-[whiteboardOpen_220ms_var(--rr-ease-standard)] sm:mt-8">
             <TutorMode
               tutor={tutor}
               reinforcementAnswer={reinforcementAnswer}
@@ -695,7 +695,7 @@ export function PracticePanel() {
         ) : null}
 
         {isExplanationState ? (
-        <nav className="rr-bottom-nav rr-panel mt-5" aria-label="Practice navigation">
+        <nav className="rr-bottom-nav rr-panel rr-moleskine-footer-strip mt-5" aria-label="Practice navigation">
           <button type="button" className="rr-bottom-action" onClick={() => setActiveTool("notes")}>
             □ Add to Notes
           </button>

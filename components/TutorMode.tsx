@@ -170,7 +170,7 @@ export function TutorMode({
   };
 
   const repairSurface = (
-    <div className={`rr-notebook-section rr-explanation-card rr-card-paper rr-explanation-column space-y-4 ${isUnknown ? "rr-concept-card" : "rr-repair-card"}`}>
+    <div className={`rr-notebook-section rr-explanation-card rr-card-paper rr-explanation-column rr-moleskine-page-section rr-moleskine-left-reasoning space-y-4 ${isUnknown ? "rr-concept-card" : "rr-repair-card"}`}>
         <p className="rr-section-header">{repairTitle}</p>
         {isUnknown ? (
           <div className="space-y-3 text-sm leading-6">
@@ -345,7 +345,7 @@ export function TutorMode({
   );
 
   const nextChallengeSurface = (
-      <div className="rr-notebook-section rr-explanation-card rr-card-paper rr-adaptive-card space-y-3">
+      <div className="rr-notebook-section rr-explanation-card rr-card-paper rr-adaptive-card rr-moleskine-page-section space-y-3">
         <p className="rr-section-header">Next challenge</p>
         <div className="space-y-3 text-sm leading-6">
           <p>
@@ -378,9 +378,9 @@ export function TutorMode({
   );
 
   return (
-    <section className="rr-post-answer-workspace rr-explanation-notebook rr-notebook-surface">
+    <section className="rr-post-answer-workspace rr-explanation-notebook rr-notebook-surface rr-moleskine-teaching-spread">
       <div className="rr-post-answer-repair">{repairSurface}</div>
-      <section className="rr-post-answer-depth" aria-label="Understand the pattern" data-rr-teaching-depth>
+      <section className="rr-post-answer-depth rr-moleskine-right-page" aria-label="Understand the pattern" data-rr-teaching-depth>
         <p className="rr-section-header rr-depth-heading">Understand the pattern</p>
         <RightPanelExplanation tutor={tutor} showComparison={showComparisonInRightPanel} />
         {teachingSurface}
@@ -395,12 +395,12 @@ function RightPanelExplanation({ tutor, showComparison }: { tutor: TutorContent;
 
   return (
     <div className="rr-right-explanation-stack">
-      <section className="rr-right-explanation-block rr-explanation-card rr-card-paper">
+      <section className="rr-right-explanation-block rr-explanation-card rr-card-paper rr-moleskine-page-section">
         <h2>Why this is correct</h2>
         <p>{tutor.repair.clueMeaning || tutor.repair.why}</p>
       </section>
       {hasAlternative ? (
-        <section className="rr-right-explanation-block rr-explanation-card rr-card-paper">
+        <section className="rr-right-explanation-block rr-explanation-card rr-card-paper rr-moleskine-page-section">
           <h2>Why others are wrong</h2>
           <p>
             <span>{tutor.comparison.competingDiagnosis}:</span>{" "}
@@ -409,7 +409,7 @@ function RightPanelExplanation({ tutor, showComparison }: { tutor: TutorContent;
         </section>
       ) : null}
       {showComparison ? (
-        <section className="rr-right-explanation-block rr-explanation-card rr-card-paper rr-separate-two">
+        <section className="rr-right-explanation-block rr-explanation-card rr-card-paper rr-separate-two rr-moleskine-page-section">
           <h2>Separate These Two</h2>
           <div className="mt-2 overflow-x-auto">
             <table className="rr-table">
@@ -433,7 +433,7 @@ function RightPanelExplanation({ tutor, showComparison }: { tutor: TutorContent;
           </div>
         </section>
       ) : null}
-      <section className="rr-right-explanation-block rr-explanation-card rr-card-paper">
+      <section className="rr-right-explanation-block rr-explanation-card rr-card-paper rr-moleskine-page-section">
         <h2>Reasoning diagnosis</h2>
         <p>
           {tutor.cognitiveError
