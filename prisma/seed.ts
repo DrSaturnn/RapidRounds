@@ -15,7 +15,22 @@ type ClinicalDecisionSeed = {
   managementPearl: string;
   difficulty: number;
   tags: string[];
+  vignetteFindings?: Array<{
+    text: string;
+    role: "context" | "supporting" | "pivot_clue" | "neutral" | "noise";
+    explanation?: string;
+  }>;
 };
+
+const VIGNETTE_FINDING_TAG_PREFIX = "vignette_finding::";
+
+function serializeTags(decision: ClinicalDecisionSeed) {
+  const vignetteFindings = decision.vignetteFindings?.map((finding) =>
+    `${VIGNETTE_FINDING_TAG_PREFIX}${JSON.stringify(finding)}`
+  ) ?? [];
+
+  return JSON.stringify([...decision.tags, ...vignetteFindings]);
+}
 
 const decisions: ClinicalDecisionSeed[] = [
   {
@@ -121,14 +136,25 @@ const decisions: ClinicalDecisionSeed[] = [
     topic: "Placenta previa",
     clinicalPattern: "Third-trimester bleeding",
     decisionType: "Diagnosis",
-    prompt: "32 weeks pregnant with painless bright red vaginal bleeding.",
+    prompt:
+      "A 32-year-old G2P1 woman at 32 weeks' gestation presents to the ED with vaginal bleeding. The bleeding is bright red. She denies abdominal pain or contractions. Vital signs are stable.",
     acceptedAnswers: ["placenta previa", "previa"],
     boardPearl: "Painless third-trimester bleeding is placenta previa until proven otherwise.",
-    pivotClue: "Painless bright red bleeding",
+    pivotClue: "Denies abdominal pain or contractions",
     commonTrap: "placental abruption",
     managementPearl: "Avoid digital cervical exam until previa is excluded.",
     difficulty: 1,
-    tags: ["third trimester bleeding", "painless bleeding", "previa"]
+    tags: ["third trimester bleeding", "painless bleeding", "previa"],
+    vignetteFindings: [
+      { text: "32 weeks' gestation", role: "context" },
+      { text: "bright red bleeding", role: "supporting" },
+      {
+        text: "denies abdominal pain or contractions",
+        role: "pivot_clue",
+        explanation: "Painless bleeding distinguishes placenta previa from placental abruption."
+      },
+      { text: "vital signs are stable", role: "neutral" }
+    ]
   },
   {
     system: "Antepartum Bleeding",
@@ -1248,7 +1274,7 @@ async function main() {
       managementPearl: decision.managementPearl,
       relatedDecisionIds: JSON.stringify([]),
       difficulty: decision.difficulty,
-      tags: JSON.stringify(decision.tags)
+      tags: serializeTags(decision)
     };
 
     if (existingDecision) {

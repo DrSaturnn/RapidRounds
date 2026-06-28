@@ -6,7 +6,7 @@ import { TeachingCard } from "@/components/TeachingCard";
 import { getComparisonFeatureDisplayText } from "@/lib/display-language";
 import { dedupeDisplayStrings } from "@/lib/display-strings";
 import { getLearningTrajectory } from "@/lib/learning-trajectory";
-import type { TutorContent } from "@/types/practice";
+import type { TutorContent, VignetteFindingAnnotation } from "@/types/practice";
 
 const inputGuardProps = {
   autoComplete: "off",
@@ -83,6 +83,21 @@ function getCompactReasoning(tutor: TutorContent) {
   return why;
 }
 
+function getFindingRoleLabel(role: VignetteFindingAnnotation["role"]) {
+  switch (role) {
+    case "context":
+      return "Context";
+    case "supporting":
+      return "Supporting";
+    case "pivot_clue":
+      return "Pivot clue";
+    case "neutral":
+      return "Neutral";
+    case "noise":
+      return "Noise";
+  }
+}
+
 export function TutorMode({
   tutor,
   reinforcementAnswer,
@@ -125,6 +140,7 @@ export function TutorMode({
     tutor.repair.correctAnswer
   ]);
   const compactReasoning = getCompactReasoning(tutor);
+  const hasVignetteFindings = Boolean(tutor.vignetteFindings?.length);
 
   const onSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -140,6 +156,7 @@ export function TutorMode({
         {isUnknown ? (
           <div className="space-y-3 text-sm leading-6">
             <ClinicalReasoningFlow steps={visualFlowSteps} />
+            {hasVignetteFindings ? <VignetteAttentionMap findings={tutor.vignetteFindings ?? []} /> : null}
             <TeachingFact label="What mattered" value={tutor.repair.clueMeaning} />
             {compactReasoning ? <TeachingFact label="What to remember" value={compactReasoning} /> : null}
             {tutor.coaching ? (
@@ -158,6 +175,7 @@ export function TutorMode({
         ) : (
           <>
             <ClinicalReasoningFlow steps={visualFlowSteps} />
+            {hasVignetteFindings ? <VignetteAttentionMap findings={tutor.vignetteFindings ?? []} /> : null}
             <div className="grid gap-3 text-sm leading-6 sm:grid-cols-2">
               <TeachingFact label="What mattered" value={tutor.repair.clueMeaning} />
               {compactReasoning ? <TeachingFact label="What to remember" value={compactReasoning} /> : null}
@@ -337,6 +355,30 @@ export function TutorMode({
       <aside className="rr-post-answer-depth" aria-label="Teach me more">
         {teachingSurface}
       </aside>
+    </section>
+  );
+}
+
+function VignetteAttentionMap({ findings }: { findings: VignetteFindingAnnotation[] }) {
+  return (
+    <section className="rr-attention-map" aria-label="What the vignette was telling you">
+      <p className="rr-attention-map-title">What the vignette was telling you</p>
+      <div className="rr-attention-map-list">
+        {findings.map((finding) => (
+          <div
+            key={`${finding.role}-${finding.text}`}
+            className={`rr-attention-map-item rr-attention-map-${finding.role.replace("_", "-")}`}
+          >
+            <div className="rr-attention-map-row">
+              <p className="rr-attention-map-text">{finding.text}</p>
+              <span className="rr-attention-map-role">{getFindingRoleLabel(finding.role)}</span>
+            </div>
+            {finding.explanation ? (
+              <p className="rr-attention-map-explanation">{finding.explanation}</p>
+            ) : null}
+          </div>
+        ))}
+      </div>
     </section>
   );
 }

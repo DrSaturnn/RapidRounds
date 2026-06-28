@@ -112,6 +112,7 @@ export type TutorContent = {
   repair: DecisionRepair;
   reasoningAnalysis: ReasoningAnalysis;
   cognitiveError?: CognitiveError;
+  vignetteFindings?: VignetteFindingAnnotation[];
   coaching?: {
     message: string;
     supportingPattern: string;
@@ -175,6 +176,19 @@ export type TutorContent = {
     acceptedAnswers: string[];
     boardPearl: string;
   };
+};
+
+export type VignetteFindingRole =
+  | "context"
+  | "supporting"
+  | "pivot_clue"
+  | "neutral"
+  | "noise";
+
+export type VignetteFindingAnnotation = {
+  text: string;
+  role: VignetteFindingRole;
+  explanation?: string;
 };
 
 export type DecisionRepairStyle =

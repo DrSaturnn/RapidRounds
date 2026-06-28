@@ -12,7 +12,14 @@ import { findDecisionBoundaryRepair } from "@/lib/decision-boundary-repair";
 import { dedupeDisplayStrings } from "@/lib/display-strings";
 import { buildTeachingPlan } from "@/lib/educational-assembly";
 import { buildExpertIllnessScript } from "@/lib/expert-illness-script";
-import type { AnswerEvaluation, CognitiveError, DecisionRepair, TutorContent } from "@/types/practice";
+import type {
+  AnswerEvaluation,
+  CognitiveError,
+  DecisionRepair,
+  TutorContent,
+  VignetteFindingAnnotation,
+  VignetteFindingRole
+} from "@/types/practice";
 
 type TutorDecision = {
   specialty: string;
@@ -146,6 +153,9 @@ const typicalPatientBySpecialty: Record<string, string> = {
   Psychiatry: "Patient whose symptoms cluster by duration and impairment"
 };
 
+const VIGNETTE_FINDING_TAG_PREFIX = "vignette_finding::";
+const findingRoles = new Set<VignetteFindingRole>(["context", "supporting", "pivot_clue", "neutral", "noise"]);
+
 function parseJsonArray(value: string) {
   try {
     const parsed = JSON.parse(value) as unknown;
@@ -153,6 +163,41 @@ function parseJsonArray(value: string) {
   } catch {
     return [];
   }
+}
+
+function parseVignetteFindingTags(tags: string[]): VignetteFindingAnnotation[] {
+  const findings: VignetteFindingAnnotation[] = [];
+
+  tags.forEach((tag) => {
+    if (!tag.startsWith(VIGNETTE_FINDING_TAG_PREFIX)) {
+      return;
+    }
+
+    try {
+      const parsed = JSON.parse(tag.slice(VIGNETTE_FINDING_TAG_PREFIX.length)) as Partial<VignetteFindingAnnotation>;
+      const text = parsed.text?.trim();
+      const role = parsed.role;
+
+      if (!text || !role || !findingRoles.has(role)) {
+        return;
+      }
+
+      const explanation = parsed.explanation?.trim();
+      findings.push({
+        text,
+        role,
+        ...(explanation ? { explanation } : {})
+      });
+    } catch {
+      // Ignore malformed authoring metadata rather than showing a weak attention map.
+    }
+  });
+
+  return findings;
+}
+
+function getClinicalTags(tags: string[]) {
+  return tags.filter((tag) => !tag.startsWith(VIGNETTE_FINDING_TAG_PREFIX));
 }
 
 function sentence(value: string) {
@@ -441,6 +486,8 @@ export function buildTutorContent(
   evaluation?: AnswerEvaluation
 ): TutorContent {
   const tags = parseJsonArray(decision.tags);
+  const clinicalTags = getClinicalTags(tags);
+  const vignetteFindings = parseVignetteFindingTags(tags);
   const acceptedAnswers = parseJsonArray(decision.acceptedAnswers);
   const diagnosis = getDiagnosis(decision);
   const pattern = getPattern(decision);
@@ -453,11 +500,11 @@ export function buildTutorContent(
       pivotClue: getPivotClue(decision),
       commonTrap: decision.commonTrap ?? "",
       managementPearl: management,
-      tags: decision.tags
+      tags: JSON.stringify(clinicalTags)
     },
     userAnswer
   );
-  const buzzwords = [...new Set([diagnosis, ...tags])]
+  const buzzwords = [...new Set([diagnosis, ...clinicalTags])]
     .filter(Boolean)
     .slice(0, 5);
   const cognitiveError = classifyCognitiveError(decision, userAnswer, evaluation);
@@ -486,6 +533,7 @@ export function buildTutorContent(
     repair,
     reasoningAnalysis,
     cognitiveError,
+    vignetteFindings: vignetteFindings.length > 0 ? vignetteFindings : undefined,
     teachingPlan,
     correctAnswer: decision.correctAnswer,
     whyIncorrect: {

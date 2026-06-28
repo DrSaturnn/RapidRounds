@@ -512,6 +512,59 @@ body:has(.practice-focus) .app-main {
     color: var(--rr-color-mastery);
   }
 
+  .rr-attention-map {
+    @apply rounded-lg border bg-rr-elevated px-4 py-3;
+    border-color: var(--rr-color-reasoning-border);
+  }
+
+  .rr-attention-map-title {
+    @apply text-xs font-semibold uppercase leading-5 tracking-normal text-rr-reasoning;
+  }
+
+  .rr-attention-map-list {
+    @apply mt-3 grid gap-2;
+  }
+
+  .rr-attention-map-item {
+    @apply rounded-md border bg-rr-surface px-3 py-2;
+    border-color: var(--rr-color-border);
+  }
+
+  .rr-attention-map-row {
+    @apply flex flex-col gap-1 sm:flex-row sm:items-start sm:justify-between;
+  }
+
+  .rr-attention-map-text {
+    @apply text-sm font-medium leading-6 text-rr-foreground;
+  }
+
+  .rr-attention-map-role {
+    @apply inline-flex w-fit shrink-0 rounded-md border px-2 py-0.5 text-xs font-semibold uppercase leading-5 tracking-normal;
+    border-color: var(--rr-color-border);
+    color: var(--rr-color-muted);
+    background: var(--rr-color-surface-elevated);
+  }
+
+  .rr-attention-map-explanation {
+    @apply mt-1 text-xs leading-5 text-rr-muted;
+  }
+
+  .rr-attention-map-pivot-clue {
+    border-color: var(--rr-color-clue-border);
+    background: var(--rr-color-clue-tint);
+  }
+
+  .rr-attention-map-pivot-clue .rr-attention-map-role {
+    border-color: var(--rr-color-clue-border);
+    color: var(--rr-color-clue);
+    background: var(--rr-color-surface-elevated);
+  }
+
+  .rr-attention-map-supporting .rr-attention-map-role {
+    border-color: var(--rr-color-recognition-border);
+    color: var(--rr-color-recognition);
+  }
+
   @media (min-width: 1024px) {
     .rr-post-answer-workspace {
       grid-template-columns: minmax(0, 1.45fr) minmax(22rem, 1fr);
