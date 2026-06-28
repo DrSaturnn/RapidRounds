@@ -254,8 +254,9 @@ describe("design system", () => {
     assert.match(css, /\[data-theme="warm-notebook"\] \.rr-tool-rail/);
     assert.match(css, /\[data-theme="warm-notebook"\] \.rr-button-primary/);
     assert.match(css, /\[data-theme="warm-notebook"\] \.rr-moleskine-shell/);
-    assert.match(css, /\[data-theme="warm-notebook"\] \.rr-moleskine-main-spread::before/);
-    assert.match(css, /\[data-theme="warm-notebook"\] \.rr-moleskine-main-spread::after/);
+    assert.match(css, /\[data-theme="warm-notebook"\] \.rr-moleskine-notebook-spread/);
+    assert.match(css, /\[data-theme="warm-notebook"\] \.rr-moleskine-notebook-spread::before/);
+    assert.match(css, /\[data-theme="warm-notebook"\] \.rr-moleskine-notebook-spread::after/);
     assert.match(css, /\[data-theme="warm-notebook"\] \.rr-question-card::before/);
     assert.match(css, /\[data-theme="warm-notebook"\] \.rr-explanation-notebook::before/);
     assert.match(css, /\[data-theme="warm-notebook"\] \.rr-teaching-card\[open\]::before/);
@@ -271,17 +272,30 @@ describe("design system", () => {
     const tutorMode = readFileSync("components/TutorMode.tsx", "utf8");
     const teachingCard = readFileSync("components/TeachingCard.tsx", "utf8");
 
+    assert.match(practicePanel, /skin === "warm-notebook"/);
+    assert.match(practicePanel, /function MoleskinePracticeLayout/);
+    assert.match(practicePanel, /function MoleskineShell/);
+    assert.match(practicePanel, /function MoleskineSidebar/);
+    assert.match(practicePanel, /function MoleskineNotebookSpread/);
+    assert.match(practicePanel, /function MoleskineLeftPage/);
+    assert.match(practicePanel, /function MoleskineRightPage/);
+    assert.match(practicePanel, /function MoleskineFooterActions/);
     assert.match(practicePanel, /rr-notebook-shell rr-notebook-surface rr-moleskine-shell/);
     assert.match(practicePanel, /rr-tool-rail rr-panel rr-moleskine-sidebar-page/);
-    assert.match(practicePanel, /rr-practice-main rr-moleskine-main-spread/);
-    assert.match(practicePanel, /rr-question-card rr-vignette-card rr-card-paper rr-moleskine-left-page/);
+    assert.match(practicePanel, /rr-moleskine-notebook-spread/);
+    assert.match(practicePanel, /rr-card rr-question-card rr-vignette-card rr-card-paper rr-moleskine-left-page/);
     assert.match(practicePanel, /rr-tool-panel rr-panel rr-moleskine-page-section/);
     assert.match(practicePanel, /rr-bottom-nav rr-panel rr-moleskine-footer-strip/);
 
-    assert.match(tutorMode, /rr-explanation-notebook rr-notebook-surface rr-moleskine-teaching-spread/);
-    assert.match(tutorMode, /rr-explanation-card rr-card-paper rr-explanation-column rr-moleskine-page-section rr-moleskine-left-reasoning/);
-    assert.match(tutorMode, /rr-post-answer-depth rr-moleskine-right-page/);
-    assert.match(tutorMode, /rr-right-explanation-block rr-explanation-card rr-card-paper rr-moleskine-page-section/);
+    assert.match(tutorMode, /presentation\?: "default" \| "moleskine"/);
+    assert.match(tutorMode, /function MoleskineTeachingDocument/);
+    assert.match(tutorMode, /function MoleskineReasoningChain/);
+    assert.match(tutorMode, /function MoleskineClinicalPearl/);
+    assert.match(tutorMode, /function MoleskineTeachMeMore/);
+    assert.match(tutorMode, /rr-moleskine-teaching-document/);
+    assert.match(tutorMode, /rr-moleskine-teach-more/);
+    assert.match(tutorMode, /rr-moleskine-right-page/);
+    assert.match(tutorMode, /rr-moleskine-teaching-section/);
     assert.match(tutorMode, /rr-explanation-card rr-card-paper rr-adaptive-card rr-moleskine-page-section/);
 
     assert.match(teachingCard, /rr-teaching-card rr-explanation-card rr-card-paper rr-moleskine-insert/);

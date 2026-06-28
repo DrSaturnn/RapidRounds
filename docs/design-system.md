@@ -1,6 +1,11 @@
 # RapidRounds Design System
 
-RapidRounds is a clinical recall environment, not a study app. The interface should feel like a calm attending asking one sharp question at a time, with a whiteboard appearing only when the learner needs teaching.
+RapidRounds is an adaptive clinical reasoning engine, not a study app. The
+interface should feel like a calm attending asking one sharp question at a
+time, with teaching appearing only when the learner needs it.
+
+The design system is theme-driven. Themes are first-class presentation
+architecture, not one-off CSS patches.
 
 ## Product Philosophy
 
@@ -18,6 +23,37 @@ RapidRounds optimizes for reviewing 100-200 clinical decisions in a session. Eve
 6. Calm is not empty: use proportion, rhythm, and material restraint.
 7. Tutor Mode is a whiteboard: structured, human, erasable, never textbook-like.
 8. Analytics diagnose the learner: focus on reasoning processes, not trivia misses.
+9. Theme inheritance is mandatory: new surfaces compose primitives and inherit
+   the active theme automatically.
+
+## Theme Inheritance
+
+Every UI surface must be built from reusable presentation primitives. A feature
+should not contain bespoke styling that only works in one theme.
+
+Required workflow:
+
+```text
+New feature
+-> Compose existing primitives
+-> Theme renders automatically
+```
+
+Prohibited workflow:
+
+```text
+New feature
+-> Patch each theme after the fact
+```
+
+Themes override primitive presentation, not individual features. For example:
+
+- Modern Academic: `Panel` renders as a clean academic surface.
+- Moleskine Notebook: `Panel` renders as aged notebook paper.
+- Dark Clinical: `Panel` renders as a dark workstation surface.
+- Editorial Magazine: `Panel` renders as a journal-style block.
+
+Feature code should not know which theme is active.
 
 ## Information Hierarchy
 
@@ -129,7 +165,35 @@ RapidRounds does not use glossy glassmorphism. The material language is paper, w
 
 Rapid Review uses pure white and minimal borders. Tutor Mode uses a slight surface shift and collapsible whiteboard cards. Dashboard and Analytics use structured rows and bands instead of decorative card grids.
 
-## Component Library
+## Presentation Primitives
+
+New feature work should use these primitives before introducing new surface
+styles:
+
+- `Page`: top-level learning or review surface
+- `Card`: distinct cognitive task
+- `Panel`: secondary grouped content
+- `Callout`: high-value clue, pearl, warning, or takeaway
+- `Sidebar`: navigation or contextual tool rail
+- `Drawer`: temporary companion or detail surface
+- `Modal`: blocking confirmation or focused task
+- `Table`: structured data grid
+- `Comparison`: decision-boundary comparison
+- `Annotation`: vignette clue or margin note
+- `Button`: action
+- `Input`: learner response or note capture
+- `Badge`: compact status or metadata
+- `Flow`: recognition path or reasoning sequence
+- `Timeline`: ordered progress or reasoning history
+- `NotebookSection`: written teaching section
+- `MarginNote`: aside, clue, or attending-style comment
+- `Divider`: section transition
+- `Toolbar`: compact group of controls
+
+If a feature needs a new kind of UI surface, add the primitive here and theme it
+before using it in the feature.
+
+## Current Component Library
 
 - `AppShell`: page layout and navigation visibility
 - `TopNav`: visible outside Focus Mode, hidden or collapsed during Practice
@@ -146,6 +210,13 @@ Rapid Review uses pure white and minimal borders. Tutor Mode uses a slight surfa
 - `ReinforcementPrompt`: final Tutor Mode checkpoint
 - `AnalyticsList`: ranked reasoning weaknesses
 - `EmptyState`: quiet, instructional empty state
+
+These components should be implemented as compositions of the presentation
+primitives above. Future Aster Companion, Repair Sessions, Adaptive Review,
+Notes, Curriculum Explorer, Progress Views, Analytics, Case Library, Search,
+Differential Builder, Illness Script Explorer, Visual Clinical Reasoning,
+Decision Boundary Repair, and External Miss Import surfaces must inherit their
+theme presentation through the same primitive system.
 
 ## Navigation
 
@@ -214,10 +285,25 @@ Desktop:
 ## Staged Implementation
 
 1. Design tokens
-2. App Shell and Focus Mode
-3. Practice refinement
-4. Tutor material system
-5. Dashboard hierarchy
-6. Analytics reframing
-7. Motion and accessibility pass
-8. Documentation updates
+2. Presentation primitives
+3. Theme inheritance for every primitive
+4. App Shell and Focus Mode
+5. Practice refinement
+6. Tutor material system
+7. Progress and analytics hierarchy
+8. Motion and accessibility pass
+9. Documentation updates
+
+## Definition of Done
+
+A feature is not complete until it renders correctly in every supported theme
+using shared presentation primitives:
+
+- Modern Academic
+- Moleskine Notebook
+- Dark Clinical
+- Editorial Magazine
+
+Per-theme patching after implementation is prohibited. If a feature does not
+render well across themes, the missing primitive or token must be added to the
+design system first.

@@ -135,9 +135,63 @@ Use large readable vignette text, comfortable body spacing, small annotation lab
 
 Do not cram information.
 
-## Themes
+## Theme Inheritance Architecture
 
-Themes change material, not layout.
+RapidRounds is theme-driven. The theme system is a first-class presentation
+architecture, not a collection of CSS overrides.
+
+Every present and future UI surface MUST derive its appearance from reusable
+theme primitives and tokens. Feature code SHOULD compose primitives; themes
+SHOULD define how those primitives look.
+
+The intended workflow is:
+
+```text
+New feature
+-> Compose existing primitives
+-> Active theme renders automatically
+```
+
+The prohibited workflow is:
+
+```text
+New feature
+-> Looks correct in Modern Academic
+-> Patch Moleskine
+-> Patch Dark Clinical
+-> Patch Editorial
+```
+
+Themes MAY express material and composition differently when the theme identity
+requires it. For example, Modern Academic may render a Panel as a clean academic
+card, while Moleskine may render the same primitive as aged notebook paper.
+Feature code MUST NOT need to know which theme is active.
+
+Every new UI surface MUST be built from reusable presentation primitives, such
+as:
+
+- Page
+- Card
+- Panel
+- Callout
+- Sidebar
+- Drawer
+- Modal
+- Table
+- Comparison
+- Annotation
+- Button
+- Input
+- Badge
+- Flow
+- Timeline
+- NotebookSection
+- MarginNote
+- Divider
+- Toolbar
+
+If a feature introduces a new kind of UI surface, the corresponding primitive
+MUST be added to the design system before the feature uses it.
 
 All themes preserve:
 
@@ -163,13 +217,14 @@ Professional academic feel.
 
 ### Moleskine Notebook
 
-Warm whites, not beige.
-Subtle paper grain.
-Faint ruling.
+An attending physician's aged clinical notebook.
+Integrated notebook spread.
+Paper margin/sidebar.
+Page depth, ruling, fibers, and lifted edges.
 Editorial typography.
 Pencil-like annotations.
-No parchment.
-No fake vintage styling.
+Premium, expressive, and tactile.
+Not parchment, scrapbook, or cartoon.
 
 ### Dark Clinical
 
@@ -241,3 +296,7 @@ The interface teaches exactly what they needed.
 Nothing more.
 
 Nothing less.
+
+A feature is not complete until it renders correctly in every supported theme
+using shared presentation primitives. Theme-specific patches after feature
+implementation are design-system failures, not acceptable follow-up work.

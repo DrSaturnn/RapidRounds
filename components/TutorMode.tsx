@@ -104,7 +104,8 @@ export function TutorMode({
   reinforcementResult,
   setReinforcementAnswer,
   submitReinforcementAnswer,
-  loadQuestion
+  loadQuestion,
+  presentation = "default"
 }: {
   tutor: TutorContent;
   reinforcementAnswer: string;
@@ -112,6 +113,7 @@ export function TutorMode({
   setReinforcementAnswer: (answer: string) => void;
   submitReinforcementAnswer: () => void;
   loadQuestion: (targetConcept?: string) => void;
+  presentation?: "default" | "moleskine";
 }) {
   const isUnknown = tutor.repair.style === "UNKNOWN";
   const repairTitle = "Build the pattern";
@@ -377,6 +379,26 @@ export function TutorMode({
       </div>
   );
 
+  if (presentation === "moleskine") {
+    return (
+      <MoleskineTeachingDocument
+        tutor={tutor}
+        visualFlowSteps={visualFlowSteps}
+        compactReasoning={compactReasoning}
+        hasVignetteFindings={hasVignetteFindings}
+        hasCommonConfusion={hasCommonConfusion}
+        showComparison={showComparisonInRightPanel}
+        teachingSurface={teachingSurface}
+        nextChallengeSurface={learningTrajectory.recommendation ? nextChallengeSurface : null}
+        reinforcementAnswer={reinforcementAnswer}
+        reinforcementResult={reinforcementResult}
+        setReinforcementAnswer={setReinforcementAnswer}
+        submitReinforcementAnswer={submitReinforcementAnswer}
+        loadQuestion={loadQuestion}
+      />
+    );
+  }
+
   return (
     <section className="rr-post-answer-workspace rr-explanation-notebook rr-notebook-surface rr-moleskine-teaching-spread">
       <div className="rr-post-answer-repair">{repairSurface}</div>
@@ -390,8 +412,199 @@ export function TutorMode({
   );
 }
 
-function RightPanelExplanation({ tutor, showComparison }: { tutor: TutorContent; showComparison: boolean }) {
+function MoleskineTeachingDocument({
+  tutor,
+  visualFlowSteps,
+  compactReasoning,
+  hasVignetteFindings,
+  hasCommonConfusion,
+  showComparison,
+  teachingSurface,
+  nextChallengeSurface,
+  reinforcementAnswer,
+  reinforcementResult,
+  setReinforcementAnswer,
+  submitReinforcementAnswer,
+  loadQuestion
+}: {
+  tutor: TutorContent;
+  visualFlowSteps: Array<{ label: string; value: string }>;
+  compactReasoning?: string;
+  hasVignetteFindings: boolean;
+  hasCommonConfusion: boolean;
+  showComparison: boolean;
+  teachingSurface: ReactNode;
+  nextChallengeSurface: ReactNode;
+  reinforcementAnswer: string;
+  reinforcementResult: boolean | null;
+  setReinforcementAnswer: (answer: string) => void;
+  submitReinforcementAnswer: () => void;
+  loadQuestion: (targetConcept?: string) => void;
+}) {
+  const onSubmit = (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+
+    if (tutor.reinforcement && reinforcementAnswer.trim().length > 0 && reinforcementResult === null) {
+      submitReinforcementAnswer();
+    }
+  };
+
+  return (
+    <section className="rr-moleskine-teaching-document" aria-label="Notebook teaching document">
+      <div className="rr-moleskine-left-reasoning">
+        <p className="rr-section-header">Expert reasoning</p>
+        <MoleskineReasoningChain steps={visualFlowSteps} />
+        <RepairSummary tutor={tutor} />
+        {hasVignetteFindings ? <VignetteAttentionMap findings={tutor.vignetteFindings ?? []} /> : null}
+        <div className="rr-moleskine-written-section">
+          <TeachingFact label="What mattered" value={tutor.repair.clueMeaning} />
+          {compactReasoning ? <TeachingFact label="What to remember" value={compactReasoning} /> : null}
+          {hasCommonConfusion ? <TeachingFact label="Common confusion" value={tutor.comparison.competingDiagnosis} /> : null}
+        </div>
+        {tutor.coaching ? (
+          <div className="rr-callout rr-coaching-callout rr-moleskine-margin-note">
+            <p className="rr-meta">Pattern to watch</p>
+            <p>{tutor.coaching.message}</p>
+          </div>
+        ) : null}
+        {tutor.reinforcement ? (
+          <form onSubmit={onSubmit} className="rr-moleskine-reinforcement">
+            <p className="text-sm font-medium leading-6">{tutor.reinforcement.question}</p>
+            <div className="grid gap-3 sm:grid-cols-[1fr_auto]">
+              <input
+                {...inputGuardProps}
+                name={`repair-${tutor.repair.style.toLowerCase()}-response`}
+                value={reinforcementAnswer}
+                onChange={(event) => setReinforcementAnswer(event.target.value)}
+                disabled={reinforcementResult !== null}
+                className="rr-text-input"
+              />
+              {reinforcementResult === null ? (
+                <Button type="submit" disabled={reinforcementAnswer.trim().length === 0}>
+                  Check
+                </Button>
+              ) : (
+                <Button type="button" onClick={() => loadQuestion()}>
+                  Next
+                </Button>
+              )}
+            </div>
+            {reinforcementResult !== null ? (
+              <p className="rr-supporting">
+                {reinforcementResult ? "Correct." : "Not quite."} {tutor.reinforcement.boardPearl}
+              </p>
+            ) : null}
+          </form>
+        ) : null}
+      </div>
+      <section className="rr-moleskine-right-page" aria-label="Understand the pattern" data-rr-teaching-depth>
+        <p className="rr-section-header rr-depth-heading">Understand the pattern</p>
+        <RightPanelExplanation tutor={tutor} showComparison={showComparison} presentation="moleskine" />
+        <MoleskineClinicalPearl tutor={tutor} />
+        <MoleskineTeachMeMore>{teachingSurface}</MoleskineTeachMeMore>
+        {nextChallengeSurface ? <div className="rr-moleskine-next-challenge">{nextChallengeSurface}</div> : null}
+      </section>
+    </section>
+  );
+}
+
+function MoleskineTeachMeMore({ children }: { children: ReactNode }) {
+  return <div className="rr-moleskine-teach-more">{children}</div>;
+}
+
+function MoleskineReasoningChain({ steps }: { steps: Array<{ label: string; value: string }> }) {
+  const visibleSteps = steps.filter((step) => step.value.trim().length > 0);
+
+  return (
+    <div className="rr-moleskine-reasoning-chain" aria-label="Expert reasoning chain">
+      {visibleSteps.map((step, index) => (
+        <div key={`${step.label}-${step.value}-${index}`} className="rr-moleskine-reasoning-step">
+          <span>{step.label}</span>
+          <strong>{step.value}</strong>
+        </div>
+      ))}
+    </div>
+  );
+}
+
+function MoleskineClinicalPearl({ tutor }: { tutor: TutorContent }) {
+  const pearl = tutor.repair.fingerprint?.trim() || tutor.managementPearl?.trim();
+
+  if (!pearl || pearl === tutor.nbmePivot?.trim()) {
+    return null;
+  }
+
+  return (
+    <section className="rr-moleskine-teaching-section rr-moleskine-clinical-pearl">
+      <h2>Clinical pearl</h2>
+      <p>{pearl}</p>
+    </section>
+  );
+}
+
+function RightPanelExplanation({
+  tutor,
+  showComparison,
+  presentation = "default"
+}: {
+  tutor: TutorContent;
+  showComparison: boolean;
+  presentation?: "default" | "moleskine";
+}) {
   const hasAlternative = Boolean(tutor.comparison.competingDiagnosis?.trim());
+
+  if (presentation === "moleskine") {
+    return (
+      <div className="rr-moleskine-teaching-sections">
+        <section className="rr-moleskine-teaching-section">
+          <h2>Why this is correct</h2>
+          <p>{tutor.repair.clueMeaning || tutor.repair.why}</p>
+        </section>
+        {hasAlternative ? (
+          <section className="rr-moleskine-teaching-section">
+            <h2>Why others are wrong</h2>
+            <p>
+              <span>{tutor.comparison.competingDiagnosis}:</span>{" "}
+              {tutor.whyTempting ?? `the pivot clue points to ${tutor.repair.correctAnswer}, not this alternative.`}
+            </p>
+          </section>
+        ) : null}
+        {showComparison ? (
+          <section className="rr-moleskine-teaching-section rr-moleskine-decision-boundary">
+            <h2>Decision boundary</h2>
+            <div className="mt-2 overflow-x-auto">
+              <table className="rr-table">
+                <thead>
+                  <tr>
+                    <th>Feature</th>
+                    <th>{tutor.comparison.correctDiagnosis}</th>
+                    <th>{tutor.comparison.competingDiagnosis}</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {tutor.comparison.rows.map((row) => (
+                    <tr key={row.feature}>
+                      <td className="font-medium">{getComparisonFeatureDisplayText(row.feature)}</td>
+                      <td>{row.correct}</td>
+                      <td>{row.competing}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </section>
+        ) : null}
+        <section className="rr-moleskine-teaching-section">
+          <h2>Reasoning diagnosis</h2>
+          <p>
+            {tutor.cognitiveError
+              ? tutor.cognitiveError.expertCorrection
+              : `You matched the key clue to ${tutor.repair.correctAnswer}. Keep anchoring the decision to the pivot clue.`}
+          </p>
+        </section>
+      </div>
+    );
+  }
 
   return (
     <div className="rr-right-explanation-stack">

@@ -1,6 +1,6 @@
 "use client";
 
-import { CSSProperties, FormEvent, KeyboardEvent, ReactNode, forwardRef, useEffect, useMemo, useRef, useState } from "react";
+import { CSSProperties, FormEvent, KeyboardEvent, ReactNode, RefObject, forwardRef, useEffect, useMemo, useRef, useState } from "react";
 import { Button } from "@/components/Button";
 import { EmptyState } from "@/components/EmptyState";
 import { QuestionMeta } from "@/components/QuestionMeta";
@@ -498,6 +498,221 @@ export function PracticePanel() {
     </div>
   );
 
+  if (skin === "warm-notebook") {
+    return (
+      <MoleskinePracticeLayout
+        topbar={
+          <header className="rr-product-nav rr-moleskine-topbar">
+            <div className="rr-product-brand">
+              <span className="rr-brand-mark" aria-hidden="true">✳</span>
+              <span>RapidRounds</span>
+              <span className="rr-brand-subtitle">with Aster</span>
+            </div>
+            <div className="rr-product-context" aria-label="Current training context">
+              <div className="rr-subject-anchor" ref={subjectSelectorRef}>
+                <button
+                  type="button"
+                  className="rr-subject-pill"
+                  aria-label="Choose shelf"
+                  aria-expanded={isSubjectSelectorOpen}
+                  onClick={toggleSubjectSelector}
+                >
+                  {activeSubject}
+                  <span aria-hidden="true">⌄</span>
+                </button>
+                {isSubjectSelectorOpen ? renderSubjectSelector() : null}
+              </div>
+              <span className="rr-context-divider" aria-hidden="true" />
+              <span className="rr-context-topic">{topicLabel}</span>
+              {variantLabel ? <span className="rr-context-variant">{variantLabel}</span> : null}
+            </div>
+            <div className="rr-product-progress" aria-label={`Question ${displayDecisionCount} of ${displayedTotalDecisionCount}`}>
+              <span className="rr-progress-count">Q {displayDecisionCount} / {displayedTotalDecisionCount}</span>
+              <span className="rr-progress-dots" aria-hidden="true">
+                {progressDots.map((isActive, index) => (
+                  <span key={index} className={isActive ? "rr-progress-dot-active" : ""} />
+                ))}
+              </span>
+            </div>
+            <div className="rr-product-actions" aria-label="Session tools">
+              <button
+                ref={asterButtonRef}
+                type="button"
+                className="rr-aster-button"
+                aria-label="Ask Aster to explain this decision"
+                aria-expanded={isAsterOpen}
+                aria-controls="aster-companion"
+                onClick={toggleAster}
+              >
+                ✧ Aster
+              </button>
+              <div className="rr-menu-anchor" ref={topSettingsRef}>
+                <button
+                  type="button"
+                  className="rr-menu-button"
+                  aria-label="Open session settings"
+                  aria-expanded={settingsAnchor === "top"}
+                  onClick={() => toggleSettings("top")}
+                >
+                  ☰
+                </button>
+                {settingsAnchor === "top" ? renderThemePopover() : null}
+              </div>
+            </div>
+          </header>
+        }
+        sidebar={
+          <MoleskineSidebar>
+            <button type="button" className="rr-tool-button" onClick={handleContinue}>
+              <span aria-hidden="true">▷</span>
+              Continue
+            </button>
+            {isExplanationState ? (
+              <button type="button" className="rr-tool-button" onClick={showTeaching} disabled={isTeaching}>
+                <span aria-hidden="true">◇</span>
+                Teach Me More
+              </button>
+            ) : null}
+            <button
+              type="button"
+              className={`rr-tool-button ${activeTool === "notes" ? "rr-tool-button-active" : ""}`}
+              onClick={() => {
+                setSettingsAnchor(null);
+                setIsAsterOpen(false);
+                setIsSubjectSelectorOpen(false);
+                setActiveTool(activeTool === "notes" ? null : "notes");
+              }}
+            >
+              <span aria-hidden="true">□</span>
+              Notes
+            </button>
+            <div className="rr-tool-popover-anchor" ref={railSettingsRef}>
+              <button
+                type="button"
+                className={`rr-tool-button w-full ${settingsAnchor === "rail" ? "rr-tool-button-active" : ""}`}
+                aria-expanded={settingsAnchor === "rail"}
+                onClick={() => toggleSettings("rail")}
+              >
+                <span aria-hidden="true">☾</span>
+                Settings
+              </button>
+              {settingsAnchor === "rail" ? renderThemePopover() : null}
+            </div>
+          </MoleskineSidebar>
+        }
+        spread={
+          <MoleskineNotebookSpread>
+            <div className="rr-moleskine-page-goal">
+              <QuestionMeta question={question} />
+              <p className="rr-meta">{learningGoal}</p>
+            </div>
+            <MoleskineLeftPage>
+              <div className="rr-moleskine-question-intro">
+                <span className="rr-badge rr-badge-learning">{isExplanationState ? "Explanation" : "Question"}</span>
+                <span className="rr-meta">Think through the vignette first.</span>
+              </div>
+              <AnnotatedClinicalPrompt prompt={clinicalPrompt} findings={visibleVignetteFindings} />
+              <p className="rr-decision-question">{decisionQuestion}</p>
+              {!isExplanationState ? (
+                <form onSubmit={onSubmit} className="rr-answer-dock rr-moleskine-solve-form">
+                  <label className="sr-only" htmlFor="answer">
+                    Answer
+                  </label>
+                  <div className="grid gap-3 sm:grid-cols-[1fr_auto]">
+                    <input
+                      ref={answerInputRef}
+                      id="answer"
+                      value={answer}
+                      onChange={(event) => setAnswer(event.target.value)}
+                      onKeyDown={onAnswerKeyDown}
+                      disabled={Boolean(result) || mode === "tutor"}
+                      placeholder="Type your answer"
+                      name={`rr-answer-${question.id.slice(-6)}`}
+                      autoComplete="off"
+                      autoCorrect="off"
+                      autoCapitalize="off"
+                      spellCheck={false}
+                      className="rr-input"
+                      autoFocus
+                    />
+                    {!result ? (
+                      <Button type="submit" disabled={isSubmitting || mode === "tutor"}>
+                        {isSubmitting ? "Checking" : "Submit"}
+                      </Button>
+                    ) : null}
+                  </div>
+                  <p className="text-xs text-rr-muted" aria-live="polite">
+                    {keyboardHint}
+                  </p>
+                  {error ? <p className="text-sm text-rr-muted">{error}</p> : null}
+                </form>
+              ) : null}
+            </MoleskineLeftPage>
+            {isExplanationState && tutor ? (
+              <TutorMode
+                tutor={tutor}
+                reinforcementAnswer={reinforcementAnswer}
+                reinforcementResult={reinforcementResult}
+                setReinforcementAnswer={setReinforcementAnswer}
+                submitReinforcementAnswer={submitReinforcementAnswer}
+                loadQuestion={(targetConcept?: string) => void loadQuestion(targetConcept)}
+                presentation="moleskine"
+              />
+            ) : (
+              <MoleskineRightPage>
+                <p>Answer first. The reasoning will unfold here.</p>
+              </MoleskineRightPage>
+            )}
+          </MoleskineNotebookSpread>
+        }
+        notes={
+          activeTool === "notes" ? (
+            <section className="rr-tool-panel rr-panel rr-moleskine-page-section">
+              <p className="rr-section-header">Notes for this case</p>
+              <textarea
+                className="rr-notes-input"
+                value={notes}
+                onChange={(event) => setNotes(event.target.value)}
+                placeholder="Capture the clue or heuristic you want to remember."
+              />
+              <p className="rr-meta">Saved on this device for the current case.</p>
+            </section>
+          ) : null
+        }
+        footer={
+          isExplanationState ? (
+            <MoleskineFooterActions>
+              <button type="button" className="rr-bottom-action" onClick={() => setActiveTool("notes")}>
+                □ Add to Notes
+              </button>
+              <Button type="button" onClick={() => void loadQuestion()}>
+                Next Case →
+              </Button>
+            </MoleskineFooterActions>
+          ) : null
+        }
+        overlays={
+          <>
+            {isAsterOpen ? (
+              <AsterCompanion
+                ref={asterPanelRef}
+                currentCaseTitle={topicLabel}
+                onClose={() => setIsAsterOpen(false)}
+              />
+            ) : null}
+            {showEndSessionConfirm ? (
+              <EndSessionDialog
+                stayButtonRef={stayButtonRef}
+                onStay={() => setShowEndSessionConfirm(false)}
+                onEnd={() => { window.location.href = "/"; }}
+              />
+            ) : null}
+          </>
+        }
+      />
+    );
+  }
+
   return (
     <div className="practice-focus rr-practice-shell rr-moleskine-root min-h-screen" data-theme={skin}>
       <header className="rr-product-nav rr-moleskine-topbar">
@@ -747,6 +962,122 @@ export function PracticePanel() {
           </div>
         </div>
       ) : null}
+    </div>
+  );
+}
+
+function MoleskinePracticeLayout({
+  topbar,
+  sidebar,
+  spread,
+  notes,
+  footer,
+  overlays
+}: {
+  topbar: ReactNode;
+  sidebar: ReactNode;
+  spread: ReactNode;
+  notes: ReactNode;
+  footer: ReactNode;
+  overlays: ReactNode;
+}) {
+  return (
+    <div className="practice-focus rr-practice-shell rr-moleskine-root min-h-screen" data-theme="warm-notebook">
+      {topbar}
+      <MoleskineShell>
+        {sidebar}
+        <main className="rr-practice-main rr-practice-main-wide rr-moleskine-main-spread">
+          {spread}
+          {notes}
+          {footer}
+        </main>
+      </MoleskineShell>
+      {overlays}
+    </div>
+  );
+}
+
+function MoleskineShell({ children }: { children: ReactNode }) {
+  return <div className="rr-notebook-shell rr-notebook-surface rr-moleskine-shell">{children}</div>;
+}
+
+function MoleskineSidebar({ children }: { children: ReactNode }) {
+  return (
+    <aside className="rr-tool-rail rr-panel rr-moleskine-sidebar-page" aria-label="Practice tools">
+      {children}
+    </aside>
+  );
+}
+
+function MoleskineNotebookSpread({ children }: { children: ReactNode }) {
+  return <div className="rr-moleskine-notebook-spread">{children}</div>;
+}
+
+function MoleskineLeftPage({ children }: { children: ReactNode }) {
+  return (
+    <section className="rr-card rr-question-card rr-vignette-card rr-card-paper rr-moleskine-left-page">
+      {children}
+    </section>
+  );
+}
+
+function MoleskineRightPage({ children }: { children: ReactNode }) {
+  return (
+    <section className="rr-moleskine-right-page rr-moleskine-quiet-page" aria-label="Notebook teaching placeholder">
+      {children}
+    </section>
+  );
+}
+
+function MoleskineFooterActions({ children }: { children: ReactNode }) {
+  return (
+    <nav className="rr-bottom-nav rr-panel rr-moleskine-footer-strip" aria-label="Practice navigation">
+      {children}
+    </nav>
+  );
+}
+
+function EndSessionDialog({
+  stayButtonRef,
+  onStay,
+  onEnd
+}: {
+  stayButtonRef: RefObject<HTMLButtonElement | null>;
+  onStay: () => void;
+  onEnd: () => void;
+}) {
+  return (
+    <div
+      className="rr-overlay fixed inset-0 z-50 flex items-center justify-center px-5 motion-safe:animate-[fadeIn_180ms_var(--rr-ease-standard)]"
+      role="presentation"
+    >
+      <div
+        aria-labelledby="end-session-title"
+        aria-describedby="end-session-body"
+        aria-modal="true"
+        className="rr-card w-full max-w-sm p-5"
+        role="dialog"
+      >
+        <h2 id="end-session-title" className="text-lg font-semibold">
+          End this session?
+        </h2>
+        <p id="end-session-body" className="mt-2 text-sm leading-6 text-rr-muted">
+          Your progress has been saved.
+        </p>
+        <div className="mt-5 flex justify-end gap-3">
+          <Button
+            ref={stayButtonRef}
+            type="button"
+            variant="secondary"
+            onClick={onStay}
+          >
+            Stay
+          </Button>
+          <Button type="button" onClick={onEnd}>
+            End session
+          </Button>
+        </div>
+      </div>
     </div>
   );
 }

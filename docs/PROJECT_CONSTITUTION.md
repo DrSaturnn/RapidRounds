@@ -81,6 +81,9 @@ amended.
    momentum.
 10. Runtime behavior MUST NOT depend on proprietary question wording or copied
     explanations.
+11. UI surfaces MUST be composed from reusable themed presentation primitives.
+    Feature-specific theme patches are prohibited unless they first establish a
+    reusable primitive.
 
 ## 5. Learner Model Principles
 
@@ -202,6 +205,14 @@ graph, evaluation layer, or tutor content system can express the same concept.
 Explicit mappings are preferred over broad AI inference when the content is
 high-stakes, testable, and commonly encountered.
 
+Presentation work MUST extend the shared theme system rather than patching
+individual features. New UI surfaces SHOULD be composed from primitives such as
+Page, Card, Panel, Callout, Sidebar, Drawer, Modal, Table, Comparison,
+Annotation, Button, Input, Badge, Flow, Timeline, NotebookSection, MarginNote,
+Divider, and Toolbar. If a future feature needs a visual structure that is not
+covered by an existing primitive, that primitive MUST be added to the design
+system before the feature depends on it.
+
 ## 11. Non-Negotiable Constraints
 
 RapidRounds MUST NOT:
@@ -216,6 +227,7 @@ RapidRounds MUST NOT:
 - change database schema without explicit justification
 - copy proprietary question stems, explanations, or answer-key language
 - let adaptive recommendations block fast practice flow
+- ship feature-specific UI styling that requires later per-theme patching
 
 RapidRounds MUST:
 
@@ -225,6 +237,8 @@ RapidRounds MUST:
 - keep Continue Learning connected to curriculum relationships
 - preserve existing API contracts unless an RFC explicitly changes them
 - protect production reliability before adding educational surface area
+- ensure new UI surfaces inherit Modern Academic, Moleskine Notebook, Dark
+  Clinical, and Editorial Magazine through shared presentation primitives
 
 ## 12. Relationship Between Constitution and RFCs
 

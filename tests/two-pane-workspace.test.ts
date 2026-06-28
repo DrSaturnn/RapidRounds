@@ -8,7 +8,9 @@ describe("continuous educational workspace", () => {
 
     assert.match(practicePanel, /rr-question-card/);
     assert.match(practicePanel, /rr-practice-main-wide/);
-    assert.ok(practicePanel.indexOf("rr-question-card") < practicePanel.indexOf("<TutorMode"));
+
+    assert.ok(practicePanel.indexOf("<MoleskineLeftPage") < practicePanel.indexOf("<TutorMode"));
+    assert.ok(practicePanel.indexOf("rr-question-card-compact") < practicePanel.lastIndexOf("<TutorMode"));
   });
 
   it("lays out repair, pattern teaching, and next challenge as one continuous workspace", () => {
