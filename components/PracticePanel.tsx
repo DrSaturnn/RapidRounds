@@ -601,7 +601,7 @@ export function PracticePanel() {
           </MoleskineSidebar>
         }
         spread={
-          <MoleskineNotebookSpread>
+          <MoleskineNotebookSpread isExplanationState={isExplanationState}>
             <div className="rr-moleskine-page-goal">
               <QuestionMeta question={question} />
               <p className="rr-meta">{learningGoal}</p>
@@ -668,9 +668,6 @@ export function PracticePanel() {
                   {error ? <p className="text-sm text-rr-muted">{error}</p> : null}
                 </form>
                 </MoleskineLeftPage>
-                <MoleskineRightPage>
-                  <p>Answer first. The reasoning will unfold here.</p>
-                </MoleskineRightPage>
               </>
             )}
           </MoleskineNotebookSpread>
@@ -1019,21 +1016,23 @@ function MoleskineSidebar({ children }: { children: ReactNode }) {
   );
 }
 
-function MoleskineNotebookSpread({ children }: { children: ReactNode }) {
-  return <div className="rr-moleskine-notebook-spread">{children}</div>;
+function MoleskineNotebookSpread({
+  children,
+  isExplanationState
+}: {
+  children: ReactNode;
+  isExplanationState: boolean;
+}) {
+  return (
+    <div className={`rr-moleskine-notebook-spread ${isExplanationState ? "rr-moleskine-learn-spread" : "rr-moleskine-solve-spread"}`}>
+      {children}
+    </div>
+  );
 }
 
 function MoleskineLeftPage({ children }: { children: ReactNode }) {
   return (
     <section className="rr-card rr-question-card rr-vignette-card rr-card-paper rr-moleskine-left-page">
-      {children}
-    </section>
-  );
-}
-
-function MoleskineRightPage({ children }: { children: ReactNode }) {
-  return (
-    <section className="rr-moleskine-right-page rr-moleskine-quiet-page" aria-label="Notebook teaching placeholder">
       {children}
     </section>
   );

@@ -2839,6 +2839,72 @@ body:has(.practice-focus) .app-main {
     color: rgb(70 47 28 / 0.92);
   }
 
+  [data-theme="warm-notebook"] .rr-moleskine-solve-spread {
+    grid-template-columns: minmax(0, min(54rem, 100%));
+    align-content: start;
+    justify-content: start;
+    min-height: calc(100vh - 7.5rem);
+    padding: clamp(1.4rem, 4vw, 3.25rem);
+  }
+
+  [data-theme="warm-notebook"] .rr-moleskine-solve-spread::before,
+  [data-theme="warm-notebook"] .rr-moleskine-solve-spread::after {
+    display: none;
+  }
+
+  [data-theme="warm-notebook"] .rr-moleskine-solve-spread .rr-moleskine-page-goal {
+    width: min(54rem, 100%);
+    padding: 0;
+  }
+
+  [data-theme="warm-notebook"] .rr-moleskine-solve-spread .rr-moleskine-left-page {
+    width: min(54rem, 100%);
+    min-height: auto;
+    padding: clamp(1.65rem, 3vw, 2.35rem);
+  }
+
+  [data-theme="warm-notebook"] .rr-moleskine-solve-spread .rr-moleskine-left-page::before {
+    top: -0.68rem;
+    right: -0.68rem;
+    width: 4.2rem;
+    height: 4.2rem;
+    opacity: 0.64;
+  }
+
+  [data-theme="warm-notebook"] .rr-moleskine-solve-spread .rr-moleskine-left-page::after {
+    bottom: -0.68rem;
+    opacity: 0.58;
+  }
+
+  [data-theme="warm-notebook"] .rr-moleskine-solve-spread .rr-question-stem {
+    max-width: 38rem;
+  }
+
+  [data-theme="warm-notebook"] .rr-moleskine-solve-spread .rr-answer-dock {
+    max-width: 42rem;
+  }
+
+  [data-theme="warm-notebook"] .rr-moleskine-solve-spread .rr-moleskine-solve-form {
+    margin-top: 1.25rem;
+  }
+
+  @media (min-width: 1024px) {
+    [data-theme="warm-notebook"] .rr-moleskine-solve-spread {
+      grid-template-columns: minmax(0, min(54rem, 62vw));
+      padding: clamp(2rem, 4vw, 4.25rem) clamp(2rem, 5vw, 5rem);
+    }
+
+    [data-theme="warm-notebook"] .rr-moleskine-solve-spread .rr-moleskine-page-goal {
+      grid-column: 1;
+      grid-row: 1;
+    }
+
+    [data-theme="warm-notebook"] .rr-moleskine-solve-spread .rr-moleskine-left-page {
+      grid-column: 1;
+      grid-row: 2;
+    }
+  }
+
   @media (prefers-reduced-motion: reduce) {
     .rr-post-answer-depth,
     .rr-separate-two,

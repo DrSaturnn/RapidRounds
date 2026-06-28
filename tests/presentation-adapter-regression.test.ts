@@ -129,7 +129,8 @@ describe("presentation adapter regression safety", () => {
     assert.match(practicePanel, /if \(skin === "warm-notebook"\)/);
     assert.match(practicePanel, /isExplanationState && tutor \?\s*\(\s*<TutorMode[\s\S]*\) : \(\s*<>\s*<MoleskineLeftPage>/);
     assert.match(practicePanel, /<form onSubmit=\{onSubmit\} className="rr-answer-dock rr-moleskine-solve-form">/);
-    assert.match(practicePanel, /<MoleskineRightPage>\s*<p>Answer first\. The reasoning will unfold here\.<\/p>\s*<\/MoleskineRightPage>/);
+    assert.doesNotMatch(practicePanel, /Answer first\. The reasoning will unfold here\./);
+    assert.match(practicePanel, /rr-moleskine-solve-spread/);
     assert.match(practicePanel, /moleskineLeftPageContent=\{[\s\S]*<span className="rr-badge rr-badge-learning">Explanation<\/span>[\s\S]*\}/);
   });
 

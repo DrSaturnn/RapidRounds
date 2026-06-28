@@ -285,14 +285,17 @@ describe("design system", () => {
     assert.match(practicePanel, /function MoleskineSidebar/);
     assert.match(practicePanel, /function MoleskineNotebookSpread/);
     assert.match(practicePanel, /function MoleskineLeftPage/);
-    assert.match(practicePanel, /function MoleskineRightPage/);
     assert.match(practicePanel, /function MoleskineFooterActions/);
+    assert.doesNotMatch(practicePanel, /function MoleskineRightPage/);
+    assert.match(practicePanel, /isExplanationState \? "rr-moleskine-learn-spread" : "rr-moleskine-solve-spread"/);
     assert.match(practicePanel, /rr-notebook-shell rr-notebook-surface rr-moleskine-shell/);
     assert.match(practicePanel, /rr-tool-rail rr-panel rr-moleskine-sidebar-page/);
     assert.match(practicePanel, /rr-moleskine-notebook-spread/);
     assert.match(practicePanel, /rr-card rr-question-card rr-vignette-card rr-card-paper rr-moleskine-left-page/);
     assert.match(practicePanel, /rr-tool-panel rr-panel rr-moleskine-page-section/);
     assert.match(practicePanel, /rr-bottom-nav rr-panel rr-moleskine-footer-strip/);
+    assert.match(css, /\[data-theme="warm-notebook"\] \.rr-moleskine-solve-spread/);
+    assert.match(css, /\[data-theme="warm-notebook"\] \.rr-moleskine-solve-spread::before,[\s\S]*display:\s*none/);
 
     assert.match(tutorMode, /presentation\?: "default" \| "moleskine"/);
     assert.match(tutorMode, /moleskineLeftPageContent\?: ReactNode/);
