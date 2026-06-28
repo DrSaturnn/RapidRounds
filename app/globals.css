@@ -37,6 +37,7 @@
   --rr-radius-lg: 1.125rem;
   --rr-radius-xl: 1.35rem;
   --rr-paper-texture: none;
+  --rr-paper-texture-opacity: 0;
   --rr-rule-opacity: 0;
   --rr-gradient-bg:
     radial-gradient(circle at top left, rgb(99 102 241 / 0.06), transparent 32rem),
@@ -208,40 +209,42 @@
   --rr-font-sans: Inter, Geist, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
   --font-sans: var(--rr-font-sans);
   --rr-bg: #fcfbf8;
-  --rr-bg-subtle: #f7f4ee;
-  --rr-surface: #fffefa;
+  --rr-bg-subtle: #faf8f4;
+  --rr-surface: #fffdf8;
   --rr-surface-elevated: #ffffff;
   --rr-surface-muted: #faf8f4;
-  --rr-border: rgb(120 80 40 / 0.16);
-  --rr-border-strong: rgb(78 56 40 / 0.34);
-  --rr-text: #2a2520;
-  --rr-text-muted: #746b61;
-  --rr-text-soft: #9b9186;
-  --rr-accent: #7f4b2c;
-  --rr-accent-soft: rgb(127 75 44 / 0.09);
-  --rr-accent-strong: #5f3821;
+  --rr-border: rgb(120 80 40 / 0.14);
+  --rr-border-strong: rgb(78 56 40 / 0.28);
+  --rr-text: #2f2a24;
+  --rr-text-muted: #6e6256;
+  --rr-text-soft: #9a8f84;
+  --rr-accent: #8a5a32;
+  --rr-accent-soft: rgb(138 90 50 / 0.1);
+  --rr-accent-strong: #6d4527;
   --rr-success: #446a46;
-  --rr-success-soft: rgb(68 106 70 / 0.1);
-  --rr-warning: #95602d;
-  --rr-warning-soft: rgb(149 96 45 / 0.12);
+  --rr-success-soft: rgb(68 106 70 / 0.09);
+  --rr-warning: #8a5a32;
+  --rr-warning-soft: rgb(138 90 50 / 0.1);
   --rr-danger: #9f3f34;
-  --rr-danger-soft: rgb(159 63 52 / 0.1);
-  --rr-shadow-sm: 0 1px 2px rgb(80 50 20 / 0.035), inset 0 1px 0 rgb(255 255 255 / 0.82);
-  --rr-shadow-md: 0 10px 30px rgb(80 50 20 / 0.08), inset 0 1px 0 rgb(255 255 255 / 0.75);
-  --rr-shadow-lg: 0 24px 78px rgb(74 52 30 / 0.09), 0 2px 10px rgb(74 52 30 / 0.035), inset 0 1px 0 rgb(255 255 255 / 0.78);
+  --rr-danger-soft: rgb(159 63 52 / 0.08);
+  --rr-shadow-sm: 0 2px 8px rgb(80 50 20 / 0.035), inset 0 1px 0 rgb(255 255 255 / 0.86);
+  --rr-shadow-md: 0 14px 40px rgb(80 50 20 / 0.08), inset 0 1px 0 rgb(255 255 255 / 0.85);
+  --rr-shadow-lg: 0 24px 70px rgb(80 50 20 / 0.09), 0 2px 14px rgb(80 50 20 / 0.035), inset 0 1px 0 rgb(255 255 255 / 0.86);
   --rr-radius-sm: 0.45rem;
   --rr-radius-md: 0.8rem;
   --rr-radius-lg: 1rem;
   --rr-radius-xl: 1.1rem;
   --rr-paper-texture:
-    radial-gradient(circle at 20% 10%, rgb(90 68 45 / 0.03) 0 1px, transparent 1px),
-    radial-gradient(circle at 80% 50%, rgb(90 68 45 / 0.025) 0 1px, transparent 1px);
-  --rr-rule-opacity: 0.16;
+    radial-gradient(circle at 18% 22%, rgb(90 68 45 / 0.55) 0 0.45px, transparent 0.7px),
+    radial-gradient(circle at 76% 34%, rgb(90 68 45 / 0.42) 0 0.42px, transparent 0.72px),
+    radial-gradient(circle at 42% 78%, rgb(90 68 45 / 0.34) 0 0.38px, transparent 0.7px);
+  --rr-paper-texture-opacity: 0.035;
+  --rr-rule-opacity: 0.045;
   --rr-gradient-bg:
     repeating-linear-gradient(to bottom, transparent 0, transparent 31px, rgb(120 80 40 / var(--rr-rule-opacity)) 32px),
-    radial-gradient(circle at top left, rgb(120 70 30 / 0.045), transparent 34rem),
-    linear-gradient(180deg, #fcfbf8, #f7f4ee);
-  --rr-card-edge: inset 0 1px 0 rgb(255 255 255 / 0.78), inset 0 -1px 0 rgb(120 80 40 / 0.035);
+    radial-gradient(circle at top left, rgb(138 90 50 / 0.035), transparent 34rem),
+    linear-gradient(180deg, #fcfbf8, #faf8f4);
+  --rr-card-edge: inset 0 1px 0 rgb(255 255 255 / 0.88), inset 0 -1px 0 rgb(120 80 40 / 0.03);
   --rr-color-text-primary: var(--rr-text);
   --rr-color-text-muted: var(--rr-text-muted);
   --rr-color-background: var(--rr-bg);
@@ -614,10 +617,12 @@ body:has(.practice-focus) .app-main {
   }
 
   [data-theme="warm-notebook"] .rr-vignette-highlight {
-    border-radius: 0.28rem;
+    border-radius: 0.22rem;
+    background: rgb(68 106 70 / 0.085);
+    color: var(--rr-text);
     box-shadow:
-      0 1px 0 rgb(255 255 255 / 0.7) inset,
-      0 -0.35em 0 color-mix(in srgb, currentColor 10%, transparent) inset;
+      0 1px 0 rgb(255 255 255 / 0.58) inset,
+      0 -0.38em 0 rgb(68 106 70 / 0.08) inset;
   }
 
   [data-theme="warm-notebook"] .rr-vignette-label {
@@ -626,6 +631,51 @@ body:has(.practice-focus) .app-main {
     font-weight: 500;
     letter-spacing: 0;
     opacity: 0.78;
+    color: rgb(74 67 59 / 0.86);
+  }
+
+  [data-theme="warm-notebook"] .rr-vignette-label span {
+    color: rgb(138 90 50 / 0.62);
+    font-family: var(--rr-font-sans);
+    font-style: normal;
+    font-weight: 400;
+  }
+
+  [data-theme="warm-notebook"] .rr-vignette-annotation-pivot-clue .rr-vignette-highlight {
+    background: rgb(68 106 70 / 0.12);
+    box-shadow:
+      0 1px 0 rgb(255 255 255 / 0.62) inset,
+      0 -0.38em 0 rgb(68 106 70 / 0.11) inset;
+  }
+
+  [data-theme="warm-notebook"] .rr-vignette-annotation-pivot-clue .rr-vignette-label {
+    color: #446a46;
+  }
+
+  [data-theme="warm-notebook"] .rr-vignette-annotation-supporting .rr-vignette-highlight {
+    background: rgb(138 90 50 / 0.065);
+    box-shadow:
+      0 1px 0 rgb(255 255 255 / 0.58) inset,
+      0 -0.34em 0 rgb(138 90 50 / 0.065) inset;
+  }
+
+  [data-theme="warm-notebook"] .rr-vignette-annotation-supporting .rr-vignette-label {
+    color: #6e6256;
+  }
+
+  [data-theme="warm-notebook"] .rr-vignette-annotation-noise .rr-vignette-highlight {
+    background: rgb(159 63 52 / 0.06);
+    box-shadow:
+      0 1px 0 rgb(255 255 255 / 0.58) inset,
+      0 -0.34em 0 rgb(159 63 52 / 0.06) inset;
+  }
+
+  [data-theme="warm-notebook"] .rr-vignette-annotation-context .rr-vignette-highlight,
+  [data-theme="warm-notebook"] .rr-vignette-annotation-neutral .rr-vignette-highlight {
+    background: rgb(47 42 36 / 0.035);
+    box-shadow:
+      0 1px 0 rgb(255 255 255 / 0.52) inset,
+      0 -0.34em 0 rgb(47 42 36 / 0.035) inset;
   }
 
   [data-theme="dark-clinical"] .rr-vignette-highlight {
@@ -777,6 +827,87 @@ body:has(.practice-focus) .app-main {
     box-shadow: var(--rr-shadow-lg), var(--rr-card-edge);
   }
 
+  [data-theme="warm-notebook"] .rr-card-paper,
+  [data-theme="warm-notebook"] .rr-vignette-card,
+  [data-theme="warm-notebook"] .rr-notebook-surface,
+  [data-theme="warm-notebook"] .rr-explanation-card,
+  [data-theme="warm-notebook"] .rr-question-card,
+  [data-theme="warm-notebook"] .rr-explanation-notebook {
+    position: relative;
+    border: 1px solid rgb(120 80 40 / 0.14);
+    border-radius: 1rem;
+    background:
+      linear-gradient(180deg, rgb(255 255 255 / 0.94), rgb(255 253 248 / 0.98)),
+      var(--rr-paper-texture),
+      #fffdf8;
+    box-shadow:
+      0 14px 40px rgb(80 50 20 / 0.08),
+      0 2px 12px rgb(80 50 20 / 0.03),
+      inset 0 1px 0 rgb(255 255 255 / 0.85);
+  }
+
+  [data-theme="warm-notebook"] .rr-question-card::before,
+  [data-theme="warm-notebook"] .rr-explanation-notebook::before {
+    content: "";
+    position: absolute;
+    inset: 0.45rem 0.55rem auto auto;
+    width: 3.8rem;
+    height: 3.8rem;
+    z-index: 0;
+    pointer-events: none;
+    border-radius: 0 0.7rem 0 1.6rem;
+    background:
+      linear-gradient(135deg, rgb(255 255 255 / 0.84), rgb(250 248 244 / 0.24) 58%, transparent 60%);
+    box-shadow:
+      -0.4rem 0.55rem 0.85rem rgb(80 50 20 / 0.045),
+      inset 1px -1px 0 rgb(120 80 40 / 0.08);
+    opacity: 0.72;
+  }
+
+  [data-theme="warm-notebook"] .rr-question-card::after,
+  [data-theme="warm-notebook"] .rr-explanation-notebook::after {
+    content: "";
+    position: absolute;
+    left: 1.25rem;
+    right: 1.25rem;
+    bottom: -0.18rem;
+    height: 0.45rem;
+    z-index: -1;
+    pointer-events: none;
+    border-radius: 999px;
+    background: rgb(80 50 20 / 0.06);
+    filter: blur(0.28rem);
+  }
+
+  [data-theme="warm-notebook"] .rr-question-card > *,
+  [data-theme="warm-notebook"] .rr-explanation-notebook > * {
+    position: relative;
+    z-index: 1;
+  }
+
+  [data-theme="warm-notebook"] .rr-question-card .rr-question-stem,
+  [data-theme="warm-notebook"] .rr-explanation-notebook h2,
+  [data-theme="warm-notebook"] .rr-teaching-block-title {
+    font-family: var(--rr-font-serif);
+  }
+
+  [data-theme="warm-notebook"] .rr-section-header,
+  [data-theme="warm-notebook"] .rr-meta,
+  [data-theme="warm-notebook"] .rr-clinical-flow-label,
+  [data-theme="warm-notebook"] .rr-attention-map-role {
+    font-style: italic;
+    letter-spacing: 0;
+    color: rgb(110 98 86 / 0.86);
+  }
+
+  [data-theme="warm-notebook"] .rr-input,
+  [data-theme="warm-notebook"] .rr-text-input,
+  [data-theme="warm-notebook"] .rr-notes-input {
+    background: rgb(255 253 248 / 0.9);
+    border-color: rgb(120 80 40 / 0.16);
+    box-shadow: inset 0 1px 0 rgb(255 255 255 / 0.72);
+  }
+
   .rr-section-header {
     @apply flex items-center gap-2 text-xs font-semibold uppercase tracking-normal text-rr-muted;
   }
@@ -892,8 +1023,9 @@ body:has(.practice-focus) .app-main {
     inset: 0;
     z-index: -1;
     pointer-events: none;
+    opacity: var(--rr-paper-texture-opacity);
     background-image: var(--rr-paper-texture);
-    background-size: 7px 7px, 11px 11px;
+    background-size: 7px 7px, 11px 11px, 17px 17px;
   }
 
   .rr-product-nav {

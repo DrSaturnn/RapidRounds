@@ -229,4 +229,32 @@ describe("design system", () => {
     assert.match(css, /\.rr-subject-grid/);
     assert.match(css, /\.rr-subject-option/);
   });
+
+  it("scopes Moleskine paper materiality to the Moleskine theme", () => {
+    const css = readFileSync("app/globals.css", "utf8");
+
+    const modernIndex = css.indexOf('[data-theme="modern-academic"]');
+    const moleskineIndex = css.indexOf('[data-theme="warm-notebook"]');
+    const darkIndex = css.indexOf('[data-theme="dark-clinical"]');
+    const editorialIndex = css.indexOf('[data-theme="editorial"]');
+    const firstComponentIndex = css.indexOf("* {");
+    const modernThemeBlock = css.slice(modernIndex, moleskineIndex);
+    const moleskineThemeBlock = css.slice(moleskineIndex, darkIndex);
+    const darkThemeBlock = css.slice(darkIndex, editorialIndex);
+    const editorialThemeBlock = css.slice(editorialIndex, firstComponentIndex);
+
+    assert.match(moleskineThemeBlock, /--rr-bg:\s*#fcfbf8/i);
+    assert.match(moleskineThemeBlock, /--rr-surface:\s*#fffdf8/i);
+    assert.match(moleskineThemeBlock, /--rr-paper-texture-opacity:\s*0\.035/);
+    assert.match(moleskineThemeBlock, /--rr-rule-opacity:\s*0\.045/);
+    assert.match(moleskineThemeBlock, /repeating-linear-gradient\(to bottom/);
+
+    assert.match(css, /\[data-theme="warm-notebook"\] \.rr-question-card::before/);
+    assert.match(css, /\[data-theme="warm-notebook"\] \.rr-explanation-notebook::before/);
+    assert.match(css, /\[data-theme="warm-notebook"\] \.rr-card-paper/);
+    assert.match(css, /\[data-theme="warm-notebook"\] \.rr-vignette-label/);
+    assert.doesNotMatch(modernThemeBlock, /rr-question-card::before/);
+    assert.doesNotMatch(darkThemeBlock, /rr-question-card::before/);
+    assert.doesNotMatch(editorialThemeBlock, /rr-question-card::before/);
+  });
 });
