@@ -13,7 +13,7 @@ import type { VignetteFindingAnnotation } from "@/types/practice";
 type PracticeTool = "notes" | "settings" | null;
 type PracticeSkin = "modern-academic" | "warm-notebook" | "dark-clinical" | "editorial";
 
-const SKIN_STORAGE_KEY = "rapidrounds.practiceSkin.v1";
+const SKIN_STORAGE_KEY = "rapidrounds.practiceSkin.v2";
 const practiceSkins: Array<{ value: PracticeSkin; label: string; description: string }> = [
   {
     value: "modern-academic",
@@ -375,14 +375,14 @@ export function PracticePanel() {
             <QuestionMeta question={question} />
             <p className="rr-meta">{learningGoal}</p>
           </div>
-          <section className="rr-card rr-question-card space-y-7 px-5 py-6 motion-safe:animate-[fadeIn_180ms_var(--rr-ease-standard)] sm:space-y-8 sm:px-7 sm:py-8">
-            <div className="space-y-5 sm:space-y-6">
+          <section className={`rr-card rr-question-card space-y-5 px-5 py-5 motion-safe:animate-[fadeIn_180ms_var(--rr-ease-standard)] sm:px-7 ${isExplanationState ? "rr-question-card-compact" : "sm:py-7"}`}>
+            <div className="space-y-4">
               <div className="flex flex-wrap items-center gap-2">
                 <span className="rr-badge rr-badge-learning">{isExplanationState ? "Explanation" : "Question"}</span>
                 <span className="rr-meta">Think through the vignette first.</span>
               </div>
               <AnnotatedClinicalPrompt prompt={clinicalPrompt} findings={visibleVignetteFindings} />
-              <p className="text-lg font-medium leading-7 text-rr-foreground sm:text-xl">
+              <p className="rr-decision-question">
                 {decisionQuestion}
               </p>
             </div>
@@ -418,7 +418,7 @@ export function PracticePanel() {
                 ) : null}
               </div>
               <div className="flex min-h-11 flex-wrap items-center gap-3 pt-1">
-                {result?.isCorrect ? (
+                {mode === "rapid" && result?.isCorrect ? (
                   <Button type="button" onClick={() => void loadQuestion()}>
                     Next
                   </Button>

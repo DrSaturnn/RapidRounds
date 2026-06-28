@@ -133,29 +133,29 @@
 }
 
 [data-theme="warm-notebook"] {
-  --font-sans: Georgia, "Times New Roman", serif;
-  --rr-color-text-primary: #2e2118;
-  --rr-color-text-muted: #7c6754;
-  --rr-color-background: #f6efe4;
-  --rr-color-surface: #fbf3e5;
-  --rr-color-surface-elevated: #fff8ea;
-  --rr-color-border: #e4d3b7;
-  --rr-color-border-strong: #5e3218;
-  --rr-color-button-primary: #8a4b1f;
-  --rr-color-sidebar-background: #fbf0dc;
-  --rr-card-shadow: 0 24px 70px rgb(92 57 20 / 0.12), 0 2px 10px rgb(92 57 20 / 0.05);
-  --rr-card-shadow-soft: 0 14px 38px rgb(92 57 20 / 0.08), 0 1px 4px rgb(92 57 20 / 0.04);
-  --rr-radius-card: 0.75rem;
-  --rr-color-accent: #a35a1f;
+  --font-sans: Arial, Helvetica, sans-serif;
+  --rr-color-text-primary: #2a2520;
+  --rr-color-text-muted: #746b61;
+  --rr-color-background: #fcfbf8;
+  --rr-color-surface: #faf8f4;
+  --rr-color-surface-elevated: #ffffff;
+  --rr-color-border: #ebe4d8;
+  --rr-color-border-strong: #4f3828;
+  --rr-color-button-primary: #7f4b2c;
+  --rr-color-sidebar-background: #fffdf8;
+  --rr-card-shadow: 0 24px 78px rgb(74 52 30 / 0.09), 0 2px 10px rgb(74 52 30 / 0.035);
+  --rr-card-shadow-soft: 0 16px 44px rgb(74 52 30 / 0.06), 0 1px 4px rgb(74 52 30 / 0.025);
+  --rr-radius-card: 0.95rem;
+  --rr-color-accent: #7f4b2c;
   --rr-color-recognition: #446a46;
-  --rr-color-reasoning: #8a4b1f;
-  --rr-color-comparison: #7a4d2f;
-  --rr-color-memory: #8a641e;
-  --rr-color-pivot: #b25b1d;
-  --rr-color-clue: #b25b1d;
-  --rr-color-repair: #9a4e23;
+  --rr-color-reasoning: #7f4b2c;
+  --rr-color-comparison: #6a5948;
+  --rr-color-memory: #765b2f;
+  --rr-color-pivot: #95602d;
+  --rr-color-clue: #95602d;
+  --rr-color-repair: #7f4b2c;
   --rr-color-info: #4b6f8c;
-  --rr-color-observatory-atmosphere: #f8edd8;
+  --rr-color-observatory-atmosphere: #f7f4ee;
 }
 
 [data-theme="dark-clinical"] {
@@ -237,10 +237,11 @@
 
 .rr-practice-shell[data-theme="warm-notebook"] {
   background:
-    linear-gradient(to bottom, color-mix(in srgb, var(--rr-color-border) 30%, transparent) 1px, transparent 1px),
-    radial-gradient(circle at top left, color-mix(in srgb, var(--rr-color-aster) 9%, transparent), transparent 28rem),
+    linear-gradient(to bottom, color-mix(in srgb, var(--rr-color-border) 18%, transparent) 1px, transparent 1px),
+    radial-gradient(circle at top left, color-mix(in srgb, var(--rr-color-aster) 5%, transparent), transparent 28rem),
+    radial-gradient(circle at 20% 10%, rgb(90 68 45 / 0.025) 0 1px, transparent 1px),
     var(--rr-color-background);
-  background-size: 100% 2rem, auto, auto;
+  background-size: 100% 2.15rem, auto, 7px 7px, auto;
 }
 
 .rr-practice-shell[data-theme="dark-clinical"] {
@@ -374,11 +375,15 @@ body:has(.practice-focus) .app-main {
   }
 
   .rr-question-stem {
-    @apply text-[1.85rem] font-semibold leading-[1.34] tracking-normal text-rr-foreground sm:text-[2.35rem] sm:leading-[1.32];
+    @apply text-[1.35rem] font-semibold leading-[1.45] tracking-normal text-rr-foreground sm:text-[1.65rem] sm:leading-[1.45];
   }
 
   .rr-question-stem-annotated {
-    @apply leading-[1.6] sm:leading-[1.55];
+    @apply leading-[1.75] sm:leading-[1.68];
+  }
+
+  .rr-decision-question {
+    @apply text-base font-medium leading-7 text-rr-foreground sm:text-lg;
   }
 
   .rr-vignette-annotation {
@@ -618,14 +623,14 @@ body:has(.practice-focus) .app-main {
 
   .rr-practice-shell {
     background:
-      radial-gradient(circle at top left, color-mix(in srgb, var(--rr-color-aster) 8%, transparent), transparent 30rem),
-      linear-gradient(180deg, color-mix(in srgb, var(--rr-color-observatory-atmosphere) 50%, transparent), transparent 18rem),
+      radial-gradient(circle at top left, color-mix(in srgb, var(--rr-color-aster) 4%, transparent), transparent 30rem),
+      linear-gradient(180deg, color-mix(in srgb, var(--rr-color-observatory-atmosphere) 28%, transparent), transparent 16rem),
       var(--rr-color-background);
   }
 
   .rr-product-nav {
-    @apply sticky top-0 z-40 grid min-h-20 grid-cols-1 gap-3 border-b border-rr-border px-4 py-3 backdrop-blur sm:px-6 lg:grid-cols-[auto_minmax(12rem,1fr)_auto_auto] lg:items-center lg:gap-6;
-    background: color-mix(in srgb, var(--rr-color-surface-elevated) 88%, transparent);
+    @apply sticky top-0 z-40 grid min-h-16 grid-cols-1 gap-2 border-b border-rr-border px-4 py-2 backdrop-blur sm:px-6 lg:grid-cols-[auto_minmax(12rem,1fr)_auto_auto] lg:items-center lg:gap-6;
+    background: color-mix(in srgb, var(--rr-color-surface-elevated) 94%, transparent);
   }
 
   .rr-product-brand {
@@ -727,22 +732,22 @@ body:has(.practice-focus) .app-main {
   }
 
   .rr-notebook-shell {
-    @apply mx-auto grid w-full max-w-[95rem] gap-5 px-4 py-5 sm:px-6 lg:grid-cols-[9rem_minmax(0,1fr)] lg:px-8;
+    @apply mx-auto grid w-full max-w-[88rem] gap-4 px-4 py-4 sm:px-6 lg:grid-cols-[8rem_minmax(0,1fr)] lg:px-8;
   }
 
   .rr-tool-rail {
-    @apply order-2 grid gap-2 border border-rr-border p-2 lg:order-1 lg:sticky lg:top-24 lg:self-start;
+    @apply order-2 grid gap-1 border border-rr-border p-1.5 lg:order-1 lg:sticky lg:top-20 lg:self-start;
     background: var(--rr-color-sidebar-background);
-    border-radius: var(--rr-radius-card);
-    box-shadow: var(--rr-card-shadow-soft);
+    border-radius: 0.9rem;
+    box-shadow: none;
   }
 
   .rr-tool-button {
-    @apply flex min-h-16 items-center justify-start gap-3 rounded-xl border border-transparent px-3 text-left text-sm font-semibold text-rr-foreground transition-colors hover:border-rr-border hover:bg-rr-surface disabled:cursor-not-allowed disabled:text-rr-muted lg:min-h-14;
+    @apply flex min-h-12 items-center justify-start gap-2 rounded-lg border border-transparent px-2.5 text-left text-xs font-semibold text-rr-foreground transition-colors hover:border-rr-border hover:bg-rr-surface disabled:cursor-not-allowed disabled:text-rr-muted;
   }
 
   .rr-tool-button span {
-    @apply text-xl leading-none text-rr-accent;
+    @apply text-base leading-none text-rr-accent;
   }
 
   .rr-tool-button-active {
@@ -819,15 +824,31 @@ body:has(.practice-focus) .app-main {
   }
 
   .rr-practice-main {
-    @apply order-1 mx-auto flex w-full max-w-[58rem] flex-1 flex-col lg:order-2;
+    @apply order-1 mx-0 flex w-full max-w-[48rem] flex-1 flex-col lg:order-2;
   }
 
   .rr-practice-main-wide {
-    max-width: 86rem;
+    max-width: 78rem;
   }
 
   .rr-answer-dock {
     @apply rounded-xl bg-rr-elevated;
+  }
+
+  .rr-question-card-compact {
+    @apply space-y-4 px-5 py-4 sm:px-6 sm:py-5;
+  }
+
+  .rr-question-card-compact .rr-question-stem {
+    @apply text-[1.1rem] font-medium leading-8 sm:text-[1.25rem] sm:leading-8;
+  }
+
+  .rr-question-card-compact .rr-decision-question {
+    @apply text-sm leading-6;
+  }
+
+  .rr-question-card-compact .rr-answer-dock {
+    @apply hidden;
   }
 
   .rr-correct-inline {
@@ -864,7 +885,7 @@ body:has(.practice-focus) .app-main {
   }
 
   .rr-explanation-notebook {
-    @apply border border-rr-border bg-rr-elevated p-5 sm:p-6 lg:grid-cols-[minmax(0,1.05fr)_minmax(22rem,0.95fr)] lg:gap-8;
+    @apply border border-rr-border bg-rr-elevated p-4 sm:p-5 lg:grid-cols-[minmax(0,1fr)_minmax(21rem,0.9fr)] lg:gap-5;
     border-radius: var(--rr-radius-card);
     box-shadow: var(--rr-card-shadow);
   }
@@ -888,7 +909,7 @@ body:has(.practice-focus) .app-main {
   }
 
   .rr-repair-summary {
-    @apply grid gap-4 rounded-2xl border border-rr-border bg-rr-surface px-4 py-3 sm:grid-cols-2;
+    @apply grid gap-3 rounded-xl border border-rr-border bg-rr-surface px-3 py-2.5 sm:grid-cols-2;
   }
 
   .rr-repair-summary-value {
@@ -904,7 +925,7 @@ body:has(.practice-focus) .app-main {
   }
 
   .rr-clinical-flow {
-    @apply rounded-2xl border px-4 py-4;
+    @apply rounded-xl border px-3 py-3;
     border-color: var(--rr-color-recognition-border);
     background:
       linear-gradient(180deg, var(--rr-color-recognition-tint), var(--rr-color-surface-elevated) 66%),
@@ -917,11 +938,11 @@ body:has(.practice-focus) .app-main {
   }
 
   .rr-clinical-flow-steps {
-    @apply mt-3 grid gap-3;
+    @apply mt-2 grid gap-2 lg:grid-cols-4;
   }
 
   .rr-clinical-flow-step {
-    @apply relative grid gap-1 rounded-xl border bg-rr-elevated px-3.5 py-3;
+    @apply relative grid gap-0.5 rounded-lg border bg-rr-elevated px-3 py-2;
     border-color: var(--rr-color-border);
   }
 
@@ -937,12 +958,23 @@ body:has(.practice-focus) .app-main {
     line-height: 1;
   }
 
+  @media (min-width: 1024px) {
+    .rr-clinical-flow-step:not(:last-child)::after {
+      content: "→";
+      left: auto;
+      right: -0.9rem;
+      bottom: auto;
+      top: 50%;
+      transform: translateY(-50%);
+    }
+  }
+
   .rr-clinical-flow-label {
-    @apply text-xs font-semibold uppercase leading-5 tracking-normal text-rr-muted;
+    @apply text-[0.68rem] font-semibold uppercase leading-4 tracking-normal text-rr-muted;
   }
 
   .rr-clinical-flow-node {
-    @apply text-base font-semibold leading-7 text-rr-foreground;
+    @apply text-sm font-semibold leading-5 text-rr-foreground;
   }
 
   .rr-clinical-flow-pivot {
@@ -960,7 +992,7 @@ body:has(.practice-focus) .app-main {
   }
 
   .rr-attention-map {
-    @apply rounded-2xl border bg-rr-elevated px-4 py-3;
+    @apply rounded-xl border bg-rr-elevated px-3 py-2.5;
     border-color: var(--rr-color-border);
   }
 
@@ -969,11 +1001,11 @@ body:has(.practice-focus) .app-main {
   }
 
   .rr-attention-map-list {
-    @apply mt-3 grid gap-2;
+    @apply mt-2 grid gap-1.5 sm:grid-cols-2;
   }
 
   .rr-attention-map-item {
-    @apply rounded-lg border bg-rr-surface px-3 py-2;
+    @apply rounded-lg border bg-rr-surface px-2.5 py-1.5;
     border-color: var(--rr-color-border);
   }
 
@@ -982,7 +1014,7 @@ body:has(.practice-focus) .app-main {
   }
 
   .rr-attention-map-text {
-    @apply text-sm font-medium leading-6 text-rr-foreground;
+    @apply text-xs font-medium leading-5 text-rr-foreground;
   }
 
   .rr-attention-map-role {
@@ -993,7 +1025,7 @@ body:has(.practice-focus) .app-main {
   }
 
   .rr-attention-map-explanation {
-    @apply mt-1 text-xs leading-5 text-rr-muted;
+    @apply hidden;
   }
 
   .rr-attention-map-pivot-clue {
@@ -1022,23 +1054,23 @@ body:has(.practice-focus) .app-main {
   }
 
   .rr-explanation-notebook .rr-teaching-card summary {
-    @apply px-4 py-3;
+    @apply px-3 py-2.5;
   }
 
   .rr-explanation-notebook .rr-teaching-card > div {
-    @apply px-4 pb-4;
+    @apply px-3 pb-3;
   }
 
   .rr-right-explanation-stack {
-    @apply mb-4 grid gap-3;
+    @apply mb-3 grid gap-2.5;
   }
 
   .rr-right-explanation-block {
-    @apply rounded-2xl border border-rr-border bg-rr-surface px-4 py-4 text-sm leading-6 text-rr-foreground;
+    @apply rounded-xl border border-rr-border bg-rr-surface px-3 py-3 text-sm leading-6 text-rr-foreground;
   }
 
   .rr-right-explanation-block h2 {
-    @apply mb-2 text-base font-semibold leading-7 text-rr-foreground;
+    @apply mb-1.5 text-sm font-semibold leading-6 text-rr-foreground;
   }
 
   .rr-right-explanation-block p span {
@@ -1066,7 +1098,7 @@ body:has(.practice-focus) .app-main {
   }
 
   .rr-teaching-block {
-    @apply border-0 bg-transparent px-0 py-4 first:pt-0 last:pb-0;
+    @apply border-0 bg-transparent px-0 py-3 first:pt-0 last:pb-0;
   }
 
   .rr-teaching-block-title {
