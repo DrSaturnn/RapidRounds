@@ -75,9 +75,21 @@ model Progress {
   clinicalDecision   ClinicalDecision? @relation(fields: [clinicalDecisionId], references: [id])
   topicId        String?
   topic          Topic?   @relation(fields: [topicId], references: [id])
-  userId         String   @default("default")
+  userId         String
   answer         String
   isCorrect      Boolean
+  expectedAnswer String?
+  answerOutcome  String?
+  evaluationClassification String?
+  partialCredit  Float?
+  confidence     Float?
+  cognitiveErrorType String?
+  reasoningPattern String?
+  repairType     String?
+  decisionType   String?
+  curriculumNodeId String?
+  shelfTags      String?
+  disciplineTags String?
   responseTimeMs Int
   diagnosis      String
   management     String
@@ -86,15 +98,19 @@ model Progress {
 
   @@index([userId, createdAt])
   @@index([clinicalDecisionId])
+  @@index([userId, clinicalDecisionId])
   @@index([topicId])
   @@index([diagnosis])
   @@index([management])
   @@index([pattern])
+  @@index([answerOutcome])
+  @@index([cognitiveErrorType])
+  @@index([curriculumNodeId])
 }
 
 model UserStats {
   id                    String   @id @default(cuid())
-  userId                String   @unique @default("default")
+  userId                String   @unique
   questionsAnswered     Int      @default(0)
   correctAnswers        Int      @default(0)
   currentStreak         Int      @default(0)

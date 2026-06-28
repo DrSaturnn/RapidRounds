@@ -23,7 +23,7 @@ const extraDecisionTypeCopy: Record<string, string> = {
 
 const comparisonFeatureCopy: Record<string, string> = {
   "Cognitive operation": "Task",
-  "Pivot clue": "Key clue",
+  "Pivot clue": "Pivot clue",
   Management: "Next step",
   "Board focus": "Board pearl"
 };

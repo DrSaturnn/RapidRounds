@@ -1,4 +1,5 @@
 import assert from "node:assert/strict";
+import { readFileSync } from "node:fs";
 import { describe, it } from "node:test";
 import {
   curriculumNodes,
@@ -8,6 +9,7 @@ import {
   getShelfViewNodes,
   questionCurriculumMap
 } from "@/lib/curriculum-graph";
+import { resolveCurriculumContext } from "@/lib/curriculum-resolution";
 import { getLearningTrajectory } from "@/lib/learning-trajectory";
 
 describe("master curriculum graph", () => {
@@ -118,5 +120,54 @@ describe("master curriculum graph", () => {
     assert.ok(severePreeclampsia.items.some((item) => /Cross-shelf overlap/.test(item.reason)));
     assert.ok(abruption.items.some((item) => item.concept === "Placenta previa"));
     assert.ok(abruption.items.some((item) => /Frequently confused/.test(item.reason)));
+  });
+
+  it("resolves every seeded clinical decision to at least one curriculum node", () => {
+    const seedSource = readFileSync("prisma/seed.ts", "utf8");
+    const seededDecisions = [...seedSource.matchAll(/\{\n    system: "([^"]+)",\n    topic: "([^"]+)"/g)]
+      .map((match) => ({
+        system: match[1],
+        topic: match[2]
+      }));
+
+    assert.equal(seededDecisions.length, 86);
+
+    for (const decision of seededDecisions) {
+      const context = resolveCurriculumContext(decision);
+
+      assert.ok(context.primaryNode, `${decision.topic} did not resolve to a curriculum node`);
+      assert.ok(context.nodes.length > 0, `${decision.topic} has no curriculum context`);
+    }
+  });
+
+  it("exposes cross-shelf overlays from resolved runtime decision context", () => {
+    const psychContext = resolveCurriculumContext({
+      system: "Postpartum",
+      topic: "Postpartum psychosis"
+    });
+    const ectopicContext = resolveCurriculumContext({
+      system: "Early Pregnancy",
+      topic: "Ectopic pregnancy"
+    });
+    const hypertensionContext = resolveCurriculumContext({
+      system: "Hypertension in Pregnancy",
+      topic: "Preeclampsia with severe features"
+    });
+
+    assert.ok(psychContext.disciplineTags.includes("psychiatry"));
+    assert.ok(ectopicContext.disciplineTags.includes("surgery"));
+    assert.ok(hypertensionContext.disciplineTags.includes("internal medicine"));
+  });
+
+  it("returns traceable curriculum metadata with learning trajectory recommendations", () => {
+    const trajectory = getLearningTrajectory({
+      correctAnswer: "Methotrexate for ectopic pregnancy",
+      wasCorrect: true
+    });
+
+    assert.equal(trajectory.curriculumNodeId, "methotrexate-ectopic-pregnancy");
+    assert.equal(trajectory.primaryConcept, "Methotrexate criteria");
+    assert.ok(trajectory.shelfTags.includes("OB/GYN"));
+    assert.ok(trajectory.disciplineTags.includes("pharmacology"));
   });
 });

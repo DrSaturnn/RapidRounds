@@ -116,8 +116,9 @@ describe("decision repair", () => {
     const tutor = buildTutorContent(baseDecision, "uterine atony", evaluation);
 
     assert.equal(tutor.repair.style, "INCORRECT");
-    assert.match(tutor.repair.why, /You answered: uterine atony/);
-    assert.match(tutor.repair.why, /Correct answer: retained placenta/);
+    assert.match(tutor.repair.why, /uterine atony/i);
+    assert.match(tutor.repair.why, /retained placenta/i);
+    assert.doesNotMatch(tutor.repair.why, /You answered:/);
   });
 
   it("does not create generic reinforcement for every miss", () => {
@@ -248,14 +249,17 @@ describe("decision repair", () => {
         boardPearl: "Acute severe hypertension in pregnancy requires prompt antihypertensive therapy.",
         decisionType: "Management",
         clinicalPattern: "Hypertension in pregnancy",
-        tags: JSON.stringify(["severe hypertension", "labetalol", "hydralazine"])
+        tags: JSON.stringify(["severe hypertension", "  Severe hypertension  ", "labetalol", "hydralazine"])
       },
       "idk",
       evaluation
     );
 
     assert.equal(tutor.repair.style, "UNKNOWN");
-    assert.equal(tutor.repair.why, "Looks like this wasn't in memory yet.");
+    assert.equal(
+      tutor.repair.why,
+      "The pivot clue was Persistent severe-range blood pressure, which supports iv labetalol."
+    );
     assert.deepEqual(tutor.repair.recognitionClues, [
       "Persistent severe-range blood pressure",
       "Hypertension in pregnancy",
@@ -295,7 +299,7 @@ describe("decision repair", () => {
     const tutorMode = readFileSync("components/TutorMode.tsx", "utf8");
 
     assert.match(tutorMode, /tutor\.repair\.style === "UNKNOWN"/);
-    assert.match(tutorMode, /<TeachingCard title="Teach me more" defaultOpen=\{false\}>/);
+    assert.match(tutorMode, /<TeachingCard title="Teach me more: illness script and comparison" defaultOpen=\{false\}>/);
     assert.match(tutorMode, /tutor\.comparison\.rows\.map/);
   });
 

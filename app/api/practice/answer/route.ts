@@ -1,6 +1,8 @@
 import { NextRequest, NextResponse } from "next/server";
 import { compareAnswerWithAI } from "@/lib/ai-answer-check";
 import { evaluateAnswer } from "@/lib/answer-check";
+import { resolveCurriculumContext } from "@/lib/curriculum-resolution";
+import { normalizeLearnerId } from "@/lib/learner-id";
 import { prisma } from "@/lib/prisma";
 import { buildTutorContent } from "@/lib/tutor-content";
 import type { AnswerEvaluation, AnswerOutcome } from "@/types/practice";
@@ -61,15 +63,25 @@ function getAnswerOutcome(evaluation: AnswerEvaluation): AnswerOutcome {
   return "DECISION_ERROR";
 }
 
+function serializeList(values: string[]) {
+  return JSON.stringify(values);
+}
+
 export async function POST(request: NextRequest) {
   const body = (await request.json()) as {
     questionId?: string;
+    learnerId?: string;
     answer?: string;
     responseTimeMs?: number;
   };
+  const learnerId = normalizeLearnerId(body.learnerId);
 
   if (!body.questionId || typeof body.answer !== "string") {
     return NextResponse.json({ error: "Question and answer are required." }, { status: 400 });
+  }
+
+  if (!learnerId) {
+    return NextResponse.json({ error: "Learner id is required." }, { status: 400 });
   }
 
   const decision = await prisma.clinicalDecision.findUnique({
@@ -99,8 +111,50 @@ export async function POST(request: NextRequest) {
     const isCorrect = evaluation.isCorrect;
     const answerOutcome = getAnswerOutcome(evaluation);
     const responseTimeMs = Math.max(0, Math.round(body.responseTimeMs ?? 0));
+    const tutor = buildTutorContent(
+      {
+        ...decision,
+        correctAnswer
+      },
+      body.answer,
+      evaluation
+    );
+    const curriculumContext = resolveCurriculumContext({
+      topic: decision.topic,
+      correctAnswer,
+      system: decision.system,
+      clinicalPattern: decision.clinicalPattern,
+      decisionType: decision.decisionType,
+      tags
+    });
+    const progressData = {
+      clinicalDecisionId: decision.id,
+      userId: learnerId,
+      answer: body.answer.trim(),
+      isCorrect,
+      expectedAnswer: correctAnswer,
+      answerOutcome,
+      evaluationClassification: evaluation.classification,
+      partialCredit: evaluation.partialCredit,
+      confidence: evaluation.confidence,
+      cognitiveErrorType: tutor.cognitiveError?.type,
+      reasoningPattern: tutor.reasoningAnalysis.primaryError,
+      repairType: tutor.repair.style,
+      decisionType: decision.decisionType,
+      curriculumNodeId: curriculumContext.primaryNode?.id,
+      shelfTags: serializeList(curriculumContext.shelfTags),
+      disciplineTags: serializeList(curriculumContext.disciplineTags),
+      responseTimeMs,
+      diagnosis: decision.topic,
+      management: decision.managementPearl,
+      pattern: decision.clinicalPattern
+    };
 
     if (answerOutcome === "UNKNOWN") {
+      await prisma.progress.create({
+        data: progressData
+      });
+
       return NextResponse.json({
         isCorrect,
         answerOutcome,
@@ -108,34 +162,18 @@ export async function POST(request: NextRequest) {
         evaluation,
         boardPearl: decision.boardPearl,
         explanation: decision.pivotClue,
-        tutor: buildTutorContent(
-          {
-            ...decision,
-            correctAnswer
-          },
-          body.answer,
-          evaluation
-        )
+        tutor
       });
     }
 
     const [, previousStats] = await Promise.all([
       prisma.progress.create({
-        data: {
-          clinicalDecisionId: decision.id,
-          userId: "default",
-          answer: body.answer.trim(),
-          isCorrect,
-          responseTimeMs,
-          diagnosis: decision.topic,
-          management: decision.managementPearl,
-          pattern: decision.clinicalPattern
-        }
+        data: progressData
       }),
       prisma.userStats.upsert({
-        where: { userId: "default" },
+        where: { userId: learnerId },
         update: {},
-        create: { userId: "default" }
+        create: { userId: learnerId }
       })
     ]);
 
@@ -149,7 +187,7 @@ export async function POST(request: NextRequest) {
     );
 
     await prisma.userStats.update({
-      where: { userId: "default" },
+      where: { userId: learnerId },
       data: {
         questionsAnswered,
         correctAnswers,
@@ -166,16 +204,7 @@ export async function POST(request: NextRequest) {
       evaluation,
       boardPearl: decision.boardPearl,
       explanation: decision.pivotClue,
-      tutor: isCorrect
-        ? undefined
-        : buildTutorContent(
-            {
-              ...decision,
-              correctAnswer
-            },
-            body.answer,
-            evaluation
-          )
+      tutor: isCorrect ? undefined : tutor
     });
   }
 
@@ -208,8 +237,50 @@ export async function POST(request: NextRequest) {
   const isCorrect = evaluation.isCorrect;
   const answerOutcome = getAnswerOutcome(evaluation);
   const responseTimeMs = Math.max(0, Math.round(body.responseTimeMs ?? 0));
+  const tutor = buildTutorContent(
+    {
+      ...question,
+      topic: question.diagnosis
+    },
+    body.answer,
+    evaluation
+  );
+  const curriculumContext = resolveCurriculumContext({
+    topic: question.diagnosis,
+    correctAnswer: question.correctAnswer,
+    clinicalPattern: question.pattern,
+    decisionType: "Diagnosis",
+    tags: question.tags
+  });
+  const progressData = {
+    questionId: question.id,
+    topicId: question.topicId,
+    userId: learnerId,
+    answer: body.answer.trim(),
+    isCorrect,
+    expectedAnswer: question.correctAnswer,
+    answerOutcome,
+    evaluationClassification: evaluation.classification,
+    partialCredit: evaluation.partialCredit,
+    confidence: evaluation.confidence,
+    cognitiveErrorType: tutor.cognitiveError?.type,
+    reasoningPattern: tutor.reasoningAnalysis.primaryError,
+    repairType: tutor.repair.style,
+    decisionType: "Diagnosis",
+    curriculumNodeId: curriculumContext.primaryNode?.id,
+    shelfTags: serializeList(curriculumContext.shelfTags),
+    disciplineTags: serializeList(curriculumContext.disciplineTags),
+    responseTimeMs,
+    diagnosis: question.diagnosis,
+    management: question.management,
+    pattern: question.pattern
+  };
 
   if (answerOutcome === "UNKNOWN") {
+    await prisma.progress.create({
+      data: progressData
+    });
+
     return NextResponse.json({
       isCorrect,
       answerOutcome,
@@ -217,35 +288,18 @@ export async function POST(request: NextRequest) {
       evaluation,
       boardPearl: question.boardPearl,
       explanation: question.explanation,
-      tutor: buildTutorContent(
-        {
-          ...question,
-          topic: question.diagnosis
-        },
-        body.answer,
-        evaluation
-      )
+      tutor
     });
   }
 
   const [, previousStats] = await Promise.all([
     prisma.progress.create({
-      data: {
-        questionId: question.id,
-        topicId: question.topicId,
-        userId: "default",
-        answer: body.answer.trim(),
-        isCorrect,
-        responseTimeMs,
-        diagnosis: question.diagnosis,
-        management: question.management,
-        pattern: question.pattern
-      }
+      data: progressData
     }),
     prisma.userStats.upsert({
-      where: { userId: "default" },
+      where: { userId: learnerId },
       update: {},
-      create: { userId: "default" }
+      create: { userId: learnerId }
     })
   ]);
 
@@ -259,7 +313,7 @@ export async function POST(request: NextRequest) {
   );
 
   await prisma.userStats.update({
-    where: { userId: "default" },
+    where: { userId: learnerId },
     data: {
       questionsAnswered,
       correctAnswers,
@@ -276,15 +330,6 @@ export async function POST(request: NextRequest) {
     evaluation,
     boardPearl: question.boardPearl,
     explanation: question.explanation,
-    tutor: isCorrect
-      ? undefined
-      : buildTutorContent(
-          {
-            ...question,
-            topic: question.diagnosis
-          },
-          body.answer,
-          evaluation
-        )
+    tutor: isCorrect ? undefined : tutor
   });
 }

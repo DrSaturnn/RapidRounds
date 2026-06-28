@@ -1,26 +1,42 @@
 import { NextResponse } from "next/server";
 import { getNextClinicalDecision } from "@/database/clinical-decisions";
+import { normalizeLearnerId } from "@/lib/learner-id";
 import { getAdaptiveTargetConcept } from "@/lib/learning-trajectory";
 import { prisma } from "@/lib/prisma";
 import { toQuestionDto } from "@/lib/serializers";
 
 export async function GET(request: Request) {
-  const requestedConcept = new URL(request.url).searchParams.get("concept")?.trim();
-  const answered = await prisma.progress.findMany({
-    where: { userId: "default" },
-    select: {
-      questionId: true,
-      clinicalDecisionId: true,
-      diagnosis: true,
-      answer: true,
-      isCorrect: true
-    },
-    orderBy: { createdAt: "desc" },
-    take: 20
-  });
+  const searchParams = new URL(request.url).searchParams;
+  const requestedConcept = searchParams.get("concept")?.trim();
+  const learnerId = normalizeLearnerId(searchParams.get("learnerId"));
+  const [answered, completed] = await Promise.all([
+    learnerId
+      ? prisma.progress.findMany({
+          where: { userId: learnerId },
+          select: {
+            questionId: true,
+            clinicalDecisionId: true,
+            diagnosis: true,
+            answer: true,
+            isCorrect: true
+          },
+          orderBy: { createdAt: "desc" },
+          take: 20
+        })
+      : Promise.resolve([]),
+    learnerId
+      ? prisma.progress.findMany({
+          where: { userId: learnerId },
+          select: {
+            questionId: true,
+            clinicalDecisionId: true
+          }
+        })
+      : Promise.resolve([])
+  ]);
 
   const answeredDecisionIds = new Set(
-    answered.map((row) => row.clinicalDecisionId).filter((id): id is string => Boolean(id))
+    completed.map((row) => row.clinicalDecisionId).filter((id): id is string => Boolean(id))
   );
 
   const adaptiveTarget = requestedConcept || getAdaptiveTargetConcept(answered)?.concept;
@@ -30,7 +46,7 @@ export async function GET(request: Request) {
   }
 
   const answeredQuestionIds = new Set(
-    answered.map((row) => row.questionId).filter((id): id is string => Boolean(id))
+    completed.map((row) => row.questionId).filter((id): id is string => Boolean(id))
   );
 
   let questions = await prisma.question.findMany({

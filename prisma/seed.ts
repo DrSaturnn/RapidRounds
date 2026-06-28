@@ -1250,10 +1250,6 @@ async function main() {
     }))
   });
 
-  await prisma.userStats.create({
-    data: { userId: "default" }
-  });
-
   console.log(`Seeded ${decisions.length} OB/GYN clinical decisions.`);
 }
 

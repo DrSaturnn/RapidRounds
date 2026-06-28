@@ -2,6 +2,18 @@ import { prisma } from "@/lib/prisma";
 import type { AnalyticsStats, DashboardStats } from "@/types/practice";
 
 const DAY_MS = 24 * 60 * 60 * 1000;
+const UNAVAILABLE_LEARNER_SCOPE = "__anonymous_learner_id_required__";
+const EMPTY_STATS = {
+  questionsAnswered: 0,
+  correctAnswers: 0,
+  currentStreak: 0
+};
+function scoredProgressWhere() {
+  return {
+    userId: UNAVAILABLE_LEARNER_SCOPE,
+    OR: [{ answerOutcome: null }, { answerOutcome: { not: "UNKNOWN" } }]
+  };
+}
 
 function percent(correct: number, total: number) {
   return total === 0 ? 0 : Math.round((correct / total) * 100);
@@ -34,16 +46,19 @@ export async function getDashboardStats(): Promise<DashboardStats> {
 
   const [todayRows, stats, topicProgress] = await Promise.all([
     prisma.progress.findMany({
-      where: { userId: "default", createdAt: { gte: today } },
+      where: { ...scoredProgressWhere(), createdAt: { gte: today } },
       select: { isCorrect: true }
     }),
-    prisma.userStats.upsert({
-      where: { userId: "default" },
-      update: {},
-      create: { userId: "default" }
+    prisma.userStats.findUnique({
+      where: { userId: UNAVAILABLE_LEARNER_SCOPE },
+      select: {
+        questionsAnswered: true,
+        correctAnswers: true,
+        currentStreak: true
+      }
     }),
     prisma.progress.findMany({
-      where: { userId: "default" },
+      where: scoredProgressWhere(),
       select: {
         isCorrect: true,
         topic: { select: { name: true, specialty: true } },
@@ -74,8 +89,8 @@ export async function getDashboardStats(): Promise<DashboardStats> {
 
   return {
     questionsAnsweredToday: todayRows.length,
-    accuracy: percent(stats.correctAnswers, stats.questionsAnswered),
-    currentStreak: stats.currentStreak,
+    accuracy: percent((stats ?? EMPTY_STATS).correctAnswers, (stats ?? EMPTY_STATS).questionsAnswered),
+    currentStreak: (stats ?? EMPTY_STATS).currentStreak,
     weakestTopics: [...groupedTopics.values()]
       .map((topic) => ({
         name: topic.name,
@@ -90,7 +105,7 @@ export async function getDashboardStats(): Promise<DashboardStats> {
 
 export async function getAnalyticsStats(): Promise<AnalyticsStats> {
   const progress = await prisma.progress.findMany({
-    where: { userId: "default" },
+    where: scoredProgressWhere(),
     orderBy: { createdAt: "desc" },
     select: {
       isCorrect: true,

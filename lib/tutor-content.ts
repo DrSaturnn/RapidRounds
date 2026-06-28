@@ -88,7 +88,7 @@ const comparisonMap: Record<
       { feature: "Timing", correct: "After 20 weeks", competing: "After 20 weeks" },
       { feature: "Blood pressure", correct: "Severe range can occur", competing: "Elevated, no severe features" },
       { feature: "End-organ injury", correct: "Present", competing: "Absent" },
-      { feature: "Key clue", correct: "Headache, RUQ pain, low platelets", competing: "Hypertension only" }
+      { feature: "Pivot clue", correct: "Headache, RUQ pain, low platelets", competing: "Hypertension only" }
     ]
   },
   "right ventricular infarction": {
@@ -239,15 +239,31 @@ function cleanAnswer(value: string) {
   return sentence(value.trim() || "Not answered yet");
 }
 
+function normalizeCue(value: string) {
+  return value.trim().replace(/\s+/g, " ").toLowerCase();
+}
+
 function buildRecognitionClues(decision: TutorDecision) {
   const tags = parseJsonArray(decision.tags);
+  const seen = new Set<string>();
   const clues = [
     sentence(getPivotClue(decision)),
     sentence(getPattern(decision)),
     ...tags.map(sentence)
   ].filter((clue) => clue.length > 0);
 
-  return Array.from(new Set(clues)).slice(0, 3);
+  return clues
+    .filter((clue) => {
+      const normalized = normalizeCue(clue);
+
+      if (!normalized || seen.has(normalized)) {
+        return false;
+      }
+
+      seen.add(normalized);
+      return true;
+    })
+    .slice(0, 3);
 }
 
 function isLikelyEtiology(answer: string, correctAnswer: string) {
@@ -273,6 +289,20 @@ function buildPartialWhy(decision: TutorDecision, userAnswer: string) {
   return `You are on the right branch. Refine it using ${clue.toLowerCase()}.`;
 }
 
+function buildPivotFeedback(decision: TutorDecision, userAnswer?: string) {
+  const answer = userAnswer ? cleanAnswer(userAnswer) : "";
+  const correctAnswer = sentence(decision.correctAnswer);
+  const clue = sentence(getPivotClue(decision));
+
+  if (clue && correctAnswer) {
+    return answer && answer !== "Not answered yet"
+      ? `You selected ${answer}. The pivot clue was ${clue}, which supports ${correctAnswer}.`
+      : `The pivot clue was ${clue}, which supports ${correctAnswer}.`;
+  }
+
+  return "Focus on the pivot clue before choosing the next step.";
+}
+
 function buildRepair(
   decision: TutorDecision,
   userAnswer: string,
@@ -290,7 +320,7 @@ function buildRepair(
       style: "UNKNOWN",
       correctAnswer,
       clue,
-      why: "Looks like this wasn't in memory yet.",
+      why: buildPivotFeedback(decision),
       fingerprint,
       recognitionClues: buildRecognitionClues(decision),
       cognitiveError
@@ -359,9 +389,7 @@ function buildRepair(
     style: "INCORRECT",
     correctAnswer,
     clue,
-    why: withDecisionBoundary(
-      `You answered: ${learnerAnswer}. Correct answer: ${correctAnswer}. The discriminator is ${clue.toLowerCase()}.`
-    ),
+    why: withDecisionBoundary(buildPivotFeedback(decision, userAnswer)),
     fingerprint,
     learnerAnswer,
     cognitiveError

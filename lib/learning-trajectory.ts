@@ -1,6 +1,7 @@
 import { normalizeAnswer } from "@/lib/answer-check";
 import { getConceptGraph } from "@/lib/concept-graph";
 import { getCurriculumLearningItems } from "@/lib/curriculum-graph";
+import { resolveCurriculumContext } from "@/lib/curriculum-resolution";
 
 export type LearningTrajectoryItem = {
   concept: string;
@@ -127,19 +128,27 @@ export function getLearningTrajectory({
   comparisonConcept,
   managementConcept
 }: LearningTrajectoryInput) {
+  const context = resolveCurriculumContext({ topic: correctAnswer });
   const graph = getConceptGraph({ correctAnswer, comparisonConcept, managementConcept });
-  const curriculum = getCurriculumLearningItems(correctAnswer, wasCorrect);
+  const curriculum = getCurriculumLearningItems(context.primaryNode?.title ?? correctAnswer, wasCorrect);
   const curriculumRecommendation = curriculum.items.find((item) => item.priority === "recommended");
-  const recommendedConcept = curriculumRecommendation?.concept ?? nextInChain(correctAnswer) ?? graph.relatedConcepts[0] ?? graph.managementConcepts[0];
+  const recommendedConcept = curriculumRecommendation?.concept ??
+    context.successorConcepts[0] ??
+    nextInChain(correctAnswer) ??
+    graph.relatedConcepts[0] ??
+    graph.managementConcepts[0];
   const recommendationReason = curriculumRecommendation?.reason ??
     (wasCorrect === false
-      ? `Recommended because you missed ${graph.primaryConcept}.`
+      ? `Recommended because you missed ${context.primaryNode?.title ?? graph.primaryConcept}.`
       : recommendedConcept
-        ? `Builds directly on ${graph.primaryConcept}.`
-        : `Continue strengthening ${graph.primaryConcept}.`);
+        ? `Builds directly on ${context.primaryNode?.title ?? graph.primaryConcept}.`
+        : `Continue strengthening ${context.primaryNode?.title ?? graph.primaryConcept}.`);
 
   return {
-    primaryConcept: curriculum.node?.title ?? graph.primaryConcept,
+    primaryConcept: curriculum.node?.title ?? context.primaryNode?.title ?? graph.primaryConcept,
+    curriculumNodeId: curriculum.node?.id ?? context.primaryNode?.id,
+    shelfTags: context.shelfTags,
+    disciplineTags: context.disciplineTags,
     recommendation: recommendedConcept
       ? {
           concept: recommendedConcept,
@@ -172,7 +181,19 @@ export function getLearningTrajectory({
         concept,
         reason: `Strengthens management around ${graph.primaryConcept}.`,
         priority: "explore" as const
-      }))
+      })),
+      ...context.commonDistractors.slice(0, 2).map((concept) => ({
+        concept,
+        reason: `Frequently confused with ${context.primaryNode?.title ?? graph.primaryConcept}.`,
+        priority: "explore" as const
+      })),
+      ...(context.crossShelfReason && context.primaryNode
+        ? [{
+            concept: context.primaryNode.title,
+            reason: context.crossShelfReason,
+            priority: "explore" as const
+          }]
+        : [])
     ]).slice(0, 6)
   };
 }

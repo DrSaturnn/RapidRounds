@@ -58,7 +58,7 @@ describe("concept graph", () => {
   it("feeds the learning trajectory after Teach Me More", () => {
     const tutorMode = readFileSync("components/TutorMode.tsx", "utf8");
 
-    assert.match(tutorMode, /Continue Learning/);
+    assert.match(tutorMode, /Next challenge/);
     assert.match(tutorMode, /You just learned/);
     assert.match(tutorMode, /Optional exploration/);
     assert.match(tutorMode, /LearningChoiceGroup/);

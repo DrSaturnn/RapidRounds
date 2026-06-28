@@ -5,6 +5,7 @@ import { compareAnswer } from "@/lib/answer-check";
 import type { AnswerResult, PracticeMode, QuestionDto, TutorContent } from "@/types/practice";
 
 const SESSION_STORAGE_KEY = "rapidrounds.practiceSession.v1";
+const LEARNER_ID_STORAGE_KEY = "rapidrounds.anonymousLearnerId.v1";
 
 type PersistedPracticeSession = {
   version: 1;
@@ -57,6 +58,29 @@ function writePersistedSession(session: PersistedPracticeSession) {
   window.localStorage.setItem(SESSION_STORAGE_KEY, JSON.stringify(session));
 }
 
+function createAnonymousLearnerId() {
+  const randomId = typeof crypto !== "undefined" && "randomUUID" in crypto
+    ? crypto.randomUUID()
+    : `${Date.now()}-${Math.random().toString(36).slice(2)}`;
+
+  return `anon_${randomId}`;
+}
+
+function getOrCreateAnonymousLearnerId() {
+  if (typeof window === "undefined") {
+    return "";
+  }
+
+  const existing = window.localStorage.getItem(LEARNER_ID_STORAGE_KEY);
+  if (existing) {
+    return existing;
+  }
+
+  const learnerId = createAnonymousLearnerId();
+  window.localStorage.setItem(LEARNER_ID_STORAGE_KEY, learnerId);
+  return learnerId;
+}
+
 export function usePracticeSession() {
   const [question, setQuestion] = useState<QuestionDto | null>(null);
   const [answer, setAnswer] = useState("");
@@ -72,6 +96,7 @@ export function usePracticeSession() {
   const [error, setError] = useState<string | null>(null);
   const [answeredQuestionIds, setAnsweredQuestionIds] = useState<string[]>([]);
   const hasHydratedSession = useRef(false);
+  const learnerId = useRef("");
   const startedAt = useRef(Date.now());
 
   const loadQuestion = useCallback(async (targetConcept?: string) => {
@@ -84,7 +109,16 @@ export function usePracticeSession() {
     setReinforcementAnswer("");
     setReinforcementResult(null);
 
-    const query = targetConcept ? `?concept=${encodeURIComponent(targetConcept)}` : "";
+    const currentLearnerId = learnerId.current || getOrCreateAnonymousLearnerId();
+    learnerId.current = currentLearnerId;
+    const params = new URLSearchParams();
+    if (targetConcept) {
+      params.set("concept", targetConcept);
+    }
+    if (currentLearnerId) {
+      params.set("learnerId", currentLearnerId);
+    }
+    const query = params.toString() ? `?${params.toString()}` : "";
     const response = await fetch(`/api/questions/next${query}`, { cache: "no-store" });
     if (!response.ok) {
       setQuestion(null);
@@ -115,6 +149,7 @@ export function usePracticeSession() {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         questionId: question.id,
+        learnerId: learnerId.current || getOrCreateAnonymousLearnerId(),
         answer,
         responseTimeMs: Date.now() - startedAt.current
       })
@@ -149,6 +184,7 @@ export function usePracticeSession() {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         questionId: question.id,
+        learnerId: learnerId.current || getOrCreateAnonymousLearnerId(),
         answer
       })
     });
@@ -177,6 +213,7 @@ export function usePracticeSession() {
   }, [reinforcementAnswer, tutor]);
 
   useEffect(() => {
+    learnerId.current = getOrCreateAnonymousLearnerId();
     const persisted = readPersistedSession();
     hasHydratedSession.current = true;
 

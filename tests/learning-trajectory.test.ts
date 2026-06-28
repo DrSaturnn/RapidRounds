@@ -48,10 +48,10 @@ describe("adaptive learning trajectory", () => {
     ]);
   });
 
-  it("renders Continue Learning instead of passive related concepts", () => {
+  it("renders a next challenge instead of passive related concepts", () => {
     const tutorMode = readFileSync("components/TutorMode.tsx", "utf8");
 
-    assert.match(tutorMode, /Continue Learning/);
+    assert.match(tutorMode, /Next challenge/);
     assert.match(tutorMode, /Optional exploration/);
     assert.match(tutorMode, /learningTrajectory\.recommendation\.reason/);
     assert.match(tutorMode, /loadQuestion\(item\.concept\)/);
@@ -66,6 +66,7 @@ describe("adaptive learning trajectory", () => {
     assert.match(route, /searchParams\.get\("concept"\)/);
     assert.match(route, /getAdaptiveTargetConcept/);
     assert.match(route, /getNextClinicalDecision\(\[\.{3}answeredDecisionIds\], adaptiveTarget\)/);
-    assert.match(hook, /encodeURIComponent\(targetConcept\)/);
+    assert.match(hook, /params\.set\("concept", targetConcept\)/);
+    assert.match(hook, /params\.set\("learnerId", currentLearnerId\)/);
   });
 });

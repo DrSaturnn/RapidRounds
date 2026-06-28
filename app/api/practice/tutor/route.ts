@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { evaluateAnswer } from "@/lib/answer-check";
+import { normalizeLearnerId } from "@/lib/learner-id";
 import { prisma } from "@/lib/prisma";
 import { buildTutorContent } from "@/lib/tutor-content";
 
@@ -26,8 +27,10 @@ function conceptList(...values: Array<string | string[] | null | undefined>) {
 export async function POST(request: NextRequest) {
   const body = (await request.json()) as {
     questionId?: string;
+    learnerId?: string;
     answer?: string;
   };
+  normalizeLearnerId(body.learnerId);
 
   if (!body.questionId) {
     return NextResponse.json({ error: "Question is required." }, { status: 400 });

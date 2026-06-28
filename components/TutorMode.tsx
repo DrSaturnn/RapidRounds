@@ -14,6 +14,28 @@ const inputGuardProps = {
   spellCheck: false
 } as const;
 
+function normalizeCue(value: string) {
+  return value.trim().replace(/\s+/g, " ").toLowerCase();
+}
+
+function formatNextChallenge(concept?: string) {
+  const value = concept?.trim();
+
+  if (!value) {
+    return "Practice the next management step.";
+  }
+
+  if (/\?$/.test(value)) {
+    return value;
+  }
+
+  if (/\b(management|step|first|treatment|therapy|prophylaxis|delivery|avoid|choose)\b/i.test(value)) {
+    return "Practice the next management step.";
+  }
+
+  return `How would you recognize ${value} next time?`;
+}
+
 export function TutorMode({
   tutor,
   reinforcementAnswer,
@@ -30,6 +52,7 @@ export function TutorMode({
   loadQuestion: (targetConcept?: string) => void;
 }) {
   const isUnknown = tutor.repair.style === "UNKNOWN";
+  const repairTitle = isUnknown ? "Build the pattern" : "Repair this decision";
   const learningTrajectory = getLearningTrajectory({
     correctAnswer: tutor.correctAnswer,
     wasCorrect: tutor.repair.style === "CORRECT",
@@ -37,9 +60,16 @@ export function TutorMode({
     managementConcept: tutor.managementPearl
   });
   const recognitionClues = Array.from(
-    new Set((tutor.repair.recognitionClues ?? [tutor.repair.clue]).map((clue) => clue.trim()).filter(Boolean))
-  ).filter((clue) => clue.toLowerCase() !== tutor.repair.clue.trim().toLowerCase());
+    new Map(
+      (tutor.repair.recognitionClues ?? [tutor.repair.clue])
+        .map((clue) => clue.trim())
+        .filter(Boolean)
+        .map((clue) => [normalizeCue(clue), clue] as const)
+    ).values()
+  ).filter((clue) => normalizeCue(clue) !== normalizeCue(tutor.repair.clue));
   const visibleRecognitionClues = recognitionClues.length > 0 ? recognitionClues : [tutor.repair.clue];
+  const hasCommonConfusion = Boolean(tutor.comparison.competingDiagnosis?.trim());
+  const nextChallenge = formatNextChallenge(learningTrajectory.recommendation?.concept);
 
   const onSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -52,45 +82,68 @@ export function TutorMode({
   return (
     <section className="space-y-4">
       <div className={`rr-card rr-card-section space-y-3 ${isUnknown ? "rr-concept-card" : "rr-repair-card"}`}>
-        <p className="rr-section-header">{isUnknown ? "Concept build" : "Decision repair"}</p>
+        <p className="rr-section-header">{repairTitle}</p>
         {isUnknown ? (
           <div className="space-y-3 text-sm leading-6">
+            <div className="rr-callout rr-callout-clue py-2">
+              <p className="rr-meta">Pivot clue</p>
+              <p>{tutor.repair.clue}</p>
+              <p className="rr-meta mt-1">Meaning: supports {tutor.repair.correctAnswer}.</p>
+            </div>
+            <div className="rr-callout py-2">
+              <p className="rr-meta">Correct action</p>
+              <p className="text-base font-semibold text-rr-mastery">{tutor.repair.correctAnswer}</p>
+            </div>
             <div>
-              <p className="rr-meta">Recognition</p>
+              <p className="rr-meta">Expert reasoning</p>
+              <p>{tutor.repair["why"]}</p>
+            </div>
+            <div>
+              <p className="rr-meta">Recognition path</p>
               <ul className="mt-1 list-disc space-y-0.5 pl-5">
                 {visibleRecognitionClues.map((clue) => (
                   <li key={clue}>{clue}</li>
                 ))}
               </ul>
             </div>
-            <div className="grid gap-3 sm:grid-cols-2">
-              <div className="rr-callout rr-callout-clue py-2">
-                <p className="rr-meta">Correct action</p>
-                <p className="text-base font-semibold text-rr-mastery">{tutor.repair.correctAnswer}</p>
+            {hasCommonConfusion ? (
+              <div>
+                <p className="rr-meta">Common confusion</p>
+                <p>{tutor.comparison.competingDiagnosis}</p>
               </div>
-              <div className="rr-callout rr-callout-clue py-2">
-                <p className="rr-meta">Key clue</p>
-                <p>{tutor.repair.clue}</p>
+            ) : null}
+            {learningTrajectory.recommendation ? (
+              <div>
+                <p className="rr-meta">Next challenge</p>
+                <p>{nextChallenge}</p>
               </div>
-            </div>
-            <div>
-              <p className="rr-meta">Clinical reasoning</p>
-              <p>{tutor.repair["why"]}</p>
+            ) : null}
+            <div className="rr-callout">
+              <p className="rr-meta">Go deeper</p>
+              <p>Open Teach me more for the illness script and comparison.</p>
             </div>
           </div>
         ) : (
           <>
             <div className="grid gap-3 text-sm leading-6 sm:grid-cols-2">
+              <div className="rr-callout rr-callout-clue py-2">
+                <p className="rr-meta">Pivot clue</p>
+                <p>{tutor.repair.clue}</p>
+                <p className="rr-meta mt-1">Meaning: supports {tutor.repair.correctAnswer}.</p>
+              </div>
               <div className="rr-callout py-2">
-                <p className="rr-meta">Correct answer</p>
+                <p className="rr-meta">Correct action</p>
                 <p className="text-base font-semibold text-rr-mastery">{tutor.repair.correctAnswer}</p>
               </div>
-              <div className="rr-callout rr-callout-clue py-2">
-                <p className="rr-meta">Key clue</p>
-                <p>{tutor.repair.clue}</p>
-              </div>
             </div>
-            <p className="text-sm leading-6">{tutor.repair.why}</p>
+            <div>
+              <p className="rr-meta">Expert reasoning</p>
+              <p className="text-sm leading-6">{tutor.repair.why}</p>
+            </div>
+            <div className="rr-callout">
+              <p className="rr-meta">Go deeper</p>
+              <p>Open Teach me more for the full illness script and comparison.</p>
+            </div>
           </>
         )}
 
@@ -131,7 +184,7 @@ export function TutorMode({
         )}
       </div>
 
-      <TeachingCard title="Teach me more" defaultOpen={false}>
+      <TeachingCard title="Teach me more: illness script and comparison" defaultOpen={false}>
         <div className="space-y-5">
           <div>
             <p className="font-medium">Illness Script</p>
@@ -184,7 +237,7 @@ export function TutorMode({
       </TeachingCard>
 
       <div className="rr-card rr-card-section rr-adaptive-card space-y-3">
-        <p className="rr-section-header">Continue Learning</p>
+        <p className="rr-section-header">Next challenge</p>
         <div className="space-y-3 text-sm leading-6">
           <p>
             You just learned: <span className="font-semibold">{learningTrajectory.primaryConcept}</span>
@@ -193,8 +246,8 @@ export function TutorMode({
             <div className="rr-adaptive-action rounded-md border px-3 py-2">
               <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
                 <div>
-                  <p className="rr-meta">Recommended next action</p>
-                  <p className="font-medium">{learningTrajectory.recommendation.concept}</p>
+                  <p className="rr-meta">Next challenge</p>
+                  <p className="font-medium">{nextChallenge}</p>
                   <p className="rr-meta">{learningTrajectory.recommendation.reason}</p>
                 </div>
                 <Button
