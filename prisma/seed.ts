@@ -166,7 +166,14 @@ const decisions: ClinicalDecisionSeed[] = [
     clinicalPattern: "Third-trimester bleeding",
     decisionType: "Initial Test",
     prompt: "Third-trimester bleeding with suspected placenta previa.",
-    acceptedAnswers: ["transvaginal ultrasound", "ultrasound", "pelvic ultrasound"],
+    acceptedAnswers: [
+      "transvaginal ultrasound",
+      "TVUS",
+      "transvaginal US",
+      "transvaginal ultrasonography",
+      "ultrasound",
+      "pelvic ultrasound"
+    ],
     boardPearl: "Transvaginal ultrasound is safe and best for diagnosing placenta previa.",
     pivotClue: "Suspected placenta previa",
     commonTrap: "digital cervical examination",

@@ -271,6 +271,7 @@ describe("design system", () => {
     const practicePanel = readFileSync("components/PracticePanel.tsx", "utf8");
     const tutorMode = readFileSync("components/TutorMode.tsx", "utf8");
     const teachingCard = readFileSync("components/TeachingCard.tsx", "utf8");
+    const css = readFileSync("app/globals.css", "utf8");
 
     assert.match(practicePanel, /skin === "warm-notebook"/);
     assert.match(practicePanel, /function MoleskinePracticeLayout/);
@@ -288,15 +289,19 @@ describe("design system", () => {
     assert.match(practicePanel, /rr-bottom-nav rr-panel rr-moleskine-footer-strip/);
 
     assert.match(tutorMode, /presentation\?: "default" \| "moleskine"/);
+    assert.match(tutorMode, /moleskineLeftPageContent\?: ReactNode/);
     assert.match(tutorMode, /function MoleskineTeachingDocument/);
     assert.match(tutorMode, /function MoleskineReasoningChain/);
     assert.match(tutorMode, /function MoleskineClinicalPearl/);
     assert.match(tutorMode, /function MoleskineTeachMeMore/);
     assert.match(tutorMode, /rr-moleskine-teaching-document/);
+    assert.match(tutorMode, /rr-moleskine-left-page[\s\S]*rr-moleskine-left-reasoning/);
     assert.match(tutorMode, /rr-moleskine-teach-more/);
     assert.match(tutorMode, /rr-moleskine-right-page/);
     assert.match(tutorMode, /rr-moleskine-teaching-section/);
     assert.match(tutorMode, /rr-explanation-card rr-card-paper rr-adaptive-card rr-moleskine-page-section/);
+    assert.doesNotMatch(css, /\.rr-moleskine-teaching-document > \.rr-moleskine-left-reasoning[\s\S]*grid-row:\s*3/);
+    assert.doesNotMatch(css, /display:\s*contents/);
 
     assert.match(teachingCard, /rr-teaching-card rr-explanation-card rr-card-paper rr-moleskine-insert/);
     assert.match(teachingCard, /rr-panel-collapsed/);

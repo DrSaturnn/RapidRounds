@@ -105,7 +105,8 @@ export function TutorMode({
   setReinforcementAnswer,
   submitReinforcementAnswer,
   loadQuestion,
-  presentation = "default"
+  presentation = "default",
+  moleskineLeftPageContent
 }: {
   tutor: TutorContent;
   reinforcementAnswer: string;
@@ -114,6 +115,7 @@ export function TutorMode({
   submitReinforcementAnswer: () => void;
   loadQuestion: (targetConcept?: string) => void;
   presentation?: "default" | "moleskine";
+  moleskineLeftPageContent?: ReactNode;
 }) {
   const isUnknown = tutor.repair.style === "UNKNOWN";
   const repairTitle = "Build the pattern";
@@ -388,6 +390,7 @@ export function TutorMode({
         hasVignetteFindings={hasVignetteFindings}
         hasCommonConfusion={hasCommonConfusion}
         showComparison={showComparisonInRightPanel}
+        leftPageContent={moleskineLeftPageContent}
         teachingSurface={teachingSurface}
         nextChallengeSurface={learningTrajectory.recommendation ? nextChallengeSurface : null}
         reinforcementAnswer={reinforcementAnswer}
@@ -419,6 +422,7 @@ function MoleskineTeachingDocument({
   hasVignetteFindings,
   hasCommonConfusion,
   showComparison,
+  leftPageContent,
   teachingSurface,
   nextChallengeSurface,
   reinforcementAnswer,
@@ -433,6 +437,7 @@ function MoleskineTeachingDocument({
   hasVignetteFindings: boolean;
   hasCommonConfusion: boolean;
   showComparison: boolean;
+  leftPageContent?: ReactNode;
   teachingSurface: ReactNode;
   nextChallengeSurface: ReactNode;
   reinforcementAnswer: string;
@@ -451,52 +456,55 @@ function MoleskineTeachingDocument({
 
   return (
     <section className="rr-moleskine-teaching-document" aria-label="Notebook teaching document">
-      <div className="rr-moleskine-left-reasoning">
-        <p className="rr-section-header">Expert reasoning</p>
-        <MoleskineReasoningChain steps={visualFlowSteps} />
-        <RepairSummary tutor={tutor} />
-        {hasVignetteFindings ? <VignetteAttentionMap findings={tutor.vignetteFindings ?? []} /> : null}
-        <div className="rr-moleskine-written-section">
-          <TeachingFact label="What mattered" value={tutor.repair.clueMeaning} />
-          {compactReasoning ? <TeachingFact label="What to remember" value={compactReasoning} /> : null}
-          {hasCommonConfusion ? <TeachingFact label="Common confusion" value={tutor.comparison.competingDiagnosis} /> : null}
-        </div>
-        {tutor.coaching ? (
-          <div className="rr-callout rr-coaching-callout rr-moleskine-margin-note">
-            <p className="rr-meta">Pattern to watch</p>
-            <p>{tutor.coaching.message}</p>
+      <section className="rr-card rr-question-card rr-vignette-card rr-card-paper rr-moleskine-left-page">
+        {leftPageContent}
+        <div className="rr-moleskine-left-reasoning">
+          <p className="rr-section-header">Expert reasoning</p>
+          <MoleskineReasoningChain steps={visualFlowSteps} />
+          <RepairSummary tutor={tutor} />
+          {hasVignetteFindings ? <VignetteAttentionMap findings={tutor.vignetteFindings ?? []} /> : null}
+          <div className="rr-moleskine-written-section">
+            <TeachingFact label="What mattered" value={tutor.repair.clueMeaning} />
+            {compactReasoning ? <TeachingFact label="What to remember" value={compactReasoning} /> : null}
+            {hasCommonConfusion ? <TeachingFact label="Common confusion" value={tutor.comparison.competingDiagnosis} /> : null}
           </div>
-        ) : null}
-        {tutor.reinforcement ? (
-          <form onSubmit={onSubmit} className="rr-moleskine-reinforcement">
-            <p className="text-sm font-medium leading-6">{tutor.reinforcement.question}</p>
-            <div className="grid gap-3 sm:grid-cols-[1fr_auto]">
-              <input
-                {...inputGuardProps}
-                name={`repair-${tutor.repair.style.toLowerCase()}-response`}
-                value={reinforcementAnswer}
-                onChange={(event) => setReinforcementAnswer(event.target.value)}
-                disabled={reinforcementResult !== null}
-                className="rr-text-input"
-              />
-              {reinforcementResult === null ? (
-                <Button type="submit" disabled={reinforcementAnswer.trim().length === 0}>
-                  Check
-                </Button>
-              ) : (
-                <Button type="button" onClick={() => loadQuestion()}>
-                  Next
-                </Button>
-              )}
+          {tutor.coaching ? (
+            <div className="rr-callout rr-coaching-callout rr-moleskine-margin-note">
+              <p className="rr-meta">Pattern to watch</p>
+              <p>{tutor.coaching.message}</p>
             </div>
-            {reinforcementResult !== null ? (
-              <p className="rr-supporting">
-                {reinforcementResult ? "Correct." : "Not quite."} {tutor.reinforcement.boardPearl}
-              </p>
-            ) : null}
-          </form>
-        ) : null}
-      </div>
+          ) : null}
+          {tutor.reinforcement ? (
+            <form onSubmit={onSubmit} className="rr-moleskine-reinforcement">
+              <p className="text-sm font-medium leading-6">{tutor.reinforcement.question}</p>
+              <div className="grid gap-3 sm:grid-cols-[1fr_auto]">
+                <input
+                  {...inputGuardProps}
+                  name={`repair-${tutor.repair.style.toLowerCase()}-response`}
+                  value={reinforcementAnswer}
+                  onChange={(event) => setReinforcementAnswer(event.target.value)}
+                  disabled={reinforcementResult !== null}
+                  className="rr-text-input"
+                />
+                {reinforcementResult === null ? (
+                  <Button type="submit" disabled={reinforcementAnswer.trim().length === 0}>
+                    Check
+                  </Button>
+                ) : (
+                  <Button type="button" onClick={() => loadQuestion()}>
+                    Next
+                  </Button>
+                )}
+              </div>
+              {reinforcementResult !== null ? (
+                <p className="rr-supporting">
+                  {reinforcementResult ? "Correct." : "Not quite."} {tutor.reinforcement.boardPearl}
+                </p>
+              ) : null}
+            </form>
+          ) : null}
+        </div>
+      </section>
       <section className="rr-moleskine-right-page" aria-label="Understand the pattern" data-rr-teaching-depth>
         <p className="rr-section-header rr-depth-heading">Understand the pattern</p>
         <RightPanelExplanation tutor={tutor} showComparison={showComparison} presentation="moleskine" />

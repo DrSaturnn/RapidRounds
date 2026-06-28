@@ -9,7 +9,7 @@ describe("continuous educational workspace", () => {
     assert.match(practicePanel, /rr-question-card/);
     assert.match(practicePanel, /rr-practice-main-wide/);
 
-    assert.ok(practicePanel.indexOf("<MoleskineLeftPage") < practicePanel.indexOf("<TutorMode"));
+    assert.ok(practicePanel.indexOf("moleskineLeftPageContent") > practicePanel.indexOf("<TutorMode"));
     assert.ok(practicePanel.indexOf("rr-question-card-compact") < practicePanel.lastIndexOf("<TutorMode"));
   });
 

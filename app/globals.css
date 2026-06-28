@@ -1475,19 +1475,14 @@ body:has(.practice-focus) .app-main {
       grid-row: 2;
     }
 
-    [data-theme="warm-notebook"] .rr-moleskine-learning-layer,
-    [data-theme="warm-notebook"] .rr-moleskine-teaching-spread {
-      display: contents;
-    }
-
     [data-theme="warm-notebook"] .rr-post-answer-repair {
       grid-column: 1;
-      grid-row: 3;
+      grid-row: 2;
     }
 
     [data-theme="warm-notebook"] .rr-moleskine-right-page {
       grid-column: 2;
-      grid-row: 2 / span 2;
+      grid-row: 2;
       align-self: start;
     }
 
@@ -1739,19 +1734,29 @@ body:has(.practice-focus) .app-main {
     }
 
     [data-theme="warm-notebook"] .rr-moleskine-teaching-document {
-      display: contents;
+      grid-column: 1 / -1;
+      grid-row: 2;
+      display: grid;
+      grid-template-columns: minmax(0, 1.08fr) minmax(24rem, 0.82fr);
+      column-gap: 2rem;
+      align-items: start;
     }
 
-    [data-theme="warm-notebook"] .rr-moleskine-teaching-document > .rr-moleskine-left-reasoning {
+    [data-theme="warm-notebook"] .rr-moleskine-teaching-document > .rr-moleskine-left-page {
       grid-column: 1;
-      grid-row: 3;
-      padding: 0.9rem 0.25rem 0;
+      grid-row: 1;
+    }
+
+    [data-theme="warm-notebook"] .rr-moleskine-left-page > .rr-moleskine-left-reasoning {
+      margin-top: 1.5rem;
+      padding-top: 1rem;
+      border-top: 1px solid rgb(112 76 42 / 0.16);
     }
 
     [data-theme="warm-notebook"] .rr-moleskine-teaching-document > .rr-moleskine-right-page,
     [data-theme="warm-notebook"] .rr-moleskine-quiet-page {
       grid-column: 2;
-      grid-row: 2 / span 2;
+      grid-row: 1;
       align-self: start;
       margin-top: 0.1rem;
     }

@@ -606,14 +606,35 @@ export function PracticePanel() {
               <QuestionMeta question={question} />
               <p className="rr-meta">{learningGoal}</p>
             </div>
-            <MoleskineLeftPage>
-              <div className="rr-moleskine-question-intro">
-                <span className="rr-badge rr-badge-learning">{isExplanationState ? "Explanation" : "Question"}</span>
-                <span className="rr-meta">Think through the vignette first.</span>
-              </div>
-              <AnnotatedClinicalPrompt prompt={clinicalPrompt} findings={visibleVignetteFindings} />
-              <p className="rr-decision-question">{decisionQuestion}</p>
-              {!isExplanationState ? (
+            {isExplanationState && tutor ? (
+              <TutorMode
+                tutor={tutor}
+                reinforcementAnswer={reinforcementAnswer}
+                reinforcementResult={reinforcementResult}
+                setReinforcementAnswer={setReinforcementAnswer}
+                submitReinforcementAnswer={submitReinforcementAnswer}
+                loadQuestion={(targetConcept?: string) => void loadQuestion(targetConcept)}
+                presentation="moleskine"
+                moleskineLeftPageContent={
+                  <>
+                    <div className="rr-moleskine-question-intro">
+                      <span className="rr-badge rr-badge-learning">Explanation</span>
+                      <span className="rr-meta">Think through the vignette first.</span>
+                    </div>
+                    <AnnotatedClinicalPrompt prompt={clinicalPrompt} findings={visibleVignetteFindings} />
+                    <p className="rr-decision-question">{decisionQuestion}</p>
+                  </>
+                }
+              />
+            ) : (
+              <>
+                <MoleskineLeftPage>
+                  <div className="rr-moleskine-question-intro">
+                    <span className="rr-badge rr-badge-learning">Question</span>
+                    <span className="rr-meta">Think through the vignette first.</span>
+                  </div>
+                  <AnnotatedClinicalPrompt prompt={clinicalPrompt} findings={visibleVignetteFindings} />
+                  <p className="rr-decision-question">{decisionQuestion}</p>
                 <form onSubmit={onSubmit} className="rr-answer-dock rr-moleskine-solve-form">
                   <label className="sr-only" htmlFor="answer">
                     Answer
@@ -646,22 +667,11 @@ export function PracticePanel() {
                   </p>
                   {error ? <p className="text-sm text-rr-muted">{error}</p> : null}
                 </form>
-              ) : null}
-            </MoleskineLeftPage>
-            {isExplanationState && tutor ? (
-              <TutorMode
-                tutor={tutor}
-                reinforcementAnswer={reinforcementAnswer}
-                reinforcementResult={reinforcementResult}
-                setReinforcementAnswer={setReinforcementAnswer}
-                submitReinforcementAnswer={submitReinforcementAnswer}
-                loadQuestion={(targetConcept?: string) => void loadQuestion(targetConcept)}
-                presentation="moleskine"
-              />
-            ) : (
-              <MoleskineRightPage>
-                <p>Answer first. The reasoning will unfold here.</p>
-              </MoleskineRightPage>
+                </MoleskineLeftPage>
+                <MoleskineRightPage>
+                  <p>Answer first. The reasoning will unfold here.</p>
+                </MoleskineRightPage>
+              </>
             )}
           </MoleskineNotebookSpread>
         }
