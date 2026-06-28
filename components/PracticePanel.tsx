@@ -228,7 +228,7 @@ export function PracticePanel() {
           </div>
         </header>
 
-        <main className="rr-practice-main">
+        <main className={`rr-practice-main ${mode === "tutor" ? "rr-practice-main-wide" : ""}`}>
           <section className="rr-card rr-question-card space-y-7 px-5 py-6 motion-safe:animate-[fadeIn_180ms_var(--rr-ease-standard)] sm:space-y-9 sm:px-8 sm:py-8">
             <div className="space-y-5 sm:space-y-6">
               <div className="flex flex-wrap items-center gap-2">

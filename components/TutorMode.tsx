@@ -73,9 +73,8 @@ export function TutorMode({
     }
   };
 
-  return (
-    <section className="space-y-3.5">
-      <div className={`rr-card rr-card-section space-y-4 ${isUnknown ? "rr-concept-card" : "rr-repair-card"}`}>
+  const repairSurface = (
+    <div className={`rr-card rr-card-section space-y-4 ${isUnknown ? "rr-concept-card" : "rr-repair-card"}`}>
         <p className="rr-section-header">{repairTitle}</p>
         {isUnknown ? (
           <div className="space-y-3 text-sm leading-6">
@@ -112,16 +111,6 @@ export function TutorMode({
                 <p>{tutor.comparison.competingDiagnosis}</p>
               </div>
             ) : null}
-            {learningTrajectory.recommendation ? (
-              <div>
-                <p className="rr-meta">Next challenge</p>
-                <p>{nextChallenge}</p>
-              </div>
-            ) : null}
-            <div className="rr-callout">
-              <p className="rr-meta">Go deeper</p>
-              <p>Open Teach me more for the illness script and comparison.</p>
-            </div>
           </div>
         ) : (
           <>
@@ -146,10 +135,6 @@ export function TutorMode({
                 <p>{tutor.coaching.message}</p>
               </div>
             ) : null}
-            <div className="rr-callout">
-              <p className="rr-meta">Go deeper</p>
-              <p>Open Teach me more for the full illness script and comparison.</p>
-            </div>
           </>
         )}
 
@@ -189,8 +174,10 @@ export function TutorMode({
           </div>
         )}
       </div>
+  );
 
-      <TeachingCard title="Teach me more: illness script and comparison" defaultOpen={false}>
+  const teachingSurface = (
+      <TeachingCard title="Teach me more: illness script and comparison" defaultOpen>
         <div className="space-y-5">
           {modules.retrieval && tutor.teachingPlan.retrieval ? (
             <div className="rr-callout">
@@ -284,7 +271,9 @@ export function TutorMode({
           ) : null}
         </div>
       </TeachingCard>
+  );
 
+  const nextChallengeSurface = (
       <div className="rr-card rr-card-section rr-adaptive-card space-y-3">
         <p className="rr-section-header">Next challenge</p>
         <div className="space-y-3 text-sm leading-6">
@@ -315,6 +304,15 @@ export function TutorMode({
           />
         </div>
       </div>
+  );
+
+  return (
+    <section className="rr-post-answer-workspace">
+      <div className="rr-post-answer-repair">{repairSurface}</div>
+      <aside className="rr-post-answer-depth" aria-label="Teach me more">
+        {teachingSurface}
+      </aside>
+      <div className="rr-post-answer-next">{nextChallengeSurface}</div>
     </section>
   );
 }

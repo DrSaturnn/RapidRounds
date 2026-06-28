@@ -295,11 +295,11 @@ describe("decision repair", () => {
     assert.match(tutorMode, /spellCheck: false/);
   });
 
-  it("keeps Teach Me More available and collapsed for UNKNOWN mode", () => {
+  it("keeps Teach Me More available for UNKNOWN mode", () => {
     const tutorMode = readFileSync("components/TutorMode.tsx", "utf8");
 
     assert.match(tutorMode, /tutor\.repair\.style === "UNKNOWN"/);
-    assert.match(tutorMode, /<TeachingCard title="Teach me more: illness script and comparison" defaultOpen=\{false\}>/);
+    assert.match(tutorMode, /<TeachingCard title="Teach me more: illness script and comparison" defaultOpen>/);
     assert.match(tutorMode, /hasComparison/);
   });
 
