@@ -132,7 +132,7 @@ export function TutorMode({
           </div>
           <div>
             <p className="font-medium">Expert Recognition</p>
-            <p className="rr-path mt-2">{tutor.recognitionPath ?? tutor.managementPearl}</p>
+            <RecognitionPath value={tutor.recognitionPath ?? tutor.managementPearl} />
           </div>
           {tutor.cognitiveError ? (
             <div className="rr-callout">
@@ -206,6 +206,32 @@ export function TutorMode({
         </div>
       </div>
     </section>
+  );
+}
+
+function RecognitionPath({ value }: { value: string }) {
+  const steps = value
+    .split(/\s*(?:->|\u2192|=>)\s*/)
+    .map((step) => step.trim())
+    .filter(Boolean);
+
+  const visibleSteps = steps.length > 0 ? steps : [value];
+
+  return (
+    <div className="rr-path mt-2" aria-label="Expert recognition pathway">
+      {visibleSteps.map((step, index) => {
+        const isTerminal = index === visibleSteps.length - 1;
+
+        return (
+          <div key={`${step}-${index}`} className={`rr-path-step ${isTerminal ? "rr-path-terminal" : ""}`}>
+            <span className="rr-path-marker" aria-hidden="true">
+              {index + 1}
+            </span>
+            <span className="rr-path-node">{step}</span>
+          </div>
+        );
+      })}
+    </div>
   );
 }
 

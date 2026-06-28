@@ -5,21 +5,43 @@
 :root {
   --font-sans: Arial, Helvetica, sans-serif;
 
+  --rr-color-text-primary: #0a0a0a;
+  --rr-color-text-muted: #626866;
   --rr-color-background: #ffffff;
-  --rr-color-foreground: #0a0a0a;
-  --rr-color-muted: #6b6b6b;
-  --rr-color-line: #111111;
-  --rr-color-soft-line: #d8d8d8;
   --rr-color-surface: #fafaf8;
-  --rr-color-panel: #ffffff;
-  --rr-color-subtle: #f4f6f5;
-  --rr-color-clinical: #264653;
-  --rr-color-pivot: #7a5c12;
+  --rr-color-surface-elevated: #ffffff;
+  --rr-color-border: #d8d8d8;
+  --rr-color-border-strong: #111111;
+  --rr-color-aster: #315c68;
+  --rr-color-correct: #137a3a;
+  --rr-color-incorrect: #b42318;
+  --rr-color-warning: #7a5c12;
+  --rr-color-info: #264653;
   --rr-color-repair: #7f1d1d;
-  --rr-color-learning: #245c45;
-  --rr-color-success: #137a3a;
-  --rr-color-error: #b42318;
-  --rr-color-focus: #000000;
+  --rr-color-mastery: #245c45;
+  --rr-color-observatory-atmosphere: #eef3f1;
+
+  --rr-color-foreground: var(--rr-color-text-primary);
+  --rr-color-muted: var(--rr-color-text-muted);
+  --rr-color-line: #111111;
+  --rr-color-soft-line: var(--rr-color-border);
+  --rr-color-panel: var(--rr-color-surface-elevated);
+  --rr-color-subtle: #f4f6f5;
+  --rr-color-clinical: var(--rr-color-info);
+  --rr-color-pivot: var(--rr-color-warning);
+  --rr-color-learning: var(--rr-color-mastery);
+  --rr-color-success: var(--rr-color-correct);
+  --rr-color-error: var(--rr-color-incorrect);
+  --rr-color-focus: var(--rr-color-aster);
+  --rr-color-repair-tint: color-mix(in srgb, var(--rr-color-repair) 7%, white);
+  --rr-color-repair-border: color-mix(in srgb, var(--rr-color-repair) 28%, white);
+  --rr-color-mastery-tint: color-mix(in srgb, var(--rr-color-mastery) 7%, white);
+  --rr-color-mastery-border: color-mix(in srgb, var(--rr-color-mastery) 28%, white);
+  --rr-color-warning-tint: color-mix(in srgb, var(--rr-color-warning) 8%, white);
+  --rr-color-warning-border: color-mix(in srgb, var(--rr-color-warning) 28%, white);
+  --rr-color-info-tint: color-mix(in srgb, var(--rr-color-info) 6%, white);
+  --rr-color-info-border: color-mix(in srgb, var(--rr-color-info) 24%, white);
+  --rr-color-disabled-surface: #f1f2f1;
 
   --rr-space-0: 0;
   --rr-space-1: 0.25rem;
@@ -36,8 +58,8 @@
   --rr-radius-md: 0.25rem;
   --rr-radius-lg: 0.5rem;
 
-  --rr-border-thin: 1px solid var(--rr-color-line);
-  --rr-border-soft: 1px solid var(--rr-color-soft-line);
+  --rr-border-thin: 1px solid var(--rr-color-border-strong);
+  --rr-border-soft: 1px solid var(--rr-color-border);
   --rr-focus-ring: 0 0 0 2px var(--rr-color-focus);
   --rr-shadow-card: 0 1px 2px rgb(0 0 0 / 0.05), 0 10px 28px rgb(0 0 0 / 0.04);
 
@@ -165,15 +187,15 @@ body:has(.practice-focus) .app-main {
   }
 
   .rr-card {
-    @apply rounded-lg border border-rr-soft-line bg-white shadow-[var(--rr-shadow-card)];
+    @apply rounded-lg border border-rr-border bg-rr-elevated shadow-[var(--rr-shadow-card)];
   }
 
   .rr-card-section {
-    @apply border-b border-rr-soft-line px-4 py-4 last:border-b-0 sm:px-5;
+    @apply border-b border-rr-border px-4 py-4 last:border-b-0 sm:px-5;
   }
 
   .rr-panel {
-    @apply rounded-lg border border-rr-soft-line bg-rr-surface;
+    @apply rounded-lg border border-rr-border bg-rr-surface;
   }
 
   .rr-section-header {
@@ -181,53 +203,60 @@ body:has(.practice-focus) .app-main {
   }
 
   .rr-badge {
-    @apply inline-flex min-h-7 items-center rounded-md border border-rr-soft-line bg-white px-2.5 py-1 text-xs font-medium leading-4 text-rr-foreground;
+    @apply inline-flex min-h-7 items-center rounded-md border border-rr-border bg-rr-elevated px-2.5 py-1 text-xs font-medium leading-4 text-rr-foreground;
   }
 
   .rr-badge-repair {
     color: var(--rr-color-repair);
-    border-color: rgb(127 29 29 / 0.28);
-    background: rgb(127 29 29 / 0.06);
+    border-color: var(--rr-color-repair-border);
+    background: var(--rr-color-repair-tint);
   }
 
   .rr-badge-learning {
-    color: var(--rr-color-learning);
-    border-color: rgb(36 92 69 / 0.28);
-    background: rgb(36 92 69 / 0.06);
+    color: var(--rr-color-mastery);
+    border-color: var(--rr-color-mastery-border);
+    background: var(--rr-color-mastery-tint);
   }
 
   .rr-badge-pivot {
-    color: var(--rr-color-pivot);
-    border-color: rgb(122 92 18 / 0.28);
-    background: rgb(122 92 18 / 0.08);
+    color: var(--rr-color-warning);
+    border-color: var(--rr-color-warning-border);
+    background: var(--rr-color-warning-tint);
   }
 
   .rr-button {
-    @apply inline-flex h-11 items-center justify-center rounded-md border px-5 text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-black focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:border-rr-soft-line disabled:bg-neutral-100 disabled:text-rr-muted;
+    @apply inline-flex h-11 items-center justify-center rounded-md border px-5 text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-rr-focus focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:border-rr-border disabled:bg-rr-disabled disabled:text-rr-muted;
   }
 
   .rr-button-primary {
-    @apply border-rr-foreground bg-rr-foreground text-white hover:bg-white hover:text-rr-foreground active:bg-rr-surface;
+    @apply border-rr-foreground bg-rr-foreground text-rr-background hover:bg-rr-elevated hover:text-rr-foreground active:bg-rr-surface;
   }
 
   .rr-button-secondary {
-    @apply border-rr-soft-line bg-white text-rr-foreground hover:border-rr-foreground hover:bg-rr-foreground hover:text-white active:bg-rr-surface;
+    @apply border-rr-border bg-rr-elevated text-rr-foreground hover:border-rr-foreground hover:bg-rr-foreground hover:text-rr-background active:bg-rr-surface;
   }
 
   .rr-button-ghost {
-    @apply border-transparent bg-transparent text-rr-foreground hover:border-rr-soft-line hover:bg-rr-surface;
+    @apply border-transparent bg-transparent text-rr-foreground hover:border-rr-border hover:bg-rr-surface;
   }
 
   .rr-button-destructive {
-    @apply border-red-800 bg-red-800 text-white hover:bg-white hover:text-red-800;
+    border-color: var(--rr-color-incorrect);
+    background: var(--rr-color-incorrect);
+    color: var(--rr-color-background);
+  }
+
+  .rr-button-destructive:hover {
+    background: var(--rr-color-surface-elevated);
+    color: var(--rr-color-incorrect);
   }
 
   .rr-input {
-    @apply h-12 w-full rounded-none border-0 border-b border-rr-line bg-transparent px-0 text-base outline-none transition-colors placeholder:text-rr-muted focus:border-rr-foreground focus-visible:ring-2 focus-visible:ring-black focus-visible:ring-offset-4 disabled:text-rr-muted;
+    @apply h-12 w-full rounded-none border-0 border-b border-rr-line bg-transparent px-0 text-base outline-none transition-colors placeholder:text-rr-muted focus:border-rr-aster focus-visible:ring-2 focus-visible:ring-rr-focus focus-visible:ring-offset-4 disabled:text-rr-muted;
   }
 
   .rr-text-input {
-    @apply h-11 w-full rounded-md border border-rr-soft-line bg-white px-3 text-sm outline-none transition-colors focus:border-rr-foreground focus-visible:ring-2 focus-visible:ring-black focus-visible:ring-offset-2 disabled:text-rr-muted;
+    @apply h-11 w-full rounded-md border border-rr-border bg-rr-elevated px-3 text-sm outline-none transition-colors focus:border-rr-aster focus-visible:ring-2 focus-visible:ring-rr-focus focus-visible:ring-offset-2 disabled:text-rr-muted;
   }
 
   .rr-table {
@@ -239,32 +268,66 @@ body:has(.practice-focus) .app-main {
   }
 
   .rr-table td {
-    @apply border-b border-rr-soft-line py-2 pr-3 align-top last:pr-0;
+    @apply border-b border-rr-border py-2 pr-3 align-top last:pr-0;
   }
 
   .rr-chip {
-    @apply inline-flex min-h-7 items-center rounded-md border border-rr-soft-line bg-white px-2.5 py-1 text-xs font-medium text-rr-foreground transition-colors hover:border-rr-line hover:bg-rr-surface;
+    @apply inline-flex min-h-7 items-center rounded-md border border-rr-border bg-rr-elevated px-2.5 py-1 text-xs font-medium text-rr-foreground transition-colors hover:border-rr-line hover:bg-rr-surface;
   }
 
   .rr-callout {
-    @apply rounded-lg border border-rr-soft-line bg-white px-4 py-3;
+    @apply rounded-lg border border-rr-border bg-rr-elevated px-4 py-3;
   }
 
   .rr-callout-pivot {
-    border-color: rgb(122 92 18 / 0.28);
-    background: rgb(122 92 18 / 0.06);
+    border-color: var(--rr-color-warning-border);
+    background: var(--rr-color-warning-tint);
   }
 
   .rr-path {
-    @apply rounded-lg border border-rr-soft-line bg-white px-4 py-3 font-mono text-xs leading-6 text-rr-foreground;
+    @apply rounded-lg border border-rr-info-border bg-rr-info-tint px-3 py-3 text-sm leading-5 text-rr-foreground;
+  }
+
+  .rr-path-step {
+    @apply relative flex items-center gap-2 pb-4 last:pb-0;
+  }
+
+  .rr-path-step:not(:last-child)::after {
+    content: "";
+    position: absolute;
+    left: 0.6875rem;
+    top: 1.85rem;
+    bottom: 0.3rem;
+    width: 1px;
+    background: var(--rr-color-info-border);
+  }
+
+  .rr-path-marker {
+    @apply z-10 flex h-6 w-6 shrink-0 items-center justify-center rounded-full border border-rr-info-border bg-rr-elevated text-[0.7rem] font-semibold text-rr-info;
+  }
+
+  .rr-path-node {
+    @apply min-w-0 rounded-md border border-rr-border bg-rr-elevated px-3 py-2;
+  }
+
+  .rr-path-terminal .rr-path-marker {
+    border-color: var(--rr-color-mastery-border);
+    background: var(--rr-color-mastery-tint);
+    color: var(--rr-color-mastery);
+  }
+
+  .rr-path-terminal .rr-path-node {
+    border-color: var(--rr-color-mastery-border);
+    background: var(--rr-color-mastery-tint);
+    font-weight: 600;
   }
 
   .rr-empty {
-    @apply rounded-lg border border-rr-soft-line bg-white p-6 shadow-[var(--rr-shadow-card)];
+    @apply rounded-lg border border-rr-border bg-rr-elevated p-6 shadow-[var(--rr-shadow-card)];
   }
 
   .rr-loading {
-    @apply rounded-lg border border-rr-soft-line bg-white px-5 py-4 text-sm text-rr-muted shadow-[var(--rr-shadow-card)];
+    @apply rounded-lg border border-rr-border bg-rr-elevated px-5 py-4 text-sm text-rr-muted shadow-[var(--rr-shadow-card)];
   }
 }
 

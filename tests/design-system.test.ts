@@ -21,6 +21,32 @@ describe("design system", () => {
     ].forEach((className) => assert.match(css, new RegExp(className.replace(".", "\\."))));
   });
 
+  it("defines semantic color tokens for the v1 product language", () => {
+    const css = readFileSync("app/globals.css", "utf8");
+    const tailwind = readFileSync("tailwind.config.ts", "utf8");
+
+    [
+      "--rr-color-background",
+      "--rr-color-surface",
+      "--rr-color-surface-elevated",
+      "--rr-color-border",
+      "--rr-color-text-muted",
+      "--rr-color-text-primary",
+      "--rr-color-aster",
+      "--rr-color-correct",
+      "--rr-color-incorrect",
+      "--rr-color-warning",
+      "--rr-color-info",
+      "--rr-color-repair",
+      "--rr-color-mastery",
+      "--rr-color-observatory-atmosphere"
+    ].forEach((token) => assert.match(css, new RegExp(token)));
+
+    ["aster", "correct", "incorrect", "warning", "info", "repair", "mastery", "observatory"].forEach((token) =>
+      assert.match(tailwind, new RegExp(`${token}: "var\\(--rr-color-`))
+    );
+  });
+
   it("uses design-system classes for core reusable components", () => {
     const button = readFileSync("components/Button.tsx", "utf8");
     const teachingCard = readFileSync("components/TeachingCard.tsx", "utf8");
@@ -37,6 +63,8 @@ describe("design system", () => {
     const tutorMode = readFileSync("components/TutorMode.tsx", "utf8");
 
     assert.match(tutorMode, /rr-path/);
+    assert.match(tutorMode, /rr-path-step/);
+    assert.match(tutorMode, /rr-path-terminal/);
     assert.match(tutorMode, /rr-table/);
     assert.match(tutorMode, /rr-callout-pivot/);
     assert.match(tutorMode, /rr-chip/);
