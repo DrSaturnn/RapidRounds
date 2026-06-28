@@ -1,4 +1,5 @@
 import type { QuestionDto } from "@/types/practice";
+import { applyRapidRoundsCaseMetadataToQuestion } from "@/lib/rapidrounds-case";
 
 type ClinicalDecisionLike = {
   id: string;
@@ -10,10 +11,20 @@ type ClinicalDecisionLike = {
   prompt: string;
   managementPearl: string;
   difficulty: number;
+  tags?: string;
 };
 
+function parseJsonArray(value?: string) {
+  try {
+    const parsed = JSON.parse(value ?? "[]") as unknown;
+    return Array.isArray(parsed) ? parsed.map(String) : [];
+  } catch {
+    return [];
+  }
+}
+
 export function toPracticePromptDto(decision: ClinicalDecisionLike): QuestionDto {
-  return {
+  const question = {
     id: decision.id,
     specialty: decision.specialty,
     system: decision.system,
@@ -25,4 +36,6 @@ export function toPracticePromptDto(decision: ClinicalDecisionLike): QuestionDto
     management: decision.managementPearl,
     diagnosis: decision.topic
   };
+
+  return applyRapidRoundsCaseMetadataToQuestion(question, parseJsonArray(decision.tags));
 }

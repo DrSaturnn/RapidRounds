@@ -158,7 +158,7 @@ export function TutorMode({
   };
 
   const repairSurface = (
-    <div className={`rr-card rr-card-section rr-notebook-section space-y-4 ${isUnknown ? "rr-concept-card" : "rr-repair-card"}`}>
+    <div className={`rr-notebook-section rr-explanation-column space-y-4 ${isUnknown ? "rr-concept-card" : "rr-repair-card"}`}>
         <p className="rr-section-header">{repairTitle}</p>
         {isUnknown ? (
           <div className="space-y-3 text-sm leading-6">
@@ -331,7 +331,7 @@ export function TutorMode({
   );
 
   const nextChallengeSurface = (
-      <div className="rr-card rr-card-section rr-notebook-section rr-adaptive-card space-y-3">
+      <div className="rr-notebook-section rr-adaptive-card space-y-3">
         <p className="rr-section-header">Next challenge</p>
         <div className="space-y-3 text-sm leading-6">
           <p>
@@ -364,12 +364,12 @@ export function TutorMode({
   );
 
   return (
-    <section className="rr-post-answer-workspace">
+    <section className="rr-post-answer-workspace rr-explanation-notebook">
       <div className="rr-post-answer-repair">{repairSurface}</div>
-      <section className="rr-post-answer-depth" aria-label="Understand the pattern">
+      <section className="rr-post-answer-depth" aria-label="Understand the pattern" data-rr-teaching-depth>
         {teachingSurface}
+        <div className="rr-post-answer-next mt-4">{nextChallengeSurface}</div>
       </section>
-      <div className="rr-post-answer-next">{nextChallengeSurface}</div>
     </section>
   );
 }

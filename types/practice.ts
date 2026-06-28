@@ -1,8 +1,11 @@
 export type QuestionDto = {
   id: string;
+  scriptId?: string;
   specialty: string;
   system?: string;
   topic: string;
+  canonicalProblem?: string;
+  variantType?: string;
   difficulty: number;
   stem: string;
   decisionType?: DecisionType;
@@ -17,6 +20,7 @@ export type DecisionType =
   | "Next Best Step"
   | "Initial Test"
   | "Confirmatory Test"
+  | "Interpretation"
   | "Management"
   | "Risk Factor"
   | "Contraindication"

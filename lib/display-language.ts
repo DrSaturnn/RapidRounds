@@ -6,6 +6,7 @@ const decisionTypeCopy: Record<DecisionType, string> = {
   "Next Best Step": "Next best step",
   "Initial Test": "Initial test",
   "Confirmatory Test": "Confirmatory test",
+  Interpretation: "Interpretation",
   Management: "Management",
   "Risk Factor": "Risk factor",
   Contraindication: "Contraindication",

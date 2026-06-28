@@ -1,8 +1,14 @@
 import { PrismaClient } from "@prisma/client";
+import { ectopicPregnancyVariants } from "../lib/ectopic-pregnancy-variants";
+import {
+  rapidRoundsCaseToClinicalDecisionSeed,
+  VIGNETTE_FINDING_TAG_PREFIX
+} from "../lib/rapidrounds-case";
 
 const prisma = new PrismaClient();
 
 type ClinicalDecisionSeed = {
+  id?: string;
   system: string;
   topic: string;
   clinicalPattern: string;
@@ -21,8 +27,6 @@ type ClinicalDecisionSeed = {
     explanation?: string;
   }>;
 };
-
-const VIGNETTE_FINDING_TAG_PREFIX = "vignette_finding::";
 
 function serializeTags(decision: ClinicalDecisionSeed) {
   const vignetteFindings = decision.vignetteFindings?.map((finding) =>
@@ -1247,19 +1251,25 @@ const decisions: ClinicalDecisionSeed[] = [
     managementPearl: "Offer pessary and pelvic floor therapy when appropriate.",
     difficulty: 1,
     tags: ["pelvic organ prolapse", "pessary", "urogynecology"]
-  }
+  },
+  ...ectopicPregnancyVariants.map(rapidRoundsCaseToClinicalDecisionSeed)
 ];
 
 async function main() {
   for (const decision of decisions) {
-    const existingDecision = await prisma.clinicalDecision.findFirst({
-      where: {
-        specialty: "OB/GYN",
-        system: decision.system,
-        topic: decision.topic
-      },
-      select: { id: true }
-    });
+    const existingDecision = decision.id
+      ? await prisma.clinicalDecision.findUnique({
+          where: { id: decision.id },
+          select: { id: true }
+        })
+      : await prisma.clinicalDecision.findFirst({
+          where: {
+            specialty: "OB/GYN",
+            system: decision.system,
+            topic: decision.topic
+          },
+          select: { id: true }
+        });
     const data = {
       specialty: "OB/GYN",
       system: decision.system,
@@ -1284,7 +1294,10 @@ async function main() {
       });
     } else {
       await prisma.clinicalDecision.create({
-        data
+        data: {
+          ...(decision.id ? { id: decision.id } : {}),
+          ...data
+        }
       });
     }
   }

@@ -42,6 +42,7 @@ describe("visual clinical reasoning renderer", () => {
     assert.match(css, /rr-clinical-flow-pivot/);
     assert.match(css, /rr-clinical-flow-terminal/);
     assert.match(css, /content: "↓"/);
-    assert.match(css, /max-width: 64rem/);
+    assert.match(css, /rr-explanation-notebook/);
+    assert.match(css, /max-width: 86rem/);
   });
 });

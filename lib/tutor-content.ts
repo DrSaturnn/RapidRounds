@@ -12,6 +12,11 @@ import { findDecisionBoundaryRepair } from "@/lib/decision-boundary-repair";
 import { dedupeDisplayStrings } from "@/lib/display-strings";
 import { buildTeachingPlan } from "@/lib/educational-assembly";
 import { buildExpertIllnessScript } from "@/lib/expert-illness-script";
+import {
+  parseRapidRoundsCaseMetadata,
+  RAPIDROUNDS_CASE_TAG_PREFIX,
+  type RapidRoundsCaseMetadata
+} from "@/lib/rapidrounds-case";
 import type {
   AnswerEvaluation,
   CognitiveError,
@@ -233,7 +238,7 @@ function parseVignetteFindingTags(tags: string[]): VignetteFindingAnnotation[] {
 }
 
 function getClinicalTags(tags: string[]) {
-  return tags.filter((tag) => !tag.startsWith(VIGNETTE_FINDING_TAG_PREFIX));
+  return tags.filter((tag) => !tag.startsWith(VIGNETTE_FINDING_TAG_PREFIX) && !tag.startsWith(RAPIDROUNDS_CASE_TAG_PREFIX));
 }
 
 function sentence(value: string) {
@@ -289,8 +294,89 @@ function getMappedTeachMore(decision: TutorDecision) {
   return comparisonMap[getDiagnosis(decision).toLowerCase()];
 }
 
-function getStructuredIllnessScript(decision: TutorDecision) {
+function getStructuredIllnessScript(decision: TutorDecision, metadata?: RapidRoundsCaseMetadata) {
+  if (metadata) {
+    return {
+      typicalPatientFindings: dedupeDisplayStrings([
+        metadata.canonicalProblem,
+        ...metadata.supportingClues,
+        ...metadata.pivotClues
+      ]).slice(0, 5),
+      recognitionGoal: metadata.decisionBoundary[0]
+        ? `Distinguish from ${metadata.decisionBoundary[0].confusedWith}.`
+        : `Recognize the ${metadata.canonicalProblem.toLowerCase()} illness script.`,
+      keyNegativeFindings: metadata.distractorClues.length > 0 ? metadata.distractorClues : undefined
+    };
+  }
+
   return structuredIllnessScriptMap[getDiagnosis(decision).toLowerCase()];
+}
+
+function buildMetadataVignetteFindings(metadata?: RapidRoundsCaseMetadata): VignetteFindingAnnotation[] {
+  if (!metadata) {
+    return [];
+  }
+
+  return [
+    { text: metadata.canonicalProblem, role: "context" },
+    ...metadata.supportingClues.map((text) => ({ text, role: "supporting" as const })),
+    ...metadata.pivotClues.map((text) => ({
+      text,
+      role: "pivot_clue" as const,
+      explanation: metadata.correctReasoning
+    })),
+    ...metadata.distractorClues.map((text) => ({
+      text,
+      role: "noise" as const,
+      explanation: "Tempting context, but not the deciding clue for this variant."
+    }))
+  ];
+}
+
+function findAuthoredDecisionBoundary(metadata: RapidRoundsCaseMetadata | undefined, learnerAnswer: string) {
+  const normalizedAnswer = cleanAnswer(learnerAnswer).toLowerCase();
+  const boundary = metadata?.decisionBoundary.find((item) => {
+    const confused = item.confusedWith.toLowerCase();
+
+    return normalizedAnswer.includes(confused) || confused.includes(normalizedAnswer);
+  });
+
+  return boundary
+    ? `Your answer becomes correct when ${boundary.confusedWith} is the supported decision. ${boundary.howToDistinguish}`
+    : undefined;
+}
+
+function buildMetadataComparison(
+  decision: TutorDecision,
+  metadata?: RapidRoundsCaseMetadata
+): TutorContent["comparison"] | undefined {
+  const boundary = metadata?.decisionBoundary[0];
+
+  if (!metadata || !boundary) {
+    return undefined;
+  }
+
+  return {
+    correctDiagnosis: sentence(decision.correctAnswer),
+    competingDiagnosis: boundary.confusedWith,
+    rows: [
+      {
+        feature: "Typical presentation",
+        correct: metadata.canonicalProblem,
+        competing: boundary.confusedWith
+      },
+      {
+        feature: "Highest-yield distinguishing clue",
+        correct: dedupeDisplayStrings(metadata.pivotClues).join("; "),
+        competing: boundary.howToDistinguish
+      },
+      {
+        feature: "Common trap",
+        correct: metadata.correctReasoning,
+        competing: metadata.commonWrongReasoning[0] ?? boundary.howToDistinguish
+      }
+    ].filter((row) => row.correct.trim().length > 0 && row.competing.trim().length > 0)
+  };
 }
 
 function isKnownAdjacentAnswer(decision: TutorDecision, userAnswer: string, evaluation?: AnswerEvaluation) {
@@ -413,7 +499,8 @@ function buildRepair(
   decision: TutorDecision,
   userAnswer: string,
   evaluation?: AnswerEvaluation,
-  cognitiveError?: CognitiveError
+  cognitiveError?: CognitiveError,
+  authoredDecisionBoundary?: string
 ): DecisionRepair {
   const classification = evaluation?.classification ?? "INCORRECT";
   const correctAnswer = sentence(decision.correctAnswer);
@@ -447,7 +534,7 @@ function buildRepair(
     learnerAnswer,
     correctAnswer,
     acceptedAnswers
-  });
+  }) ?? authoredDecisionBoundary;
   const withDecisionBoundary = (why: string) => (decisionBoundary ? `${why} ${decisionBoundary}` : why);
 
   if (["EXACT", "EQUIVALENT", "SPELLING_VARIATION"].includes(classification)) {
@@ -559,7 +646,10 @@ export function buildTutorContent(
 ): TutorContent {
   const tags = parseJsonArray(decision.tags);
   const clinicalTags = getClinicalTags(tags);
-  const vignetteFindings = parseVignetteFindingTags(tags);
+  const rapidRoundsCase = parseRapidRoundsCaseMetadata(tags);
+  const authoredVignetteFindings = parseVignetteFindingTags(tags);
+  const metadataVignetteFindings = buildMetadataVignetteFindings(rapidRoundsCase);
+  const vignetteFindings = authoredVignetteFindings.length > 0 ? authoredVignetteFindings : metadataVignetteFindings;
   const acceptedAnswers = parseJsonArray(decision.acceptedAnswers);
   const diagnosis = getDiagnosis(decision);
   const pattern = getPattern(decision);
@@ -580,15 +670,16 @@ export function buildTutorContent(
     .filter(Boolean)
     .slice(0, 5);
   const cognitiveError = classifyCognitiveError(decision, userAnswer, evaluation);
-  const repair = buildRepair(decision, userAnswer, evaluation, cognitiveError);
+  const authoredDecisionBoundary = findAuthoredDecisionBoundary(rapidRoundsCase, userAnswer);
+  const repair = buildRepair(decision, userAnswer, evaluation, cognitiveError, authoredDecisionBoundary);
   const mappedTeachMore = getMappedTeachMore(decision);
-  const structuredIllnessScript = getStructuredIllnessScript(decision);
-  const comparison = buildComparison(decision);
+  const structuredIllnessScript = getStructuredIllnessScript(decision, rapidRoundsCase);
+  const comparison = buildMetadataComparison(decision, rapidRoundsCase) ?? buildComparison(decision);
   const decisionBoundary = findDecisionBoundaryRepair({
     learnerAnswer: cleanAnswer(userAnswer),
     correctAnswer: decision.correctAnswer,
     acceptedAnswers
-  });
+  }) ?? authoredDecisionBoundary;
   const teachingPlan = buildTeachingPlan({
     decisionType: decision.decisionType,
     learnerAnswer: userAnswer,
@@ -619,13 +710,27 @@ export function buildTutorContent(
       recognitionGoal: structuredIllnessScript?.recognitionGoal,
       recognitionGoalContrast: structuredIllnessScript?.recognitionGoalContrast,
       keyNegativeFindings: structuredIllnessScript?.keyNegativeFindings,
-      classicPresentation: buildExpertIllnessScript(decision),
+      classicPresentation: rapidRoundsCase?.teachMeMore || buildExpertIllnessScript(decision),
       buzzwords
     },
     managementPearl: sentence(management),
-    recognitionPath: mappedTeachMore?.recognitionPath ?? buildRecognitionPath(decision),
-    nbmePivot: mappedTeachMore?.nbmePivot ?? buildNbmePivot(decision),
-    whyTempting: buildWhyTempting(decision, userAnswer, evaluation, mappedTeachMore?.whyTempting),
+    recognitionPath: mappedTeachMore?.recognitionPath ?? (
+      rapidRoundsCase
+        ? dedupeDisplayStrings([
+            rapidRoundsCase.canonicalProblem,
+            ...rapidRoundsCase.pivotClues,
+            decision.decisionType ?? "",
+            decision.correctAnswer
+          ]).join(" -> ")
+        : buildRecognitionPath(decision)
+    ),
+    nbmePivot: mappedTeachMore?.nbmePivot ?? rapidRoundsCase?.decisionBoundary[0]?.howToDistinguish ?? buildNbmePivot(decision),
+    whyTempting: buildWhyTempting(
+      decision,
+      userAnswer,
+      evaluation,
+      mappedTeachMore?.whyTempting ?? rapidRoundsCase?.commonWrongReasoning[0]
+    ),
     comparison,
     reinforcement: buildReinforcement(decision, acceptedAnswers, repair)
   };

@@ -13,11 +13,12 @@ describe("production readiness", () => {
     assert.doesNotMatch(schema, /provider = "sqlite"/);
   });
 
-  it("keeps seeded OB/GYN clinical decision count at 86", () => {
+  it("keeps seeded OB/GYN clinical decisions plus the ectopic illness-script pilot", () => {
     const seed = readFileSync("prisma/seed.ts", "utf8");
     const decisionsBlock = seed.match(/const decisions:[\s\S]*?= \[([\s\S]*?)\n\];/)?.[1] ?? "";
 
     assert.equal((decisionsBlock.match(/\n  \{/g) ?? []).length, 86);
+    assert.match(seed, /ectopicPregnancyVariants\.map\(rapidRoundsCaseToClinicalDecisionSeed\)/);
     assert.match(seed, /Seeded \$\{decisions\.length\} OB\/GYN clinical decisions\./);
   });
 
