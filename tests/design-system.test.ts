@@ -88,7 +88,7 @@ describe("design system", () => {
     assert.match(tutorMode, /rr-path/);
     assert.match(tutorMode, /rr-path-step/);
     assert.match(tutorMode, /rr-path-terminal/);
-    assert.match(tutorMode, /rr-callout-clue/);
+    assert.match(tutorMode, /rr-clinical-flow-pivot/);
     assert.match(tutorMode, /rr-table/);
     assert.match(css, /rr-teaching-block-pivot/);
     assert.match(tutorMode, /rr-chip/);

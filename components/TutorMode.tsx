@@ -42,6 +42,47 @@ function formatNextChallenge(concept?: string) {
   return `How would you recognize ${value} next time?`;
 }
 
+function isSameDisplayValue(left?: string, right?: string) {
+  return left?.trim().replace(/\s+/g, " ").toLowerCase() === right?.trim().replace(/\s+/g, " ").toLowerCase();
+}
+
+function getDecisionTaskLabel(tutor: TutorContent) {
+  const label = tutor.repair.answerLabel?.trim();
+
+  if (!label) {
+    return "Choose the clinical decision";
+  }
+
+  if (/action|management|treatment|step/i.test(label)) {
+    return "Choose the next step";
+  }
+
+  if (/diagnosis/i.test(label)) {
+    return "Name the diagnosis";
+  }
+
+  return label;
+}
+
+function getCompactReasoning(tutor: TutorContent) {
+  const why = tutor.repair.why?.trim();
+  const clueMeaning = tutor.repair.clueMeaning?.trim();
+
+  if (!why || why === "Correct.") {
+    return undefined;
+  }
+
+  if (
+    isSameDisplayValue(why, tutor.repair.clueMeaning) ||
+    (clueMeaning && why.includes(clueMeaning)) ||
+    why.includes(`${tutor.repair.clue} -> ${tutor.repair.correctAnswer}`)
+  ) {
+    return undefined;
+  }
+
+  return why;
+}
+
 export function TutorMode({
   tutor,
   reinforcementAnswer,
@@ -77,6 +118,13 @@ export function TutorMode({
     Boolean(tutor.repair.fingerprint?.trim()) &&
     tutor.repair.fingerprint.trim() !== tutor.nbmePivot?.trim() &&
     tutor.repair.fingerprint.trim() !== tutor.illnessScript.classicPresentation.trim();
+  const visualFlowSteps = dedupeDisplayStrings([
+    visibleRecognitionClues[0],
+    tutor.repair.clue,
+    getDecisionTaskLabel(tutor),
+    tutor.repair.correctAnswer
+  ]);
+  const compactReasoning = getCompactReasoning(tutor);
 
   const onSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -91,33 +139,15 @@ export function TutorMode({
         <p className="rr-section-header">{repairTitle}</p>
         {isUnknown ? (
           <div className="space-y-3 text-sm leading-6">
-            <div className="rr-callout rr-callout-clue rr-pivot-panel">
-              <p className="rr-meta">Pivot clue</p>
-              <p>{tutor.repair.clue}</p>
-              <p className="rr-meta mt-1">Meaning: {tutor.repair.clueMeaning}</p>
-            </div>
-            <div className="rr-callout rr-correct-panel">
-              <p className="rr-meta">{tutor.repair.answerLabel ?? "Correct action"}</p>
-              <p className="text-base font-semibold text-rr-mastery">{tutor.repair.correctAnswer}</p>
-            </div>
-            <div>
-              <p className="rr-meta">Expert reasoning</p>
-              <p>{tutor.repair["why"]}</p>
-            </div>
+            <ClinicalReasoningFlow steps={visualFlowSteps} />
+            <TeachingFact label="What mattered" value={tutor.repair.clueMeaning} />
+            {compactReasoning ? <TeachingFact label="What to remember" value={compactReasoning} /> : null}
             {tutor.coaching ? (
               <div className="rr-callout rr-coaching-callout">
                 <p className="rr-meta">Pattern to watch</p>
                 <p>{tutor.coaching.message}</p>
               </div>
             ) : null}
-            <div>
-              <p className="rr-meta">Recognition path</p>
-              <ul className="mt-1 list-disc space-y-0.5 pl-5">
-                {visibleRecognitionClues.map((clue) => (
-                  <li key={clue}>{clue}</li>
-                ))}
-              </ul>
-            </div>
             {hasCommonConfusion ? (
               <div>
                 <p className="rr-meta">Common confusion</p>
@@ -127,20 +157,10 @@ export function TutorMode({
           </div>
         ) : (
           <>
+            <ClinicalReasoningFlow steps={visualFlowSteps} />
             <div className="grid gap-3 text-sm leading-6 sm:grid-cols-2">
-              <div className="rr-callout rr-callout-clue rr-pivot-panel">
-                <p className="rr-meta">Pivot clue</p>
-                <p>{tutor.repair.clue}</p>
-                <p className="rr-meta mt-1">Meaning: {tutor.repair.clueMeaning}</p>
-              </div>
-              <div className="rr-callout rr-correct-panel">
-                <p className="rr-meta">{tutor.repair.answerLabel ?? "Correct action"}</p>
-                <p className="text-base font-semibold text-rr-mastery">{tutor.repair.correctAnswer}</p>
-              </div>
-            </div>
-            <div>
-              <p className="rr-meta">Expert reasoning</p>
-              <p className="text-sm leading-6">{tutor.repair.why}</p>
+              <TeachingFact label="What mattered" value={tutor.repair.clueMeaning} />
+              {compactReasoning ? <TeachingFact label="What to remember" value={compactReasoning} /> : null}
             </div>
             {tutor.coaching ? (
               <div className="rr-callout rr-coaching-callout">
@@ -259,8 +279,8 @@ export function TutorMode({
             </TeachingBlock>
           ) : null}
           {modules.nbmePivot ? (
-          <TeachingBlock title="NBME pivot" tone="pivot">
-            <p>{tutor.nbmePivot}</p>
+          <TeachingBlock title="Decision boundary" tone="pivot">
+            <TeachingFact label="NBME pivot" value={tutor.nbmePivot} />
           </TeachingBlock>
           ) : null}
           {modules.whyTempting && tutor.whyTempting ? (
@@ -318,6 +338,42 @@ export function TutorMode({
         {teachingSurface}
       </aside>
     </section>
+  );
+}
+
+function ClinicalReasoningFlow({ steps }: { steps: string[] }) {
+  const visibleSteps = steps.filter(Boolean);
+
+  return (
+    <div className="rr-clinical-flow" aria-label="Clinical reasoning flow">
+      <p className="rr-clinical-flow-title">Clinical pattern</p>
+      <div className="rr-clinical-flow-steps">
+        {visibleSteps.map((step, index) => {
+          const isPivot = index === 1;
+          const isTerminal = index === visibleSteps.length - 1;
+
+          return (
+            <div
+              key={`${step}-${index}`}
+              className={`rr-clinical-flow-step ${isPivot ? "rr-clinical-flow-pivot" : ""} ${
+                isTerminal ? "rr-clinical-flow-terminal" : ""
+              }`}
+            >
+              <span className="rr-clinical-flow-label">
+                {index === 0
+                  ? "Pattern"
+                  : isPivot
+                    ? "What mattered"
+                    : isTerminal
+                      ? "Correct answer"
+                      : "Decision task"}
+              </span>
+              <span className="rr-clinical-flow-node">{step}</span>
+            </div>
+          );
+        })}
+      </div>
+    </div>
   );
 }
 

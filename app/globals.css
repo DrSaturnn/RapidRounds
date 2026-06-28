@@ -406,7 +406,7 @@ body:has(.practice-focus) .app-main {
   }
 
   .rr-practice-main-wide {
-    @apply max-w-6xl;
+    max-width: 90rem;
   }
 
   .rr-answer-dock {
@@ -456,9 +456,65 @@ body:has(.practice-focus) .app-main {
     box-shadow: 0 10px 24px color-mix(in srgb, var(--rr-color-clue) 10%, transparent);
   }
 
+  .rr-clinical-flow {
+    @apply rounded-lg border px-4 py-4;
+    border-color: var(--rr-color-recognition-border);
+    background:
+      linear-gradient(180deg, var(--rr-color-recognition-tint), var(--rr-color-surface-elevated) 66%),
+      var(--rr-color-surface-elevated);
+    box-shadow: 0 12px 28px color-mix(in srgb, var(--rr-color-recognition) 8%, transparent);
+  }
+
+  .rr-clinical-flow-title {
+    @apply text-xs font-semibold uppercase leading-5 tracking-normal text-rr-recognition;
+  }
+
+  .rr-clinical-flow-steps {
+    @apply mt-3 grid gap-3;
+  }
+
+  .rr-clinical-flow-step {
+    @apply relative grid gap-1 rounded-lg border bg-rr-elevated px-3.5 py-3;
+    border-color: var(--rr-color-border);
+  }
+
+  .rr-clinical-flow-step:not(:last-child)::after {
+    content: "↓";
+    position: absolute;
+    left: 50%;
+    bottom: -1.05rem;
+    z-index: 2;
+    transform: translateX(-50%);
+    color: var(--rr-color-recognition);
+    font-size: 0.85rem;
+    line-height: 1;
+  }
+
+  .rr-clinical-flow-label {
+    @apply text-xs font-semibold uppercase leading-5 tracking-normal text-rr-muted;
+  }
+
+  .rr-clinical-flow-node {
+    @apply text-base font-semibold leading-7 text-rr-foreground;
+  }
+
+  .rr-clinical-flow-pivot {
+    border-color: var(--rr-color-clue-border);
+    background: var(--rr-color-clue-tint);
+  }
+
+  .rr-clinical-flow-terminal {
+    border-color: var(--rr-color-mastery-border);
+    background: var(--rr-color-mastery-tint);
+  }
+
+  .rr-clinical-flow-terminal .rr-clinical-flow-node {
+    color: var(--rr-color-mastery);
+  }
+
   @media (min-width: 1024px) {
     .rr-post-answer-workspace {
-      grid-template-columns: minmax(0, 3fr) minmax(20rem, 2fr);
+      grid-template-columns: minmax(0, 1.45fr) minmax(22rem, 1fr);
       grid-template-areas:
         "repair depth"
         "next depth";
