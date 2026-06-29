@@ -1,10 +1,19 @@
 import { buildRapidRoundsReasoningObject } from "@/lib/local-reasoning-engine";
 import {
+  getIndexedSchemaNodes,
+  getIndexedSubjectNodeCounts,
+  normalizeQuestionBreadth
+} from "@/lib/curriculum-index";
+import {
+  getGeneratedCaseCacheStats,
+  getSchemaNodeCasePoolFromCache,
+  getSubjectCasePoolFromCache,
+  resetGeneratedCaseCacheForTests
+} from "@/lib/generated-case-cache";
+import {
   allDecisionTreeSeeds,
-  allSchemaNodes,
   allSubjectSeeds,
   getSubjectDecisionTreeSeeds,
-  getSubjectSchemaNodes,
   getSubjectSeeds,
   SUBJECTS
 } from "@/lib/subject-seeds";
@@ -77,14 +86,6 @@ const breadthRank: Record<QuestionBreadth, number> = {
   expanded: 1,
   comprehensive: 2
 };
-
-function normalizeQuestionBreadth(value?: string | null): QuestionBreadth {
-  if (value === "primary" || value === "expanded" || value === "comprehensive") {
-    return value;
-  }
-
-  return "comprehensive";
-}
 
 function nodeBreadth(node: DecisionNode): QuestionBreadth {
   if (node.nodeId === "recognition" || node.nodeId === "initial-management") {
@@ -427,7 +428,7 @@ export function generateCasesFromDecisionTreeSeed(
   );
 }
 
-export function generateCasesFromSchemaNode(
+function generateCasesFromSchemaNodeUncached(
   node: SchemaNode,
   breadth?: QuestionBreadth | string | null
 ): GeneratedRapidRoundsCase[] {
@@ -509,15 +510,28 @@ export function generateCasesFromSchemaNode(
   });
 }
 
+export function generateCasesFromSchemaNode(
+  node: SchemaNode,
+  breadth?: QuestionBreadth | string | null
+): GeneratedRapidRoundsCase[] {
+  const selectedBreadth = normalizeQuestionBreadth(breadth);
+  return getSchemaNodeCasePoolFromCache(node.id, selectedBreadth, () =>
+    generateCasesFromSchemaNodeUncached(node, selectedBreadth)
+  );
+}
+
 export function getGeneratedCasesForSubject(subject?: string | null, breadth?: QuestionBreadth | string | null) {
   const selectedBreadth = normalizeQuestionBreadth(breadth);
-  return getSubjectSchemaNodes(subject).flatMap((node) => generateCasesFromSchemaNode(node, selectedBreadth));
+  const normalizedSubject = subject && SUBJECTS.includes(subject as RapidRoundsSubject)
+    ? subject as RapidRoundsSubject
+    : undefined;
+  return getSubjectCasePoolFromCache(normalizedSubject ?? "all", selectedBreadth, () =>
+    getIndexedSchemaNodes(normalizedSubject).flatMap((node) => generateCasesFromSchemaNode(node, selectedBreadth))
+  );
 }
 
 export function getGeneratedCaseById(id: string) {
-  const schemaCase = allSchemaNodes
-    .flatMap((node) => generateCasesFromSchemaNode(node))
-    .find((item) => item.id === id);
+  const schemaCase = getGeneratedSchemaCaseById(id);
   if (schemaCase) {
     return schemaCase;
   }
@@ -534,13 +548,44 @@ export function getGeneratedCaseById(id: string) {
   return seed ? generateCaseFromSeed(seed) : undefined;
 }
 
+function getGeneratedSchemaCaseById(id: string) {
+  if (!id.startsWith("generated-schema-")) {
+    return undefined;
+  }
+
+  const generatedIdBody = id.replace(/^generated-schema-/, "");
+  const node = getIndexedSchemaNodes().find((candidate) => generatedIdBody.startsWith(`${candidate.id}-`));
+  if (!node) {
+    return undefined;
+  }
+
+  return generateCasesFromSchemaNode(node, "comprehensive").find((item) => item.id === id);
+}
+
 export function getGeneratedSubjectCounts() {
-  return SUBJECTS.map((subject) => ({
+  return getIndexedSubjectNodeCounts().map(({ subject }) => ({
     subject,
-    count: getGeneratedCasesForSubject(subject).length
+    count: countGeneratedCasesForSubject(subject, "comprehensive")
   }));
 }
 
 export function isGeneratedSubject(subject: string): subject is RapidRoundsSubject {
   return SUBJECTS.includes(subject as RapidRoundsSubject);
 }
+
+export function countGeneratedCasesForSubject(subject?: string | null, breadth?: QuestionBreadth | string | null) {
+  const selectedBreadth = normalizeQuestionBreadth(breadth);
+  const normalizedSubject = subject && SUBJECTS.includes(subject as RapidRoundsSubject)
+    ? subject as RapidRoundsSubject
+    : undefined;
+
+  return getIndexedSchemaNodes(normalizedSubject).reduce((count, node) => {
+    if (!isWithinBreadth(node.shelfBand === "core" ? "primary" : "comprehensive", selectedBreadth)) {
+      return count;
+    }
+
+    return count + node.adaptiveBreadthVariants.filter((variant) => isWithinBreadth(variant.breadth, selectedBreadth)).length;
+  }, 0);
+}
+
+export { getGeneratedCaseCacheStats, resetGeneratedCaseCacheForTests };

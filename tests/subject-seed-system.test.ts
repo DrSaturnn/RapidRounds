@@ -13,13 +13,17 @@ import {
 } from "@/lib/subject-seeds";
 import type { RapidRoundsConceptSeed, SchemaNode } from "@/lib/subject-seeds/seed-types";
 import {
+  countGeneratedCasesForSubject,
   generateCaseFromSeed,
   generateCasesFromDecisionTreeSeed,
   generateCasesFromSchemaNode,
   getGeneratedCaseById,
+  getGeneratedCaseCacheStats,
   getGeneratedCasesForSubject,
-  getGeneratedSubjectCounts
+  getGeneratedSubjectCounts,
+  resetGeneratedCaseCacheForTests
 } from "@/lib/seed-case-generator";
+import { getCurriculumIndexStats, resetCurriculumIndexForTests } from "@/lib/curriculum-index";
 
 const expectedSubjects = [
   "Internal Medicine",
@@ -229,8 +233,8 @@ describe("RapidRounds subject seed system", () => {
 
   it("loads selected subject cases from the seed registry", () => {
     const ethicsCases = getGeneratedCasesForSubject("Ethics");
-    const ethicsSchemaCaseCount = getSubjectSchemaNodes("Ethics").flatMap((node) => generateCasesFromSchemaNode(node)).length;
-    const biostatisticsCaseCount = getGeneratedCasesForSubject("Biostatistics").length;
+    const ethicsSchemaCaseCount = countGeneratedCasesForSubject("Ethics");
+    const biostatisticsCaseCount = countGeneratedCasesForSubject("Biostatistics");
     const counts = getGeneratedSubjectCounts();
 
     assert.equal(ethicsCases.length, ethicsSchemaCaseCount);
@@ -238,9 +242,93 @@ describe("RapidRounds subject seed system", () => {
     assert.equal(counts.find((item) => item.subject === "Biostatistics")?.count, biostatisticsCaseCount);
   });
 
+  it("uses lightweight subject counts without generating full case pools", () => {
+    resetGeneratedCaseCacheForTests();
+
+    const counts = getGeneratedSubjectCounts();
+    const stats = getGeneratedCaseCacheStats();
+
+    assert.ok(counts.every((item) => item.count > 0));
+    assert.equal(stats.subjectCasePoolBuilds, 0);
+    assert.equal(stats.schemaNodeCasePoolBuilds, 0);
+    assert.equal(stats.caseIdIndexBuilds, 0);
+  });
+
   it("retrieves generated cases by stable generated id", () => {
     const firstNeurology = getGeneratedCasesForSubject("Neurology")[0];
     assert.equal(getGeneratedCaseById(firstNeurology.id)?.topic, firstNeurology.topic);
+  });
+
+  it("keeps generated cases stable for the same schema input across cache resets", () => {
+    resetGeneratedCaseCacheForTests();
+    const first = getGeneratedCasesForSubject("Pediatrics", "primary").map((item) => ({
+      id: item.id,
+      vignette: item.vignette,
+      correctAnswer: item.correctAnswer
+    }));
+
+    resetGeneratedCaseCacheForTests();
+    const second = getGeneratedCasesForSubject("Pediatrics", "primary").map((item) => ({
+      id: item.id,
+      vignette: item.vignette,
+      correctAnswer: item.correctAnswer
+    }));
+
+    assert.deepEqual(second, first);
+  });
+
+  it("selecting a subject builds only that subject and breadth cache", () => {
+    resetGeneratedCaseCacheForTests();
+
+    const cases = getGeneratedCasesForSubject("Ethics", "primary");
+    const stats = getGeneratedCaseCacheStats();
+
+    assert.ok(cases.length > 0);
+    assert.equal(stats.subjectCasePoolBuilds, 1);
+    assert.deepEqual(stats.subjectCacheKeys, ["Ethics:primary"]);
+    assert.ok(stats.schemaNodeCacheKeys.every((key) => key.endsWith(":primary")));
+    assert.ok(stats.schemaNodeCasePoolBuilds <= getSubjectSchemaNodes("Ethics").length);
+  });
+
+  it("changing mode regenerates only the selected subject/mode cache", () => {
+    resetGeneratedCaseCacheForTests();
+
+    getGeneratedCasesForSubject("Surgery", "primary");
+    getGeneratedCasesForSubject("Surgery", "expanded");
+    getGeneratedCasesForSubject("Surgery", "expanded");
+    const stats = getGeneratedCaseCacheStats();
+
+    assert.equal(stats.subjectCasePoolBuilds, 2);
+    assert.deepEqual(stats.subjectCacheKeys.sort(), ["Surgery:expanded", "Surgery:primary"]);
+  });
+
+  it("repeated next-case selection does not rebuild schema-node indexes or generated pools", () => {
+    resetCurriculumIndexForTests();
+    resetGeneratedCaseCacheForTests();
+
+    const first = getGeneratedCasesForSubject("Neurology", "primary")[0];
+    const firstStats = {
+      curriculum: getCurriculumIndexStats(),
+      generated: getGeneratedCaseCacheStats()
+    };
+    const second = getGeneratedCasesForSubject("Neurology", "primary")[0];
+    const secondStats = {
+      curriculum: getCurriculumIndexStats(),
+      generated: getGeneratedCaseCacheStats()
+    };
+
+    assert.equal(second.id, first.id);
+    assert.equal(secondStats.curriculum.curriculumIndexBuilds, firstStats.curriculum.curriculumIndexBuilds);
+    assert.equal(secondStats.generated.subjectCasePoolBuilds, firstStats.generated.subjectCasePoolBuilds);
+    assert.equal(secondStats.generated.schemaNodeCasePoolBuilds, firstStats.generated.schemaNodeCasePoolBuilds);
+  });
+
+  it("keeps Moleskine rendering detached from generated case regeneration", () => {
+    const practicePanel = readFileSync("components/PracticePanel.tsx", "utf8");
+    const moleskineRenderer = readFileSync("components/moleskine/MoleskinePracticeRenderer.tsx", "utf8");
+
+    assert.match(practicePanel, /clinicalNotebook/);
+    assert.doesNotMatch(moleskineRenderer, /getGeneratedCasesForSubject|generateCasesFromSchemaNode|getGeneratedCaseById/);
   });
 
   it("wires the subject dropdown and APIs to the registry instead of UI-hardcoded case sets", () => {
