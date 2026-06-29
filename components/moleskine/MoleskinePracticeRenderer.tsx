@@ -201,14 +201,26 @@ function NotebookRightPage({ notebook }: { notebook: ClinicalNotebookViewModel }
             ) : null}
             {rightPage.teachMeMore.comparisonRows.length > 0 ? (
               <section>
-                <h3>Decision boundary</h3>
-                <div className="rr-notebook-comparison-list">
-                  {rightPage.teachMeMore.comparisonRows.slice(0, 4).map((row) => (
-                    <p key={row.feature}>
-                      <span>{row.feature}</span>
-                      {row.correct} / {row.competing}
-                    </p>
-                  ))}
+                <h3>Discriminator table</h3>
+                <div className="rr-notebook-comparison-table" role="region" aria-label="Discriminator comparison">
+                  <table>
+                    <thead>
+                      <tr>
+                        <th scope="col">Feature</th>
+                        <th scope="col">{notebook.reasoning.correctAnswer ?? "Correct answer"}</th>
+                        <th scope="col">{rightPage.whyWrong?.label ?? "Common confusion"}</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {rightPage.teachMeMore.comparisonRows.map((row) => (
+                        <tr key={row.feature}>
+                          <th scope="row">{row.feature}</th>
+                          <td>{row.correct}</td>
+                          <td>{row.competing}</td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
                 </div>
               </section>
             ) : null}

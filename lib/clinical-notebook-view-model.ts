@@ -122,6 +122,9 @@ function fallbackTeachingStem(question: QuestionDto, tutor?: TutorContent | null
   const management = clean(question.management || tutor?.managementPearl);
   const diagnosis = clean(question.diagnosis || tutor?.correctAnswer || question.topic);
   const task = clean(question.decisionType);
+  const competing = clean(tutor?.comparison.competingDiagnosis);
+  const stem = clean(question.stem).replace(/\.$/, "");
+  const decisionTask = task ? getDecisionTypeDisplayText(task).toLowerCase() : "make the clinical decision";
 
   if (question.displayStem && question.displayStem !== question.stem) {
     return question.displayStem;
@@ -132,10 +135,10 @@ function fallbackTeachingStem(question: QuestionDto, tutor?: TutorContent | null
   }
 
   return [
-    pattern ? `A patient presents with ${pattern.toLowerCase()}.` : question.stem,
-    pivot ? `The pivot finding is ${pivot.toLowerCase()}.` : "",
-    task ? `${getDecisionTypeDisplayText(task)} this presentation.` : "",
-    management && diagnosis ? `${management}.` : ""
+    pattern ? `In a ${pattern.toLowerCase()} presentation, ${stem.toLowerCase()}.` : `${stem}.`,
+    diagnosis ? `The board task is to ${decisionTask} and connect the evidence to ${diagnosis}.` : "",
+    pivot ? `The discriminator is ${pivot.toLowerCase()}${competing ? `, which separates this from ${competing}` : ""}.` : "",
+    management && !new RegExp(management.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"), "i").test(stem) ? `${management}.` : ""
   ].filter(Boolean).join(" ");
 }
 
