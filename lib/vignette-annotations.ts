@@ -109,17 +109,32 @@ export function buildDisplayVignette(source: VignetteAnnotationSource) {
   const pattern = clean(source.clinicalPattern || prompt);
   const pivot = clean(source.pivotClue || source.clinicalPattern);
   const task = clean(source.decisionType);
-  const topic = clean(source.topic);
+  const topic = clean(source.topic).replace(/\bcontraindication contraindication\b/gi, "contraindication");
   const management = clean(source.managementPearl);
-  const decisionContext = task
-    ? `The task is to ${task.toLowerCase() === "diagnosis" ? "name the diagnosis" : `choose the ${task.toLowerCase()}`} ${topic ? `for ${topic}` : ""}.`
-    : topic
-      ? `The case centers on ${topic}.`
-      : "";
+  const normalizedTask = task.toLowerCase();
+  const decisionContext = (() => {
+    if (normalizedTask === "diagnosis") {
+      return "Name the diagnosis supported by this pattern.";
+    }
+
+    if (normalizedTask.includes("contraindication")) {
+      return "Identify the option that should be avoided in this context.";
+    }
+
+    if (normalizedTask.includes("management") || normalizedTask.includes("treatment") || normalizedTask.includes("step")) {
+      return "Choose the best next management step.";
+    }
+
+    if (task) {
+      return `Make the ${normalizedTask} decision from the clinical evidence.`;
+    }
+
+    return topic ? `The case centers on ${topic}.` : "";
+  })();
 
   return [
-    pattern ? `Patient with ${pattern.toLowerCase()} presents for evaluation.` : sentence(prompt),
-    pivot ? `The key finding is ${pivot.toLowerCase()}.` : "",
+    pattern ? `A patient presents with ${pattern.toLowerCase()}.` : sentence(prompt),
+    pivot ? `The pivot finding is ${pivot.toLowerCase()}.` : "",
     decisionContext,
     management ? `${management}.` : ""
   ].filter(Boolean).join(" ");
