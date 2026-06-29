@@ -136,6 +136,34 @@ describe("answer intelligence", () => {
     assert.equal(evaluation.learnerFacingClassification?.category, "Related but incorrect");
   });
 
+  it("accepts exact antepartum bleeding diagnosis answers from the seeded cases", () => {
+    [
+      {
+        answer: "placenta previa",
+        acceptedAnswers: ["placenta previa", "previa"],
+        canonicalAnswer: "placenta previa"
+      },
+      {
+        answer: "vasa previa",
+        acceptedAnswers: ["vasa previa"],
+        canonicalAnswer: "vasa previa"
+      }
+    ].forEach(({ answer, acceptedAnswers, canonicalAnswer }) => {
+      const evaluation = evaluateAnswer({
+        answer,
+        acceptedAnswers,
+        canonicalAnswer,
+        expectedTask: "Diagnosis",
+        clinicalConcepts: ["third-trimester bleeding", "placental abruption", "placenta previa", "vasa previa"]
+      });
+
+      assert.equal(evaluation.isCorrect, true, answer);
+      assert.equal(evaluation.classification, "EXACT", answer);
+      assert.equal(evaluation.requiresTeaching, false, answer);
+      assert.equal(evaluation.partialCredit, 1, answer);
+    });
+  });
+
   it("keeps truly wrong unrelated answers incorrect", () => {
     const evaluation = evaluateAnswer({
       answer: "appendicitis",

@@ -32,6 +32,16 @@ export type PersistedPracticeSession = {
   updatedAt: number;
 };
 
+type PracticeSnapshot = {
+  question: QuestionDto;
+  answer: string;
+  result: AnswerResult | null;
+  mode: PracticeMode;
+  tutor: TutorContent | null;
+  reinforcementAnswer: string;
+  reinforcementResult: boolean | null;
+};
+
 function isRecord(value: unknown): value is Record<string, unknown> {
   return typeof value === "object" && value !== null;
 }
@@ -189,12 +199,30 @@ export function usePracticeSession() {
   const [answeredQuestionIds, setAnsweredQuestionIds] = useState<string[]>([]);
   const [activeSubject, setActiveSubject] = useState(DEFAULT_SUBJECT);
   const [subjectSummaries, setSubjectSummaries] = useState<SubjectSummary[]>([]);
+  const [canGoBack, setCanGoBack] = useState(false);
   const hasHydratedSession = useRef(false);
   const learnerId = useRef("");
   const activeSubjectRef = useRef(DEFAULT_SUBJECT);
   const startedAt = useRef(Date.now());
+  const history = useRef<PracticeSnapshot[]>([]);
+  const latestSnapshot = useRef<PracticeSnapshot | null>(null);
+
+  useEffect(() => {
+    latestSnapshot.current = question
+      ? {
+          question,
+          answer,
+          result,
+          mode,
+          tutor,
+          reinforcementAnswer,
+          reinforcementResult
+        }
+      : null;
+  }, [answer, mode, question, reinforcementAnswer, reinforcementResult, result, tutor]);
 
   const loadQuestion = useCallback(async (targetConcept?: string, subjectOverride?: string) => {
+    const previousSnapshot = latestSnapshot.current;
     setIsLoading(true);
     setError(null);
     setResult(null);
@@ -230,6 +258,11 @@ export function usePracticeSession() {
     if (data.subjectCounts) {
       setSubjectSummaries(data.subjectCounts);
     }
+    if (previousSnapshot && data.question && data.question.id !== previousSnapshot.question.id) {
+      history.current = [...history.current, previousSnapshot].slice(-12);
+      setCanGoBack(history.current.length > 0);
+    }
+
     setQuestion(data.question);
     if (data.question) {
       activeSubjectRef.current = data.question.specialty;
@@ -239,6 +272,39 @@ export function usePracticeSession() {
     }
     startedAt.current = Date.now();
     setIsLoading(false);
+  }, []);
+
+  const goBack = useCallback(() => {
+    const previous = history.current.pop();
+    if (!previous) {
+      setCanGoBack(false);
+      return;
+    }
+
+    setQuestion(previous.question);
+    setAnswer(previous.answer);
+    setResult(previous.result);
+    setMode(previous.mode);
+    setTutor(previous.tutor);
+    setReinforcementAnswer(previous.reinforcementAnswer);
+    setReinforcementResult(previous.reinforcementResult);
+    setError(null);
+    setIsLoading(false);
+    setIsSubmitting(false);
+    setIsTeaching(false);
+    setCanGoBack(history.current.length > 0);
+    startedAt.current = Date.now();
+  }, []);
+
+  const resetCurrentQuestion = useCallback(() => {
+    setAnswer("");
+    setResult(null);
+    setMode("rapid");
+    setTutor(null);
+    setReinforcementAnswer("");
+    setReinforcementResult(null);
+    setError(null);
+    startedAt.current = Date.now();
   }, []);
 
   const submitAnswer = useCallback(async () => {
@@ -269,9 +335,12 @@ export function usePracticeSession() {
     const data = (await response.json()) as AnswerResult;
     setResult(data);
     setAnsweredQuestionIds((ids) => unique([...ids, question.id]));
-    if (data.tutor) {
+    if (data.tutor && !data.isCorrect) {
       setTutor(data.tutor);
       setMode("tutor");
+    } else {
+      setTutor(null);
+      setMode("rapid");
     }
     setIsSubmitting(false);
   }, [answer, question]);
@@ -322,6 +391,8 @@ export function usePracticeSession() {
     setActiveSubject(subject);
     setSessionDecisionCount(0);
     setAnsweredQuestionIds([]);
+    history.current = [];
+    setCanGoBack(false);
     if (typeof window !== "undefined") {
       window.localStorage.setItem(SUBJECT_STORAGE_KEY, subject);
     }
@@ -416,6 +487,7 @@ export function usePracticeSession() {
     isTeaching,
     error,
     activeSubject,
+    canGoBack,
     subjectSummaries,
     setAnswer,
     setReinforcementAnswer,
@@ -423,6 +495,8 @@ export function usePracticeSession() {
     requestTeaching,
     submitReinforcementAnswer,
     selectSubject,
-    loadQuestion
+    loadQuestion,
+    goBack,
+    resetCurrentQuestion
   };
 }

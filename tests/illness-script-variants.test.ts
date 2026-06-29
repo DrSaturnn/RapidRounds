@@ -162,7 +162,7 @@ describe("illness-script variant engine", () => {
       "ectopic pregnancy"
     );
 
-    assert.equal(tutor.vignetteFindings, undefined);
+    assert.ok(tutor.vignetteFindings?.some((finding) => finding.role === "pivot_clue"));
     assert.match(tutor.illnessScript.classicPresentation, /first-trimester bleeding/i);
     assert.match(tutor.illnessScript.classicPresentation, /closed cervix with fetal cardiac activity/i);
   });

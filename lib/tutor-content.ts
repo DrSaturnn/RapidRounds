@@ -17,13 +17,15 @@ import {
   RAPIDROUNDS_CASE_TAG_PREFIX,
   type RapidRoundsCaseMetadata
 } from "@/lib/rapidrounds-case";
+import {
+  buildPracticeVignetteAnnotations,
+  VIGNETTE_FINDING_TAG_PREFIX
+} from "@/lib/vignette-annotations";
 import type {
   AnswerEvaluation,
   CognitiveError,
   DecisionRepair,
-  TutorContent,
-  VignetteFindingAnnotation,
-  VignetteFindingRole
+  TutorContent
 } from "@/types/practice";
 
 type TutorDecision = {
@@ -194,9 +196,6 @@ const structuredIllnessScriptMap: Record<
   }
 };
 
-const VIGNETTE_FINDING_TAG_PREFIX = "vignette_finding::";
-const findingRoles = new Set<VignetteFindingRole>(["context", "supporting", "pivot_clue", "neutral", "noise"]);
-
 function parseJsonArray(value: string) {
   try {
     const parsed = JSON.parse(value) as unknown;
@@ -204,37 +203,6 @@ function parseJsonArray(value: string) {
   } catch {
     return [];
   }
-}
-
-function parseVignetteFindingTags(tags: string[]): VignetteFindingAnnotation[] {
-  const findings: VignetteFindingAnnotation[] = [];
-
-  tags.forEach((tag) => {
-    if (!tag.startsWith(VIGNETTE_FINDING_TAG_PREFIX)) {
-      return;
-    }
-
-    try {
-      const parsed = JSON.parse(tag.slice(VIGNETTE_FINDING_TAG_PREFIX.length)) as Partial<VignetteFindingAnnotation>;
-      const text = parsed.text?.trim();
-      const role = parsed.role;
-
-      if (!text || !role || !findingRoles.has(role)) {
-        return;
-      }
-
-      const explanation = parsed.explanation?.trim();
-      findings.push({
-        text,
-        role,
-        ...(explanation ? { explanation } : {})
-      });
-    } catch {
-      // Ignore malformed authoring metadata rather than showing a weak attention map.
-    }
-  });
-
-  return findings;
 }
 
 function getClinicalTags(tags: string[]) {
@@ -310,27 +278,6 @@ function getStructuredIllnessScript(decision: TutorDecision, metadata?: RapidRou
   }
 
   return structuredIllnessScriptMap[getDiagnosis(decision).toLowerCase()];
-}
-
-function buildMetadataVignetteFindings(metadata?: RapidRoundsCaseMetadata): VignetteFindingAnnotation[] {
-  if (!metadata) {
-    return [];
-  }
-
-  return [
-    { text: metadata.canonicalProblem, role: "context" },
-    ...metadata.supportingClues.map((text) => ({ text, role: "supporting" as const })),
-    ...metadata.pivotClues.map((text) => ({
-      text,
-      role: "pivot_clue" as const,
-      explanation: metadata.correctReasoning
-    })),
-    ...metadata.distractorClues.map((text) => ({
-      text,
-      role: "noise" as const,
-      explanation: "Tempting context, but not the deciding clue for this variant."
-    }))
-  ];
 }
 
 function findAuthoredDecisionBoundary(metadata: RapidRoundsCaseMetadata | undefined, learnerAnswer: string) {
@@ -647,9 +594,17 @@ export function buildTutorContent(
   const tags = parseJsonArray(decision.tags);
   const clinicalTags = getClinicalTags(tags);
   const rapidRoundsCase = parseRapidRoundsCaseMetadata(tags);
-  const authoredVignetteFindings = parseVignetteFindingTags(tags);
-  const metadataVignetteFindings = buildMetadataVignetteFindings(rapidRoundsCase);
-  const vignetteFindings = authoredVignetteFindings.length > 0 ? authoredVignetteFindings : metadataVignetteFindings;
+  const vignette = buildPracticeVignetteAnnotations({
+    prompt: decision.prompt,
+    topic: getDiagnosis(decision),
+    clinicalPattern: getPattern(decision),
+    decisionType: decision.decisionType,
+    pivotClue: getPivotClue(decision),
+    commonTrap: decision.commonTrap,
+    managementPearl: getManagement(decision),
+    tags
+  });
+  const vignetteFindings = vignette.vignetteFindings;
   const acceptedAnswers = parseJsonArray(decision.acceptedAnswers);
   const diagnosis = getDiagnosis(decision);
   const pattern = getPattern(decision);

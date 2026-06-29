@@ -1030,8 +1030,10 @@ body:has(.practice-focus) .app-main {
 
   [data-theme="warm-notebook"] .rr-tool-button,
   [data-theme="warm-notebook"] .rr-subject-pill,
+  [data-theme="warm-notebook"] .rr-header-action,
   [data-theme="warm-notebook"] .rr-aster-button,
   [data-theme="warm-notebook"] .rr-menu-button,
+  [data-theme="warm-notebook"] .rr-mobile-action,
   [data-theme="warm-notebook"] .rr-skin-option,
   [data-theme="warm-notebook"] .rr-subject-option,
   [data-theme="warm-notebook"] .rr-bottom-action,
@@ -1047,8 +1049,10 @@ body:has(.practice-focus) .app-main {
 
   [data-theme="warm-notebook"] .rr-tool-button:hover,
   [data-theme="warm-notebook"] .rr-subject-pill:hover,
+  [data-theme="warm-notebook"] .rr-header-action:hover,
   [data-theme="warm-notebook"] .rr-aster-button:hover,
   [data-theme="warm-notebook"] .rr-menu-button:hover,
+  [data-theme="warm-notebook"] .rr-mobile-action:hover,
   [data-theme="warm-notebook"] .rr-skin-option:hover,
   [data-theme="warm-notebook"] .rr-subject-option:hover,
   [data-theme="warm-notebook"] .rr-bottom-action:hover,
@@ -1069,6 +1073,16 @@ body:has(.practice-focus) .app-main {
     box-shadow:
       inset 0 2px 8px rgb(92 55 26 / 0.12),
       inset 0 1px 0 rgb(255 255 255 / 0.48);
+  }
+
+  [data-theme="warm-notebook"] .rr-mobile-action-primary:not(:disabled) {
+    border-color: rgb(92 55 26 / 0.44);
+    background:
+      linear-gradient(180deg, #8b5d34, #6a3f20);
+    color: #fffdf8;
+    box-shadow:
+      0 12px 24px rgb(58 34 16 / 0.22),
+      inset 0 1px 0 rgb(255 255 255 / 0.2);
   }
 
   [data-theme="warm-notebook"] .rr-product-brand,
@@ -2000,7 +2014,7 @@ body:has(.practice-focus) .app-main {
   }
 
   .rr-product-actions {
-    @apply flex items-center justify-end gap-3;
+    @apply flex items-center justify-end gap-2 sm:gap-3;
   }
 
   .rr-menu-anchor,
@@ -2008,14 +2022,28 @@ body:has(.practice-focus) .app-main {
     @apply relative;
   }
 
+  .rr-header-action,
   .rr-aster-button,
   .rr-menu-button {
     @apply inline-flex min-h-10 items-center justify-center rounded-lg border border-rr-border bg-rr-elevated px-3 text-sm font-semibold text-rr-foreground transition-colors hover:border-rr-accent hover:text-rr-accent disabled:cursor-not-allowed disabled:text-rr-muted;
     box-shadow: var(--rr-shadow-sm), var(--rr-card-edge);
   }
 
+  .rr-header-action {
+    @apply gap-1.5;
+  }
+
+  .rr-header-action span[aria-hidden="true"],
+  .rr-aster-button span[aria-hidden="true"] {
+    @apply text-base leading-none;
+  }
+
   .rr-menu-button {
     @apply min-w-10 text-xl;
+  }
+
+  .rr-action-label {
+    @apply whitespace-nowrap;
   }
 
   .rr-session-link {
@@ -2612,6 +2640,50 @@ body:has(.practice-focus) .app-main {
     @apply inline-flex min-h-11 items-center justify-center rounded-lg border border-transparent px-4 text-sm font-semibold text-rr-accent transition-colors hover:border-rr-border hover:bg-rr-surface;
   }
 
+  .rr-mobile-practice-actions {
+    @apply fixed inset-x-3 bottom-3 z-50 grid grid-cols-3 gap-2 rounded-2xl border border-rr-border bg-rr-elevated p-2 shadow-[var(--rr-shadow-lg)] sm:hidden;
+    padding-bottom: max(0.5rem, env(safe-area-inset-bottom));
+  }
+
+  .rr-mobile-action {
+    @apply inline-flex min-h-12 items-center justify-center gap-1.5 rounded-xl border border-rr-border px-3 text-sm font-semibold text-rr-foreground transition-colors disabled:cursor-not-allowed disabled:text-rr-muted;
+    background: var(--rr-color-surface);
+  }
+
+  .rr-mobile-action-primary {
+    border-color: var(--rr-color-button-primary);
+    background: var(--rr-color-button-primary);
+    color: var(--rr-color-button-primary-text);
+  }
+
+  .rr-mobile-action-primary:disabled {
+    border-color: var(--rr-color-border);
+    background: var(--rr-color-surface);
+    color: var(--rr-color-text-muted);
+  }
+
+  @media (max-width: 639px) {
+    .rr-practice-shell {
+      padding-bottom: calc(5.5rem + env(safe-area-inset-bottom));
+    }
+
+    .rr-product-actions {
+      justify-content: flex-end;
+    }
+
+    .rr-header-action,
+    .rr-aster-button,
+    .rr-menu-button {
+      min-width: 2.75rem;
+      padding-left: 0.75rem;
+      padding-right: 0.75rem;
+    }
+
+    .rr-action-label {
+      @apply sr-only;
+    }
+  }
+
   [data-theme="warm-notebook"] .rr-practice-shell {
     background:
       linear-gradient(90deg, #242323 0, #242323 1.45rem, rgb(120 80 40 / 0.16) 1.45rem, transparent 2.55rem),
@@ -2903,6 +2975,78 @@ body:has(.practice-focus) .app-main {
       grid-column: 1;
       grid-row: 2;
     }
+  }
+
+  [data-theme="warm-notebook"] .rr-moleskine-learn-spread {
+    align-content: start;
+    min-height: auto;
+    padding: clamp(1rem, 2.5vw, 1.65rem);
+  }
+
+  [data-theme="warm-notebook"] .rr-moleskine-learn-spread .rr-moleskine-teaching-document {
+    align-items: start;
+  }
+
+  [data-theme="warm-notebook"] .rr-moleskine-learn-spread .rr-moleskine-left-page {
+    padding: clamp(1.2rem, 2vw, 1.65rem);
+  }
+
+  [data-theme="warm-notebook"] .rr-moleskine-learn-spread .rr-question-stem {
+    max-width: 48rem;
+    font-size: clamp(1.35rem, 1.55vw, 1.75rem);
+    line-height: 1.55;
+  }
+
+  [data-theme="warm-notebook"] .rr-moleskine-learn-spread .rr-question-stem-annotated {
+    line-height: 1.72;
+  }
+
+  [data-theme="warm-notebook"] .rr-moleskine-learn-spread .rr-vignette-label {
+    font-size: 0.88rem;
+  }
+
+  [data-theme="warm-notebook"] .rr-moleskine-learn-spread .rr-decision-question {
+    font-size: 1rem;
+    line-height: 1.55;
+  }
+
+  [data-theme="warm-notebook"] .rr-moleskine-learn-spread .rr-moleskine-left-reasoning {
+    margin-top: 1rem;
+    padding-top: 0.85rem;
+  }
+
+  [data-theme="warm-notebook"] .rr-moleskine-learn-spread .rr-moleskine-reasoning-chain {
+    gap: 0.55rem;
+  }
+
+  [data-theme="warm-notebook"] .rr-moleskine-learn-spread .rr-moleskine-reasoning-step {
+    min-height: 4.25rem;
+    padding: 0.58rem 0.65rem;
+  }
+
+  [data-theme="warm-notebook"] .rr-moleskine-learn-spread .rr-repair-summary,
+  [data-theme="warm-notebook"] .rr-moleskine-learn-spread .rr-attention-map,
+  [data-theme="warm-notebook"] .rr-moleskine-learn-spread .rr-moleskine-written-section {
+    margin-top: 0.65rem;
+  }
+
+  [data-theme="warm-notebook"] .rr-moleskine-learn-spread .rr-moleskine-teaching-section {
+    padding: 0.68rem 0.82rem;
+    margin-bottom: 0.55rem;
+  }
+
+  [data-theme="warm-notebook"] .rr-moleskine-learn-spread .rr-moleskine-teaching-section h2 {
+    margin-bottom: 0.25rem;
+    font-size: 1rem;
+  }
+
+  [data-theme="warm-notebook"] .rr-moleskine-learn-spread .rr-moleskine-teaching-section p {
+    font-size: 0.92rem;
+    line-height: 1.55;
+  }
+
+  [data-theme="warm-notebook"] .rr-moleskine-learn-spread .rr-moleskine-next-challenge {
+    margin-top: 0.5rem;
   }
 
   @media (prefers-reduced-motion: reduce) {

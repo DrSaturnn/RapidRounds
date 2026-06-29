@@ -123,6 +123,13 @@ describe("presentation adapter regression safety", () => {
     assert.doesNotMatch(tutorMode, /evaluateAnswer|compareAnswer|isCorrect\s*=/);
   });
 
+  it("does not route correct submissions into automatic repair mode", () => {
+    const practiceSession = readFileSync("hooks/usePracticeSession.ts", "utf8");
+
+    assert.match(practiceSession, /if \(data\.tutor && !data\.isCorrect\)/);
+    assert.match(practiceSession, /setTutor\(null\);[\s\S]*setMode\("rapid"\);/);
+  });
+
   it("keeps Moleskine solve state quiet before submission", () => {
     const practicePanel = readFileSync("components/PracticePanel.tsx", "utf8");
 

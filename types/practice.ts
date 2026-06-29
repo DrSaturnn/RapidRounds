@@ -8,10 +8,12 @@ export type QuestionDto = {
   variantType?: string;
   difficulty: number;
   stem: string;
+  displayStem?: string;
   decisionType?: DecisionType;
   pattern: string;
   management: string;
   diagnosis: string;
+  vignetteFindings?: VignetteFindingAnnotation[];
 };
 
 export type DecisionType =

@@ -230,6 +230,24 @@ describe("design system", () => {
     assert.match(css, /\.rr-subject-option/);
   });
 
+  it("collapses top actions into specific mobile icons and exposes real back/reset controls", () => {
+    const practicePanel = readFileSync("components/PracticePanel.tsx", "utf8");
+    const practiceSession = readFileSync("hooks/usePracticeSession.ts", "utf8");
+    const css = readFileSync("app/globals.css", "utf8");
+
+    assert.match(practiceSession, /canGoBack/);
+    assert.match(practiceSession, /const goBack = useCallback/);
+    assert.match(practiceSession, /const resetCurrentQuestion = useCallback/);
+    assert.match(practicePanel, /aria-label="Go back to the previous case"/);
+    assert.match(practicePanel, /aria-label="Reset this case"/);
+    assert.match(practicePanel, /rr-mobile-practice-actions/);
+    assert.match(practicePanel, /←/);
+    assert.match(practicePanel, /↺/);
+    assert.match(practicePanel, /✧/);
+    assert.match(css, /@media \(max-width: 639px\)[\s\S]*\.rr-action-label[\s\S]*sr-only/);
+    assert.match(css, /\.rr-mobile-practice-actions[\s\S]*fixed/);
+  });
+
   it("scopes Moleskine paper materiality to the Moleskine theme", () => {
     const css = readFileSync("app/globals.css", "utf8");
 
@@ -296,6 +314,8 @@ describe("design system", () => {
     assert.match(practicePanel, /rr-bottom-nav rr-panel rr-moleskine-footer-strip/);
     assert.match(css, /\[data-theme="warm-notebook"\] \.rr-moleskine-solve-spread/);
     assert.match(css, /\[data-theme="warm-notebook"\] \.rr-moleskine-solve-spread::before,[\s\S]*display:\s*none/);
+    assert.match(css, /\[data-theme="warm-notebook"\] \.rr-moleskine-learn-spread \.rr-question-stem/);
+    assert.match(css, /\[data-theme="warm-notebook"\] \.rr-moleskine-learn-spread \.rr-moleskine-teaching-section/);
 
     assert.match(tutorMode, /presentation\?: "default" \| "moleskine"/);
     assert.match(tutorMode, /moleskineLeftPageContent\?: ReactNode/);

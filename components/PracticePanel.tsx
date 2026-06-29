@@ -68,6 +68,7 @@ export function PracticePanel() {
     isTeaching,
     error,
     activeSubject,
+    canGoBack,
     subjectSummaries,
     setAnswer,
     setReinforcementAnswer,
@@ -75,7 +76,9 @@ export function PracticePanel() {
     requestTeaching,
     submitReinforcementAnswer,
     selectSubject,
-    loadQuestion
+    loadQuestion,
+    goBack,
+    resetCurrentQuestion
   } = usePracticeSession();
   const answerInputRef = useRef<HTMLInputElement>(null);
   const stayButtonRef = useRef<HTMLButtonElement>(null);
@@ -346,7 +349,7 @@ export function PracticePanel() {
     );
   }
 
-  const clinicalPrompt = getClinicalPromptText(question.stem);
+  const clinicalPrompt = getClinicalPromptText(question.displayStem ?? question.stem);
   const decisionQuestion = getDecisionQuestionText(question.decisionType);
   const learningGoal = question.topic ? `Learning goal: ${question.topic}` : "Learning goal: make the next clinical decision";
   const displayDecisionCount = Math.max(sessionDecisionCount, 1);
@@ -354,7 +357,9 @@ export function PracticePanel() {
   const topicLabel = question.canonicalProblem ?? question.system ?? question.topic;
   const variantLabel = getRapidRoundsVariantDisplayText(question.variantType);
   const isExplanationState = mode === "tutor" && Boolean(tutor);
-  const visibleVignetteFindings = isExplanationState ? tutor?.vignetteFindings ?? [] : [];
+  const visibleVignetteFindings = isExplanationState
+    ? tutor?.vignetteFindings ?? question.vignetteFindings ?? []
+    : question.vignetteFindings ?? [];
   const subjectCountByName = new Map(subjectSummaries.map((item) => [item.subject, item.count]));
   const subjectOptions = requiredSubjects.map((subject) => ({
     subject,
@@ -390,6 +395,35 @@ export function PracticePanel() {
     }
 
     answerInputRef.current?.focus();
+  };
+
+  const canAdvance = Boolean(isExplanationState || result?.isCorrect);
+
+  const handleBack = () => {
+    setActiveTool(null);
+    setSettingsAnchor(null);
+    setIsAsterOpen(false);
+    setIsSubjectSelectorOpen(false);
+    goBack();
+  };
+
+  const handleReset = () => {
+    setActiveTool(null);
+    setSettingsAnchor(null);
+    setIsAsterOpen(false);
+    setIsSubjectSelectorOpen(false);
+    resetCurrentQuestion();
+    window.requestAnimationFrame(() => {
+      answerInputRef.current?.focus();
+    });
+  };
+
+  const handleNextCase = () => {
+    if (!canAdvance) {
+      return;
+    }
+
+    void loadQuestion();
   };
 
   const toggleSettings = (anchor: Exclude<SettingsAnchor, null>) => {
@@ -498,6 +532,71 @@ export function PracticePanel() {
     </div>
   );
 
+  const renderTopSessionActions = () => (
+    <div className="rr-product-actions" aria-label="Session tools">
+      <button
+        type="button"
+        className="rr-header-action"
+        aria-label="Go back to the previous case"
+        onClick={handleBack}
+        disabled={!canGoBack}
+      >
+        <span aria-hidden="true">←</span>
+        <span className="rr-action-label">Back</span>
+      </button>
+      <button
+        type="button"
+        className="rr-header-action"
+        aria-label="Reset this case"
+        onClick={handleReset}
+      >
+        <span aria-hidden="true">↺</span>
+        <span className="rr-action-label">Reset</span>
+      </button>
+      <button
+        ref={asterButtonRef}
+        type="button"
+        className="rr-aster-button"
+        aria-label="Ask Aster to explain this decision"
+        aria-expanded={isAsterOpen}
+        aria-controls="aster-companion"
+        onClick={toggleAster}
+      >
+        <span aria-hidden="true">✧</span>
+        <span className="rr-action-label">Aster</span>
+      </button>
+      <div className="rr-menu-anchor" ref={topSettingsRef}>
+        <button
+          type="button"
+          className="rr-menu-button"
+          aria-label="Open session settings"
+          aria-expanded={settingsAnchor === "top"}
+          onClick={() => toggleSettings("top")}
+        >
+          ☰
+        </button>
+        {settingsAnchor === "top" ? renderThemePopover() : null}
+      </div>
+    </div>
+  );
+
+  const renderMobilePracticeActions = () => (
+    <nav className="rr-mobile-practice-actions" aria-label="Mobile practice actions">
+      <button type="button" className="rr-mobile-action" onClick={handleBack} disabled={!canGoBack}>
+        <span aria-hidden="true">←</span>
+        <span>Back</span>
+      </button>
+      <button type="button" className="rr-mobile-action" onClick={handleReset}>
+        <span aria-hidden="true">↺</span>
+        <span>Reset</span>
+      </button>
+      <button type="button" className="rr-mobile-action rr-mobile-action-primary" onClick={handleNextCase} disabled={!canAdvance}>
+        <span>Next</span>
+        <span aria-hidden="true">→</span>
+      </button>
+    </nav>
+  );
+
   if (skin === "warm-notebook") {
     return (
       <MoleskinePracticeLayout
@@ -534,31 +633,7 @@ export function PracticePanel() {
                 ))}
               </span>
             </div>
-            <div className="rr-product-actions" aria-label="Session tools">
-              <button
-                ref={asterButtonRef}
-                type="button"
-                className="rr-aster-button"
-                aria-label="Ask Aster to explain this decision"
-                aria-expanded={isAsterOpen}
-                aria-controls="aster-companion"
-                onClick={toggleAster}
-              >
-                ✧ Aster
-              </button>
-              <div className="rr-menu-anchor" ref={topSettingsRef}>
-                <button
-                  type="button"
-                  className="rr-menu-button"
-                  aria-label="Open session settings"
-                  aria-expanded={settingsAnchor === "top"}
-                  onClick={() => toggleSettings("top")}
-                >
-                  ☰
-                </button>
-                {settingsAnchor === "top" ? renderThemePopover() : null}
-              </div>
-            </div>
+            {renderTopSessionActions()}
           </header>
         }
         sidebar={
@@ -714,6 +789,7 @@ export function PracticePanel() {
                 onEnd={() => { window.location.href = "/"; }}
               />
             ) : null}
+            {renderMobilePracticeActions()}
           </>
         }
       />
@@ -754,31 +830,7 @@ export function PracticePanel() {
             ))}
           </span>
         </div>
-        <div className="rr-product-actions" aria-label="Session tools">
-          <button
-            ref={asterButtonRef}
-            type="button"
-            className="rr-aster-button"
-            aria-label="Ask Aster to explain this decision"
-            aria-expanded={isAsterOpen}
-            aria-controls="aster-companion"
-            onClick={toggleAster}
-          >
-            ✧ Aster
-          </button>
-          <div className="rr-menu-anchor" ref={topSettingsRef}>
-            <button
-              type="button"
-              className="rr-menu-button"
-              aria-label="Open session settings"
-              aria-expanded={settingsAnchor === "top"}
-              onClick={() => toggleSettings("top")}
-            >
-              ☰
-            </button>
-            {settingsAnchor === "top" ? renderThemePopover() : null}
-          </div>
-        </div>
+        {renderTopSessionActions()}
       </header>
 
       <div className="rr-notebook-shell rr-notebook-surface rr-moleskine-shell">
@@ -969,6 +1021,7 @@ export function PracticePanel() {
           </div>
         </div>
       ) : null}
+      {renderMobilePracticeActions()}
     </div>
   );
 }
