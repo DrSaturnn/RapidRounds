@@ -53,6 +53,45 @@ function isPracticeSkin(value: string | null): value is PracticeSkin {
   return Boolean(value && practiceSkins.some((skin) => skin.value === value));
 }
 
+function getToolIcons(skin: PracticeSkin) {
+  const icons: Record<PracticeSkin, Record<"continue" | "back" | "reset" | "teach" | "notes" | "settings", string>> = {
+    "modern-academic": {
+      continue: "▶",
+      back: "←",
+      reset: "↺",
+      teach: "✦",
+      notes: "▣",
+      settings: "⚙"
+    },
+    "warm-notebook": {
+      continue: "▷",
+      back: "←",
+      reset: "↺",
+      teach: "◇",
+      notes: "□",
+      settings: "☾"
+    },
+    "dark-clinical": {
+      continue: "▶",
+      back: "⟵",
+      reset: "⟳",
+      teach: "✧",
+      notes: "▤",
+      settings: "☰"
+    },
+    editorial: {
+      continue: "›",
+      back: "‹",
+      reset: "↻",
+      teach: "※",
+      notes: "◫",
+      settings: "☷"
+    }
+  };
+
+  return icons[skin];
+}
+
 export function PracticePanel() {
   const {
     question,
@@ -94,6 +133,7 @@ export function PracticePanel() {
   const [isAsterOpen, setIsAsterOpen] = useState(false);
   const [notes, setNotes] = useState("");
   const [skin, setSkin] = useState<PracticeSkin>("modern-academic");
+  const toolIcons = getToolIcons(skin);
 
   const keyboardHint = useMemo(() => {
     if (mode === "tutor") {
@@ -565,11 +605,11 @@ export function PracticePanel() {
   const renderDesktopCaseControls = () => (
     <>
       <button type="button" className="rr-tool-button rr-desktop-session-control" onClick={handleBack} disabled={!canGoBack}>
-        <span aria-hidden="true">←</span>
+        <span aria-hidden="true">{toolIcons.back}</span>
         Back
       </button>
       <button type="button" className="rr-tool-button rr-desktop-session-control" onClick={handleReset}>
-        <span aria-hidden="true">↺</span>
+        <span aria-hidden="true">{toolIcons.reset}</span>
         Reset
       </button>
     </>
@@ -578,11 +618,11 @@ export function PracticePanel() {
   const renderMobilePracticeActions = () => (
     <nav className="rr-mobile-practice-actions" aria-label="Mobile practice actions">
       <button type="button" className="rr-mobile-action" onClick={handleBack} disabled={!canGoBack}>
-        <span aria-hidden="true">←</span>
+        <span aria-hidden="true">{toolIcons.back}</span>
         <span>Back</span>
       </button>
       <button type="button" className="rr-mobile-action" onClick={handleReset}>
-        <span aria-hidden="true">↺</span>
+        <span aria-hidden="true">{toolIcons.reset}</span>
         <span>Reset</span>
       </button>
       <button type="button" className="rr-mobile-action rr-mobile-action-primary" onClick={handleNextCase} disabled={!canAdvance}>
@@ -634,13 +674,13 @@ export function PracticePanel() {
         sidebar={
           <MoleskineSidebar>
             <button type="button" className="rr-tool-button" onClick={handleContinue}>
-              <span aria-hidden="true">▷</span>
+              <span aria-hidden="true">{toolIcons.continue}</span>
               Continue
             </button>
             {renderDesktopCaseControls()}
             {isExplanationState ? (
               <button type="button" className="rr-tool-button" onClick={showTeaching} disabled={isTeaching}>
-                <span aria-hidden="true">◇</span>
+                <span aria-hidden="true">{toolIcons.teach}</span>
                 Teach Me More
               </button>
             ) : null}
@@ -654,7 +694,7 @@ export function PracticePanel() {
                 setActiveTool(activeTool === "notes" ? null : "notes");
               }}
             >
-              <span aria-hidden="true">□</span>
+              <span aria-hidden="true">{toolIcons.notes}</span>
               Notes
             </button>
             <div className="rr-tool-popover-anchor" ref={railSettingsRef}>
@@ -664,7 +704,7 @@ export function PracticePanel() {
                 aria-expanded={settingsAnchor === "rail"}
                 onClick={() => toggleSettings("rail")}
               >
-                <span aria-hidden="true">☾</span>
+                <span aria-hidden="true">{toolIcons.settings}</span>
                 Settings
               </button>
               {settingsAnchor === "rail" ? renderThemePopover() : null}
@@ -832,13 +872,13 @@ export function PracticePanel() {
       <div className="rr-notebook-shell rr-notebook-surface rr-moleskine-shell">
         <aside className="rr-tool-rail rr-panel rr-moleskine-sidebar-page" aria-label="Practice tools">
           <button type="button" className="rr-tool-button" onClick={handleContinue}>
-            <span aria-hidden="true">▷</span>
+            <span aria-hidden="true">{toolIcons.continue}</span>
             Continue
           </button>
           {renderDesktopCaseControls()}
           {isExplanationState ? (
             <button type="button" className="rr-tool-button" onClick={showTeaching} disabled={isTeaching}>
-              <span aria-hidden="true">◇</span>
+              <span aria-hidden="true">{toolIcons.teach}</span>
               Teach Me More
             </button>
           ) : null}
@@ -852,7 +892,7 @@ export function PracticePanel() {
               setActiveTool(activeTool === "notes" ? null : "notes");
             }}
           >
-            <span aria-hidden="true">□</span>
+            <span aria-hidden="true">{toolIcons.notes}</span>
             Notes
           </button>
           <div className="rr-tool-popover-anchor" ref={railSettingsRef}>
@@ -862,7 +902,7 @@ export function PracticePanel() {
               aria-expanded={settingsAnchor === "rail"}
               onClick={() => toggleSettings("rail")}
             >
-              <span aria-hidden="true">☾</span>
+              <span aria-hidden="true">{toolIcons.settings}</span>
               Settings
             </button>
             {settingsAnchor === "rail" ? renderThemePopover() : null}

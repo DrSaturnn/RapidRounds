@@ -1516,9 +1516,9 @@ body:has(.practice-focus) .app-main {
   [data-theme="warm-notebook"] .rr-moleskine-notebook-spread {
     position: relative;
     display: grid;
-    gap: 1rem;
-    min-height: calc(100vh - 8rem);
-    padding: 1.1rem;
+    gap: 0.85rem;
+    min-height: calc(100vh - 7.25rem);
+    padding: 0.95rem;
     overflow: hidden;
     background:
       repeating-linear-gradient(to bottom, transparent 0, transparent 31px, rgb(112 76 42 / 0.06) 32px),
@@ -2921,11 +2921,11 @@ body:has(.practice-focus) .app-main {
   }
 
   [data-theme="warm-notebook"] .rr-moleskine-solve-spread {
-    grid-template-columns: minmax(0, min(54rem, 100%));
+    grid-template-columns: minmax(0, min(46rem, 100%));
     align-content: start;
     justify-content: start;
-    min-height: calc(100vh - 7.5rem);
-    padding: clamp(1.4rem, 4vw, 3.25rem);
+    min-height: calc(100vh - 7.25rem);
+    padding: clamp(1.15rem, 3vw, 2.4rem);
   }
 
   [data-theme="warm-notebook"] .rr-moleskine-solve-spread::before,
@@ -2934,14 +2934,14 @@ body:has(.practice-focus) .app-main {
   }
 
   [data-theme="warm-notebook"] .rr-moleskine-solve-spread .rr-moleskine-page-goal {
-    width: min(54rem, 100%);
+    width: min(46rem, 100%);
     padding: 0;
   }
 
   [data-theme="warm-notebook"] .rr-moleskine-solve-spread .rr-moleskine-left-page {
-    width: min(54rem, 100%);
+    width: min(46rem, 100%);
     min-height: auto;
-    padding: clamp(1.65rem, 3vw, 2.35rem);
+    padding: clamp(1.35rem, 2.3vw, 1.95rem);
   }
 
   [data-theme="warm-notebook"] .rr-moleskine-solve-spread .rr-moleskine-left-page::before {
@@ -2958,11 +2958,13 @@ body:has(.practice-focus) .app-main {
   }
 
   [data-theme="warm-notebook"] .rr-moleskine-solve-spread .rr-question-stem {
-    max-width: 38rem;
+    max-width: 34rem;
+    font-size: clamp(1.35rem, 2vw, 1.9rem);
+    line-height: 1.45;
   }
 
   [data-theme="warm-notebook"] .rr-moleskine-solve-spread .rr-answer-dock {
-    max-width: 42rem;
+    max-width: 38rem;
   }
 
   [data-theme="warm-notebook"] .rr-moleskine-solve-spread .rr-moleskine-solve-form {
@@ -2971,8 +2973,8 @@ body:has(.practice-focus) .app-main {
 
   @media (min-width: 1024px) {
     [data-theme="warm-notebook"] .rr-moleskine-solve-spread {
-      grid-template-columns: minmax(0, min(54rem, 62vw));
-      padding: clamp(2rem, 4vw, 4.25rem) clamp(2rem, 5vw, 5rem);
+      grid-template-columns: minmax(0, min(46rem, 54vw));
+      padding: clamp(1.45rem, 3vw, 2.6rem) clamp(1.6rem, 4vw, 3.25rem);
     }
 
     [data-theme="warm-notebook"] .rr-moleskine-solve-spread .rr-moleskine-page-goal {
@@ -2989,21 +2991,30 @@ body:has(.practice-focus) .app-main {
   [data-theme="warm-notebook"] .rr-moleskine-learn-spread {
     align-content: start;
     min-height: auto;
-    padding: clamp(1rem, 2.5vw, 1.65rem);
+    padding: clamp(0.75rem, 1.8vw, 1.15rem);
   }
 
   [data-theme="warm-notebook"] .rr-moleskine-learn-spread .rr-moleskine-teaching-document {
     align-items: start;
   }
 
+  @media (min-width: 1024px) {
+    [data-theme="warm-notebook"] .rr-moleskine-learn-spread .rr-moleskine-teaching-document {
+      grid-template-columns: minmax(0, 0.98fr) minmax(22rem, 0.78fr);
+      column-gap: 1.2rem;
+      max-width: 76rem;
+      margin-inline: auto;
+    }
+  }
+
   [data-theme="warm-notebook"] .rr-moleskine-learn-spread .rr-moleskine-left-page {
-    padding: clamp(1.2rem, 2vw, 1.65rem);
+    padding: clamp(1rem, 1.55vw, 1.25rem);
   }
 
   [data-theme="warm-notebook"] .rr-moleskine-learn-spread .rr-question-stem {
-    max-width: 48rem;
-    font-size: clamp(1.35rem, 1.55vw, 1.75rem);
-    line-height: 1.55;
+    max-width: 41rem;
+    font-size: clamp(1.12rem, 1.22vw, 1.42rem);
+    line-height: 1.48;
   }
 
   [data-theme="warm-notebook"] .rr-moleskine-learn-spread .rr-question-stem-annotated {
@@ -3029,8 +3040,8 @@ body:has(.practice-focus) .app-main {
   }
 
   [data-theme="warm-notebook"] .rr-moleskine-learn-spread .rr-moleskine-reasoning-step {
-    min-height: 4.25rem;
-    padding: 0.58rem 0.65rem;
+    min-height: 3.7rem;
+    padding: 0.5rem 0.58rem;
   }
 
   [data-theme="warm-notebook"] .rr-moleskine-learn-spread .rr-repair-summary,
@@ -3040,18 +3051,18 @@ body:has(.practice-focus) .app-main {
   }
 
   [data-theme="warm-notebook"] .rr-moleskine-learn-spread .rr-moleskine-teaching-section {
-    padding: 0.68rem 0.82rem;
-    margin-bottom: 0.55rem;
+    padding: 0.58rem 0.72rem;
+    margin-bottom: 0.45rem;
   }
 
   [data-theme="warm-notebook"] .rr-moleskine-learn-spread .rr-moleskine-teaching-section h2 {
     margin-bottom: 0.25rem;
-    font-size: 1rem;
+    font-size: 0.96rem;
   }
 
   [data-theme="warm-notebook"] .rr-moleskine-learn-spread .rr-moleskine-teaching-section p {
-    font-size: 0.92rem;
-    line-height: 1.55;
+    font-size: 0.88rem;
+    line-height: 1.48;
   }
 
   [data-theme="warm-notebook"] .rr-moleskine-learn-spread .rr-moleskine-next-challenge {

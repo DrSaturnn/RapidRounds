@@ -238,6 +238,11 @@ describe("design system", () => {
     assert.match(practiceSession, /canGoBack/);
     assert.match(practiceSession, /const goBack = useCallback/);
     assert.match(practiceSession, /const resetCurrentQuestion = useCallback/);
+    assert.match(practicePanel, /function getToolIcons/);
+    assert.match(practicePanel, /"modern-academic"[\s\S]*continue: "▶"/);
+    assert.match(practicePanel, /"warm-notebook"[\s\S]*continue: "▷"/);
+    assert.match(practicePanel, /"dark-clinical"[\s\S]*settings: "☰"/);
+    assert.match(practicePanel, /editorial[\s\S]*teach: "※"/);
     assert.match(practicePanel, /renderDesktopCaseControls/);
     assert.match(practicePanel, /rr-desktop-session-control/);
     assert.match(practicePanel, /rr-mobile-practice-actions/);

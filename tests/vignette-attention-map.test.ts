@@ -85,7 +85,7 @@ describe("vignette attention map", () => {
     assert.ok(question.vignetteFindings?.some((finding) => finding.role === "context"));
   });
 
-  it("creates an example vignette with highlights when a prompt is too short", () => {
+  it("creates a generated teaching vignette with highlights when a prompt is too short", () => {
     const vignette = buildPracticeVignetteAnnotations({
       prompt: "Suspected placenta previa.",
       topic: "Placenta previa",
@@ -95,9 +95,9 @@ describe("vignette attention map", () => {
       managementPearl: "Avoid digital cervical exam until previa is excluded."
     });
 
-    assert.match(vignette.displayStem, /Example vignette:/);
-    assert.match(vignette.displayStem, /Third-trimester bleeding/);
-    assert.match(vignette.displayStem, /Suspected placenta previa/);
+    assert.equal(vignette.displayStem.toLowerCase().includes(["example", "vignette"].join(" ")), false);
+    assert.match(vignette.displayStem, /third-trimester bleeding/i);
+    assert.match(vignette.displayStem, /suspected placenta previa/i);
     assert.ok(vignette.vignetteFindings.some((finding) => finding.role === "pivot_clue"));
   });
 

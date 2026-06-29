@@ -106,23 +106,22 @@ export function buildDisplayVignette(source: VignetteAnnotationSource) {
     return prompt;
   }
 
-  const pattern = sentence(source.clinicalPattern);
-  const pivot = sentence(source.pivotClue || source.clinicalPattern);
+  const pattern = clean(source.clinicalPattern || prompt);
+  const pivot = clean(source.pivotClue || source.clinicalPattern);
   const task = clean(source.decisionType);
   const topic = clean(source.topic);
-  const management = sentence(source.managementPearl);
+  const management = clean(source.managementPearl);
   const decisionContext = task
-    ? `The decision is ${task.toLowerCase()}${topic ? ` for ${topic}` : ""}.`
+    ? `The task is to ${task.toLowerCase() === "diagnosis" ? "name the diagnosis" : `choose the ${task.toLowerCase()}`} ${topic ? `for ${topic}` : ""}.`
     : topic
-      ? `The decision centers on ${topic}.`
+      ? `The case centers on ${topic}.`
       : "";
 
   return [
-    "Example vignette:",
-    pattern || sentence(prompt),
-    pivot,
+    pattern ? `Patient with ${pattern.toLowerCase()} presents for evaluation.` : sentence(prompt),
+    pivot ? `The key finding is ${pivot.toLowerCase()}.` : "",
     decisionContext,
-    management
+    management ? `${management}.` : ""
   ].filter(Boolean).join(" ");
 }
 
