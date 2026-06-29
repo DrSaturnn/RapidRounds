@@ -214,5 +214,77 @@ export const internalMedicineSeeds: RapidRoundsConceptSeed[] = [
     contraindications: ["avoid delaying antibiotics in unstable sepsis solely for ideal culture timing"],
     relatedConcepts: ["sepsis", "stroke", "glomerulonephritis"],
     guidelineReferences: ["AHA infective endocarditis scientific statement"]
+  }),
+  createConceptSeed(subject, "SLE flare", {
+    schema: "Systemic autoimmune disease activity organized by rash, arthritis, serositis, cytopenias, renal findings, and complement activity.",
+    questionArchetypes: ["Diagnosis", "Mechanism/pathophysiology", "Complication"],
+    pivotClues: ["malar photosensitive rash", "low complement with active urine sediment", "anti-dsDNA activity"],
+    supportingClues: ["oral ulcers", "nonerosive arthritis", "pleuritic pain"],
+    commonTraps: ["treating lupus nephritis as uncomplicated urinary abnormality"],
+    primaryDiscriminators: ["immune-complex end-organ activity separates flare from nonspecific symptoms"],
+    managementRules: ["match treatment intensity to organ involvement and severity"],
+    contraindications: ["avoid live vaccines during significant immunosuppression"],
+    relatedConcepts: ["lupus nephritis", "antiphospholipid syndrome", "rheumatoid arthritis"],
+    guidelineReferences: ["ACR lupus nephritis and SLE guidance"]
+  }),
+  createConceptSeed(subject, "TIA/stroke medical evaluation", {
+    schema: "Acute focal neurologic deficit organized by timing, vascular territory, hemorrhage exclusion, and secondary prevention.",
+    questionArchetypes: ["Diagnosis", "Initial management", "Risk factor", "Prognosis/counseling"],
+    pivotClues: ["sudden focal neurologic deficit", "last known well", "noncontrast head CT"],
+    supportingClues: ["atrial fibrillation", "carotid bruit", "vascular risk factors"],
+    commonTraps: ["delaying acute stroke pathway while waiting for outpatient workup"],
+    primaryDiscriminators: ["time from onset determines acute reperfusion eligibility"],
+    managementRules: ["exclude hemorrhage and determine reperfusion eligibility before secondary prevention"],
+    contraindications: ["avoid thrombolysis when exclusion criteria are present"],
+    relatedConcepts: ["intracranial hemorrhage", "seizure", "migraine"],
+    guidelineReferences: ["AHA/ASA acute ischemic stroke guideline"]
+  }),
+  createConceptSeed(subject, "major depressive disorder in medical care", {
+    schema: "Persistent depressed mood or anhedonia with neurovegetative symptoms, functional impairment, and safety assessment.",
+    questionArchetypes: ["Diagnosis", "Screening/prevention", "Prognosis/counseling"],
+    pivotClues: ["anhedonia or depressed mood for at least 2 weeks", "suicidal ideation", "functional impairment"],
+    supportingClues: ["sleep change", "appetite change", "low energy"],
+    commonTraps: ["missing urgent safety assessment when suicidal ideation is present"],
+    primaryDiscriminators: ["duration plus impairment separates MDD from transient sadness"],
+    managementRules: ["assess suicide risk and match treatment to severity"],
+    contraindications: ["avoid antidepressant monotherapy when mania history is present"],
+    relatedConcepts: ["bipolar disorder", "adjustment disorder", "hypothyroidism"],
+    guidelineReferences: ["USPSTF depression screening recommendation"]
+  }),
+  createConceptSeed(subject, "drug eruption", {
+    schema: "Medication-associated rash organized by timing, mucosal involvement, systemic symptoms, and severity.",
+    questionArchetypes: ["Diagnosis", "Drug adverse effect", "Complication"],
+    pivotClues: ["new medication followed by morbilliform rash", "mucosal involvement", "skin pain"],
+    supportingClues: ["pruritus", "fever", "eosinophilia"],
+    commonTraps: ["missing severe cutaneous adverse reaction when mucosa or skin pain appears"],
+    primaryDiscriminators: ["mucosal involvement or skin pain separates severe reaction from simple exanthem"],
+    managementRules: ["stop the offending drug and escalate when severe features are present"],
+    contraindications: ["avoid rechallenge with the suspected severe reaction drug"],
+    relatedConcepts: ["SJS/TEN", "DRESS", "viral exanthem"],
+    guidelineReferences: ["AAD drug eruption educational guidance"]
+  }),
+  createConceptSeed(subject, "gout flare", {
+    schema: "Acute inflammatory monoarthritis organized by crystal pattern, joint distribution, renal function, and urate-lowering timing.",
+    questionArchetypes: ["Diagnosis", "Initial management", "Mechanism/pathophysiology"],
+    pivotClues: ["needle-shaped negatively birefringent crystals", "podagra", "acute monoarthritis"],
+    supportingClues: ["renal disease", "diuretic use", "hyperuricemia"],
+    commonTraps: ["starting urate-lowering therapy as the sole acute flare treatment"],
+    primaryDiscriminators: ["crystal microscopy separates gout from septic arthritis and pseudogout"],
+    managementRules: ["treat the acute inflammatory flare while considering renal and GI contraindications"],
+    contraindications: ["avoid NSAIDs when renal failure or high bleeding risk prohibits them"],
+    relatedConcepts: ["pseudogout", "septic arthritis", "rheumatoid arthritis"],
+    guidelineReferences: ["ACR gout guideline"]
+  }),
+  createConceptSeed(subject, "genitourinary syndrome of menopause", {
+    schema: "Female reproductive hypoestrogenic urogenital syndrome organized by menopausal timing, vaginal symptoms, urinary irritation, and infection exclusion.",
+    questionArchetypes: ["Diagnosis", "Initial management", "Screening/prevention"],
+    pivotClues: ["postmenopausal vaginal dryness and dyspareunia", "pale thin vaginal mucosa", "no infectious discharge"],
+    supportingClues: ["urinary irritation", "recurrent discomfort", "hypoestrogenic tissue changes"],
+    commonTraps: ["treating hypoestrogenic atrophy as infectious vaginitis without discharge or microscopy support"],
+    primaryDiscriminators: ["postmenopausal hypoestrogenic mucosal changes separate GSM from infectious vaginitis"],
+    managementRules: ["use vaginal moisturizers or local estrogen when appropriate after excluding infection and malignancy clues"],
+    contraindications: ["avoid assuming infection when the pivot is hypoestrogenic atrophy without infectious findings"],
+    relatedConcepts: ["vulvovaginal candidiasis", "bacterial vaginosis", "lichen sclerosus"],
+    guidelineReferences: ["ACOG and menopause society public clinical guidance"]
   })
 ];

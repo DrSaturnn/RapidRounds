@@ -53,6 +53,32 @@ const baseTutor = {
     correctDiagnosis: "Gestational hypertension",
     competingDiagnosis: "Preeclampsia",
     rows: []
+  },
+  postAnswerTeaching: {
+    learnerAnswer: "preeclampsia",
+    learnerAnswerSchema: ["Hypertension after 20 weeks", "Preeclampsia"],
+    correctSchema: ["Hypertension after 20 weeks", "No proteinuria or severe features", "Gestational hypertension"],
+    pivotClue: "No proteinuria or severe features",
+    semanticLinks: [
+      {
+        sourceText: "No proteinuria or severe features",
+        relationship: "supports",
+        targetConcept: "Gestational hypertension vs Preeclampsia",
+        targetDiagnosis: "gestational hypertension"
+      }
+    ],
+    intendedDiscriminatorPair: {
+      conceptA: "Gestational hypertension",
+      conceptB: "Preeclampsia",
+      schemaA: ["Hypertension after 20 weeks", "No proteinuria or severe features", "Gestational hypertension"],
+      schemaB: ["Hypertension after 20 weeks", "Proteinuria or severe features", "Preeclampsia"],
+      pivotSupports: "No proteinuria or severe features supports Gestational hypertension.",
+      alternativeWouldNeed: "Proteinuria or severe features"
+    },
+    clinicalResolution: "gestational hypertension",
+    teachingPearl: "Hypertension after 20 weeks without severe features is gestational hypertension.",
+    nextTimeRule: "Check proteinuria and severe features before closing on preeclampsia.",
+    isCorrect: false
   }
 } satisfies TutorContent;
 

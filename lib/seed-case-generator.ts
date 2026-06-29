@@ -1,8 +1,10 @@
 import { buildRapidRoundsReasoningObject } from "@/lib/local-reasoning-engine";
 import {
   allDecisionTreeSeeds,
+  allSchemaNodes,
   allSubjectSeeds,
   getSubjectDecisionTreeSeeds,
+  getSubjectSchemaNodes,
   getSubjectSeeds,
   SUBJECTS
 } from "@/lib/subject-seeds";
@@ -13,7 +15,8 @@ import type {
   GeneratedRapidRoundsCase,
   QuestionBreadth,
   RapidRoundsConceptSeed,
-  RapidRoundsSubject
+  RapidRoundsSubject,
+  SchemaNode
 } from "@/lib/subject-seeds/seed-types";
 import type { DecisionType, QuestionDto, VignetteFindingAnnotation } from "@/types/practice";
 
@@ -142,6 +145,30 @@ function buildNodeAnswerChoices(seed: ClinicalDecisionTreeSeed, node: DecisionNo
   }));
 }
 
+function buildSchemaNodeAnswerChoices(node: SchemaNode) {
+  const distractors = unique([
+    ...node.incorrectAnswerSchemas,
+    ...node.discriminatorPairs.map((pair) => pair.conceptB),
+    ...node.relatedConcepts,
+    ...node.commonTraps,
+    node.managementBranch?.ifAbsent ?? "",
+    node.complicationBranch?.ifPresent ?? ""
+  ])
+    .filter((choice) => choice.toLowerCase() !== node.correctAnswer.toLowerCase())
+    .slice(0, 3);
+
+  const choices = unique([node.correctAnswer, ...distractors]);
+  while (choices.length < 4) {
+    choices.push(`${node.topic} alternative ${choices.length}`);
+  }
+
+  return choices.slice(0, 4).map((text, index) => ({
+    label: String.fromCharCode(65 + index),
+    text,
+    isCorrect: text === node.correctAnswer
+  }));
+}
+
 function buildOriginalVignette(seed: RapidRoundsConceptSeed) {
   const patient = seed.subject === "Pediatrics" ? "A child" : seed.subject === "OB/GYN" ? "A patient" : "An adult patient";
   const context = seed.contextualClues[0] ?? seed.schema;
@@ -223,6 +250,59 @@ function buildTreeVignette(seed: ClinicalDecisionTreeSeed, node: DecisionNode, v
   }
 
   return `${context}. Findings include ${support}. The pivot is ${pivot}${negative ? `, with ${negative}` : ""}.`;
+}
+
+function buildSchemaNodeVignette(node: SchemaNode, variant: CaseVariantTemplate) {
+  const questionSchema = node.initialQuestionSchema;
+  const epidemiology = questionSchema.classicEpidemiologyFrame;
+  const complaint = questionSchema.chiefProblem;
+  const positive = questionSchema.pertinentPositiveSlots[0] ?? node.corePertinentPositives[0] ?? complaint;
+  const pivot = questionSchema.pivotSlot;
+  const negative = questionSchema.pertinentNegativeSlots[0] ?? node.corePertinentNegatives[0];
+  const distractor = node.discriminatorPairs[0]?.conceptB ?? node.relatedConcepts[0];
+
+  if (variant.composition === "minimal_decisive_pivot") {
+    return `${questionSchema.minimalContextFrame}. ${pivot}.`;
+  }
+
+  if (variant.composition === "context_pivot_distractors") {
+    return `${questionSchema.misleadingContextFrame}. ${complaint}. ${pivot}. A tempting alternative schema is ${distractor ?? "a nearby presentation"}.`;
+  }
+
+  if (variant.composition === "context_negative_generic_positive") {
+    return `${questionSchema.atypicalEpidemiologyFrame}. ${positive}${negative ? `, without ${negative}` : ""}. The decision turns on ${pivot}.`;
+  }
+
+  if (variant.composition === "late_stage_after_intervention") {
+    const prior = node.priorInterventions[0] ?? node.managementBranch?.ifPresent ?? "initial management";
+    const stateChange = node.downstreamStateChanges[0] ?? `the clinical state has advanced after ${prior}`;
+    return `${epidemiology}. The patient has already received ${prior}. ${stateChange}. The next decision depends on ${pivot}.`;
+  }
+
+  if (variant.composition === "complication_nonresponse_branch") {
+    const branch = node.complicationBranches[0] ?? node.complicationBranch;
+    return `${epidemiology}. A prior intervention has been attempted, but the patient does not follow the expected course. ${branch?.branchPoint ?? pivot} now determines whether to escalate.`;
+  }
+
+  return `${epidemiology}. ${complaint}. ${pivot}. ${questionSchema.task}`;
+}
+
+function buildSchemaNodeClueMap(node: SchemaNode): VignetteFindingAnnotation[] {
+  return [
+    { text: node.initialQuestionSchema.classicEpidemiologyFrame, role: "context" },
+    { text: node.chiefProblem, role: "supporting" },
+    ...node.corePertinentPositives.slice(0, 1).map((text) => ({ text, role: "supporting" as const })),
+    ...node.pivotClues.slice(0, 1).map((text) => ({
+      text,
+      role: "pivot_clue" as const,
+      explanation: node.discriminatorPair.boardRule
+    })),
+    ...node.corePertinentNegatives.slice(0, 1).map((text) => ({
+      text,
+      role: "neutral" as const,
+      explanation: "This negative finding narrows the decision boundary."
+    }))
+  ];
 }
 
 export function generateCaseFromSeed(seed: RapidRoundsConceptSeed): GeneratedRapidRoundsCase {
@@ -347,14 +427,101 @@ export function generateCasesFromDecisionTreeSeed(
   );
 }
 
+export function generateCasesFromSchemaNode(
+  node: SchemaNode,
+  breadth?: QuestionBreadth | string | null
+): GeneratedRapidRoundsCase[] {
+  const selectedBreadth = normalizeQuestionBreadth(breadth);
+  if (!isWithinBreadth(node.shelfBand === "core" ? "primary" : "comprehensive", selectedBreadth)) {
+    return [];
+  }
+
+  const selectedVariants = node.adaptiveBreadthVariants.filter((variant) => isWithinBreadth(variant.breadth, selectedBreadth));
+
+  return selectedVariants.map((variant) => {
+    const vignette = buildSchemaNodeVignette(node, variant);
+    const answerPrompt = node.answerPrompt || promptFor(node.nbmeArchetype);
+    const answerChoices = buildSchemaNodeAnswerChoices(node);
+    const rawText = [
+      vignette,
+      answerPrompt,
+      ...answerChoices.map((choice) => `${choice.label}. ${choice.text}`)
+    ].join("\n");
+    const reasoningObjectBase = buildRapidRoundsReasoningObject({
+      rawText,
+      highlightedText: `Educational objective: ${node.nextTimeRule}\nCorrect answer: ${node.correctAnswer}.`
+    });
+    const reasoningObject = {
+      ...reasoningObjectBase,
+      pivotClue: node.pivotClue,
+      semanticLinks: node.semanticLinks,
+      intendedDiscriminatorPair: {
+        conceptA: node.discriminatorPair.conceptA,
+        conceptB: node.discriminatorPair.conceptB,
+        schemaA: node.discriminatorPair.conceptASchema,
+        schemaB: node.discriminatorPair.conceptBSchema,
+        pivotSupports: node.discriminatorPair.whyPivotSupportsA,
+        alternativeWouldNeed: node.discriminatorPair.whatWouldSupportB
+      },
+      clinicalResolution: node.correctAnswer,
+      teachingPearl: node.discriminatorPair.boardRule,
+      nextTimeRule: node.nextTimeRule
+    };
+    const clueMap = buildSchemaNodeClueMap(node);
+    const id = `generated-schema-${node.id}-${variant.variantId}`;
+    const explanation = `${node.discriminatorPairs[0]?.boardRule ?? node.nextTimeRule} ${node.managementBranch?.ifPresent ?? ""}`.trim();
+    const question: QuestionDto = {
+      id,
+      specialty: node.subject,
+      system: node.system,
+      topic: node.topic,
+      canonicalProblem: node.schema,
+      variantType: `${node.nodeKind}_${variant.variantId}`.replace(/[^a-z0-9_]+/gi, "_").toLowerCase(),
+      difficulty: node.shelfBand === "core" ? 2 : 4,
+      stem: `${vignette}\n\n${answerPrompt}`,
+      displayStem: `${vignette}\n\n${answerPrompt}`,
+      decisionType: archetypeToDecisionType(node.nbmeArchetype),
+      pattern: node.schema,
+      management: node.managementBranch?.ifPresent ?? node.nextTimeRule,
+      diagnosis: node.topic,
+      vignetteFindings: clueMap
+    };
+
+    return {
+      id,
+      subject: node.subject,
+      topic: node.topic,
+      schema: node.schema,
+      archetype: node.nbmeArchetype,
+      vignette,
+      answerPrompt,
+      answerChoices,
+      correctAnswer: node.correctAnswer,
+      explanation,
+      clueMap,
+      reasoningObject,
+      conceptCard: reasoningObject.conceptCard,
+      question,
+      seed: allSubjectSeeds.find((seed) => seed.id === node.parentSeedId)!,
+      schemaNode: node,
+      variantTemplate: variant
+    } satisfies GeneratedRapidRoundsCase;
+  });
+}
+
 export function getGeneratedCasesForSubject(subject?: string | null, breadth?: QuestionBreadth | string | null) {
   const selectedBreadth = normalizeQuestionBreadth(breadth);
-  const treeCases = getSubjectDecisionTreeSeeds(subject).flatMap((seed) => generateCasesFromDecisionTreeSeed(seed, selectedBreadth));
-  const flatCases = getSubjectSeeds(subject).map(generateCaseFromSeed);
-  return selectedBreadth === "primary" ? treeCases : [...treeCases, ...flatCases];
+  return getSubjectSchemaNodes(subject).flatMap((node) => generateCasesFromSchemaNode(node, selectedBreadth));
 }
 
 export function getGeneratedCaseById(id: string) {
+  const schemaCase = allSchemaNodes
+    .flatMap((node) => generateCasesFromSchemaNode(node))
+    .find((item) => item.id === id);
+  if (schemaCase) {
+    return schemaCase;
+  }
+
   const treeCase = allDecisionTreeSeeds
     .flatMap((seed) => generateCasesFromDecisionTreeSeed(seed))
     .find((item) => item.id === id);

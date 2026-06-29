@@ -326,6 +326,303 @@ function buildMetadataComparison(
   };
 }
 
+function normalizeSchemaName(value?: string) {
+  return sentence(String(value ?? "")).toLowerCase();
+}
+
+function mapsAnswerToSchema(answer?: string, schema?: string) {
+  const normalizedAnswer = normalizeSchemaName(answer);
+  const normalizedSchema = normalizeSchemaName(schema);
+
+  return (
+    normalizedAnswer.length > 2 &&
+    normalizedSchema.length > 2 &&
+    (normalizedAnswer === normalizedSchema ||
+      normalizedAnswer.includes(normalizedSchema) ||
+      normalizedSchema.includes(normalizedAnswer))
+  );
+}
+
+function findMetadataBoundaryForAnswer(metadata: RapidRoundsCaseMetadata | undefined, learnerAnswer: string) {
+  return metadata?.decisionBoundary.find((boundary) => mapsAnswerToSchema(learnerAnswer, boundary.confusedWith));
+}
+
+function findComparisonRow(comparison: TutorContent["comparison"], patterns: RegExp[]) {
+  return comparison.rows.find((row) => patterns.some((pattern) => pattern.test(row.feature)));
+}
+
+function buildSchemaSummary(
+  comparison: TutorContent["comparison"],
+  side: "correct" | "competing",
+  fallback: string
+) {
+  const candidates = [
+    findComparisonRow(comparison, [/typical/i, /presentation/i, /clinical target/i, /clinical use/i])?.[side],
+    findComparisonRow(comparison, [/distinguishing/i, /discriminator/i, /pivot/i, /contraindication/i, /clue/i])?.[side],
+    findComparisonRow(comparison, [/management/i, /board pearl/i])?.[side]
+  ];
+  const summary = dedupeDisplayStrings(candidates.filter(Boolean).map((value) => sentence(value ?? ""))).slice(0, 2);
+
+  return summary.length > 0 ? summary.join("; ") : fallback;
+}
+
+function buildSchemaDiscriminator({
+  decision,
+  userAnswer,
+  evaluation,
+  comparison,
+  metadata,
+  repair,
+  whyTempting,
+  nbmePivot
+}: {
+  decision: TutorDecision;
+  userAnswer: string;
+  evaluation?: AnswerEvaluation;
+  comparison: TutorContent["comparison"];
+  metadata?: RapidRoundsCaseMetadata;
+  repair: DecisionRepair;
+  whyTempting?: string;
+  nbmePivot?: string;
+}): TutorContent["schemaDiscriminator"] | undefined {
+  if (
+    evaluation?.isCorrect !== false ||
+    evaluation.classification === "UNKNOWN" ||
+    comparison.rows.length === 0 ||
+    !comparison.competingDiagnosis.trim()
+  ) {
+    return undefined;
+  }
+
+  const learnerAnswer = cleanAnswer(userAnswer);
+  const mappedBoundary = findMetadataBoundaryForAnswer(metadata, learnerAnswer);
+  const mapsToKnownComparison =
+    mapsAnswerToSchema(learnerAnswer, comparison.competingDiagnosis) ||
+    Boolean(mappedBoundary) ||
+    mapsAnswerToSchema(evaluation.recognizedConcept, comparison.competingDiagnosis);
+  const fallbackBoundary = metadata?.decisionBoundary[0];
+  const canUseFallback = !mapsToKnownComparison && Boolean(fallbackBoundary);
+
+  if (!mapsToKnownComparison && !canUseFallback) {
+    return undefined;
+  }
+
+  const learnerSchema = mapsToKnownComparison
+    ? mappedBoundary?.confusedWith ?? comparison.competingDiagnosis
+    : fallbackBoundary?.confusedWith ?? comparison.competingDiagnosis;
+  const clueMeaning = sentence(repair.clueMeaning ?? repair.why);
+  const sharedPresentation = sentence(getPattern(decision)) || sentence(decision.prompt ?? "");
+  const correctSchema = buildSchemaSummary(comparison, "correct", comparison.correctDiagnosis);
+  const wrongSchema = buildSchemaSummary(comparison, "competing", learnerSchema);
+  const discriminatorRow = findComparisonRow(comparison, [/distinguishing/i, /discriminator/i, /pivot/i, /contraindication/i, /clue/i]);
+  const pivotRuleOut =
+    mappedBoundary?.howToDistinguish ??
+    fallbackBoundary?.howToDistinguish ??
+    (discriminatorRow?.competing
+      ? `${learnerSchema} would need ${sentence(discriminatorRow.competing).toLowerCase()}; this stem gives ${repair.clue.toLowerCase()}.`
+      : `This stem gives ${repair.clue.toLowerCase()}, which supports ${repair.correctAnswer} instead.`);
+  const boardRule = sentence(nbmePivot || repair.fingerprint || decision.boardPearl);
+
+  return {
+    correctSchema: comparison.correctDiagnosis,
+    learnerSchema,
+    source: mapsToKnownComparison ? "learner_answer" : "fallback",
+    pivotClue: repair.clue,
+    boardRule,
+    rows: [
+      {
+        feature: "Shared presentation",
+        correct: sharedPresentation || comparison.correctDiagnosis,
+        learner: sharedPresentation || learnerSchema
+      },
+      {
+        feature: "Correct schema",
+        correct: correctSchema,
+        learner: "Not the schema supported by this stem"
+      },
+      {
+        feature: "Learner schema",
+        correct: "Ruled in by the pivot clue here",
+        learner: wrongSchema
+      },
+      {
+        feature: "Pivot clue",
+        correct: repair.clue,
+        learner: `This clue should move you away from ${learnerSchema}.`
+      },
+      {
+        feature: "Why it was tempting",
+        correct: `${comparison.correctDiagnosis} and ${learnerSchema} can overlap on the presenting pattern.`,
+        learner: whyTempting ?? `${learnerSchema} was tempting because it overlaps with the stem.`
+      },
+      {
+        feature: "Why the pivot rules it out",
+        correct: clueMeaning,
+        learner: pivotRuleOut
+      },
+      {
+        feature: "Board rule",
+        correct: boardRule,
+        learner: `Do not choose ${learnerSchema} unless its discriminator is present.`
+      }
+    ].filter((row) => row.correct.trim().length > 0 && row.learner.trim().length > 0)
+  };
+}
+
+function getDecisionTaskDisplay(decision: TutorDecision) {
+  const type = sentence(decision.decisionType ?? "");
+
+  if (/diagnosis/i.test(type)) {
+    return "Name the diagnosis";
+  }
+
+  if (/contraindication/i.test(type)) {
+    return "Avoid the contraindicated option";
+  }
+
+  if (/management|treatment|step/i.test(type)) {
+    return "Choose the next step";
+  }
+
+  return type || "Make the clinical decision";
+}
+
+function buildSchemaChain(values: Array<string | undefined>) {
+  return dedupeDisplayStrings(values.map((value) => sentence(value ?? "")).filter(Boolean)).slice(0, 4);
+}
+
+function buildSchemaChainFromComparison({
+  comparison,
+  side,
+  decision,
+  terminal
+}: {
+  comparison: TutorContent["comparison"];
+  side: "correct" | "competing";
+  decision: TutorDecision;
+  terminal: string;
+}) {
+  const presentation = findComparisonRow(comparison, [/typical/i, /presentation/i, /clinical target/i, /clinical use/i])?.[side];
+  const discriminator = findComparisonRow(comparison, [/distinguishing/i, /discriminator/i, /pivot/i, /contraindication/i, /clue/i])?.[side];
+
+  return buildSchemaChain([
+    sentence(getPattern(decision)) || comparison.correctDiagnosis,
+    presentation,
+    discriminator,
+    terminal
+  ]);
+}
+
+function buildIntendedDiscriminatorPair({
+  comparison,
+  decision,
+  pivotClue,
+  correctAnswer
+}: {
+  comparison: TutorContent["comparison"];
+  decision: TutorDecision;
+  pivotClue: string;
+  correctAnswer: string;
+}): TutorContent["postAnswerTeaching"]["intendedDiscriminatorPair"] {
+  if (comparison.rows.length === 0 || !comparison.competingDiagnosis.trim()) {
+    return undefined;
+  }
+
+  const discriminatorRow = findComparisonRow(comparison, [/distinguishing/i, /discriminator/i, /pivot/i, /contraindication/i, /clue/i]);
+  const schemaA = buildSchemaChainFromComparison({
+    comparison,
+    side: "correct",
+    decision,
+    terminal: correctAnswer
+  });
+  const schemaB = buildSchemaChainFromComparison({
+    comparison,
+    side: "competing",
+    decision,
+    terminal: comparison.competingDiagnosis
+  });
+
+  return {
+    conceptA: comparison.correctDiagnosis,
+    conceptB: comparison.competingDiagnosis,
+    schemaA,
+    schemaB,
+    pivotSupports: `${pivotClue} supports ${comparison.correctDiagnosis}.`,
+    alternativeWouldNeed:
+      discriminatorRow?.competing ??
+      `A finding that specifically supports ${comparison.competingDiagnosis}.`
+  };
+}
+
+function buildPostAnswerTeaching({
+  decision,
+  userAnswer,
+  evaluation,
+  comparison,
+  repair,
+  nbmePivot
+}: {
+  decision: TutorDecision;
+  userAnswer: string;
+  evaluation?: AnswerEvaluation;
+  comparison: TutorContent["comparison"];
+  repair: DecisionRepair;
+  nbmePivot?: string;
+}): TutorContent["postAnswerTeaching"] {
+  const learnerAnswer = cleanAnswer(userAnswer);
+  const correctAnswer = sentence(decision.correctAnswer);
+  const isCorrect = Boolean(evaluation?.isCorrect);
+  const learnerMapsToAlternative =
+    !isCorrect &&
+    (mapsAnswerToSchema(learnerAnswer, comparison.competingDiagnosis) ||
+      mapsAnswerToSchema(evaluation?.recognizedConcept, comparison.competingDiagnosis));
+  const learnerAnswerSchema = isCorrect
+    ? buildSchemaChainFromComparison({ comparison, side: "correct", decision, terminal: correctAnswer })
+    : learnerMapsToAlternative
+      ? buildSchemaChainFromComparison({ comparison, side: "competing", decision, terminal: comparison.competingDiagnosis })
+      : buildSchemaChain([
+          sentence(getPattern(decision)) || sentence(decision.prompt ?? ""),
+          learnerAnswer,
+          evaluation?.recognizedConcept,
+          "Schema not proven by this stem"
+        ]);
+  const correctSchema = buildSchemaChainFromComparison({
+    comparison,
+    side: "correct",
+    decision,
+    terminal: correctAnswer
+  });
+  const intendedDiscriminatorPair = buildIntendedDiscriminatorPair({
+    comparison,
+    decision,
+    pivotClue: repair.clue,
+    correctAnswer
+  });
+  const targetConcept = intendedDiscriminatorPair
+    ? `${intendedDiscriminatorPair.conceptA} vs ${intendedDiscriminatorPair.conceptB}`
+    : sentence(getPattern(decision)) || correctAnswer;
+
+  return {
+    learnerAnswer,
+    learnerAnswerSchema,
+    correctSchema,
+    pivotClue: repair.clue,
+    semanticLinks: [
+      {
+        sourceText: repair.clue,
+        relationship: /diagnosis|pattern/i.test(decision.decisionType ?? "") ? "proves" : "supports",
+        targetConcept,
+        targetDiagnosis: correctAnswer
+      }
+    ],
+    intendedDiscriminatorPair,
+    clinicalResolution: correctAnswer,
+    teachingPearl: repair.fingerprint || repair.clueMeaning || nbmePivot || "",
+    nextTimeRule: nbmePivot || repair.fingerprint || `Use ${repair.clue.toLowerCase()} before choosing the next branch.`,
+    isCorrect
+  };
+}
+
 function isKnownAdjacentAnswer(decision: TutorDecision, userAnswer: string, evaluation?: AnswerEvaluation) {
   const answer = cleanAnswer(userAnswer).toLowerCase();
   const trap = sentence(decision.commonTrap ?? "").toLowerCase();
@@ -647,6 +944,31 @@ export function buildTutorContent(
     hasDecisionBoundary: Boolean(decisionBoundary),
     hasSpecificComparison: comparison.rows.length > 0
   });
+  const nbmePivot = mappedTeachMore?.nbmePivot ?? rapidRoundsCase?.decisionBoundary[0]?.howToDistinguish ?? buildNbmePivot(decision);
+  const whyTempting = buildWhyTempting(
+    decision,
+    userAnswer,
+    evaluation,
+    mappedTeachMore?.whyTempting ?? rapidRoundsCase?.commonWrongReasoning[0]
+  );
+  const schemaDiscriminator = buildSchemaDiscriminator({
+    decision,
+    userAnswer,
+    evaluation,
+    comparison,
+    metadata: rapidRoundsCase,
+    repair,
+    whyTempting,
+    nbmePivot
+  });
+  const postAnswerTeaching = buildPostAnswerTeaching({
+    decision,
+    userAnswer,
+    evaluation,
+    comparison,
+    repair,
+    nbmePivot
+  });
 
   return {
     repair,
@@ -679,14 +1001,11 @@ export function buildTutorContent(
           ]).join(" -> ")
         : buildRecognitionPath(decision)
     ),
-    nbmePivot: mappedTeachMore?.nbmePivot ?? rapidRoundsCase?.decisionBoundary[0]?.howToDistinguish ?? buildNbmePivot(decision),
-    whyTempting: buildWhyTempting(
-      decision,
-      userAnswer,
-      evaluation,
-      mappedTeachMore?.whyTempting ?? rapidRoundsCase?.commonWrongReasoning[0]
-    ),
+    nbmePivot,
+    whyTempting,
     comparison,
+    schemaDiscriminator,
+    postAnswerTeaching,
     reinforcement: buildReinforcement(decision, acceptedAnswers, repair)
   };
 }

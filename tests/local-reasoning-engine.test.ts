@@ -24,6 +24,11 @@ describe("local NBME-first reasoning engine", () => {
     assert.equal(result.clinicalSchema?.name, "Placenta previa");
     assert.ok(result.candidatePivots.some((pivot) => /painless|digital|placental/i.test(pivot.text)));
     assert.ok(result.discriminators.some((item) => item.competingConcept === "Placental abruption"));
+    assert.ok(result.correctSchema.length > 0);
+    assert.equal(result.pivotClue.length > 0, true);
+    assert.ok(result.semanticLinks.some((link) => link.sourceText === result.pivotClue));
+    assert.equal(result.intendedDiscriminatorPair?.conceptB, "Placental abruption");
+    assert.ok(result.clinicalResolution.length > 0);
     assert.equal(result.needsExpertReview, false);
   });
 

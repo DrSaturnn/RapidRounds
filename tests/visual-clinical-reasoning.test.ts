@@ -3,19 +3,17 @@ import { readFileSync } from "node:fs";
 import { describe, it } from "node:test";
 
 describe("visual clinical reasoning renderer", () => {
-  it("renders the repair flow from existing tutor metadata", () => {
+  it("renders the post-answer teaching model from semantic tutor fields", () => {
     const tutorMode = readFileSync("components/TutorMode.tsx", "utf8");
 
-    assert.match(tutorMode, /const visualFlowSteps = \[/);
-    assert.match(tutorMode, /label: "Clinical pattern"/);
-    assert.match(tutorMode, /label: "Pivot clue"/);
-    assert.match(tutorMode, /label: "Decision"/);
-    assert.match(tutorMode, /label: "Correct answer"/);
-    assert.match(tutorMode, /visibleRecognitionClues\[0\]/);
-    assert.match(tutorMode, /tutor\.repair\.clue/);
-    assert.match(tutorMode, /getDecisionTaskLabel\(tutor\)/);
-    assert.match(tutorMode, /tutor\.repair\.correctAnswer/);
-    assert.match(tutorMode, /<ClinicalReasoningFlow steps=\{visualFlowSteps\} \/>/);
+    assert.match(tutorMode, /function PostAnswerTeachingModel/);
+    assert.match(tutorMode, /tutor\.postAnswerTeaching/);
+    assert.match(tutorMode, /learnerAnswerSchema/);
+    assert.match(tutorMode, /semanticLinks/);
+    assert.match(tutorMode, /intendedDiscriminatorPair/);
+    assert.match(tutorMode, /Clinical Resolution/);
+    assert.match(tutorMode, /Next-time rule/);
+    assert.doesNotMatch(tutorMode, /semanticLinks\s*=\s*\[/);
   });
 
   it("suppresses redundant recognition bullets when the visual flow is shown", () => {
@@ -26,22 +24,22 @@ describe("visual clinical reasoning renderer", () => {
     assert.doesNotMatch(tutorMode, /list-disc/);
   });
 
-  it("shortens expert reasoning into an optional memory line", () => {
+  it("keeps the pivot as the primary teaching event", () => {
     const tutorMode = readFileSync("components/TutorMode.tsx", "utf8");
 
-    assert.match(tutorMode, /function getCompactReasoning/);
-    assert.match(tutorMode, /compactReasoning/);
-    assert.match(tutorMode, /What to remember/);
+    assert.match(tutorMode, /rr-dominant-pivot/);
+    assert.match(tutorMode, /Pivot/);
+    assert.match(tutorMode, /teaching\.pivotClue/);
     assert.doesNotMatch(tutorMode, /<p className="rr-meta">Expert reasoning<\/p>/);
   });
 
-  it("styles the flow as a clinical decision pathway", () => {
+  it("styles the schema-first teaching pathway", () => {
     const css = readFileSync("app/globals.css", "utf8");
 
-    assert.match(css, /rr-clinical-flow/);
-    assert.match(css, /rr-clinical-flow-pivot/);
-    assert.match(css, /rr-clinical-flow-terminal/);
-    assert.match(css, /content: "↓"/);
+    assert.match(css, /rr-schema-arrow-chain/);
+    assert.match(css, /rr-dominant-pivot/);
+    assert.match(css, /rr-semantic-bridge/);
+    assert.match(css, /rr-decision-boundary-model/);
     assert.match(css, /rr-explanation-notebook/);
     assert.match(css, /max-width: 78rem/);
   });

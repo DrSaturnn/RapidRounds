@@ -127,7 +127,8 @@ export function TutorMode({
   });
   const comparisonRows = tutor.comparison.rows;
   const modules = tutor.teachingPlan.modules;
-  const hasComparison = modules.comparison && comparisonRows.length > 0;
+  const hasSchemaDiscriminator = Boolean(tutor.schemaDiscriminator);
+  const hasComparison = modules.comparison && comparisonRows.length > 0 && !hasSchemaDiscriminator;
   const recognitionClues = dedupeDisplayStrings(tutor.repair.recognitionClues ?? [tutor.repair.clue])
     .filter((clue) => clue.toLowerCase() !== tutor.repair.clue.trim().replace(/\s+/g, " ").toLowerCase());
   const visibleRecognitionClues = recognitionClues.length > 0 ? recognitionClues : [tutor.repair.clue];
@@ -148,11 +149,11 @@ export function TutorMode({
     { label: "Clinical pattern", value: visibleRecognitionClues[0] },
     { label: "Pivot clue", value: tutor.repair.clue },
     { label: "Decision", value: getDecisionTaskLabel(tutor) },
-    { label: "Correct answer", value: tutor.repair.correctAnswer }
+    { label: "Clinical resolution", value: tutor.repair.correctAnswer }
   ].filter((step) => step.value.trim().length > 0);
   const compactReasoning = getCompactReasoning(tutor);
   const hasVignetteFindings = Boolean(tutor.vignetteFindings?.length);
-  const showComparisonInRightPanel = hasComparison;
+  const showComparisonInRightPanel = hasSchemaDiscriminator;
   const hasTeachingContent = Boolean(
     (modules.retrieval && tutor.teachingPlan.retrieval) ||
     (modules.contraindication && tutor.teachingPlan.contraindication) ||
@@ -178,33 +179,19 @@ export function TutorMode({
         <p className="rr-section-header">{repairTitle}</p>
         {isUnknown ? (
           <div className="space-y-3 text-sm leading-6">
-            <ClinicalReasoningFlow steps={visualFlowSteps} />
-            <RepairSummary tutor={tutor} />
+            <PostAnswerTeachingModel tutor={tutor} />
             {hasVignetteFindings ? <VignetteAttentionMap findings={tutor.vignetteFindings ?? []} /> : null}
-            <TeachingFact label="What mattered" value={tutor.repair.clueMeaning} />
-            {compactReasoning ? <TeachingFact label="What to remember" value={compactReasoning} /> : null}
             {tutor.coaching ? (
               <div className="rr-callout rr-coaching-callout">
                 <p className="rr-meta">Pattern to watch</p>
                 <p>{tutor.coaching.message}</p>
               </div>
             ) : null}
-            {hasCommonConfusion ? (
-              <div>
-                <p className="rr-meta">Common confusion</p>
-                <p>{tutor.comparison.competingDiagnosis}</p>
-              </div>
-            ) : null}
           </div>
         ) : (
           <>
-            <ClinicalReasoningFlow steps={visualFlowSteps} />
-            <RepairSummary tutor={tutor} />
+            <PostAnswerTeachingModel tutor={tutor} />
             {hasVignetteFindings ? <VignetteAttentionMap findings={tutor.vignetteFindings ?? []} /> : null}
-            <div className="grid gap-3 text-sm leading-6 sm:grid-cols-2">
-              <TeachingFact label="What mattered" value={tutor.repair.clueMeaning} />
-              {compactReasoning ? <TeachingFact label="What to remember" value={compactReasoning} /> : null}
-            </div>
             {tutor.coaching ? (
               <div className="rr-callout rr-coaching-callout">
                 <p className="rr-meta">Pattern to watch</p>
@@ -406,11 +393,112 @@ export function TutorMode({
     <section className="rr-post-answer-workspace rr-explanation-notebook rr-notebook-surface rr-moleskine-teaching-spread">
       <div className="rr-post-answer-repair">{repairSurface}</div>
       <section className="rr-post-answer-depth rr-moleskine-right-page" aria-label="Understand the pattern" data-rr-teaching-depth>
-        <p className="rr-section-header rr-depth-heading">Understand the pattern</p>
-        <RightPanelExplanation tutor={tutor} showComparison={showComparisonInRightPanel} />
+        <p className="rr-section-header rr-depth-heading">Optional depth</p>
         {teachingSurface}
         <div className="rr-post-answer-next mt-4">{nextChallengeSurface}</div>
       </section>
+    </section>
+  );
+}
+
+function PostAnswerTeachingModel({ tutor }: { tutor: TutorContent }) {
+  const teaching = tutor.postAnswerTeaching;
+  const learnerLabel = teaching.learnerAnswer || "your answer";
+  const intro = teaching.isCorrect
+    ? "Correct. You recognized the schema:"
+    : `Not quite. You put ${learnerLabel}. The typical schema for ${learnerLabel} is:`;
+
+  return (
+    <div className="rr-post-answer-model" aria-label="Post-answer teaching model">
+      <section className="rr-schema-activation">
+        <p className="rr-schema-intro">{intro}</p>
+        <SchemaArrowChain steps={teaching.learnerAnswerSchema} />
+      </section>
+      <section className="rr-dominant-pivot" aria-label="Pivot clue">
+        <span>Pivot</span>
+        <strong>{teaching.pivotClue}</strong>
+      </section>
+      <SemanticBridge links={teaching.semanticLinks} />
+      {teaching.intendedDiscriminatorPair ? (
+        <DecisionBoundaryTable pair={teaching.intendedDiscriminatorPair} />
+      ) : null}
+      <section className="rr-clinical-resolution" aria-label="Clinical resolution">
+        <span>Clinical Resolution</span>
+        <strong>{teaching.clinicalResolution}</strong>
+      </section>
+      <section className="rr-next-time-rule" aria-label="Next-time rule">
+        <span>Next-time rule</span>
+        <p>{teaching.nextTimeRule}</p>
+      </section>
+    </div>
+  );
+}
+
+function SchemaArrowChain({ steps }: { steps: string[] }) {
+  return (
+    <div className="rr-schema-arrow-chain" aria-label="Activated schema">
+      {steps.map((step, index) => (
+        <div key={`${step}-${index}`} className="rr-schema-arrow-step">
+          <span>{step}</span>
+        </div>
+      ))}
+    </div>
+  );
+}
+
+function SemanticBridge({ links }: { links: TutorContent["postAnswerTeaching"]["semanticLinks"] }) {
+  if (links.length === 0) {
+    return null;
+  }
+
+  return (
+    <section className="rr-semantic-bridge" aria-label="Semantic bridge">
+      {links.map((link) => (
+        <div key={`${link.sourceText}-${link.relationship}-${link.targetConcept}`}>
+          <span>{link.sourceText}</span>
+          <strong>{link.relationship.replace("_", " ")}</strong>
+          <span>{link.targetDiagnosis ?? link.targetConcept}</span>
+        </div>
+      ))}
+    </section>
+  );
+}
+
+function DecisionBoundaryTable({ pair }: { pair: NonNullable<TutorContent["postAnswerTeaching"]["intendedDiscriminatorPair"]> }) {
+  return (
+    <section className="rr-decision-boundary-model" aria-label="Decision boundary">
+      <div className="rr-schema-discriminator-heading">
+        <h2>Decision boundary</h2>
+        <p>The pivot separates these two schemas.</p>
+      </div>
+      <div className="mt-2 overflow-x-auto">
+        <table className="rr-table rr-schema-discriminator-table">
+          <thead>
+            <tr>
+              <th>Field</th>
+              <th>{pair.conceptA}</th>
+              <th>{pair.conceptB}</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td className="font-medium">Defining schema</td>
+              <td><SchemaArrowChain steps={pair.schemaA} /></td>
+              <td><SchemaArrowChain steps={pair.schemaB} /></td>
+            </tr>
+            <tr>
+              <td className="font-medium">What the pivot supports</td>
+              <td>{pair.pivotSupports}</td>
+              <td>Not supported by the pivot here.</td>
+            </tr>
+            <tr>
+              <td className="font-medium">Alternative would need</td>
+              <td>The current pivot instead.</td>
+              <td>{pair.alternativeWouldNeed}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
     </section>
   );
 }
@@ -459,15 +547,9 @@ function MoleskineTeachingDocument({
       <section className="rr-card rr-question-card rr-vignette-card rr-card-paper rr-moleskine-left-page">
         {leftPageContent}
         <div className="rr-moleskine-left-reasoning">
-          <p className="rr-section-header">Expert reasoning</p>
-          <MoleskineReasoningChain steps={visualFlowSteps} />
-          <RepairSummary tutor={tutor} />
+          <p className="rr-section-header">Build the pattern</p>
+          <PostAnswerTeachingModel tutor={tutor} />
           {hasVignetteFindings ? <VignetteAttentionMap findings={tutor.vignetteFindings ?? []} /> : null}
-          <div className="rr-moleskine-written-section">
-            <TeachingFact label="What mattered" value={tutor.repair.clueMeaning} />
-            {compactReasoning ? <TeachingFact label="What to remember" value={compactReasoning} /> : null}
-            {hasCommonConfusion ? <TeachingFact label="Common confusion" value={tutor.comparison.competingDiagnosis} /> : null}
-          </div>
           {tutor.coaching ? (
             <div className="rr-callout rr-coaching-callout rr-moleskine-margin-note">
               <p className="rr-meta">Pattern to watch</p>
@@ -506,9 +588,7 @@ function MoleskineTeachingDocument({
         </div>
       </section>
       <section className="rr-moleskine-right-page" aria-label="Understand the pattern" data-rr-teaching-depth>
-        <p className="rr-section-header rr-depth-heading">Understand the pattern</p>
-        <RightPanelExplanation tutor={tutor} showComparison={showComparison} presentation="moleskine" />
-        <MoleskineClinicalPearl tutor={tutor} />
+        <p className="rr-section-header rr-depth-heading">Optional depth</p>
         <MoleskineTeachMeMore>{teachingSurface}</MoleskineTeachMeMore>
         {nextChallengeSurface ? <div className="rr-moleskine-next-challenge">{nextChallengeSurface}</div> : null}
       </section>
@@ -520,164 +600,51 @@ function MoleskineTeachMeMore({ children }: { children: ReactNode }) {
   return <div className="rr-moleskine-teach-more">{children}</div>;
 }
 
-function MoleskineReasoningChain({ steps }: { steps: Array<{ label: string; value: string }> }) {
-  const visibleSteps = steps.filter((step) => step.value.trim().length > 0);
-
-  return (
-    <div className="rr-moleskine-reasoning-chain" aria-label="Expert reasoning chain">
-      {visibleSteps.map((step, index) => (
-        <div key={`${step.label}-${step.value}-${index}`} className="rr-moleskine-reasoning-step">
-          <span>{step.label}</span>
-          <strong>{step.value}</strong>
-        </div>
-      ))}
-    </div>
-  );
-}
-
-function MoleskineClinicalPearl({ tutor }: { tutor: TutorContent }) {
-  const pearl = tutor.repair.fingerprint?.trim() || tutor.managementPearl?.trim();
-
-  if (!pearl || pearl === tutor.nbmePivot?.trim()) {
-    return null;
-  }
-
-  return (
-    <section className="rr-moleskine-teaching-section rr-moleskine-clinical-pearl">
-      <h2>Clinical pearl</h2>
-      <p>{pearl}</p>
-    </section>
-  );
-}
-
-function RightPanelExplanation({
-  tutor,
-  showComparison,
+function SchemaDiscriminatorInsert({
+  discriminator,
   presentation = "default"
 }: {
-  tutor: TutorContent;
-  showComparison: boolean;
+  discriminator: NonNullable<TutorContent["schemaDiscriminator"]>;
   presentation?: "default" | "moleskine";
 }) {
-  const hasAlternative = Boolean(tutor.comparison.competingDiagnosis?.trim());
-
-  if (presentation === "moleskine") {
-    return (
-      <div className="rr-moleskine-teaching-sections">
-        <section className="rr-moleskine-teaching-section">
-          <h2>Why this is correct</h2>
-          <p>{tutor.repair.clueMeaning || tutor.repair.why}</p>
-        </section>
-        {hasAlternative ? (
-          <section className="rr-moleskine-teaching-section">
-            <h2>Why others are wrong</h2>
-            <p>
-              <span>{tutor.comparison.competingDiagnosis}:</span>{" "}
-              {tutor.whyTempting ?? `the pivot clue points to ${tutor.repair.correctAnswer}, not this alternative.`}
-            </p>
-          </section>
-        ) : null}
-        {showComparison ? (
-          <section className="rr-moleskine-teaching-section rr-moleskine-decision-boundary">
-            <h2>Decision boundary</h2>
-            <div className="mt-2 overflow-x-auto">
-              <table className="rr-table">
-                <thead>
-                  <tr>
-                    <th>Feature</th>
-                    <th>{tutor.comparison.correctDiagnosis}</th>
-                    <th>{tutor.comparison.competingDiagnosis}</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {tutor.comparison.rows.map((row) => (
-                    <tr key={row.feature}>
-                      <td className="font-medium">{getComparisonFeatureDisplayText(row.feature)}</td>
-                      <td>{row.correct}</td>
-                      <td>{row.competing}</td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
-          </section>
-        ) : null}
-        <section className="rr-moleskine-teaching-section">
-          <h2>Reasoning diagnosis</h2>
-          <p>
-            {tutor.cognitiveError
-              ? tutor.cognitiveError.expertCorrection
-              : `You matched the key clue to ${tutor.repair.correctAnswer}. Keep anchoring the decision to the pivot clue.`}
-          </p>
-        </section>
-      </div>
-    );
-  }
+  const sectionClass =
+    presentation === "moleskine"
+      ? "rr-moleskine-teaching-section rr-moleskine-decision-boundary rr-schema-discriminator"
+      : "rr-right-explanation-block rr-explanation-card rr-card-paper rr-separate-two rr-moleskine-page-section rr-schema-discriminator";
 
   return (
-    <div className="rr-right-explanation-stack">
-      <section className="rr-right-explanation-block rr-explanation-card rr-card-paper rr-moleskine-page-section">
-        <h2>Why this is correct</h2>
-        <p>{tutor.repair.clueMeaning || tutor.repair.why}</p>
-      </section>
-      {hasAlternative ? (
-        <section className="rr-right-explanation-block rr-explanation-card rr-card-paper rr-moleskine-page-section">
-          <h2>Why others are wrong</h2>
-          <p>
-            <span>{tutor.comparison.competingDiagnosis}:</span>{" "}
-            {tutor.whyTempting ?? `the pivot clue points to ${tutor.repair.correctAnswer}, not this alternative.`}
-          </p>
-        </section>
-      ) : null}
-      {showComparison ? (
-        <section className="rr-right-explanation-block rr-explanation-card rr-card-paper rr-separate-two rr-moleskine-page-section">
-          <h2>Separate These Two</h2>
-          <div className="mt-2 overflow-x-auto">
-            <table className="rr-table">
-              <thead>
-                <tr>
-                  <th>Feature</th>
-                  <th>{tutor.comparison.correctDiagnosis}</th>
-                  <th>{tutor.comparison.competingDiagnosis}</th>
-                </tr>
-              </thead>
-              <tbody>
-                {tutor.comparison.rows.map((row) => (
-                  <tr key={row.feature}>
-                    <td className="font-medium">{getComparisonFeatureDisplayText(row.feature)}</td>
-                    <td>{row.correct}</td>
-                    <td>{row.competing}</td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-        </section>
-      ) : null}
-      <section className="rr-right-explanation-block rr-explanation-card rr-card-paper rr-moleskine-page-section">
-        <h2>Reasoning diagnosis</h2>
+    <section className={sectionClass} aria-label="Schema discriminator comparison">
+      <div className="rr-schema-discriminator-heading">
+        <h2>Separate these two</h2>
         <p>
-          {tutor.cognitiveError
-            ? tutor.cognitiveError.expertCorrection
-            : `You matched the key clue to ${tutor.repair.correctAnswer}. Keep anchoring the decision to the pivot clue.`}
+          Pivot clue: <strong>{discriminator.pivotClue}</strong>
         </p>
-      </section>
-    </div>
-  );
-}
-
-function RepairSummary({ tutor }: { tutor: TutorContent }) {
-  return (
-    <div className="rr-repair-summary">
-      <div>
-        <p className="rr-meta">Correct answer</p>
-        <p className="rr-repair-summary-value rr-repair-summary-correct">{tutor.repair.correctAnswer}</p>
       </div>
-      <div>
-        <p className="rr-meta">Pivot clue</p>
-        <p className="rr-repair-summary-value rr-repair-summary-clue">{tutor.repair.clue}</p>
+      <div className="mt-2 overflow-x-auto">
+        <table className="rr-table rr-schema-discriminator-table">
+          <thead>
+            <tr>
+              <th>Discriminator</th>
+              <th>{discriminator.correctSchema}</th>
+              <th>{discriminator.learnerSchema}</th>
+            </tr>
+          </thead>
+          <tbody>
+            {discriminator.rows.map((row) => (
+              <tr key={row.feature}>
+                <td className="font-medium">{getComparisonFeatureDisplayText(row.feature)}</td>
+                <td>{row.correct}</td>
+                <td>{row.learner}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
       </div>
-    </div>
+      <p className="rr-schema-board-rule">
+        <span>Board rule</span>
+        {discriminator.boardRule}
+      </p>
+    </section>
   );
 }
 

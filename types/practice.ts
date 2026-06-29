@@ -71,6 +71,22 @@ export type CognitiveError = {
   expertCorrection: string;
 };
 
+export type SemanticLink = {
+  sourceText: string;
+  relationship: "proves" | "supports" | "rules_out" | "activates" | "explains";
+  targetConcept: string;
+  targetDiagnosis?: string;
+};
+
+export type IntendedDiscriminatorPair = {
+  conceptA: string;
+  conceptB: string;
+  schemaA: string[];
+  schemaB: string[];
+  pivotSupports: string;
+  alternativeWouldNeed: string;
+};
+
 export type AnswerResult = {
   isCorrect: boolean;
   answerOutcome?: AnswerOutcome;
@@ -196,6 +212,30 @@ export type TutorContent = {
       correct: string;
       competing: string;
     }>;
+  };
+  schemaDiscriminator?: {
+    correctSchema: string;
+    learnerSchema: string;
+    source: "learner_answer" | "fallback";
+    pivotClue: string;
+    boardRule: string;
+    rows: Array<{
+      feature: string;
+      correct: string;
+      learner: string;
+    }>;
+  };
+  postAnswerTeaching: {
+    learnerAnswer: string;
+    learnerAnswerSchema: string[];
+    correctSchema: string[];
+    pivotClue: string;
+    semanticLinks: SemanticLink[];
+    intendedDiscriminatorPair?: IntendedDiscriminatorPair;
+    clinicalResolution: string;
+    teachingPearl: string;
+    nextTimeRule: string;
+    isCorrect: boolean;
   };
   reinforcement?: {
     question: string;

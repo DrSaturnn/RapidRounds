@@ -9,9 +9,11 @@ import { pediatricsSeeds } from "@/lib/subject-seeds/pediatrics";
 import { psychiatrySeeds } from "@/lib/subject-seeds/psychiatry";
 import { surgerySeeds } from "@/lib/subject-seeds/surgery";
 import {
+  createSchemaNodesFromSeed,
   createDecisionTreeSeed,
   type ClinicalDecisionTreeSeed,
   type RapidRoundsConceptSeed,
+  type SchemaNode,
   type RapidRoundsSubject
 } from "@/lib/subject-seeds/seed-types";
 
@@ -31,6 +33,13 @@ export const SUBJECT_REGISTRY: Record<RapidRoundsSubject, RapidRoundsConceptSeed
 export const SUBJECTS = Object.keys(SUBJECT_REGISTRY) as RapidRoundsSubject[];
 
 export const allSubjectSeeds = SUBJECTS.flatMap((subject) => SUBJECT_REGISTRY[subject]);
+
+export const SUBJECT_SCHEMA_NODE_REGISTRY: Record<RapidRoundsSubject, SchemaNode[]> = SUBJECTS.reduce((registry, subject) => {
+  registry[subject] = SUBJECT_REGISTRY[subject].flatMap(createSchemaNodesFromSeed);
+  return registry;
+}, {} as Record<RapidRoundsSubject, SchemaNode[]>);
+
+export const allSchemaNodes = SUBJECTS.flatMap((subject) => SUBJECT_SCHEMA_NODE_REGISTRY[subject]);
 
 const findSeed = (subject: RapidRoundsSubject, topic: string) =>
   SUBJECT_REGISTRY[subject].find((seed) => seed.topic.toLowerCase() === topic.toLowerCase()) ?? SUBJECT_REGISTRY[subject][0];
@@ -76,27 +85,35 @@ export function getSubjectDecisionTreeSeeds(subject?: string | null) {
   return SUBJECT_DECISION_TREE_REGISTRY[subject as RapidRoundsSubject] ?? [];
 }
 
+export function getSubjectSchemaNodes(subject?: string | null) {
+  if (!subject) {
+    return allSchemaNodes;
+  }
+
+  return SUBJECT_SCHEMA_NODE_REGISTRY[subject as RapidRoundsSubject] ?? [];
+}
+
 export function getSubjectSeedCounts() {
   return SUBJECTS.map((subject) => ({
     subject,
-    count: SUBJECT_REGISTRY[subject].length
+    count: SUBJECT_SCHEMA_NODE_REGISTRY[subject].length
   }));
 }
 
 export function subjectSeedsAsClinicalSchemas() {
-  return allSubjectSeeds.map((seed) => ({
-    id: seed.id,
-    name: seed.topic,
-    category: seed.schema,
+  return allSchemaNodes.map((node) => ({
+    id: node.id,
+    name: node.topic,
+    category: node.schema,
     clueTerms: [
-      seed.topic,
-      ...seed.pivotClues,
-      ...seed.supportingClues,
-      ...seed.contextualClues,
-      ...seed.primaryDiscriminators,
-      ...seed.managementRules
+      node.topic,
+      ...node.pivotClues,
+      ...node.supportingClues,
+      ...node.contextualClues,
+      ...node.pertinentPositives,
+      ...node.pertinentNegatives
     ],
-    expectedPivots: seed.pivotClues,
-    commonConfusions: seed.commonTraps
+    expectedPivots: node.pivotClues,
+    commonConfusions: node.discriminatorPairs.map((pair) => pair.conceptB)
   }));
 }

@@ -91,56 +91,106 @@ function NotebookPrompt({
 }
 
 function NotebookReasoning({ notebook }: { notebook: ClinicalNotebookViewModel }) {
-  if (notebook.state !== "explanation") {
+  if (notebook.state !== "explanation" || !notebook.postAnswerTeaching) {
     return null;
   }
 
   return (
     <section className="rr-notebook-reasoning" aria-label="Build the pattern">
       <p className="rr-notebook-section-title">{notebook.reasoning.title}</p>
-      <div className="rr-notebook-reasoning-chain">
-        {notebook.reasoning.steps.map((step) => (
-          <div
-            key={`${step.label}-${step.value}`}
-            className={`rr-notebook-reasoning-node ${step.tone ? `rr-notebook-reasoning-node-${step.tone}` : ""}`}
-          >
-            <span>{step.label}</span>
-            <strong>{step.value}</strong>
-          </div>
-        ))}
+      <NotebookPostAnswerTeaching teaching={notebook.postAnswerTeaching} />
+    </section>
+  );
+}
+
+function NotebookSchemaChain({ steps }: { steps: string[] }) {
+  return (
+    <div className="rr-notebook-schema-chain" aria-label="Activated schema">
+      {steps.map((step, index) => (
+        <span key={`${step}-${index}`}>{step}</span>
+      ))}
+    </div>
+  );
+}
+
+function NotebookPostAnswerTeaching({ teaching }: { teaching: NonNullable<ClinicalNotebookViewModel["postAnswerTeaching"]> }) {
+  const learnerLabel = teaching.learnerAnswer || "your answer";
+  const intro = teaching.isCorrect
+    ? "Correct. You recognized the schema:"
+    : `Not quite. You put ${learnerLabel}. The typical schema for ${learnerLabel} is:`;
+
+  return (
+    <div className="rr-notebook-post-answer-model">
+      <section className="rr-notebook-schema-activation">
+        <p>{intro}</p>
+        <NotebookSchemaChain steps={teaching.learnerAnswerSchema} />
+      </section>
+      <section className="rr-notebook-pivot-event">
+        <span>Pivot</span>
+        <strong>{teaching.pivotClue}</strong>
+      </section>
+      {teaching.semanticLinks.length > 0 ? (
+        <section className="rr-notebook-semantic-bridge">
+          {teaching.semanticLinks.map((link) => (
+            <div key={`${link.sourceText}-${link.relationship}-${link.targetConcept}`}>
+              <span>{link.sourceText}</span>
+              <strong>{link.relationship.replace("_", " ")}</strong>
+              <span>{link.targetDiagnosis ?? link.targetConcept}</span>
+            </div>
+          ))}
+        </section>
+      ) : null}
+      {teaching.intendedDiscriminatorPair ? (
+        <NotebookBoundaryPair pair={teaching.intendedDiscriminatorPair} />
+      ) : null}
+      <section className="rr-notebook-clinical-resolution">
+        <span>Clinical Resolution</span>
+        <strong>{teaching.clinicalResolution}</strong>
+      </section>
+      <section className="rr-notebook-next-time-rule">
+        <span>Next-time rule</span>
+        <p>{teaching.nextTimeRule}</p>
+      </section>
+    </div>
+  );
+}
+
+function NotebookBoundaryPair({
+  pair
+}: {
+  pair: NonNullable<NonNullable<ClinicalNotebookViewModel["postAnswerTeaching"]>["intendedDiscriminatorPair"]>;
+}) {
+  return (
+    <section className="rr-notebook-schema-discriminator" aria-label="Decision boundary">
+      <h2>Decision boundary</h2>
+      <div className="rr-notebook-comparison-table rr-notebook-schema-table" role="region" aria-label="Discriminator comparison">
+        <table>
+          <thead>
+            <tr>
+              <th scope="col">Field</th>
+              <th scope="col">{pair.conceptA}</th>
+              <th scope="col">{pair.conceptB}</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <th scope="row">Defining schema</th>
+              <td><NotebookSchemaChain steps={pair.schemaA} /></td>
+              <td><NotebookSchemaChain steps={pair.schemaB} /></td>
+            </tr>
+            <tr>
+              <th scope="row">What the pivot supports</th>
+              <td>{pair.pivotSupports}</td>
+              <td>Not supported by the pivot here.</td>
+            </tr>
+            <tr>
+              <th scope="row">Alternative would need</th>
+              <td>The current pivot instead.</td>
+              <td>{pair.alternativeWouldNeed}</td>
+            </tr>
+          </tbody>
+        </table>
       </div>
-      {(notebook.reasoning.correctAnswer || notebook.reasoning.pivotClue) ? (
-        <div className="rr-notebook-answer-strip">
-          {notebook.reasoning.correctAnswer ? (
-            <div>
-              <span>Correct answer</span>
-              <strong>{notebook.reasoning.correctAnswer}</strong>
-            </div>
-          ) : null}
-          {notebook.reasoning.pivotClue ? (
-            <div>
-              <span>Pivot clue</span>
-              <strong>{notebook.reasoning.pivotClue}</strong>
-            </div>
-          ) : null}
-        </div>
-      ) : null}
-      {(notebook.reasoning.whatMattered || notebook.reasoning.commonConfusion) ? (
-        <div className="rr-notebook-written-notes">
-          {notebook.reasoning.whatMattered ? (
-            <p>
-              <span>What mattered</span>
-              {notebook.reasoning.whatMattered}
-            </p>
-          ) : null}
-          {notebook.reasoning.commonConfusion ? (
-            <p>
-              <span>Common confusion</span>
-              {notebook.reasoning.commonConfusion}
-            </p>
-          ) : null}
-        </div>
-      ) : null}
     </section>
   );
 }
@@ -157,30 +207,8 @@ function NotebookRightPage({ notebook }: { notebook: ClinicalNotebookViewModel }
   }
 
   return (
-    <aside className="rr-notebook-right-page" aria-label="Understand the pattern">
-      <p className="rr-notebook-section-title">Understand the pattern</p>
-      <section className="rr-notebook-right-section">
-        <h2>Why this is correct</h2>
-        <p>{rightPage.whyCorrect}</p>
-      </section>
-      {rightPage.whyWrong ? (
-        <section className="rr-notebook-right-section">
-          <h2>Why others are wrong</h2>
-          <p>
-            <strong>{rightPage.whyWrong.label}:</strong> {rightPage.whyWrong.text}
-          </p>
-        </section>
-      ) : null}
-      <section className="rr-notebook-right-section">
-        <h2>Reasoning diagnosis</h2>
-        <p>{rightPage.reasoningDiagnosis}</p>
-      </section>
-      {notebook.reasoning.pearl ? (
-        <section className="rr-notebook-right-section rr-notebook-pearl">
-          <h2>Clinical pearl</h2>
-          <p>{notebook.reasoning.pearl}</p>
-        </section>
-      ) : null}
+    <aside className="rr-notebook-right-page" aria-label="Optional depth">
+      <p className="rr-notebook-section-title">Optional depth</p>
       {rightPage.teachMeMore ? (
         <details className="rr-notebook-teach-more">
           <summary>
@@ -208,7 +236,7 @@ function NotebookRightPage({ notebook }: { notebook: ClinicalNotebookViewModel }
                     <thead>
                       <tr>
                         <th scope="col">Feature</th>
-                        <th scope="col">{notebook.reasoning.correctAnswer ?? "Correct answer"}</th>
+                        <th scope="col">{notebook.reasoning.correctAnswer ?? "Clinical resolution"}</th>
                         <th scope="col">{rightPage.whyWrong?.label ?? "Common confusion"}</th>
                       </tr>
                     </thead>

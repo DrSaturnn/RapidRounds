@@ -86,6 +86,22 @@ export type ConceptCard = {
   sourceConfidence: "confirmed" | "inferred" | "needs_review";
 };
 
+export type SemanticLink = {
+  sourceText: string;
+  relationship: "proves" | "supports" | "rules_out" | "activates" | "explains";
+  targetConcept: string;
+  targetDiagnosis?: string;
+};
+
+export type IntendedDiscriminatorPair = {
+  conceptA: string;
+  conceptB: string;
+  schemaA: string[];
+  schemaB: string[];
+  pivotSupports: string;
+  alternativeWouldNeed: string;
+};
+
 export type RapidRoundsReasoningObject = {
   sourceType: SourceType;
   questionType: string;
@@ -95,6 +111,15 @@ export type RapidRoundsReasoningObject = {
   answerChoices: AnswerChoice[];
   confirmedAnswer?: string;
   educationalObjectiveConcept?: string;
+  learnerAnswer?: string;
+  learnerAnswerSchema: string[];
+  correctSchema: string[];
+  pivotClue: string;
+  semanticLinks: SemanticLink[];
+  intendedDiscriminatorPair?: IntendedDiscriminatorPair;
+  clinicalResolution: string;
+  teachingPearl: string;
+  nextTimeRule: string;
   discriminators: Discriminator[];
   conceptCard: ConceptCard;
   needsExpertReview: boolean;
@@ -383,7 +408,10 @@ function inferConceptFromObjective(objective: string) {
 }
 
 export function uworldExplanationParser(state: WorkingState) {
-  const text = clean(`${state.input.highlightedText ?? ""}\n${state.input.rawText}`);
+  const text = clean(
+    state.input.highlightedText ??
+      (state.sourceType === "uworld_explanation" ? state.input.rawText : "")
+  );
   const educationalObjective = extractSection(text, ["Educational objective", "Objective"]);
   const correctAnswer = clean(
     text.match(/(?:correct answer|answer)\s*:?\s*(?:\(?([A-J])\)?[).]?\s*)?([^\n.]+)/i)?.[2]
@@ -621,6 +649,79 @@ function confidenceFor(state: WorkingState) {
   return Number(Math.min(0.98, authorityScore * 0.46 + schemaScore * 0.25 + pivotScore * 0.21 + discriminatorScore).toFixed(2));
 }
 
+function buildScriptChain(values: Array<string | undefined>) {
+  return unique(values.map(clean).filter(Boolean)).slice(0, 4);
+}
+
+function isUsableDiscriminator(discriminator: Discriminator) {
+  const competing = clean(discriminator.competingConcept);
+  return competing.length > 0 && competing.length <= 80 && !/[?]/.test(competing);
+}
+
+function choosePrimaryDiscriminator(state: WorkingState) {
+  const knownConfusions = new Set((state.clinicalSchema?.commonConfusions ?? []).map(normalize));
+
+  return (
+    state.discriminators.find((item) => knownConfusions.has(normalize(item.competingConcept))) ??
+    state.discriminators.find(isUsableDiscriminator) ??
+    state.discriminators[0]
+  );
+}
+
+function buildReasoningObjectTeachingFields(state: WorkingState) {
+  const confirmedAnswer = state.uworld.confirmedAnswer || state.answerChoices.find((choice) => choice.isConfirmedCorrect)?.text;
+  const clinicalResolution = confirmedAnswer || state.clinicalSchema?.name || state.conceptCard?.testedConcept || "Needs Expert Review";
+  const pivotClue = state.candidatePivots[0]?.text || state.clinicalSchema?.expectedPivots[0] || "Candidate pivot requires expert review";
+  const correctSchema = buildScriptChain([
+    state.clinicalSchema?.category,
+    state.clinicalSchema?.matchedClues[0],
+    pivotClue,
+    clinicalResolution
+  ]);
+  const learnerAnswer = clean(state.input.learnerAnswer || state.input.selectedAnswer);
+  const learnerAnswerSchema = learnerAnswer
+    ? buildScriptChain([
+        state.clinicalSchema?.category,
+        state.discriminators.find((item) => normalize(item.competingConcept) === normalize(learnerAnswer))?.distinguishingClue,
+        learnerAnswer
+      ])
+    : correctSchema;
+  const primaryDiscriminator = choosePrimaryDiscriminator(state);
+  const intendedDiscriminatorPair = primaryDiscriminator
+    ? {
+        conceptA: clinicalResolution,
+        conceptB: primaryDiscriminator.competingConcept,
+        schemaA: correctSchema,
+        schemaB: buildScriptChain([
+          state.clinicalSchema?.category,
+          primaryDiscriminator.competingConcept,
+          primaryDiscriminator.distinguishingClue
+        ]),
+        pivotSupports: `${pivotClue} supports ${clinicalResolution}.`,
+        alternativeWouldNeed: primaryDiscriminator.distinguishingClue
+      }
+    : undefined;
+
+  return {
+    learnerAnswer: learnerAnswer || undefined,
+    learnerAnswerSchema,
+    correctSchema,
+    pivotClue,
+    semanticLinks: [
+      {
+        sourceText: pivotClue,
+        relationship: state.nbmeArchetype === "Diagnosis" ? "proves" : "supports",
+        targetConcept: state.clinicalSchema?.category || state.conceptCard?.clinicalSchema || clinicalResolution,
+        targetDiagnosis: clinicalResolution
+      }
+    ] satisfies SemanticLink[],
+    intendedDiscriminatorPair,
+    clinicalResolution,
+    teachingPearl: state.conceptCard?.pivotSummary || pivotClue,
+    nextTimeRule: state.conceptCard?.recognitionGoal || `Use ${pivotClue} to choose ${clinicalResolution}.`
+  };
+}
+
 export function buildRapidRoundsReasoningObject(input: LocalReasoningInput): RapidRoundsReasoningObject {
   const sourceType = sourceTypeDetector(input);
   const parts = splitQuestionParts(input.rawText);
@@ -656,6 +757,7 @@ export function buildRapidRoundsReasoningObject(input: LocalReasoningInput): Rap
   const confidence = confidenceFor(state);
   const needsExpertReview = confidence < 0.58 || state.conceptCard?.sourceConfidence === "needs_review";
   const learnerModelUpdate = learnerModelUpdater(state);
+  const teachingFields = buildReasoningObjectTeachingFields(state);
 
   return {
     sourceType,
@@ -666,6 +768,7 @@ export function buildRapidRoundsReasoningObject(input: LocalReasoningInput): Rap
     answerChoices: state.answerChoices,
     confirmedAnswer: state.uworld.confirmedAnswer || state.answerChoices.find((choice) => choice.isConfirmedCorrect)?.text,
     educationalObjectiveConcept: state.uworld.educationalObjectiveConcept,
+    ...teachingFields,
     discriminators: state.discriminators,
     conceptCard: state.conceptCard!,
     needsExpertReview,

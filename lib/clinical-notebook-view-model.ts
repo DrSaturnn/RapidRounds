@@ -41,6 +41,7 @@ export type ClinicalNotebookViewModel = {
     commonConfusion?: string;
     pearl?: string;
   };
+  postAnswerTeaching?: TutorContent["postAnswerTeaching"];
   rightPage?: {
     whyCorrect: string;
     whyWrong?: {
@@ -48,6 +49,17 @@ export type ClinicalNotebookViewModel = {
       text: string;
     };
     reasoningDiagnosis: string;
+    schemaDiscriminator?: {
+      correctSchema: string;
+      learnerSchema: string;
+      pivotClue: string;
+      boardRule: string;
+      rows: Array<{
+        feature: string;
+        correct: string;
+        learner: string;
+      }>;
+    };
     teachMeMore?: {
       illnessScript?: string;
       recognitionGoal?: string;
@@ -206,7 +218,7 @@ function buildReasoningSteps(question: QuestionDto, tutor?: TutorContent | null)
     { label: "Clinical pattern", value: clinicalPattern },
     { label: "Pivot clue", value: pivot, tone: "pivot" },
     { label: "Decision", value: decision },
-    { label: "Correct answer", value: correctAnswer, tone: "terminal" }
+    { label: "Clinical resolution", value: correctAnswer, tone: "terminal" }
   ];
 
   return steps.filter((step) => step.value);
@@ -269,6 +281,7 @@ export function buildClinicalNotebookViewModel({
       commonConfusion: hasAnswered ? commonConfusion : undefined,
       pearl: hasAnswered ? pearl : undefined
     },
+    postAnswerTeaching: hasAnswered ? tutor?.postAnswerTeaching : undefined,
     rightPage: hasAnswered
       ? {
           whyCorrect: whyCorrect || `The pivot clue supports ${correctAnswer}.`,
@@ -279,6 +292,15 @@ export function buildClinicalNotebookViewModel({
               }
             : undefined,
           reasoningDiagnosis: clean(tutor?.cognitiveError?.expertCorrection) || `Experts attach the pivot clue directly to ${correctAnswer}.`,
+          schemaDiscriminator: tutor?.schemaDiscriminator
+            ? {
+                correctSchema: tutor.schemaDiscriminator.correctSchema,
+                learnerSchema: tutor.schemaDiscriminator.learnerSchema,
+                pivotClue: tutor.schemaDiscriminator.pivotClue,
+                boardRule: tutor.schemaDiscriminator.boardRule,
+                rows: tutor.schemaDiscriminator.rows
+              }
+            : undefined,
           teachMeMore: tutor
             ? {
                 illnessScript: clean(tutor.illnessScript.classicPresentation),

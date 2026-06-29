@@ -4,15 +4,18 @@ import { describe, it } from "node:test";
 import {
   allSubjectSeeds,
   allDecisionTreeSeeds,
+  allSchemaNodes,
   getSubjectDecisionTreeSeeds,
+  getSubjectSchemaNodes,
   getSubjectSeeds,
   SUBJECT_REGISTRY,
   SUBJECTS
 } from "@/lib/subject-seeds";
-import type { RapidRoundsConceptSeed } from "@/lib/subject-seeds/seed-types";
+import type { RapidRoundsConceptSeed, SchemaNode } from "@/lib/subject-seeds/seed-types";
 import {
   generateCaseFromSeed,
   generateCasesFromDecisionTreeSeed,
+  generateCasesFromSchemaNode,
   getGeneratedCaseById,
   getGeneratedCasesForSubject,
   getGeneratedSubjectCounts
@@ -50,6 +53,73 @@ function assertSeed(seed: RapidRoundsConceptSeed) {
   assert.ok(seed.guidelineReferences.length > 0);
 }
 
+function assertSchemaNode(node: SchemaNode) {
+  assert.ok(node.id);
+  assert.ok(node.parentSeedId);
+  assert.ok(node.shelf);
+  assert.ok(node.subject);
+  assert.ok(node.system);
+  assert.ok(node.topic);
+  assert.ok(node.schemaName);
+  assert.ok(node.schema);
+  assert.ok(node.nodeKind);
+  assert.ok(node.questionArchetype);
+  assert.ok(node.nbmeArchetype);
+  assert.ok(node.nbmeBlueprintCategory);
+  assert.ok(node.estimatedYield > 0);
+  assert.equal(typeof node.caseTierEligibility.core, "boolean");
+  assert.equal(node.caseTierEligibility.comprehensive, true);
+  assert.ok(node.initialQuestionSchema.classicEpidemiologyFrame);
+  assert.ok(node.initialQuestionSchema.atypicalEpidemiologyFrame);
+  assert.ok(node.initialQuestionSchema.misleadingContextFrame);
+  assert.ok(node.initialQuestionSchema.minimalContextFrame);
+  assert.ok(node.initialQuestionSchema.chiefProblem);
+  assert.ok(node.initialQuestionSchema.pivotSlot);
+  assert.ok(node.initialQuestionSchema.task);
+  assert.ok(node.shelfFrequencyWeight > 0);
+  assert.ok(node.shelfBand === "core" || node.shelfBand === "comprehensive");
+  assert.ok(node.epidemiologyFrames.length > 0);
+  assert.ok(node.chiefComplaintVariants.length > 0);
+  assert.ok(node.chiefProblem);
+  assert.ok(node.corePertinentPositives.length > 0);
+  assert.ok(Array.isArray(node.corePertinentNegatives));
+  assert.ok(node.pertinentPositives.length > 0);
+  assert.ok(Array.isArray(node.pertinentNegatives));
+  assert.ok(node.pivotClue);
+  assert.ok(node.pivotCategory);
+  assert.ok(node.pivotClues.length > 0);
+  assert.ok(node.supportingClues.length > 0);
+  assert.ok(node.contextualClues.length > 0);
+  assert.ok(node.discriminatorPair.conceptA);
+  assert.ok(node.discriminatorPair.conceptB);
+  assert.ok(node.discriminatorPair.pivotThatSeparates);
+  assert.ok(node.discriminatorPair.whyPivotSupportsA);
+  assert.ok(node.discriminatorPair.whatWouldSupportB);
+  assert.ok(node.discriminatorPair.commonWrongSchema);
+  assert.ok(node.discriminatorPair.conceptASchema.length > 0);
+  assert.ok(node.discriminatorPair.conceptBSchema.length > 0);
+  assert.ok(node.discriminatorPairs.length > 0);
+  assert.ok(node.semanticLinks.length > 0);
+  assert.ok(node.semanticLinks.every((link) => link.sourceText && link.relationship && link.targetConcept));
+  assert.ok(node.answerType);
+  assert.ok(node.managementStage);
+  assert.ok(Array.isArray(node.priorInterventions));
+  assert.ok(Array.isArray(node.downstreamStateChanges));
+  assert.ok(Array.isArray(node.complicationBranches));
+  assert.ok(Array.isArray(node.contraindicationBranches));
+  assert.ok(node.adaptiveBreadthVariants.length > 0);
+  assert.ok(node.correctAnswer);
+  assert.ok(node.incorrectAnswerSchemas.length > 0);
+  assert.ok(node.answerPrompt);
+  assert.ok(node.commonTraps.length > 0);
+  assert.ok(node.nextTimeRule);
+  assert.ok(node.relatedConcepts.length > 0);
+  assert.ok(node.guidelineReferences.length > 0);
+  assert.ok(node.sourcePolicyMetadata.reconstructedFromMedicalTruth);
+  assert.equal(node.sourcePolicyMetadata.proprietaryExpressionRetained, false);
+  assert.ok(node.sourcePolicyMetadata.validationSources.length > 0);
+}
+
 describe("RapidRounds subject seed system", () => {
   it("registers every dropdown subject with a real seed library", () => {
     assert.deepEqual([...SUBJECTS].sort(), expectedSubjects.sort());
@@ -63,6 +133,82 @@ describe("RapidRounds subject seed system", () => {
     assert.ok(allSubjectSeeds.length >= 120);
     for (const seed of allSubjectSeeds) {
       assertSeed(seed);
+    }
+  });
+
+  it("derives NBME clinical reasoning SchemaNodes from every disease concept", () => {
+    assert.ok(allSchemaNodes.length > allSubjectSeeds.length);
+
+    for (const seed of allSubjectSeeds) {
+      const schemaNodes = allSchemaNodes.filter((node) => node.parentSeedId === seed.id);
+      assert.equal(schemaNodes.length, seed.questionArchetypes.length);
+      assert.ok(schemaNodes.every((node) => node.topic === seed.topic));
+    }
+
+    for (const node of allSchemaNodes) {
+      assertSchemaNode(node);
+    }
+  });
+
+  it("creates schema-node registries for every shelf subject", () => {
+    for (const subject of SUBJECTS) {
+      const nodes = getSubjectSchemaNodes(subject);
+      assert.ok(nodes.length > 0, `${subject} should expose schema nodes`);
+      assert.ok(nodes.every((node) => node.subject === subject && node.shelf === subject));
+    }
+  });
+
+  it("weights SchemaNodes into core and comprehensive shelf bands", () => {
+    assert.ok(allSchemaNodes.some((node) => node.shelfBand === "core" && node.shelfFrequencyWeight >= 3));
+    assert.ok(allSchemaNodes.some((node) => node.shelfBand === "comprehensive" && !node.caseTierEligibility.core));
+    assert.ok(allSchemaNodes.some((node) => node.shelfBand === "comprehensive" && node.caseTierEligibility.comprehensive));
+  });
+
+  it("generates Core and Comprehensive cases from schema nodes without exposing parent-topic repetition as the unit", () => {
+    const coreNode = allSchemaNodes.find((node) => node.caseTierEligibility.core);
+    const comprehensiveNode = allSchemaNodes.find((node) => !node.caseTierEligibility.core && node.caseTierEligibility.comprehensive);
+
+    assert.ok(coreNode);
+    assert.ok(comprehensiveNode);
+
+    const coreCases = generateCasesFromSchemaNode(coreNode, "primary");
+    const comprehensiveCases = generateCasesFromSchemaNode(comprehensiveNode, "comprehensive");
+
+    assert.ok(coreCases.length > 0);
+    assert.ok(comprehensiveCases.length > 0);
+    assert.ok(coreCases.every((item) => item.schemaNode?.id === coreNode.id));
+    assert.ok(comprehensiveCases.every((item) => item.schemaNode?.id === comprehensiveNode.id));
+    assert.ok(coreCases.every((item) => item.variantTemplate?.breadth === "primary"));
+    assert.ok(comprehensiveCases.some((item) => item.variantTemplate?.breadth === "comprehensive"));
+  });
+
+  it("weights high-frequency Internal Medicine blueprint categories toward more Core cases while preserving low-yield Comprehensive coverage", () => {
+    const imCases = getGeneratedCasesForSubject("Internal Medicine", "comprehensive");
+    const categoryCounts = new Map<string, { core: number; comprehensive: number }>();
+
+    for (const generatedCase of imCases) {
+      const category = generatedCase.schemaNode?.nbmeBlueprintCategory;
+      if (!category) continue;
+      const counts = categoryCounts.get(category) ?? { core: 0, comprehensive: 0 };
+      if (generatedCase.schemaNode?.shelfBand === "core" && generatedCase.variantTemplate?.breadth === "primary") {
+        counts.core += 1;
+      }
+      counts.comprehensive += 1;
+      categoryCounts.set(category, counts);
+    }
+
+    assert.ok((categoryCounts.get("Cardiovascular Disorders")?.core ?? 0) > (categoryCounts.get("Immunologic Disorders")?.core ?? 0));
+    assert.ok((categoryCounts.get("Diseases of the Respiratory System")?.core ?? 0) > (categoryCounts.get("Mental Disorders")?.core ?? 0));
+
+    for (const lowYieldCategory of [
+      "Immunologic Disorders",
+      "Mental Disorders",
+      "Diseases of the Nervous System",
+      "Female Reproductive System",
+      "Diseases of the Skin",
+      "Musculoskeletal and Connective Tissue Disorders"
+    ]) {
+      assert.ok((categoryCounts.get(lowYieldCategory)?.comprehensive ?? 0) > 0, `${lowYieldCategory} should appear in Comprehensive packaging`);
     }
   });
 
@@ -83,11 +229,11 @@ describe("RapidRounds subject seed system", () => {
 
   it("loads selected subject cases from the seed registry", () => {
     const ethicsCases = getGeneratedCasesForSubject("Ethics");
-    const ethicsTreeCaseCount = getSubjectDecisionTreeSeeds("Ethics").flatMap((seed) => generateCasesFromDecisionTreeSeed(seed)).length;
+    const ethicsSchemaCaseCount = getSubjectSchemaNodes("Ethics").flatMap((node) => generateCasesFromSchemaNode(node)).length;
     const biostatisticsCaseCount = getGeneratedCasesForSubject("Biostatistics").length;
     const counts = getGeneratedSubjectCounts();
 
-    assert.equal(ethicsCases.length, SUBJECT_REGISTRY.Ethics.length + ethicsTreeCaseCount);
+    assert.equal(ethicsCases.length, ethicsSchemaCaseCount);
     assert.ok(ethicsCases.every((item) => item.question.specialty === "Ethics"));
     assert.equal(counts.find((item) => item.subject === "Biostatistics")?.count, biostatisticsCaseCount);
   });
@@ -157,7 +303,39 @@ describe("RapidRounds subject seed system", () => {
 
     assert.ok(primaryCases.length > 0);
     assert.ok(comprehensiveCases.length > primaryCases.length);
-    assert.ok(primaryCases.every((item) => item.treeSeed && item.subject === "Internal Medicine"));
+    assert.ok(primaryCases.every((item) => item.schemaNode?.shelfBand === "core" && item.subject === "Internal Medicine"));
+    assert.ok(comprehensiveCases.some((item) => item.schemaNode?.shelfBand === "comprehensive"));
+  });
+
+  it("generates schema-node downstream management cases with prior intervention and state-change text", () => {
+    const downstreamNode = allSchemaNodes.find((node) => node.priorInterventions.length > 0 && node.downstreamStateChanges.length > 0);
+    assert.ok(downstreamNode);
+
+    const downstreamCase = generateCasesFromSchemaNode(downstreamNode, "comprehensive")
+      .find((item) => item.variantTemplate?.composition === "late_stage_after_intervention");
+
+    assert.ok(downstreamCase);
+    assert.match(downstreamCase.vignette, /already received|clinical state has advanced|next decision/i);
+    assert.ok(downstreamCase.correctAnswer);
+  });
+
+  it("advances management answers when a schema node includes a later clinical state", () => {
+    const byParent = new Map<string, SchemaNode[]>();
+    for (const node of allSchemaNodes) {
+      byParent.set(node.parentSeedId, [...(byParent.get(node.parentSeedId) ?? []), node]);
+    }
+
+    const stagedNodes = [...byParent.values()].find((nodes) =>
+      nodes.some((node) => node.questionArchetype === "Initial management") &&
+      nodes.some((node) => node.questionArchetype === "Definitive management")
+    );
+
+    assert.ok(stagedNodes);
+    const initial = stagedNodes.find((node) => node.questionArchetype === "Initial management");
+    const definitive = stagedNodes.find((node) => node.questionArchetype === "Definitive management");
+    assert.ok(initial);
+    assert.ok(definitive);
+    assert.notEqual(initial.correctAnswer.toLowerCase(), definitive.correctAnswer.toLowerCase());
   });
 
   it("generates downstream cases with prior interventions or state changes", () => {
@@ -188,10 +366,35 @@ describe("RapidRounds subject seed system", () => {
   });
 
   it("emits valid RapidRoundsReasoningObjects for tree-generated cases", () => {
-    const caseFromTree = generateCasesFromDecisionTreeSeed(getSubjectDecisionTreeSeeds("Emergency Medicine")[0])[0];
+    const caseFromTree = generateCasesFromSchemaNode(getSubjectSchemaNodes("Emergency Medicine")[0])[0];
 
     assert.ok(caseFromTree.reasoningObject.conceptCard);
     assert.ok(caseFromTree.reasoningObject.pipelineTrace.some((entry) => entry.stage === "conceptCardBuilder"));
     assert.ok(caseFromTree.reasoningObject.confirmedAnswer);
+    assert.ok(caseFromTree.schemaNode);
+  });
+
+  it("emits post-answer teaching fields from generated schema-node cases", () => {
+    const generatedCase = generateCasesFromSchemaNode(getSubjectSchemaNodes("OB/GYN")[0])[0];
+
+    assert.ok(generatedCase.reasoningObject.pivotClue);
+    assert.ok(generatedCase.reasoningObject.semanticLinks.length > 0);
+    assert.ok(generatedCase.reasoningObject.intendedDiscriminatorPair);
+    assert.ok(generatedCase.reasoningObject.intendedDiscriminatorPair.conceptA);
+    assert.ok(generatedCase.reasoningObject.intendedDiscriminatorPair.conceptB);
+    assert.ok(generatedCase.reasoningObject.clinicalResolution);
+    assert.ok(generatedCase.reasoningObject.nextTimeRule);
+  });
+
+  it("prevents same-node superficial duplicates by assigning distinct variant compositions and stems", () => {
+    const node = allSchemaNodes.find((candidate) => generateCasesFromSchemaNode(candidate, "comprehensive").length >= 3);
+    assert.ok(node);
+
+    const cases = generateCasesFromSchemaNode(node, "comprehensive");
+    const compositions = new Set(cases.map((item) => item.variantTemplate?.composition));
+    const stems = new Set(cases.map((item) => item.vignette));
+
+    assert.equal(compositions.size, cases.length);
+    assert.equal(stems.size, cases.length);
   });
 });

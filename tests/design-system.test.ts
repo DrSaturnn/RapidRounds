@@ -348,8 +348,8 @@ describe("design system", () => {
     assert.match(tutorMode, /presentation\?: "default" \| "moleskine"/);
     assert.match(tutorMode, /moleskineLeftPageContent\?: ReactNode/);
     assert.match(tutorMode, /function MoleskineTeachingDocument/);
-    assert.match(tutorMode, /function MoleskineReasoningChain/);
-    assert.match(tutorMode, /function MoleskineClinicalPearl/);
+    assert.match(tutorMode, /function PostAnswerTeachingModel/);
+    assert.match(tutorMode, /function SchemaArrowChain/);
     assert.match(tutorMode, /function MoleskineTeachMeMore/);
     assert.match(tutorMode, /rr-moleskine-teaching-document/);
     assert.match(tutorMode, /rr-moleskine-left-page[\s\S]*rr-moleskine-left-reasoning/);
