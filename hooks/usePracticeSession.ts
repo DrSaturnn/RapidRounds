@@ -3,7 +3,7 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { compareAnswer } from "@/lib/answer-check";
 import { normalizeLearnerId } from "@/lib/learner-id";
-import type { AnswerResult, PracticeMode, QuestionDto, TutorContent } from "@/types/practice";
+import type { AnswerResult, LevelOfAssistanceRequired, PracticeMode, QuestionDto, TutorContent } from "@/types/practice";
 
 const SESSION_STORAGE_KEY = "rapidrounds.practiceSession.v1";
 const LEARNER_ID_STORAGE_KEY = "rapidrounds.anonymousLearnerId.v1";
@@ -38,6 +38,8 @@ export type PersistedPracticeSession = {
   activeSubject?: string;
   activeStudyMode?: StudySessionMode;
   questionBreadth?: QuestionBreadth;
+  clinicalCueLevel?: 0 | 1 | 2 | 3;
+  clinicalCuePrompt?: string | null;
   updatedAt: number;
 };
 
@@ -49,6 +51,8 @@ type PracticeSnapshot = {
   tutor: TutorContent | null;
   reinforcementAnswer: string;
   reinforcementResult: boolean | null;
+  clinicalCueLevel: 0 | 1 | 2 | 3;
+  clinicalCuePrompt: string | null;
 };
 
 function isRecord(value: unknown): value is Record<string, unknown> {
@@ -150,6 +154,13 @@ function unique(values: string[]) {
   return Array.from(new Set(values));
 }
 
+function assistanceLevelFromCue(cueLevel: 0 | 1 | 2 | 3): LevelOfAssistanceRequired {
+  if (cueLevel === 1) return "pivot_cue";
+  if (cueLevel === 2) return "schema_cue";
+  if (cueLevel === 3) return "decision_boundary_cue";
+  return "independent";
+}
+
 function readPersistedSession() {
   if (typeof window === "undefined") {
     return null;
@@ -223,6 +234,8 @@ export function usePracticeSession() {
   const [activeSubject, setActiveSubject] = useState(DEFAULT_SUBJECT);
   const [activeStudyMode, setActiveStudyMode] = useState<StudySessionMode>(DEFAULT_STUDY_MODE);
   const [questionBreadth, setQuestionBreadth] = useState<QuestionBreadth>(DEFAULT_QUESTION_BREADTH);
+  const [clinicalCueLevel, setClinicalCueLevel] = useState<0 | 1 | 2 | 3>(0);
+  const [clinicalCuePrompt, setClinicalCuePrompt] = useState<string | null>(null);
   const [subjectSummaries, setSubjectSummaries] = useState<SubjectSummary[]>([]);
   const [canGoBack, setCanGoBack] = useState(false);
   const hasHydratedSession = useRef(false);
@@ -243,10 +256,12 @@ export function usePracticeSession() {
           mode,
           tutor,
           reinforcementAnswer,
-          reinforcementResult
+          reinforcementResult,
+          clinicalCueLevel,
+          clinicalCuePrompt
         }
       : null;
-  }, [answer, mode, question, reinforcementAnswer, reinforcementResult, result, tutor]);
+  }, [answer, clinicalCueLevel, clinicalCuePrompt, mode, question, reinforcementAnswer, reinforcementResult, result, tutor]);
 
   const loadQuestion = useCallback(
     async (
@@ -264,6 +279,8 @@ export function usePracticeSession() {
     setAnswer("");
     setReinforcementAnswer("");
     setReinforcementResult(null);
+    setClinicalCueLevel(0);
+    setClinicalCuePrompt(null);
 
     const currentLearnerId = learnerId.current || getOrCreateAnonymousLearnerId();
     learnerId.current = currentLearnerId;
@@ -329,6 +346,8 @@ export function usePracticeSession() {
     setTutor(previous.tutor);
     setReinforcementAnswer(previous.reinforcementAnswer);
     setReinforcementResult(previous.reinforcementResult);
+    setClinicalCueLevel(previous.clinicalCueLevel);
+    setClinicalCuePrompt(previous.clinicalCuePrompt);
     setError(null);
     setIsLoading(false);
     setIsSubmitting(false);
@@ -344,6 +363,8 @@ export function usePracticeSession() {
     setTutor(null);
     setReinforcementAnswer("");
     setReinforcementResult(null);
+    setClinicalCueLevel(0);
+    setClinicalCuePrompt(null);
     setError(null);
     startedAt.current = Date.now();
   }, []);
@@ -353,8 +374,17 @@ export function usePracticeSession() {
       return;
     }
 
+    const trimmedAnswer = answer.trim();
+    if (!trimmedAnswer) {
+      setClinicalCuePrompt("Enter an answer, or use a clinical cue.");
+      setError(null);
+      return;
+    }
+
     setIsSubmitting(true);
     setError(null);
+    setClinicalCuePrompt(null);
+    const assistanceLevel = assistanceLevelFromCue(clinicalCueLevel);
 
     const response = await fetch("/api/practice/answer", {
       method: "POST",
@@ -362,8 +392,11 @@ export function usePracticeSession() {
       body: JSON.stringify({
         questionId: question.id,
         learnerId: learnerId.current || getOrCreateAnonymousLearnerId(),
-        answer,
-        responseTimeMs: Date.now() - startedAt.current
+        answer: trimmedAnswer,
+        responseTimeMs: Date.now() - startedAt.current,
+        cueLevelUsed: clinicalCueLevel > 0 ? String(clinicalCueLevel) : undefined,
+        levelOfAssistanceRequired: assistanceLevel,
+        answeredAfterCue: clinicalCueLevel > 0
       })
     });
 
@@ -384,7 +417,61 @@ export function usePracticeSession() {
       setMode("rapid");
     }
     setIsSubmitting(false);
-  }, [answer, question]);
+  }, [answer, clinicalCueLevel, question]);
+
+  const requestClinicalCue = useCallback(() => {
+    if (!question || result || mode === "tutor") {
+      return;
+    }
+
+    setError(null);
+    setClinicalCuePrompt(null);
+    setClinicalCueLevel((level) => {
+      if (level >= 3) {
+        return 3;
+      }
+      return (level + 1) as 0 | 1 | 2 | 3;
+    });
+  }, [mode, question, result]);
+
+  const revealAnswer = useCallback(async () => {
+    if (!question || result || mode === "tutor") {
+      return;
+    }
+
+    setIsSubmitting(true);
+    setError(null);
+    setClinicalCuePrompt(null);
+
+    const response = await fetch("/api/practice/answer", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        questionId: question.id,
+        learnerId: learnerId.current || getOrCreateAnonymousLearnerId(),
+        answer: "",
+        responseTimeMs: Date.now() - startedAt.current,
+        revealUsed: true,
+        cueLevelUsed: "reveal",
+        levelOfAssistanceRequired: "revealed_without_attempt"
+      })
+    });
+
+    if (!response.ok) {
+      setError("Clinical resolution could not be revealed.");
+      setIsSubmitting(false);
+      return;
+    }
+
+    const data = (await response.json()) as AnswerResult;
+    setResult(data);
+    setAnsweredQuestionIds((ids) => unique([...ids, question.id]));
+    if (data.tutor) {
+      setTutor(data.tutor);
+      setMode("tutor");
+    }
+    setIsSubmitting(false);
+  }, [mode, question, result]);
 
   const requestTeaching = useCallback(async () => {
     if (!question) {
@@ -509,6 +596,8 @@ export function usePracticeSession() {
       setTutor(persisted.tutor);
       setReinforcementAnswer(persisted.reinforcementAnswer);
       setReinforcementResult(persisted.reinforcementResult);
+      setClinicalCueLevel(persisted.clinicalCueLevel ?? 0);
+      setClinicalCuePrompt(persisted.clinicalCuePrompt ?? null);
       setSessionDecisionCount(persisted.sessionDecisionCount);
       setAnsweredQuestionIds(persisted.answeredQuestionIds ?? []);
       setIsLoading(false);
@@ -540,6 +629,8 @@ export function usePracticeSession() {
       activeSubject,
       activeStudyMode,
       questionBreadth,
+      clinicalCueLevel,
+      clinicalCuePrompt,
       updatedAt: Date.now()
     });
   }, [
@@ -547,6 +638,8 @@ export function usePracticeSession() {
     activeStudyMode,
     answer,
     answeredQuestionIds,
+    clinicalCueLevel,
+    clinicalCuePrompt,
     isLoading,
     mode,
     question,
@@ -586,6 +679,10 @@ export function usePracticeSession() {
     selectQuestionBreadth,
     loadQuestion,
     goBack,
-    resetCurrentQuestion
+    resetCurrentQuestion,
+    requestClinicalCue,
+    revealAnswer,
+    clinicalCueLevel,
+    clinicalCuePrompt
   };
 }

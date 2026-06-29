@@ -353,13 +353,16 @@ describe("decision repair", () => {
     assert.equal(tutor.teachingPlan.modules.comparison, false);
   });
 
-  it("keeps blank primary submissions available from the Practice flow", () => {
+  it("keeps blank primary submissions in pre-answer cue flow instead of grading", () => {
     const practicePanel = readFileSync("components/PracticePanel.tsx", "utf8");
     const practiceSession = readFileSync("hooks/usePracticeSession.ts", "utf8");
+    const answerRoute = readFileSync("app/api/practice/answer/route.ts", "utf8");
 
-    assert.doesNotMatch(practicePanel, /answer\.trim\(\)\.length === 0/);
-    assert.doesNotMatch(practicePanel, /answer\.trim\(\)\.length > 0/);
-    assert.doesNotMatch(practiceSession, /answer\.trim\(\)\.length === 0/);
+    assert.match(practiceSession, /Enter an answer, or use a clinical cue\./);
+    assert.match(practiceSession, /if \(!trimmedAnswer\)/);
+    assert.match(answerRoute, /needsAnswer: true/);
+    assert.match(practicePanel, /Clinical Cue/);
+    assert.match(practicePanel, /Reveal/);
     assert.match(practicePanel, /disabled=\{isSubmitting \|\| mode === "tutor"\}/);
   });
 

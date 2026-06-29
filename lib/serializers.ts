@@ -30,6 +30,10 @@ export function toQuestionDto(question: QuestionWithTopic): QuestionDto {
     pattern: question.pattern,
     management: question.management,
     diagnosis: question.diagnosis,
-    vignetteFindings: vignette.vignetteFindings
+    vignetteFindings: vignette.vignetteFindings,
+    clinicalCues: {
+      pivotClue: vignette.vignetteFindings.find((finding) => finding.role === "pivot_clue")?.text ?? question.diagnosis,
+      schemaScaffold: [question.pattern, question.diagnosis, question.management].filter(Boolean)
+    }
   };
 }

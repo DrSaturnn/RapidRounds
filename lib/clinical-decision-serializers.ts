@@ -11,6 +11,7 @@ type ClinicalDecisionLike = {
   decisionType: string;
   prompt: string;
   pivotClue?: string;
+  boardPearl?: string;
   commonTrap?: string | null;
   managementPearl: string;
   difficulty: number;
@@ -50,7 +51,26 @@ export function toPracticePromptDto(decision: ClinicalDecisionLike): QuestionDto
     pattern: decision.clinicalPattern,
     management: decision.managementPearl,
     diagnosis: decision.topic,
-    vignetteFindings: vignette.vignetteFindings
+    vignetteFindings: vignette.vignetteFindings,
+    clinicalCues: {
+      pivotClue: decision.pivotClue || vignette.vignetteFindings.find((finding) => finding.role === "pivot_clue")?.text || decision.topic,
+      schemaScaffold: [
+        decision.clinicalPattern,
+        decision.pivotClue || decision.topic,
+        decision.decisionType,
+        decision.topic
+      ].filter(Boolean),
+      decisionBoundary: decision.commonTrap
+        ? {
+            conceptA: decision.topic,
+            conceptB: decision.commonTrap,
+            pivot: decision.pivotClue || decision.topic,
+            whyPivotSupportsA: `${decision.pivotClue || decision.topic} supports ${decision.topic}.`,
+            whatWouldSupportB: `Findings that specifically support ${decision.commonTrap}.`,
+            boardRule: decision.boardPearl || decision.managementPearl
+          }
+        : undefined
+    }
   };
 
   return applyRapidRoundsCaseMetadataToQuestion(question, tags);

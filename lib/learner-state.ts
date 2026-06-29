@@ -10,6 +10,11 @@ type ProgressEvent = {
   diagnosis: string;
   isCorrect: boolean;
   answerOutcome?: string | null;
+  levelOfAssistanceRequired?: string | null;
+  cueLevelUsed?: string | null;
+  revealUsed?: boolean | null;
+  schemaNodeId?: string | null;
+  competency?: string | null;
   confidence?: number | null;
   cognitiveErrorType?: string | null;
   reasoningPattern?: string | null;
@@ -91,7 +96,11 @@ function serializeCountMap<Key extends string>(map: Map<string, number>, label: 
 }
 
 function isScoredMiss(event: ProgressEvent) {
-  return !event.isCorrect && event.answerOutcome !== "UNKNOWN";
+  return (
+    !event.isCorrect &&
+    event.answerOutcome !== "UNKNOWN" &&
+    event.answerOutcome !== "REVEALED_WITHOUT_ATTEMPT"
+  );
 }
 
 function getMasteryLabel(attempts: number, correct: number, recentAttempts: number, recentCorrect: number): MasteryLabel {
@@ -248,6 +257,11 @@ export async function getLearnerState(learnerId: string) {
       diagnosis: true,
       isCorrect: true,
       answerOutcome: true,
+      levelOfAssistanceRequired: true,
+      cueLevelUsed: true,
+      revealUsed: true,
+      schemaNodeId: true,
+      competency: true,
       confidence: true,
       cognitiveErrorType: true,
       reasoningPattern: true,

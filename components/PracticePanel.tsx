@@ -153,12 +153,16 @@ export function PracticePanel() {
     activeSubject,
     activeStudyMode,
     questionBreadth,
+    clinicalCueLevel,
+    clinicalCuePrompt,
     canGoBack,
     subjectSummaries,
     setAnswer,
     setReinforcementAnswer,
     submitAnswer,
     requestTeaching,
+    requestClinicalCue,
+    revealAnswer,
     submitReinforcementAnswer,
     selectSubject,
     selectStudyMode,
@@ -508,6 +512,70 @@ export function PracticePanel() {
   };
 
   const canAdvance = Boolean(isExplanationState || result?.isCorrect);
+  const canUseClinicalCue = Boolean(question.clinicalCues && !hasAnsweredCurrentQuestion && mode === "rapid");
+
+  const renderClinicalCuePanel = () => {
+    if (!canUseClinicalCue || !question.clinicalCues) {
+      return clinicalCuePrompt ? (
+        <p className="rr-clinical-cue-prompt" role="status">{clinicalCuePrompt}</p>
+      ) : null;
+    }
+
+    const cues = question.clinicalCues;
+
+    return (
+      <section className="rr-clinical-cue-panel" aria-label="Clinical cue">
+        <div className="rr-clinical-cue-actions">
+          <button
+            type="button"
+            className="rr-clinical-cue-button"
+            onClick={requestClinicalCue}
+            disabled={clinicalCueLevel >= 3 || isSubmitting}
+          >
+            Clinical Cue
+          </button>
+          {clinicalCueLevel >= 3 ? (
+            <button
+              type="button"
+              className="rr-clinical-cue-reveal"
+              onClick={() => void revealAnswer()}
+              disabled={isSubmitting}
+            >
+              Reveal
+            </button>
+          ) : null}
+        </div>
+        {clinicalCuePrompt ? <p className="rr-clinical-cue-prompt" role="status">{clinicalCuePrompt}</p> : null}
+        {clinicalCueLevel >= 1 ? (
+          <div className="rr-clinical-cue-stage">
+            <span>Cue 1 · Pivot only</span>
+            <strong>{cues.pivotClue}</strong>
+          </div>
+        ) : null}
+        {clinicalCueLevel >= 2 && cues.schemaScaffold.length > 0 ? (
+          <div className="rr-clinical-cue-stage">
+            <span>Cue 2 · Schema scaffold</span>
+            <div className="rr-clinical-cue-chain">
+              {cues.schemaScaffold.map((step, index) => (
+                <em key={`${step}-${index}`}>{step}</em>
+              ))}
+            </div>
+          </div>
+        ) : null}
+        {clinicalCueLevel >= 3 && cues.decisionBoundary ? (
+          <div className="rr-clinical-cue-stage">
+            <span>Cue 3 · Decision boundary</span>
+            <div className="rr-clinical-cue-boundary">
+              <strong>{cues.decisionBoundary.conceptA}</strong>
+              <span>vs</span>
+              <strong>{cues.decisionBoundary.conceptB}</strong>
+            </div>
+            <p>{cues.decisionBoundary.pivot}</p>
+          </div>
+        ) : null}
+      </section>
+    );
+  };
 
   const handleBack = () => {
     setActiveTool(null);
@@ -896,6 +964,7 @@ export function PracticePanel() {
         onSubmit={onSubmit}
         isSubmitting={isSubmitting}
         keyboardHint={keyboardHint}
+        clinicalCuePanel={renderClinicalCuePanel()}
         error={error}
         canAdvance={canAdvance}
         onNext={() => void loadQuestion()}
@@ -1028,6 +1097,7 @@ export function PracticePanel() {
                   </Button>
                 ) : null}
               </div>
+              {renderClinicalCuePanel()}
               <div className="flex min-h-11 flex-wrap items-center gap-3 pt-1">
                 {mode === "rapid" && result?.isCorrect ? (
                   <Button type="button" onClick={() => void loadQuestion()}>

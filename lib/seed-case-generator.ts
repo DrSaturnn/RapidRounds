@@ -306,6 +306,47 @@ function buildSchemaNodeClueMap(node: SchemaNode): VignetteFindingAnnotation[] {
   ];
 }
 
+function buildSchemaNodeClinicalCues(node: SchemaNode): QuestionDto["clinicalCues"] {
+  return {
+    pivotClue: node.pivotClue,
+    schemaScaffold: [
+      node.initialQuestionSchema.classicEpidemiologyFrame,
+      node.chiefProblem,
+      node.pivotClue,
+      node.answerPrompt,
+      node.correctAnswer
+    ].filter(Boolean),
+    decisionBoundary: {
+      conceptA: node.discriminatorPair.conceptA,
+      conceptB: node.discriminatorPair.conceptB,
+      pivot: node.discriminatorPair.pivotThatSeparates,
+      whyPivotSupportsA: node.discriminatorPair.whyPivotSupportsA,
+      whatWouldSupportB: node.discriminatorPair.whatWouldSupportB,
+      boardRule: node.discriminatorPair.boardRule
+    }
+  };
+}
+
+function buildSeedClinicalCues(seed: RapidRoundsConceptSeed): QuestionDto["clinicalCues"] {
+  const pivot = seed.pivotClues[0] ?? seed.topic;
+  const competingConcept = seed.relatedConcepts[0] ?? seed.commonTraps[0];
+
+  return {
+    pivotClue: pivot,
+    schemaScaffold: [seed.schema, seed.supportingClues[0], pivot, seed.topic].filter(Boolean),
+    decisionBoundary: competingConcept
+      ? {
+          conceptA: seed.topic,
+          conceptB: competingConcept,
+          pivot,
+          whyPivotSupportsA: seed.primaryDiscriminators[0] ?? `${pivot} supports ${seed.topic}.`,
+          whatWouldSupportB: seed.commonTraps[0] ?? `A finding that supports ${competingConcept}.`,
+          boardRule: seed.nextTimeRule
+        }
+      : undefined
+  };
+}
+
 export function generateCaseFromSeed(seed: RapidRoundsConceptSeed): GeneratedRapidRoundsCase {
   const archetype = seed.questionArchetypes[0] ?? "Diagnosis";
   const vignette = buildOriginalVignette(seed);
@@ -336,7 +377,8 @@ export function generateCaseFromSeed(seed: RapidRoundsConceptSeed): GeneratedRap
     pattern: seed.schema,
     management: seed.managementRules[0] ?? seed.nextTimeRule,
     diagnosis: seed.topic,
-    vignetteFindings: clueMap
+    vignetteFindings: clueMap,
+    clinicalCues: buildSeedClinicalCues(seed)
   };
 
   return {
@@ -397,7 +439,8 @@ export function generateCasesFromDecisionTreeSeed(
         pattern: node.clinicalState,
         management: node.nextTimeRule,
         diagnosis: seed.topic,
-        vignetteFindings: clueMap
+        vignetteFindings: clueMap,
+        clinicalCues: buildSeedClinicalCues(seed)
       };
 
       return {
@@ -485,7 +528,8 @@ function generateCasesFromSchemaNodeUncached(
       pattern: node.schema,
       management: node.managementBranch?.ifPresent ?? node.nextTimeRule,
       diagnosis: node.topic,
-      vignetteFindings: clueMap
+      vignetteFindings: clueMap,
+      clinicalCues: buildSchemaNodeClinicalCues(node)
     };
 
     return {

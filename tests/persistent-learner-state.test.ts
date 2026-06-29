@@ -49,7 +49,7 @@ describe("persistent learner state", () => {
 
   it("persists UNKNOWN attempts without treating them as UserStats completions", () => {
     const route = readFileSync("app/api/practice/answer/route.ts", "utf8");
-    const unknownIndex = route.indexOf('if (answerOutcome === "UNKNOWN")');
+    const unknownIndex = route.indexOf('if (answerOutcome === "UNKNOWN" || answerOutcome === "REVEALED_WITHOUT_ATTEMPT")');
     const statsIndex = route.indexOf("const [, previousStats]", unknownIndex);
     const unknownBlock = route.slice(unknownIndex, statsIndex);
 
@@ -83,6 +83,7 @@ describe("persistent learner state", () => {
     const stats = readFileSync("lib/stats.ts", "utf8");
 
     assert.match(stats, /answerOutcome: \{ not: "UNKNOWN" \}/);
+    assert.match(stats, /answerOutcome: \{ not: "REVEALED_WITHOUT_ATTEMPT" \}/);
     assert.match(stats, /scoredProgressWhere/);
     assert.doesNotMatch(stats, /userId: "default"/);
     assert.doesNotMatch(stats, /userStats\.upsert/);

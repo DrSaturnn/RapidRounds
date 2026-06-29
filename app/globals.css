@@ -5187,6 +5187,100 @@ body:has(.practice-focus) .app-main {
   }
 }
 
+.rr-clinical-cue-panel {
+  display: grid;
+  gap: 0.7rem;
+  padding: 0.85rem;
+  border: 1px solid color-mix(in srgb, var(--rr-color-clue) 24%, var(--rr-border));
+  border-radius: var(--rr-radius-md);
+  background: color-mix(in srgb, var(--rr-color-clue) 7%, var(--rr-surface));
+}
+
+.rr-clinical-cue-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+}
+
+.rr-clinical-cue-button,
+.rr-clinical-cue-reveal {
+  min-height: 2.3rem;
+  padding: 0.45rem 0.85rem;
+  border: 1px solid var(--rr-border);
+  border-radius: var(--rr-radius-sm);
+  font-size: 0.86rem;
+  font-weight: 700;
+  color: var(--rr-text);
+  background: var(--rr-surface-elevated);
+  box-shadow: var(--rr-shadow-sm);
+}
+
+.rr-clinical-cue-reveal {
+  color: var(--rr-color-repair);
+  border-color: color-mix(in srgb, var(--rr-color-repair) 28%, var(--rr-border));
+  background: color-mix(in srgb, var(--rr-color-repair) 8%, var(--rr-surface-elevated));
+}
+
+.rr-clinical-cue-button:disabled,
+.rr-clinical-cue-reveal:disabled {
+  cursor: not-allowed;
+  opacity: 0.55;
+}
+
+.rr-clinical-cue-prompt {
+  color: var(--rr-color-repair);
+  font-size: 0.9rem;
+  font-weight: 650;
+}
+
+.rr-clinical-cue-stage {
+  display: grid;
+  gap: 0.35rem;
+  font-size: 0.9rem;
+  color: var(--rr-text);
+}
+
+.rr-clinical-cue-stage > span {
+  color: var(--rr-muted);
+  font-size: 0.76rem;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.rr-clinical-cue-stage > strong {
+  color: var(--rr-color-clue);
+  font-size: 1rem;
+}
+
+.rr-clinical-cue-chain,
+.rr-clinical-cue-boundary {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.45rem;
+}
+
+.rr-clinical-cue-chain em,
+.rr-clinical-cue-boundary strong {
+  padding: 0.35rem 0.55rem;
+  border: 1px solid var(--rr-border);
+  border-radius: var(--rr-radius-sm);
+  font-style: normal;
+  background: var(--rr-surface-elevated);
+}
+
+.rr-clinical-cue-chain em:not(:last-child)::after {
+  content: "→";
+  margin-left: 0.45rem;
+  color: var(--rr-muted);
+}
+
+[data-theme="warm-notebook"] .rr-clinical-cue-panel {
+  border-color: rgba(120, 80, 40, 0.16);
+  background: rgba(255, 253, 248, 0.72);
+}
+
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,

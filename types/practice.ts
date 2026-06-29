@@ -14,6 +14,27 @@ export type QuestionDto = {
   management: string;
   diagnosis: string;
   vignetteFindings?: VignetteFindingAnnotation[];
+  clinicalCues?: ClinicalCueSet;
+};
+
+export type LevelOfAssistanceRequired =
+  | "independent"
+  | "pivot_cue"
+  | "schema_cue"
+  | "decision_boundary_cue"
+  | "revealed_without_attempt";
+
+export type ClinicalCueSet = {
+  pivotClue: string;
+  schemaScaffold: string[];
+  decisionBoundary?: {
+    conceptA: string;
+    conceptB: string;
+    pivot: string;
+    whyPivotSupportsA: string;
+    whatWouldSupportB: string;
+    boardRule: string;
+  };
 };
 
 export type DecisionType =
@@ -95,6 +116,9 @@ export type AnswerResult = {
   explanation: string;
   evaluation?: AnswerEvaluation;
   tutor?: TutorContent;
+  levelOfAssistanceRequired?: LevelOfAssistanceRequired;
+  answeredAfterCue?: boolean;
+  revealUsed?: boolean;
 };
 
 export type AnswerOutcome =
@@ -102,7 +126,8 @@ export type AnswerOutcome =
   | "DECISION_ERROR"
   | "PARTIAL"
   | "TASK_MISMATCH"
-  | "UNKNOWN";
+  | "UNKNOWN"
+  | "REVEALED_WITHOUT_ATTEMPT";
 
 export type AnswerEvaluationClassification =
   | "EXACT"

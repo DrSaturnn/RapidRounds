@@ -19,6 +19,7 @@ type MoleskinePracticeRendererProps = {
   onSubmit: (event: FormEvent<HTMLFormElement>) => void;
   isSubmitting: boolean;
   keyboardHint: string;
+  clinicalCuePanel?: ReactNode;
   error?: string | null;
   canAdvance: boolean;
   onNext: () => void;
@@ -281,6 +282,7 @@ export function MoleskinePracticeRenderer({
   onSubmit,
   isSubmitting,
   keyboardHint,
+  clinicalCuePanel,
   error,
   canAdvance,
   onNext,
@@ -347,6 +349,7 @@ export function MoleskinePracticeRenderer({
                     {isSubmitting ? "Checking" : "Submit"}
                   </Button>
                 </div>
+                {clinicalCuePanel}
                 <p className="text-xs text-rr-muted" aria-live="polite">{keyboardHint}</p>
                 {error ? <p className="text-sm text-rr-muted">{error}</p> : null}
               </form>

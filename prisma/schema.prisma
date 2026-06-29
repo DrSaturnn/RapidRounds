@@ -86,6 +86,12 @@ model Progress {
   cognitiveErrorType String?
   reasoningPattern String?
   repairType     String?
+  cueLevelUsed   String?
+  levelOfAssistanceRequired String?
+  answeredAfterCue Boolean @default(false)
+  revealUsed     Boolean @default(false)
+  schemaNodeId   String?
+  competency     String?
   decisionType   String?
   curriculumNodeId String?
   shelfTags      String?
@@ -105,6 +111,9 @@ model Progress {
   @@index([pattern])
   @@index([answerOutcome])
   @@index([cognitiveErrorType])
+  @@index([levelOfAssistanceRequired])
+  @@index([schemaNodeId])
+  @@index([competency])
   @@index([curriculumNodeId])
 }
 

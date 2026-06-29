@@ -15,6 +15,11 @@ export type SchemaProgressEvent = {
   decisionType?: string | null;
   isCorrect: boolean;
   answerOutcome?: string | null;
+  levelOfAssistanceRequired?: string | null;
+  cueLevelUsed?: string | null;
+  revealUsed?: boolean | null;
+  schemaNodeId?: string | null;
+  competency?: string | null;
   createdAt?: Date | string | null;
 };
 
@@ -68,6 +73,7 @@ function summarizeProgress(progressEvents: SchemaProgressEvent[], availableCases
   const completedIds = new Set(sorted.map((event) => event.questionId).filter((id): id is string => Boolean(id)));
   const topicAttempts = new Map<string, number>();
   const topicCorrectCompetencies = new Map<string, Set<Competency>>();
+  const recentAssistedEvents: Array<{ event: SchemaProgressEvent; matchedCase?: GeneratedRapidRoundsCase }> = [];
 
   for (const event of sorted) {
     const matchedCase = event.questionId ? caseById.get(event.questionId) : undefined;
@@ -76,7 +82,18 @@ function summarizeProgress(progressEvents: SchemaProgressEvent[], availableCases
 
     topicAttempts.set(topic, (topicAttempts.get(topic) ?? 0) + 1);
 
-    if (event.isCorrect && event.answerOutcome !== "UNKNOWN" && matchedCase) {
+    const assistanceLevel = event.levelOfAssistanceRequired ?? "independent";
+    const isIndependentMastery =
+      event.isCorrect &&
+      event.answerOutcome !== "UNKNOWN" &&
+      event.answerOutcome !== "REVEALED_WITHOUT_ATTEMPT" &&
+      assistanceLevel === "independent";
+
+    if (assistanceLevel !== "independent" || event.revealUsed || event.answerOutcome === "REVEALED_WITHOUT_ATTEMPT") {
+      recentAssistedEvents.push({ event, matchedCase });
+    }
+
+    if (isIndependentMastery && matchedCase) {
       const competency = competencyForCase(matchedCase);
       const competencies = topicCorrectCompetencies.get(topic) ?? new Set<Competency>();
       competencies.add(competency);
@@ -88,6 +105,7 @@ function summarizeProgress(progressEvents: SchemaProgressEvent[], availableCases
     completedIds,
     topicAttempts,
     topicCorrectCompetencies,
+    recentAssistedEvents: recentAssistedEvents.slice(0, 12),
     recentCases: sorted
       .map((event) => event.questionId ? caseById.get(event.questionId) : undefined)
       .filter((candidate): candidate is GeneratedRapidRoundsCase => Boolean(candidate))
@@ -155,6 +173,113 @@ function diversityScore(candidate: GeneratedRapidRoundsCase, recentCases: Genera
   return score;
 }
 
+function assistanceReviewScore(
+  candidate: GeneratedRapidRoundsCase,
+  assistedEvents: Array<{ event: SchemaProgressEvent; matchedCase?: GeneratedRapidRoundsCase }>
+) {
+  const candidateTopic = normalize(candidate.topic);
+  const candidateCompetency = competencyForCase(candidate);
+  const candidateNodeId = candidate.schemaNode?.id;
+
+  let score = 0;
+  assistedEvents.forEach(({ event, matchedCase }, index) => {
+    const eventTopic = normalize(matchedCase?.topic ?? event.diagnosis);
+    if (!eventTopic || eventTopic !== candidateTopic) {
+      return;
+    }
+
+    const recencyWeight = Math.max(1, 10 - index);
+    const level = event.levelOfAssistanceRequired ?? (event.revealUsed ? "revealed_without_attempt" : "independent");
+    const eventCompetency = matchedCase ? competencyForCase(matchedCase) : undefined;
+
+    if (candidateNodeId && matchedCase?.schemaNode?.id === candidateNodeId) {
+      score -= 18;
+    }
+
+    if (level === "pivot_cue" && event.isCorrect) {
+      if (eventCompetency && competencyRank(candidateCompetency) > competencyRank(eventCompetency)) {
+        score -= 80;
+      }
+      score += candidateCompetency === eventCompetency ? 48 + recencyWeight : 0;
+    }
+
+    if (level === "schema_cue" && event.isCorrect) {
+      if (candidateCompetency !== "recognition") {
+        score -= 18;
+      }
+      score += candidateCompetency === "recognition" ? 16 + recencyWeight : 0;
+      score += candidate.variantTemplate?.composition === "minimal_decisive_pivot" ? 8 : 0;
+    }
+
+    if (level === "decision_boundary_cue" && event.isCorrect) {
+      score += candidate.variantTemplate?.composition === "context_pivot_distractors" ? 18 + recencyWeight : 0;
+      score += candidate.schemaNode?.discriminatorPair.conceptB === matchedCase?.schemaNode?.discriminatorPair.conceptB ? 8 : 0;
+    }
+
+    if (level === "revealed_without_attempt" || event.revealUsed || event.answerOutcome === "REVEALED_WITHOUT_ATTEMPT") {
+      if (candidateCompetency !== "recognition") {
+        score -= 28;
+      }
+      score += candidateCompetency === "recognition" ? 20 + recencyWeight : 0;
+      score += candidate.variantTemplate?.composition === "minimal_decisive_pivot" ? 10 : 0;
+    }
+  });
+
+  return score;
+}
+
+function assistanceTargetPool(
+  candidatePool: GeneratedRapidRoundsCase[],
+  assistedEvents: Array<{ event: SchemaProgressEvent; matchedCase?: GeneratedRapidRoundsCase }>,
+  focusedReview: boolean
+) {
+  if (focusedReview || assistedEvents.length === 0) {
+    return candidatePool;
+  }
+
+  for (const { event, matchedCase } of assistedEvents) {
+    if (!matchedCase) {
+      continue;
+    }
+
+    const topic = normalize(matchedCase.topic);
+    const eventCompetency = competencyForCase(matchedCase);
+    const level = event.levelOfAssistanceRequired ?? (event.revealUsed ? "revealed_without_attempt" : "independent");
+    const sameTopic = candidatePool.filter(
+      (candidate) => normalize(candidate.topic) === topic && candidate.id !== matchedCase.id
+    );
+    let preferred: GeneratedRapidRoundsCase[] = [];
+
+    if (level === "pivot_cue" && event.isCorrect) {
+      preferred = sameTopic.filter((candidate) => competencyForCase(candidate) === eventCompetency);
+    } else if (level === "schema_cue" && event.isCorrect) {
+      preferred = sameTopic.filter(
+        (candidate) =>
+          competencyForCase(candidate) === "recognition" ||
+          candidate.variantTemplate?.composition === "minimal_decisive_pivot"
+      );
+    } else if (level === "decision_boundary_cue" && event.isCorrect) {
+      preferred = sameTopic.filter(
+        (candidate) =>
+          candidate.variantTemplate?.composition === "context_pivot_distractors" ||
+          candidate.schemaNode?.discriminatorPair.conceptB === matchedCase.schemaNode?.discriminatorPair.conceptB
+      );
+    } else if (level === "revealed_without_attempt" || event.revealUsed || event.answerOutcome === "REVEALED_WITHOUT_ATTEMPT") {
+      preferred = sameTopic.filter(
+        (candidate) =>
+          competencyForCase(candidate) === "recognition" ||
+          candidate.variantTemplate?.composition === "minimal_decisive_pivot"
+      );
+    }
+
+    if (preferred.length > 0) {
+      return preferred;
+    }
+  }
+
+  return candidatePool;
+}
+
 export function selectAdaptiveGeneratedCase(
   availableCases: GeneratedRapidRoundsCase[],
   progressEvents: SchemaProgressEvent[],
@@ -173,7 +298,8 @@ export function selectAdaptiveGeneratedCase(
   const progress = summarizeProgress(progressEvents, availableCases);
   const focusedReview = isFocusedReview(options.mode, options.requestedConcept);
   const incomplete = availableCases.filter((candidate) => !progress.completedIds.has(candidate.id));
-  const candidatePool = incomplete.length > 0 ? incomplete : availableCases;
+  const initialCandidatePool = incomplete.length > 0 ? incomplete : availableCases;
+  const candidatePool = assistanceTargetPool(initialCandidatePool, progress.recentAssistedEvents, focusedReview);
   const availableRanksByTopic = new Map<string, Set<number>>();
   for (const candidate of candidatePool) {
     const topic = normalize(candidate.topic);
@@ -195,6 +321,7 @@ export function selectAdaptiveGeneratedCase(
         (progress.completedIds.has(candidate.id) ? -100 : 50) +
         progressionScore(candidate, masteredRank, availableRanksByTopic) +
         diversityScore(candidate, progress.recentCases, focusedReview) +
+        assistanceReviewScore(candidate, progress.recentAssistedEvents) +
         (topicAttempts === leastTopicAttempts ? 10 : 0) -
         topicAttempts * (focusedReview ? 0.25 : 1.5) +
         (candidate.schemaNode?.estimatedYield ?? 0) / 4;

@@ -8,7 +8,7 @@ import { prisma } from "@/lib/prisma";
 import { buildReasoningMemoryCoaching } from "@/lib/reasoning-memory";
 import { getGeneratedCaseById } from "@/lib/seed-case-generator";
 import { buildTutorContent } from "@/lib/tutor-content";
-import type { AnswerEvaluation, AnswerOutcome } from "@/types/practice";
+import type { AnswerEvaluation, AnswerOutcome, LevelOfAssistanceRequired } from "@/types/practice";
 
 function parseJsonArray(value: string) {
   try {
@@ -70,6 +70,69 @@ function getAnswerOutcome(evaluation: AnswerEvaluation): AnswerOutcome {
   return "DECISION_ERROR";
 }
 
+function competencyForDecisionType(decisionType?: string | null) {
+  if (/differential/i.test(decisionType ?? "")) return "differential";
+  if (/complication|escalation/i.test(decisionType ?? "")) return "complications";
+  if (/mechanism|risk|prognosis/i.test(decisionType ?? "")) return "transfer";
+  if (/management|step|contraindication|prevention|screening|follow/i.test(decisionType ?? "")) return "management";
+  return "recognition";
+}
+
+function masteryCreditForAssistance(level: LevelOfAssistanceRequired) {
+  if (level === "independent") return 1;
+  if (level === "pivot_cue") return 0.7;
+  if (level === "schema_cue") return 0.45;
+  if (level === "decision_boundary_cue") return 0.2;
+  return 0;
+}
+
+function getAssistanceLevel(body: {
+  levelOfAssistanceRequired?: LevelOfAssistanceRequired;
+  cueLevelUsed?: string;
+  revealUsed?: boolean;
+}): LevelOfAssistanceRequired {
+  if (body.revealUsed) return "revealed_without_attempt";
+  if (
+    body.levelOfAssistanceRequired === "pivot_cue" ||
+    body.levelOfAssistanceRequired === "schema_cue" ||
+    body.levelOfAssistanceRequired === "decision_boundary_cue"
+  ) {
+    return body.levelOfAssistanceRequired;
+  }
+  if (body.cueLevelUsed === "3") return "decision_boundary_cue";
+  if (body.cueLevelUsed === "2") return "schema_cue";
+  if (body.cueLevelUsed === "1") return "pivot_cue";
+  return "independent";
+}
+
+function applyAssistanceCredit(evaluation: AnswerEvaluation, level: LevelOfAssistanceRequired): AnswerEvaluation {
+  if (!evaluation.isCorrect) {
+    return evaluation;
+  }
+
+  return {
+    ...evaluation,
+    partialCredit: Math.min(evaluation.partialCredit, masteryCreditForAssistance(level))
+  };
+}
+
+function buildRevealEvaluation(correctAnswer: string): AnswerEvaluation {
+  return {
+    isCorrect: false,
+    classification: "UNKNOWN",
+    learnerFacingClassification: {
+      category: "Unknown",
+      message: "Clinical resolution revealed before an answer attempt."
+    },
+    canonicalAnswer: correctAnswer,
+    confidence: 0,
+    spellingCorrected: false,
+    requiresTeaching: true,
+    partialCredit: 0,
+    reason: "Clinical resolution was revealed without an answer attempt."
+  };
+}
+
 function serializeList(values: string[]) {
   return JSON.stringify(values);
 }
@@ -80,6 +143,10 @@ export async function POST(request: NextRequest) {
     learnerId?: string;
     answer?: string;
     responseTimeMs?: number;
+    cueLevelUsed?: string;
+    levelOfAssistanceRequired?: LevelOfAssistanceRequired;
+    answeredAfterCue?: boolean;
+    revealUsed?: boolean;
   };
   const learnerId = normalizeLearnerId(body.learnerId);
 
@@ -91,6 +158,21 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ error: "Learner id is required." }, { status: 400 });
   }
 
+  const trimmedAnswer = body.answer.trim();
+  if (!trimmedAnswer && !body.revealUsed) {
+    return NextResponse.json(
+      { error: "Enter an answer, or use a clinical cue.", needsAnswer: true },
+      { status: 422 }
+    );
+  }
+
+  const assistanceLevel = getAssistanceLevel(body);
+  const answeredAfterCue = Boolean(
+    body.answeredAfterCue ||
+      (assistanceLevel !== "independent" && assistanceLevel !== "revealed_without_attempt")
+  );
+  const cueLevelUsed = assistanceLevel === "independent" ? undefined : assistanceLevel;
+
   const decision = await prisma.clinicalDecision.findUnique({
     where: { id: body.questionId }
   });
@@ -99,31 +181,33 @@ export async function POST(request: NextRequest) {
     const acceptedAnswers = parseJsonArray(decision.acceptedAnswers);
     const correctAnswer = acceptedAnswers[0] ?? decision.topic;
     const tags = parseJsonArray(decision.tags);
-    const localEvaluation = evaluateAnswer({
-      answer: body.answer,
-      acceptedAnswers,
-      canonicalAnswer: correctAnswer,
-      expectedTask: decision.decisionType,
-      clinicalConcepts: conceptList(decision.topic, decision.clinicalPattern, decision.commonTrap, tags)
-    });
+    const localEvaluation = body.revealUsed
+      ? buildRevealEvaluation(correctAnswer)
+      : evaluateAnswer({
+          answer: trimmedAnswer,
+          acceptedAnswers,
+          canonicalAnswer: correctAnswer,
+          expectedTask: decision.decisionType,
+          clinicalConcepts: conceptList(decision.topic, decision.clinicalPattern, decision.commonTrap, tags)
+        });
     const aiMatch = localEvaluation.isCorrect || localEvaluation.classification === "UNKNOWN"
       ? null
       : await compareAnswerWithAI({
           stem: decision.prompt,
           correctAnswer,
           acceptedAnswers,
-          userAnswer: body.answer
+          userAnswer: trimmedAnswer
         });
-    const evaluation = applyAiEquivalent(localEvaluation, aiMatch);
+    const evaluation = applyAssistanceCredit(applyAiEquivalent(localEvaluation, aiMatch), assistanceLevel);
     const isCorrect = evaluation.isCorrect;
-    const answerOutcome = getAnswerOutcome(evaluation);
+    const answerOutcome = body.revealUsed ? "REVEALED_WITHOUT_ATTEMPT" : getAnswerOutcome(evaluation);
     const responseTimeMs = Math.max(0, Math.round(body.responseTimeMs ?? 0));
     const tutor = buildTutorContent(
       {
         ...decision,
         correctAnswer
       },
-      body.answer,
+      body.revealUsed ? "clinical cue reveal" : trimmedAnswer,
       evaluation
     );
     const learnerState = await getLearnerState(learnerId);
@@ -139,7 +223,7 @@ export async function POST(request: NextRequest) {
     const progressData = {
       clinicalDecisionId: decision.id,
       userId: learnerId,
-      answer: body.answer.trim(),
+      answer: trimmedAnswer,
       isCorrect,
       expectedAnswer: correctAnswer,
       answerOutcome,
@@ -149,6 +233,11 @@ export async function POST(request: NextRequest) {
       cognitiveErrorType: tutor.cognitiveError?.type,
       reasoningPattern: tutor.reasoningAnalysis.primaryError,
       repairType: tutor.repair.style,
+      cueLevelUsed,
+      levelOfAssistanceRequired: assistanceLevel,
+      answeredAfterCue,
+      revealUsed: Boolean(body.revealUsed),
+      competency: competencyForDecisionType(decision.decisionType),
       decisionType: decision.decisionType,
       curriculumNodeId: curriculumContext.primaryNode?.id,
       shelfTags: serializeList(curriculumContext.shelfTags),
@@ -159,7 +248,7 @@ export async function POST(request: NextRequest) {
       pattern: decision.clinicalPattern
     };
 
-    if (answerOutcome === "UNKNOWN") {
+    if (answerOutcome === "UNKNOWN" || answerOutcome === "REVEALED_WITHOUT_ATTEMPT") {
       await prisma.progress.create({
         data: progressData
       });
@@ -171,7 +260,10 @@ export async function POST(request: NextRequest) {
         evaluation,
         boardPearl: decision.boardPearl,
         explanation: decision.pivotClue,
-        tutor
+        tutor,
+        levelOfAssistanceRequired: assistanceLevel,
+        answeredAfterCue,
+        revealUsed: Boolean(body.revealUsed)
       });
     }
 
@@ -213,7 +305,10 @@ export async function POST(request: NextRequest) {
       evaluation,
       boardPearl: decision.boardPearl,
       explanation: decision.pivotClue,
-      tutor
+      tutor,
+      levelOfAssistanceRequired: assistanceLevel,
+      answeredAfterCue,
+      revealUsed: Boolean(body.revealUsed)
     });
   }
 
@@ -224,21 +319,23 @@ export async function POST(request: NextRequest) {
       generatedCase.correctAnswer.toLowerCase(),
       ...generatedCase.seed.relatedConcepts.filter((concept) => concept.toLowerCase() === generatedCase.correctAnswer.toLowerCase())
     ];
-    const localEvaluation = evaluateAnswer({
-      answer: body.answer,
-      acceptedAnswers,
-      canonicalAnswer: generatedCase.correctAnswer,
-      expectedTask: generatedCase.question.decisionType,
-      clinicalConcepts: conceptList(
-        generatedCase.topic,
-        generatedCase.schema,
-        generatedCase.seed.commonTraps,
-        generatedCase.seed.relatedConcepts
-      )
-    });
-    const evaluation = localEvaluation;
+    const localEvaluation = body.revealUsed
+      ? buildRevealEvaluation(generatedCase.correctAnswer)
+      : evaluateAnswer({
+          answer: trimmedAnswer,
+          acceptedAnswers,
+          canonicalAnswer: generatedCase.correctAnswer,
+          expectedTask: generatedCase.question.decisionType,
+          clinicalConcepts: conceptList(
+            generatedCase.topic,
+            generatedCase.schema,
+            generatedCase.seed.commonTraps,
+            generatedCase.seed.relatedConcepts
+          )
+        });
+    const evaluation = applyAssistanceCredit(localEvaluation, assistanceLevel);
     const isCorrect = evaluation.isCorrect;
-    const answerOutcome = getAnswerOutcome(evaluation);
+    const answerOutcome = body.revealUsed ? "REVEALED_WITHOUT_ATTEMPT" : getAnswerOutcome(evaluation);
     const responseTimeMs = Math.max(0, Math.round(body.responseTimeMs ?? 0));
     const tags = conceptList(
       generatedCase.seed.id,
@@ -265,7 +362,7 @@ export async function POST(request: NextRequest) {
       decisionType: generatedCase.question.decisionType,
       managementPearl: generatedCase.explanation
     };
-    const tutor = buildTutorContent(decisionLike, body.answer, evaluation);
+    const tutor = buildTutorContent(decisionLike, body.revealUsed ? "clinical cue reveal" : trimmedAnswer, evaluation);
     const learnerState = await getLearnerState(learnerId);
     tutor.coaching = buildReasoningMemoryCoaching(tutor, answerOutcome, learnerState.recentReasoningAttempts);
     const curriculumContext = resolveCurriculumContext({
@@ -281,7 +378,7 @@ export async function POST(request: NextRequest) {
       data: {
         questionId: generatedCase.id,
         userId: learnerId,
-        answer: body.answer.trim(),
+        answer: trimmedAnswer,
         isCorrect,
         expectedAnswer: generatedCase.correctAnswer,
         answerOutcome,
@@ -291,6 +388,12 @@ export async function POST(request: NextRequest) {
         cognitiveErrorType: tutor.cognitiveError?.type,
         reasoningPattern: tutor.reasoningAnalysis.primaryError,
         repairType: tutor.repair.style,
+        cueLevelUsed,
+        levelOfAssistanceRequired: assistanceLevel,
+        answeredAfterCue,
+        revealUsed: Boolean(body.revealUsed),
+        schemaNodeId: generatedCase.schemaNode?.id,
+        competency: generatedCase.schemaNode?.nodeKind ?? competencyForDecisionType(generatedCase.question.decisionType),
         decisionType: generatedCase.question.decisionType,
         curriculumNodeId: curriculumContext.primaryNode?.id,
         shelfTags: serializeList(curriculumContext.shelfTags.length ? curriculumContext.shelfTags : [generatedCase.subject]),
@@ -302,7 +405,7 @@ export async function POST(request: NextRequest) {
       }
     });
 
-    if (answerOutcome !== "UNKNOWN") {
+    if (answerOutcome !== "UNKNOWN" && answerOutcome !== "REVEALED_WITHOUT_ATTEMPT") {
       const previousStats = await prisma.userStats.upsert({
         where: { userId: learnerId },
         update: {},
@@ -336,7 +439,10 @@ export async function POST(request: NextRequest) {
       evaluation,
       boardPearl: generatedCase.seed.nextTimeRule,
       explanation: generatedCase.seed.pivotClues[0],
-      tutor
+      tutor,
+      levelOfAssistanceRequired: assistanceLevel,
+      answeredAfterCue,
+      revealUsed: Boolean(body.revealUsed)
     });
   }
 
@@ -350,31 +456,33 @@ export async function POST(request: NextRequest) {
   }
 
   const acceptedAnswers = parseJsonArray(question.acceptedAnswers);
-  const localEvaluation = evaluateAnswer({
-    answer: body.answer,
-    acceptedAnswers,
-    canonicalAnswer: question.correctAnswer,
-    expectedTask: "Diagnosis",
-    clinicalConcepts: conceptList(question.diagnosis, question.pattern, question.management, question.topic.name)
-  });
+  const localEvaluation = body.revealUsed
+    ? buildRevealEvaluation(question.correctAnswer)
+    : evaluateAnswer({
+        answer: trimmedAnswer,
+        acceptedAnswers,
+        canonicalAnswer: question.correctAnswer,
+        expectedTask: "Diagnosis",
+        clinicalConcepts: conceptList(question.diagnosis, question.pattern, question.management, question.topic.name)
+      });
   const aiMatch = localEvaluation.isCorrect || localEvaluation.classification === "UNKNOWN"
     ? null
     : await compareAnswerWithAI({
         stem: question.stem,
         correctAnswer: question.correctAnswer,
         acceptedAnswers,
-        userAnswer: body.answer
+        userAnswer: trimmedAnswer
       });
-  const evaluation = applyAiEquivalent(localEvaluation, aiMatch);
+  const evaluation = applyAssistanceCredit(applyAiEquivalent(localEvaluation, aiMatch), assistanceLevel);
   const isCorrect = evaluation.isCorrect;
-  const answerOutcome = getAnswerOutcome(evaluation);
+  const answerOutcome = body.revealUsed ? "REVEALED_WITHOUT_ATTEMPT" : getAnswerOutcome(evaluation);
   const responseTimeMs = Math.max(0, Math.round(body.responseTimeMs ?? 0));
   const tutor = buildTutorContent(
     {
       ...question,
       topic: question.diagnosis
     },
-    body.answer,
+    body.revealUsed ? "clinical cue reveal" : trimmedAnswer,
     evaluation
   );
   const learnerState = await getLearnerState(learnerId);
@@ -390,7 +498,7 @@ export async function POST(request: NextRequest) {
     questionId: question.id,
     topicId: question.topicId,
     userId: learnerId,
-    answer: body.answer.trim(),
+    answer: trimmedAnswer,
     isCorrect,
     expectedAnswer: question.correctAnswer,
     answerOutcome,
@@ -400,6 +508,11 @@ export async function POST(request: NextRequest) {
     cognitiveErrorType: tutor.cognitiveError?.type,
     reasoningPattern: tutor.reasoningAnalysis.primaryError,
     repairType: tutor.repair.style,
+    cueLevelUsed,
+    levelOfAssistanceRequired: assistanceLevel,
+    answeredAfterCue,
+    revealUsed: Boolean(body.revealUsed),
+    competency: competencyForDecisionType("Diagnosis"),
     decisionType: "Diagnosis",
     curriculumNodeId: curriculumContext.primaryNode?.id,
     shelfTags: serializeList(curriculumContext.shelfTags),
@@ -410,7 +523,7 @@ export async function POST(request: NextRequest) {
     pattern: question.pattern
   };
 
-  if (answerOutcome === "UNKNOWN") {
+  if (answerOutcome === "UNKNOWN" || answerOutcome === "REVEALED_WITHOUT_ATTEMPT") {
     await prisma.progress.create({
       data: progressData
     });
@@ -422,7 +535,10 @@ export async function POST(request: NextRequest) {
       evaluation,
       boardPearl: question.boardPearl,
       explanation: question.explanation,
-      tutor
+      tutor,
+      levelOfAssistanceRequired: assistanceLevel,
+      answeredAfterCue,
+      revealUsed: Boolean(body.revealUsed)
     });
   }
 
@@ -464,6 +580,9 @@ export async function POST(request: NextRequest) {
     evaluation,
     boardPearl: question.boardPearl,
     explanation: question.explanation,
-    tutor
+    tutor,
+    levelOfAssistanceRequired: assistanceLevel,
+    answeredAfterCue,
+    revealUsed: Boolean(body.revealUsed)
   });
 }

@@ -41,6 +41,11 @@ export async function GET(request: Request) {
             isCorrect: true,
             answerOutcome: true,
             decisionType: true,
+            levelOfAssistanceRequired: true,
+            cueLevelUsed: true,
+            revealUsed: true,
+            schemaNodeId: true,
+            competency: true,
             createdAt: true
           },
           orderBy: { createdAt: "desc" },
@@ -57,6 +62,11 @@ export async function GET(request: Request) {
             isCorrect: true,
             answerOutcome: true,
             decisionType: true,
+            levelOfAssistanceRequired: true,
+            cueLevelUsed: true,
+            revealUsed: true,
+            schemaNodeId: true,
+            competency: true,
             createdAt: true
           }
         })

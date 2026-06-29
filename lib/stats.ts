@@ -11,7 +11,10 @@ const EMPTY_STATS = {
 function scoredProgressWhere() {
   return {
     userId: UNAVAILABLE_LEARNER_SCOPE,
-    OR: [{ answerOutcome: null }, { answerOutcome: { not: "UNKNOWN" } }]
+    AND: [
+      { OR: [{ answerOutcome: null }, { answerOutcome: { not: "UNKNOWN" } }] },
+      { OR: [{ answerOutcome: null }, { answerOutcome: { not: "REVEALED_WITHOUT_ATTEMPT" } }] }
+    ]
   };
 }
 
