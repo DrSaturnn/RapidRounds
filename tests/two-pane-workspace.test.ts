@@ -5,11 +5,14 @@ import { describe, it } from "node:test";
 describe("continuous educational workspace", () => {
   it("keeps the question card above the post-answer learning workspace", () => {
     const practicePanel = readFileSync("components/PracticePanel.tsx", "utf8");
+    const moleskineRenderer = readFileSync("components/moleskine/MoleskinePracticeRenderer.tsx", "utf8");
 
     assert.match(practicePanel, /rr-question-card/);
     assert.match(practicePanel, /rr-practice-main-wide/);
 
-    assert.ok(practicePanel.indexOf("moleskineLeftPageContent") > practicePanel.indexOf("<TutorMode"));
+    assert.match(practicePanel, /<MoleskinePracticeRenderer/);
+    assert.match(moleskineRenderer, /rr-notebook-left-page/);
+    assert.match(moleskineRenderer, /<NotebookRightPage notebook=\{notebook\} \/>/);
     assert.ok(practicePanel.indexOf("rr-question-card-compact") < practicePanel.lastIndexOf("<TutorMode"));
   });
 

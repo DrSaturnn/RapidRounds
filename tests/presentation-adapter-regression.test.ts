@@ -111,16 +111,20 @@ describe("presentation adapter regression safety", () => {
 
   it("keeps the Moleskine adapter on the canonical answer state and submit path", () => {
     const practicePanel = readFileSync("components/PracticePanel.tsx", "utf8");
-    const tutorMode = readFileSync("components/TutorMode.tsx", "utf8");
+    const moleskineRenderer = readFileSync("components/moleskine/MoleskinePracticeRenderer.tsx", "utf8");
     const hook = readFileSync("hooks/usePracticeSession.ts", "utf8");
 
-    assert.match(practicePanel, /<form onSubmit=\{onSubmit\} className="rr-answer-dock rr-moleskine-solve-form"/);
-    assert.match(practicePanel, /value=\{answer\}/);
-    assert.match(practicePanel, /onChange=\{\(event\) => setAnswer\(event\.target\.value\)\}/);
-    assert.match(practicePanel, /\{isSubmitting \? "Checking" : "Submit"\}/);
+    assert.match(practicePanel, /<MoleskinePracticeRenderer/);
+    assert.match(practicePanel, /answer=\{answer\}/);
+    assert.match(practicePanel, /onAnswerChange=\{setAnswer\}/);
+    assert.match(practicePanel, /onSubmit=\{onSubmit\}/);
+    assert.match(moleskineRenderer, /<form onSubmit=\{onSubmit\} className="rr-answer-dock rr-moleskine-solve-form rr-notebook-answer-form">/);
+    assert.match(moleskineRenderer, /value=\{answer\}/);
+    assert.match(moleskineRenderer, /onChange=\{\(event\) => onAnswerChange\(event\.target\.value\)\}/);
+    assert.match(moleskineRenderer, /\{isSubmitting \? "Checking" : "Submit"\}/);
     assert.match(hook, /body:\s*JSON\.stringify\(\{[\s\S]*answer,[\s\S]*responseTimeMs:/);
     assert.doesNotMatch(practicePanel, /evaluateAnswer|compareAnswer|isCorrect\s*=/);
-    assert.doesNotMatch(tutorMode, /evaluateAnswer|compareAnswer|isCorrect\s*=/);
+    assert.doesNotMatch(moleskineRenderer, /evaluateAnswer|compareAnswer|isCorrect\s*=/);
   });
 
   it("does not route correct submissions into automatic repair mode", () => {
@@ -132,26 +136,30 @@ describe("presentation adapter regression safety", () => {
 
   it("keeps Moleskine solve state quiet before submission", () => {
     const practicePanel = readFileSync("components/PracticePanel.tsx", "utf8");
+    const moleskineRenderer = readFileSync("components/moleskine/MoleskinePracticeRenderer.tsx", "utf8");
 
     assert.match(practicePanel, /if \(skin === "warm-notebook"\)/);
-    assert.match(practicePanel, /isExplanationState && tutor \?\s*\(\s*<TutorMode[\s\S]*\) : \(\s*<>\s*<MoleskineLeftPage>/);
-    assert.match(practicePanel, /<form onSubmit=\{onSubmit\} className="rr-answer-dock rr-moleskine-solve-form">/);
-    assert.doesNotMatch(practicePanel, /Answer first\. The reasoning will unfold here\./);
-    assert.match(practicePanel, /rr-moleskine-solve-spread/);
-    assert.match(practicePanel, /moleskineLeftPageContent=\{[\s\S]*<span className="rr-badge rr-badge-learning">Explanation<\/span>[\s\S]*\}/);
+    assert.match(practicePanel, /notebook=\{clinicalNotebook\}/);
+    assert.match(moleskineRenderer, /notebook\.state === "question"/);
+    assert.match(moleskineRenderer, /rr-notebook-quiet-page/);
+    assert.match(moleskineRenderer, /Answer first\. The reasoning will unfold here\./);
+    assert.match(moleskineRenderer, /rr-clinical-notebook-spread-question/);
+    assert.doesNotMatch(practicePanel, /moleskineLeftPageContent/);
   });
 
   it("keeps Moleskine learn state inside one left page and the right teaching document conditional", () => {
     const practicePanel = readFileSync("components/PracticePanel.tsx", "utf8");
-    const tutorMode = readFileSync("components/TutorMode.tsx", "utf8");
+    const moleskineRenderer = readFileSync("components/moleskine/MoleskinePracticeRenderer.tsx", "utf8");
+    const notebookViewModel = readFileSync("lib/clinical-notebook-view-model.ts", "utf8");
     const styles = readFileSync("app/globals.css", "utf8");
 
-    assert.match(practicePanel, /moleskineLeftPageContent=\{/);
-    assert.match(tutorMode, /<section className="rr-card rr-question-card rr-vignette-card rr-card-paper rr-moleskine-left-page">[\s\S]*rr-moleskine-left-reasoning/);
-    assert.match(tutorMode, /<RightPanelExplanation tutor=\{tutor\} showComparison=\{showComparison\} presentation="moleskine" \/>/);
-    assert.match(tutorMode, /<MoleskineTeachMeMore>\{teachingSurface\}<\/MoleskineTeachMeMore>/);
-    assert.match(tutorMode, /nextChallengeSurface \? <div className="rr-moleskine-next-challenge">/);
-    assert.match(tutorMode, /<TeachingCard title="Teach Me More" defaultOpen=\{false\}>/);
+    assert.match(practicePanel, /buildClinicalNotebookViewModel/);
+    assert.match(moleskineRenderer, /rr-notebook-left-page/);
+    assert.match(moleskineRenderer, /<NotebookReasoning notebook=\{notebook\} \/>/);
+    assert.match(moleskineRenderer, /<NotebookRightPage notebook=\{notebook\} \/>/);
+    assert.match(moleskineRenderer, /rr-notebook-teach-more/);
+    assert.match(notebookViewModel, /rightPage:\s*hasAnswered/);
+    assert.match(notebookViewModel, /annotations = hasAnswered/);
     assert.doesNotMatch(styles, /display:\s*contents/);
     assert.doesNotMatch(styles, /grid-row:\s*3/);
   });

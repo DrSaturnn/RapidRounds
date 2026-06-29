@@ -3081,6 +3081,366 @@ body:has(.practice-focus) .app-main {
 }
 
 @layer components {
+  [data-theme="warm-notebook"].rr-clinical-notebook-shell {
+    padding: 0.5rem;
+    background:
+      linear-gradient(90deg, #1e1e1e 0 1.35rem, transparent 1.35rem),
+      radial-gradient(circle at 10% 12%, rgb(255 255 255 / 0.48), transparent 18rem),
+      repeating-linear-gradient(to bottom, transparent 0 31px, rgb(93 64 38 / 0.052) 32px),
+      var(--rr-paper-texture),
+      linear-gradient(180deg, #f3dfba, #ead5ae);
+  }
+
+  [data-theme="warm-notebook"] .rr-clinical-notebook-book {
+    display: grid;
+    grid-template-columns: 11.25rem minmax(0, 1fr);
+    width: min(94rem, calc(100vw - 1rem));
+    min-height: calc(100vh - 4.4rem);
+    margin: 0 auto;
+    border: 1px solid rgb(73 51 32 / 0.34);
+    border-top: 0;
+    border-radius: 0 0 0.9rem 0.9rem;
+    overflow: hidden;
+    background:
+      linear-gradient(90deg, #1f1f1f 0 1.35rem, rgb(82 61 40 / 0.42) 1.35rem 2rem, transparent 2rem),
+      repeating-linear-gradient(to bottom, transparent 0 31px, rgb(93 64 38 / 0.058) 32px),
+      var(--rr-paper-texture),
+      linear-gradient(180deg, #f7e8ca, #ecd8b4);
+    box-shadow:
+      0 34px 88px rgb(31 20 12 / 0.28),
+      inset 1.35rem 0 0 #1f1f1f,
+      inset 0 1px 0 rgb(255 255 255 / 0.5);
+  }
+
+  [data-theme="warm-notebook"] .rr-notebook-topbar {
+    width: min(94rem, calc(100vw - 1rem));
+    min-height: 3.45rem;
+    margin: 0 auto;
+    border-radius: 0.9rem 0.9rem 0 0;
+  }
+
+  [data-theme="warm-notebook"] .rr-notebook-sidebar {
+    width: auto;
+    min-height: calc(100vh - 4.4rem);
+  }
+
+  [data-theme="warm-notebook"] .rr-clinical-notebook-spread {
+    position: relative;
+    display: grid;
+    grid-template-columns: minmax(0, 1.08fr) minmax(22rem, 0.76fr);
+    grid-template-rows: auto 1fr;
+    column-gap: 1.45rem;
+    row-gap: 0.75rem;
+    min-height: calc(100vh - 4.4rem);
+    padding: 0.75rem 1.05rem 0;
+    overflow: hidden;
+    background:
+      repeating-linear-gradient(to bottom, transparent 0 31px, rgb(93 64 38 / 0.055) 32px),
+      var(--rr-paper-texture),
+      linear-gradient(180deg, #f8e8c7, #efdbb8);
+  }
+
+  [data-theme="warm-notebook"] .rr-notebook-learning-goal {
+    grid-column: 1 / -1;
+    min-height: 1.55rem;
+    text-align: right;
+    font-family: var(--rr-font-serif);
+    font-size: 0.82rem;
+    font-style: italic;
+    color: rgb(68 48 32 / 0.68);
+  }
+
+  [data-theme="warm-notebook"] .rr-notebook-left-page {
+    grid-column: 1;
+    grid-row: 2;
+    align-self: start;
+    max-width: none;
+    min-height: auto;
+    margin-top: 1.15rem;
+    padding: clamp(1.45rem, 2vw, 1.9rem) clamp(1.6rem, 2vw, 2rem) 1.45rem;
+    border-radius: 0.42rem 0.88rem 0.52rem 0.42rem;
+    background:
+      radial-gradient(circle at 14% 0%, rgb(255 255 255 / 0.62), transparent 16rem),
+      repeating-linear-gradient(to bottom, transparent 0 31px, rgb(93 64 38 / 0.058) 32px),
+      var(--rr-paper-texture),
+      linear-gradient(180deg, #fff0d2, #f7e7c6);
+    box-shadow:
+      -0.34rem 0.25rem 0 rgb(238 220 188 / 0.9),
+      -0.66rem 0.52rem 0 rgb(219 198 164 / 0.58),
+      0 24px 56px rgb(55 32 15 / 0.18),
+      inset 0 1px 0 rgb(255 255 255 / 0.64);
+  }
+
+  [data-theme="warm-notebook"] .rr-clinical-notebook-spread-question .rr-notebook-left-page {
+    width: min(46rem, 100%);
+  }
+
+  [data-theme="warm-notebook"] .rr-clinical-notebook-spread-question {
+    grid-template-columns: minmax(0, 46rem) minmax(16rem, 1fr);
+  }
+
+  [data-theme="warm-notebook"] .rr-notebook-quiet-page {
+    grid-column: 2;
+    grid-row: 2;
+    align-self: start;
+    display: grid;
+    min-height: 9.8rem;
+    margin-top: 4.8rem;
+    place-items: center;
+    border: 1px dashed rgb(93 64 38 / 0.22);
+    border-radius: 0.65rem;
+    background:
+      repeating-linear-gradient(to bottom, transparent 0 31px, rgb(93 64 38 / 0.035) 32px),
+      rgb(255 245 222 / 0.18);
+    color: rgb(68 48 32 / 0.58);
+    font-family: var(--rr-font-serif);
+    font-size: 0.95rem;
+    font-style: italic;
+  }
+
+  [data-theme="warm-notebook"] .rr-notebook-prompt {
+    max-width: 42rem;
+    font-family: var(--rr-font-serif);
+    font-size: clamp(1.25rem, 1.75vw, 1.78rem);
+    line-height: 1.43;
+    color: #201a14;
+  }
+
+  [data-theme="warm-notebook"] .rr-notebook-answer-form {
+    margin-top: 1rem;
+  }
+
+  [data-theme="warm-notebook"] .rr-notebook-answer-row {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: 0.7rem;
+    max-width: 40rem;
+  }
+
+  [data-theme="warm-notebook"] .rr-notebook-reasoning {
+    margin-top: 1rem;
+    padding-top: 0.9rem;
+    border-top: 1px solid rgb(93 64 38 / 0.16);
+  }
+
+  [data-theme="warm-notebook"] .rr-notebook-section-title {
+    margin-bottom: 0.55rem;
+    font-family: var(--rr-font-serif);
+    font-size: 0.8rem;
+    font-style: italic;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    color: rgb(55 39 26 / 0.88);
+    text-transform: none;
+  }
+
+  [data-theme="warm-notebook"] .rr-notebook-reasoning-chain {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 0.68rem;
+  }
+
+  [data-theme="warm-notebook"] .rr-notebook-reasoning-node {
+    position: relative;
+    min-height: 4.35rem;
+    padding: 0.56rem 0.64rem;
+    border: 1px solid rgb(93 64 38 / 0.18);
+    border-radius: 0.38rem;
+    background:
+      repeating-linear-gradient(to bottom, transparent 0 31px, rgb(93 64 38 / 0.028) 32px),
+      rgb(255 245 222 / 0.38);
+  }
+
+  [data-theme="warm-notebook"] .rr-notebook-reasoning-node:not(:last-child)::after {
+    content: "→";
+    position: absolute;
+    right: -0.55rem;
+    top: 50%;
+    transform: translateY(-50%);
+    color: rgb(68 48 32 / 0.7);
+    font-family: var(--rr-font-serif);
+  }
+
+  [data-theme="warm-notebook"] .rr-notebook-reasoning-node span,
+  [data-theme="warm-notebook"] .rr-notebook-answer-strip span,
+  [data-theme="warm-notebook"] .rr-notebook-written-notes span {
+    display: block;
+    margin-bottom: 0.22rem;
+    font-family: var(--rr-font-serif);
+    font-size: 0.76rem;
+    font-style: italic;
+    color: rgb(68 48 32 / 0.7);
+  }
+
+  [data-theme="warm-notebook"] .rr-notebook-reasoning-node strong {
+    display: block;
+    color: #211b15;
+    font-size: 0.96rem;
+    line-height: 1.28;
+  }
+
+  [data-theme="warm-notebook"] .rr-notebook-reasoning-node-terminal {
+    background: rgb(224 237 218 / 0.34);
+    border-color: rgb(69 105 67 / 0.24);
+  }
+
+  [data-theme="warm-notebook"] .rr-notebook-answer-strip {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1rem;
+    margin-top: 0.75rem;
+    padding: 0.7rem 0.9rem;
+    border: 1px solid rgb(93 64 38 / 0.17);
+    border-radius: 0.38rem;
+    background: rgb(255 245 222 / 0.28);
+  }
+
+  [data-theme="warm-notebook"] .rr-notebook-answer-strip strong {
+    color: #286445;
+    font-weight: 700;
+  }
+
+  [data-theme="warm-notebook"] .rr-notebook-written-notes {
+    display: grid;
+    gap: 0.45rem;
+    margin-top: 0.85rem;
+    padding-top: 0.75rem;
+    border-top: 1px solid rgb(93 64 38 / 0.14);
+    font-size: 0.92rem;
+    line-height: 1.45;
+  }
+
+  [data-theme="warm-notebook"] .rr-notebook-right-page {
+    grid-column: 2;
+    grid-row: 2;
+    align-self: start;
+    margin-top: 1.15rem;
+    padding: 0.2rem 0;
+    background: transparent;
+  }
+
+  [data-theme="warm-notebook"] .rr-notebook-right-section,
+  [data-theme="warm-notebook"] .rr-notebook-teach-more {
+    margin-bottom: 0.62rem;
+    padding: 0.68rem 0.78rem;
+    border: 1px solid rgb(93 64 38 / 0.18);
+    border-radius: 0.38rem;
+    background:
+      repeating-linear-gradient(to bottom, transparent 0 31px, rgb(93 64 38 / 0.035) 32px),
+      rgb(255 245 222 / 0.28);
+    box-shadow: inset 0 1px 0 rgb(255 255 255 / 0.42);
+  }
+
+  [data-theme="warm-notebook"] .rr-notebook-right-section h2 {
+    margin-bottom: 0.24rem;
+    font-family: var(--rr-font-serif);
+    font-size: 1rem;
+    font-style: italic;
+    font-weight: 700;
+    color: #3b2b1f;
+  }
+
+  [data-theme="warm-notebook"] .rr-notebook-right-section p {
+    font-size: 0.9rem;
+    line-height: 1.45;
+    color: #211b15;
+  }
+
+  [data-theme="warm-notebook"] .rr-notebook-teach-more {
+    padding: 0;
+    overflow: hidden;
+  }
+
+  [data-theme="warm-notebook"] .rr-notebook-teach-more summary {
+    display: flex;
+    justify-content: space-between;
+    padding: 0.68rem 0.78rem;
+    cursor: pointer;
+    font-weight: 700;
+    color: #211b15;
+  }
+
+  [data-theme="warm-notebook"] .rr-notebook-teach-more-body {
+    max-height: 18rem;
+    overflow: auto;
+    padding: 0 0.78rem 0.78rem;
+    border-top: 1px solid rgb(93 64 38 / 0.14);
+  }
+
+  [data-theme="warm-notebook"] .rr-notebook-teach-more-body section {
+    padding-top: 0.6rem;
+  }
+
+  [data-theme="warm-notebook"] .rr-notebook-teach-more-body h3,
+  [data-theme="warm-notebook"] .rr-notebook-comparison-list span {
+    display: block;
+    margin-bottom: 0.18rem;
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    color: rgb(46 67 94 / 0.85);
+    text-transform: uppercase;
+  }
+
+  [data-theme="warm-notebook"] .rr-notebook-teach-more-body p {
+    font-size: 0.86rem;
+    line-height: 1.42;
+  }
+
+  [data-theme="warm-notebook"] .rr-notebook-footer {
+    grid-column: 1 / -1;
+    min-height: 3.8rem;
+    border-radius: 0;
+  }
+
+  @media (max-width: 1023px) {
+    [data-theme="warm-notebook"] .rr-clinical-notebook-book {
+      display: block;
+      width: 100%;
+      border-radius: 0;
+      border-right: 0;
+      border-left: 0;
+    }
+
+    [data-theme="warm-notebook"] .rr-clinical-notebook-spread,
+    [data-theme="warm-notebook"] .rr-clinical-notebook-spread-question {
+      display: grid;
+      grid-template-columns: 1fr;
+      padding: 1rem;
+    }
+
+    [data-theme="warm-notebook"] .rr-notebook-sidebar {
+      display: none;
+    }
+
+    [data-theme="warm-notebook"] .rr-notebook-left-page,
+    [data-theme="warm-notebook"] .rr-notebook-right-page,
+    [data-theme="warm-notebook"] .rr-notebook-quiet-page {
+      grid-column: 1;
+      grid-row: auto;
+      width: 100%;
+      margin-top: 0;
+    }
+
+    [data-theme="warm-notebook"] .rr-notebook-reasoning-chain {
+      grid-template-columns: 1fr;
+    }
+
+    [data-theme="warm-notebook"] .rr-notebook-reasoning-node:not(:last-child)::after {
+      content: "↓";
+      right: auto;
+      left: 50%;
+      top: auto;
+      bottom: -0.78rem;
+      transform: translateX(-50%);
+    }
+
+    [data-theme="warm-notebook"] .rr-notebook-answer-row,
+    [data-theme="warm-notebook"] .rr-notebook-answer-strip {
+      grid-template-columns: 1fr;
+    }
+  }
+
   /*
     Final Moleskine adapter override.
     This theme intentionally behaves like a physical notebook instead of the shared
@@ -3690,6 +4050,102 @@ body:has(.practice-focus) .app-main {
 
     [data-theme="warm-notebook"] .rr-moleskine-reasoning-chain {
       grid-template-columns: 1fr;
+    }
+  }
+}
+
+@layer components {
+  [data-theme="warm-notebook"] .rr-product-nav.rr-notebook-topbar {
+    width: min(94rem, calc(100vw - 1rem));
+    min-height: 3.45rem;
+    margin: 0 auto;
+    border-radius: 0.9rem 0.9rem 0 0;
+  }
+
+  [data-theme="warm-notebook"] .rr-moleskine-shell.rr-clinical-notebook-book {
+    display: grid;
+    grid-template-columns: 11.25rem minmax(0, 1fr);
+    width: min(94rem, calc(100vw - 1rem));
+    min-height: calc(100vh - 4.4rem);
+    margin: 0 auto;
+    border: 1px solid rgb(73 51 32 / 0.34);
+    border-top: 0;
+    border-radius: 0 0 0.9rem 0.9rem;
+    overflow: hidden;
+  }
+
+  [data-theme="warm-notebook"] .rr-moleskine-sidebar-page.rr-notebook-sidebar {
+    width: auto;
+    min-height: calc(100vh - 4.4rem);
+    padding: 1.55rem 0.95rem 1.2rem 2.25rem;
+  }
+
+  [data-theme="warm-notebook"] .rr-practice-main.rr-clinical-notebook-spread {
+    display: grid;
+    grid-template-columns: minmax(0, 1.08fr) minmax(22rem, 0.76fr);
+    grid-template-rows: auto 1fr;
+    column-gap: 1.45rem;
+    row-gap: 0.75rem;
+    max-width: none;
+    min-height: calc(100vh - 4.4rem);
+    padding: 0.75rem 1.05rem 0;
+    overflow: hidden;
+    background:
+      repeating-linear-gradient(to bottom, transparent 0 31px, rgb(93 64 38 / 0.055) 32px),
+      var(--rr-paper-texture),
+      linear-gradient(180deg, #f8e8c7, #efdbb8);
+  }
+
+  [data-theme="warm-notebook"] .rr-practice-main.rr-clinical-notebook-spread-question {
+    grid-template-columns: minmax(0, 46rem) minmax(16rem, 1fr);
+  }
+
+  [data-theme="warm-notebook"] .rr-moleskine-left-page.rr-notebook-left-page {
+    grid-column: 1;
+    grid-row: 2;
+    align-self: start;
+    width: 100%;
+    max-width: none;
+    min-height: auto;
+    margin-top: 1.15rem;
+    padding: clamp(1.45rem, 2vw, 1.9rem) clamp(1.6rem, 2vw, 2rem) 1.45rem;
+    background:
+      radial-gradient(circle at 14% 0%, rgb(255 255 255 / 0.62), transparent 16rem),
+      repeating-linear-gradient(to bottom, transparent 0 31px, rgb(93 64 38 / 0.058) 32px),
+      var(--rr-paper-texture),
+      linear-gradient(180deg, #fff0d2, #f7e7c6);
+  }
+
+  [data-theme="warm-notebook"] .rr-clinical-notebook-spread-question .rr-notebook-left-page {
+    width: min(46rem, 100%);
+  }
+
+  [data-theme="warm-notebook"] .rr-notebook-right-page {
+    grid-column: 2;
+    grid-row: 2;
+    align-self: start;
+    margin-top: 1.15rem;
+  }
+
+  [data-theme="warm-notebook"] .rr-notebook-footer {
+    grid-column: 1 / -1;
+  }
+
+  @media (max-width: 1023px) {
+    [data-theme="warm-notebook"] .rr-moleskine-shell.rr-clinical-notebook-book {
+      display: block;
+      width: 100%;
+      min-height: calc(100vh - 5rem);
+      border-radius: 0;
+      border-right: 0;
+      border-left: 0;
+    }
+
+    [data-theme="warm-notebook"] .rr-practice-main.rr-clinical-notebook-spread,
+    [data-theme="warm-notebook"] .rr-practice-main.rr-clinical-notebook-spread-question {
+      display: grid;
+      grid-template-columns: 1fr;
+      padding: 1rem;
     }
   }
 }
