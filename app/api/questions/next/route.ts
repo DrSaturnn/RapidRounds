@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { getClinicalDecisionSubjectCounts, getNextClinicalDecision } from "@/database/clinical-decisions";
 import { getAdaptiveDecisionRecommendation } from "@/lib/adaptive-decision";
+import { selectAdaptiveGeneratedCase } from "@/lib/adaptive-schema-scheduler";
 import { normalizeLearnerId } from "@/lib/learner-id";
 import { getAdaptiveTargetConcept } from "@/lib/learning-trajectory";
 import { prisma } from "@/lib/prisma";
@@ -37,7 +38,10 @@ export async function GET(request: Request) {
             clinicalDecisionId: true,
             diagnosis: true,
             answer: true,
-            isCorrect: true
+            isCorrect: true,
+            answerOutcome: true,
+            decisionType: true,
+            createdAt: true
           },
           orderBy: { createdAt: "desc" },
           take: 20
@@ -49,7 +53,11 @@ export async function GET(request: Request) {
           select: {
             questionId: true,
             clinicalDecisionId: true,
-            diagnosis: true
+            diagnosis: true,
+            isCorrect: true,
+            answerOutcome: true,
+            decisionType: true,
+            createdAt: true
           }
         })
       : Promise.resolve([]),
@@ -104,15 +112,21 @@ export async function GET(request: Request) {
 
   if (questions.length === 0) {
     const generatedCases = getGeneratedCasesForSubject(requestedSubject, requestedQuestionBreadth);
-    const completedGeneratedIds = new Set(
-      completed.map((row) => row.questionId).filter((id): id is string => Boolean(id))
-    );
-    const generatedCase =
-      generatedCases.find((item) => !completedGeneratedIds.has(item.id)) ??
-      generatedCases[0];
+    const generatedSelection = selectAdaptiveGeneratedCase(generatedCases, completed, {
+      mode: requestedSessionMode,
+      requestedConcept
+    });
+    const generatedCase = generatedSelection.case;
 
     if (generatedCase) {
-      return NextResponse.json({ question: generatedCase.question, subjectCounts: responseSubjectCounts });
+      return NextResponse.json({
+        question: generatedCase.question,
+        subjectCounts: responseSubjectCounts,
+        adaptive: {
+          actionType: "practice_related_decision",
+          explanation: generatedSelection.explanation
+        }
+      });
     }
 
     return NextResponse.json({ question: null, subjectCounts: responseSubjectCounts }, { status: 404 });

@@ -104,12 +104,22 @@ function highestMasteredRank(topic: string, topicCorrectCompetencies: Map<string
   return Math.max(...[...mastered].map(competencyRank));
 }
 
-function progressionScore(candidate: GeneratedRapidRoundsCase, masteredRank: number) {
+function nextAvailableRank(topic: string, masteredRank: number, availableRanksByTopic: Map<string, Set<number>>) {
+  const ranks = [...(availableRanksByTopic.get(topic) ?? new Set<number>())].sort((left, right) => left - right);
+  return ranks.find((rank) => rank > masteredRank);
+}
+
+function progressionScore(
+  candidate: GeneratedRapidRoundsCase,
+  masteredRank: number,
+  availableRanksByTopic: Map<string, Set<number>>
+) {
   const rank = competencyRank(competencyForCase(candidate));
+  const topic = normalize(candidate.topic);
   if (masteredRank < 0) {
     return rank === 0 ? 14 : -8;
   }
-  if (rank === masteredRank + 1) {
+  if (rank === nextAvailableRank(topic, masteredRank, availableRanksByTopic)) {
     return 24;
   }
   if (rank <= masteredRank) {
@@ -164,6 +174,13 @@ export function selectAdaptiveGeneratedCase(
   const focusedReview = isFocusedReview(options.mode, options.requestedConcept);
   const incomplete = availableCases.filter((candidate) => !progress.completedIds.has(candidate.id));
   const candidatePool = incomplete.length > 0 ? incomplete : availableCases;
+  const availableRanksByTopic = new Map<string, Set<number>>();
+  for (const candidate of candidatePool) {
+    const topic = normalize(candidate.topic);
+    const ranks = availableRanksByTopic.get(topic) ?? new Set<number>();
+    ranks.add(competencyRank(competencyForCase(candidate)));
+    availableRanksByTopic.set(topic, ranks);
+  }
   const leastTopicAttempts = Math.min(
     ...candidatePool.map((candidate) => progress.topicAttempts.get(normalize(candidate.topic)) ?? 0)
   );
@@ -176,7 +193,7 @@ export function selectAdaptiveGeneratedCase(
       const competency = competencyForCase(candidate);
       const score =
         (progress.completedIds.has(candidate.id) ? -100 : 50) +
-        progressionScore(candidate, masteredRank) +
+        progressionScore(candidate, masteredRank, availableRanksByTopic) +
         diversityScore(candidate, progress.recentCases, focusedReview) +
         (topicAttempts === leastTopicAttempts ? 10 : 0) -
         topicAttempts * (focusedReview ? 0.25 : 1.5) +

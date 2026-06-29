@@ -279,6 +279,7 @@ export async function POST(request: NextRequest) {
 
     await prisma.progress.create({
       data: {
+        questionId: generatedCase.id,
         userId: learnerId,
         answer: body.answer.trim(),
         isCorrect,
