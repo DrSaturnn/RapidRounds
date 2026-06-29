@@ -349,17 +349,18 @@ export function PracticePanel() {
     );
   }
 
-  const clinicalPrompt = getClinicalPromptText(question.displayStem ?? question.stem);
+  const isExplanationState = mode === "tutor" && Boolean(tutor);
+  const hasAnsweredCurrentQuestion = Boolean(result) || isExplanationState;
+  const clinicalPrompt = getClinicalPromptText(hasAnsweredCurrentQuestion ? question.displayStem ?? question.stem : question.stem);
   const decisionQuestion = getDecisionQuestionText(question.decisionType);
   const learningGoal = question.topic ? `Learning goal: ${question.topic}` : "Learning goal: make the next clinical decision";
   const displayDecisionCount = Math.max(sessionDecisionCount, 1);
   const totalDecisionCount = 96;
   const topicLabel = question.canonicalProblem ?? question.system ?? question.topic;
   const variantLabel = getRapidRoundsVariantDisplayText(question.variantType);
-  const isExplanationState = mode === "tutor" && Boolean(tutor);
-  const visibleVignetteFindings = isExplanationState
+  const visibleVignetteFindings = hasAnsweredCurrentQuestion
     ? tutor?.vignetteFindings ?? question.vignetteFindings ?? []
-    : question.vignetteFindings ?? [];
+    : [];
   const subjectCountByName = new Map(subjectSummaries.map((item) => [item.subject, item.count]));
   const subjectOptions = requiredSubjects.map((subject) => ({
     subject,
@@ -535,25 +536,6 @@ export function PracticePanel() {
   const renderTopSessionActions = () => (
     <div className="rr-product-actions" aria-label="Session tools">
       <button
-        type="button"
-        className="rr-header-action"
-        aria-label="Go back to the previous case"
-        onClick={handleBack}
-        disabled={!canGoBack}
-      >
-        <span aria-hidden="true">←</span>
-        <span className="rr-action-label">Back</span>
-      </button>
-      <button
-        type="button"
-        className="rr-header-action"
-        aria-label="Reset this case"
-        onClick={handleReset}
-      >
-        <span aria-hidden="true">↺</span>
-        <span className="rr-action-label">Reset</span>
-      </button>
-      <button
         ref={asterButtonRef}
         type="button"
         className="rr-aster-button"
@@ -578,6 +560,19 @@ export function PracticePanel() {
         {settingsAnchor === "top" ? renderThemePopover() : null}
       </div>
     </div>
+  );
+
+  const renderDesktopCaseControls = () => (
+    <>
+      <button type="button" className="rr-tool-button rr-desktop-session-control" onClick={handleBack} disabled={!canGoBack}>
+        <span aria-hidden="true">←</span>
+        Back
+      </button>
+      <button type="button" className="rr-tool-button rr-desktop-session-control" onClick={handleReset}>
+        <span aria-hidden="true">↺</span>
+        Reset
+      </button>
+    </>
   );
 
   const renderMobilePracticeActions = () => (
@@ -642,6 +637,7 @@ export function PracticePanel() {
               <span aria-hidden="true">▷</span>
               Continue
             </button>
+            {renderDesktopCaseControls()}
             {isExplanationState ? (
               <button type="button" className="rr-tool-button" onClick={showTeaching} disabled={isTeaching}>
                 <span aria-hidden="true">◇</span>
@@ -839,6 +835,7 @@ export function PracticePanel() {
             <span aria-hidden="true">▷</span>
             Continue
           </button>
+          {renderDesktopCaseControls()}
           {isExplanationState ? (
             <button type="button" className="rr-tool-button" onClick={showTeaching} disabled={isTeaching}>
               <span aria-hidden="true">◇</span>

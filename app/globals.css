@@ -2075,6 +2075,10 @@ body:has(.practice-focus) .app-main {
     color: var(--rr-color-accent);
   }
 
+  .rr-desktop-session-control {
+    @apply hidden sm:flex;
+  }
+
   .rr-popover {
     @apply fixed right-4 top-[4.75rem] z-50 w-[min(22rem,calc(100vw-2rem))] border border-rr-border bg-rr-elevated p-4;
     border-radius: var(--rr-radius-lg);
@@ -2687,8 +2691,10 @@ body:has(.practice-focus) .app-main {
   [data-theme="warm-notebook"] .rr-practice-shell {
     background:
       linear-gradient(90deg, #242323 0, #242323 1.45rem, rgb(120 80 40 / 0.16) 1.45rem, transparent 2.55rem),
-      radial-gradient(circle at 8% 12%, rgb(255 255 255 / 0.72), transparent 18rem),
-      radial-gradient(circle at 92% 0%, rgb(138 90 50 / 0.055), transparent 24rem),
+      radial-gradient(circle at 8% 12%, rgb(255 255 255 / 0.58), transparent 18rem),
+      radial-gradient(circle at 92% 0%, rgb(138 90 50 / 0.075), transparent 24rem),
+      repeating-linear-gradient(to bottom, transparent 0, transparent 31px, rgb(120 80 40 / 0.026) 32px),
+      var(--rr-paper-texture),
       var(--rr-gradient-bg);
   }
 
@@ -2718,8 +2724,8 @@ body:has(.practice-focus) .app-main {
       var(--rr-paper-texture),
       linear-gradient(180deg, #fcfbf8, #faf8f4);
     box-shadow:
-      0 42px 90px rgb(42 24 12 / 0.14),
-      0 14px 28px rgb(42 24 12 / 0.07),
+      0 46px 96px rgb(42 24 12 / 0.18),
+      0 18px 32px rgb(42 24 12 / 0.09),
       inset 0 1px 0 rgb(255 255 255 / 0.72),
       inset 1.55rem 0 0 rgb(31 31 31 / 0.72);
   }
@@ -2739,7 +2745,8 @@ body:has(.practice-focus) .app-main {
       linear-gradient(180deg, #fcfbf8, #f7f4ee);
     box-shadow:
       inset -1px 0 0 rgb(255 255 255 / 0.48),
-      inset -0.8rem 0 1.4rem rgb(79 52 30 / 0.035);
+      inset -0.8rem 0 1.4rem rgb(79 52 30 / 0.045),
+      0.45rem 0 1.2rem rgb(58 34 16 / 0.045);
   }
 
   [data-theme="warm-notebook"] .rr-moleskine-notebook-spread {
@@ -2771,7 +2778,7 @@ body:has(.practice-focus) .app-main {
     border-color: rgb(120 80 40 / 0.14);
     background:
       radial-gradient(circle at 18% 0%, rgb(255 255 255 / 0.52), transparent 18rem),
-      repeating-linear-gradient(to bottom, transparent 0, transparent 31px, rgb(120 80 40 / 0.035) 32px),
+      repeating-linear-gradient(to bottom, transparent 0, transparent 31px, rgb(120 80 40 / 0.044) 32px),
       var(--rr-paper-texture),
       linear-gradient(180deg, #fffdf8, #faf8f4);
     box-shadow:
@@ -2784,11 +2791,13 @@ body:has(.practice-focus) .app-main {
     border-radius: 0.95rem 0.55rem 0.85rem 0.95rem;
     background:
       radial-gradient(circle at 20% 0%, rgb(255 255 255 / 0.64), transparent 15rem),
-      repeating-linear-gradient(to bottom, transparent 0, transparent 31px, rgb(120 80 40 / 0.036) 32px),
+      repeating-linear-gradient(to bottom, transparent 0, transparent 31px, rgb(120 80 40 / 0.052) 32px),
       var(--rr-paper-texture),
       linear-gradient(180deg, #fffdf8, #faf8f4);
     box-shadow:
-      0 24px 54px rgb(80 50 20 / 0.105),
+      -0.42rem 0.34rem 0 rgb(244 233 212 / 0.82),
+      -0.78rem 0.68rem 0 rgb(231 214 184 / 0.54),
+      0 24px 54px rgb(80 50 20 / 0.13),
       0 8px 16px rgb(80 50 20 / 0.055),
       inset 0 1px 0 rgb(255 255 255 / 0.86),
       inset 0 -1px 0 rgb(120 80 40 / 0.045);
@@ -2796,10 +2805,10 @@ body:has(.practice-focus) .app-main {
 
   [data-theme="warm-notebook"] .rr-moleskine-left-page::before {
     background:
-      linear-gradient(135deg, rgb(255 255 255 / 0.92), rgb(250 248 244 / 0.74) 45%, rgb(120 80 40 / 0.12) 49%, transparent 52%);
+      linear-gradient(135deg, rgb(255 255 255 / 0.94), rgb(250 248 244 / 0.78) 43%, rgb(120 80 40 / 0.17) 49%, transparent 53%);
     box-shadow:
-      -0.95rem 0.95rem 1.35rem rgb(80 50 20 / 0.12),
-      inset 1px -1px 0 rgb(120 80 40 / 0.14);
+      -1.1rem 1.05rem 1.45rem rgb(80 50 20 / 0.16),
+      inset 1px -1px 0 rgb(120 80 40 / 0.18);
   }
 
   [data-theme="warm-notebook"] .rr-moleskine-left-page::after {

@@ -238,14 +238,15 @@ describe("design system", () => {
     assert.match(practiceSession, /canGoBack/);
     assert.match(practiceSession, /const goBack = useCallback/);
     assert.match(practiceSession, /const resetCurrentQuestion = useCallback/);
-    assert.match(practicePanel, /aria-label="Go back to the previous case"/);
-    assert.match(practicePanel, /aria-label="Reset this case"/);
+    assert.match(practicePanel, /renderDesktopCaseControls/);
+    assert.match(practicePanel, /rr-desktop-session-control/);
     assert.match(practicePanel, /rr-mobile-practice-actions/);
     assert.match(practicePanel, /←/);
     assert.match(practicePanel, /↺/);
     assert.match(practicePanel, /✧/);
     assert.match(css, /@media \(max-width: 639px\)[\s\S]*\.rr-action-label[\s\S]*sr-only/);
     assert.match(css, /\.rr-mobile-practice-actions[\s\S]*fixed/);
+    assert.match(css, /\.rr-desktop-session-control/);
   });
 
   it("scopes Moleskine paper materiality to the Moleskine theme", () => {

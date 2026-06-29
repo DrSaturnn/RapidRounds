@@ -120,10 +120,10 @@ describe("vignette attention map", () => {
     assert.match(seed, /Painless bleeding distinguishes placenta previa from placental abruption/);
   });
 
-  it("renders question DTO annotations before answer submission", () => {
+  it("keeps the raw stem before submission and renders display annotations only after answering", () => {
     const practicePanel = readFileSync("components/PracticePanel.tsx", "utf8");
 
-    assert.match(practicePanel, /question\.displayStem \?\? question\.stem/);
-    assert.match(practicePanel, /: question\.vignetteFindings \?\? \[\]/);
+    assert.match(practicePanel, /hasAnsweredCurrentQuestion \? question\.displayStem \?\? question\.stem : question\.stem/);
+    assert.match(practicePanel, /hasAnsweredCurrentQuestion[\s\S]*: \[\]/);
   });
 });
