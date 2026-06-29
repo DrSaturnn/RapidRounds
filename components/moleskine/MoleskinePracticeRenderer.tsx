@@ -245,7 +245,7 @@ export function MoleskinePracticeRenderer({
   onAddNotes
 }: MoleskinePracticeRendererProps) {
   return (
-    <div className="practice-focus rr-practice-shell rr-moleskine-root rr-clinical-notebook-shell min-h-screen" data-theme="warm-notebook">
+    <div className="practice-focus rr-practice-shell rr-moleskine-root rr-moleskine-book-mode rr-clinical-notebook-shell min-h-screen" data-theme="warm-notebook">
       <header className="rr-product-nav rr-moleskine-topbar rr-notebook-topbar">
         <div className="rr-product-brand">
           <span className="rr-brand-mark" aria-hidden="true">✳</span>
@@ -266,17 +266,17 @@ export function MoleskinePracticeRenderer({
             ))}
           </span>
         </div>
-        {topActions}
+        <div className="rr-notebook-top-actions">{topActions}</div>
       </header>
-      <div className="rr-notebook-shell rr-notebook-surface rr-moleskine-shell rr-clinical-notebook-book">
-        <aside className="rr-tool-rail rr-panel rr-moleskine-sidebar-page rr-notebook-sidebar" aria-label="Practice tools">
+      <div className="rr-notebook-shell rr-notebook-surface rr-moleskine-shell rr-moleskine-physical-book rr-clinical-notebook-book">
+        <aside className="rr-tool-rail rr-panel rr-moleskine-sidebar-page rr-notebook-sidebar rr-notebook-tool-page" aria-label="Practice tools">
           {sidebar}
         </aside>
-        <main className={`rr-practice-main rr-practice-main-wide rr-clinical-notebook-spread ${notebook.state === "explanation" ? "rr-clinical-notebook-spread-learn" : "rr-clinical-notebook-spread-question"}`}>
+        <main className={`rr-practice-main rr-practice-main-wide rr-clinical-notebook-spread rr-notebook-spread ${notebook.state === "explanation" ? "rr-clinical-notebook-spread-learn" : "rr-clinical-notebook-spread-question"}`}>
           <div className="rr-notebook-learning-goal">
             <p>{notebook.header.learningGoal}</p>
           </div>
-          <section className="rr-card rr-question-card rr-vignette-card rr-card-paper rr-moleskine-left-page rr-notebook-left-page">
+          <section className="rr-card rr-question-card rr-vignette-card rr-card-paper rr-moleskine-left-page rr-notebook-left-page rr-notebook-primary-page">
             <div className="rr-moleskine-question-intro rr-notebook-question-intro">
               <span className="rr-badge rr-badge-learning">{notebook.state === "explanation" ? "Explanation" : "Question"}</span>
               <span className="rr-meta">Think through the vignette first.</span>
@@ -315,16 +315,18 @@ export function MoleskinePracticeRenderer({
           <NotebookRightPage notebook={notebook} />
           {notes}
         </main>
-        {notebook.state === "explanation" ? (
-          <nav className="rr-bottom-nav rr-panel rr-moleskine-footer-strip rr-notebook-footer" aria-label="Practice navigation">
-            <button type="button" className="rr-bottom-action" onClick={onAddNotes}>
-              □ Add to Notes
-            </button>
+        <nav className="rr-bottom-nav rr-panel rr-moleskine-footer-strip rr-notebook-footer" aria-label="Practice navigation">
+          <button type="button" className="rr-bottom-action" onClick={onAddNotes}>
+            □ Add to Notes
+          </button>
+          {notebook.state === "explanation" ? (
             <Button type="button" onClick={onNext} disabled={!canAdvance}>
               Next Case →
             </Button>
-          </nav>
-        ) : null}
+          ) : (
+            <span className="rr-notebook-footer-hint">Answer first. Then the notebook will unfold.</span>
+          )}
+        </nav>
       </div>
       {overlays}
     </div>
