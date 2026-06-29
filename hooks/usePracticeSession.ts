@@ -8,7 +8,14 @@ import type { AnswerResult, PracticeMode, QuestionDto, TutorContent } from "@/ty
 const SESSION_STORAGE_KEY = "rapidrounds.practiceSession.v1";
 const LEARNER_ID_STORAGE_KEY = "rapidrounds.anonymousLearnerId.v1";
 const SUBJECT_STORAGE_KEY = "rapidrounds.activeSubject.v1";
+const STUDY_MODE_STORAGE_KEY = "rapidrounds.studyMode.v1";
+const QUESTION_BREADTH_STORAGE_KEY = "rapidrounds.questionBreadth.v1";
 const DEFAULT_SUBJECT = "OB/GYN";
+const DEFAULT_STUDY_MODE = "adaptive";
+const DEFAULT_QUESTION_BREADTH = "primary";
+
+export type StudySessionMode = "adaptive" | "new_concepts" | "weak_areas" | "review" | "rapid_round";
+export type QuestionBreadth = "primary" | "expanded" | "comprehensive";
 
 export type SubjectSummary = {
   subject: string;
@@ -29,6 +36,8 @@ export type PersistedPracticeSession = {
   sessionDecisionCount: number;
   answeredQuestionIds: string[];
   activeSubject?: string;
+  activeStudyMode?: StudySessionMode;
+  questionBreadth?: QuestionBreadth;
   updatedAt: number;
 };
 
@@ -56,6 +65,20 @@ function isNumber(value: unknown): value is number {
 
 function isPracticeMode(value: unknown): value is PracticeMode {
   return value === "rapid" || value === "tutor";
+}
+
+function isStudySessionMode(value: unknown): value is StudySessionMode {
+  return (
+    value === "adaptive" ||
+    value === "new_concepts" ||
+    value === "weak_areas" ||
+    value === "review" ||
+    value === "rapid_round"
+  );
+}
+
+function isQuestionBreadth(value: unknown): value is QuestionBreadth {
+  return value === "primary" || value === "expanded" || value === "comprehensive";
 }
 
 function hasRestorableQuestionShape(value: unknown): value is QuestionDto {
@@ -198,11 +221,15 @@ export function usePracticeSession() {
   const [error, setError] = useState<string | null>(null);
   const [answeredQuestionIds, setAnsweredQuestionIds] = useState<string[]>([]);
   const [activeSubject, setActiveSubject] = useState(DEFAULT_SUBJECT);
+  const [activeStudyMode, setActiveStudyMode] = useState<StudySessionMode>(DEFAULT_STUDY_MODE);
+  const [questionBreadth, setQuestionBreadth] = useState<QuestionBreadth>(DEFAULT_QUESTION_BREADTH);
   const [subjectSummaries, setSubjectSummaries] = useState<SubjectSummary[]>([]);
   const [canGoBack, setCanGoBack] = useState(false);
   const hasHydratedSession = useRef(false);
   const learnerId = useRef("");
   const activeSubjectRef = useRef(DEFAULT_SUBJECT);
+  const activeStudyModeRef = useRef<StudySessionMode>(DEFAULT_STUDY_MODE);
+  const questionBreadthRef = useRef<QuestionBreadth>(DEFAULT_QUESTION_BREADTH);
   const startedAt = useRef(Date.now());
   const history = useRef<PracticeSnapshot[]>([]);
   const latestSnapshot = useRef<PracticeSnapshot | null>(null);
@@ -221,7 +248,13 @@ export function usePracticeSession() {
       : null;
   }, [answer, mode, question, reinforcementAnswer, reinforcementResult, result, tutor]);
 
-  const loadQuestion = useCallback(async (targetConcept?: string, subjectOverride?: string) => {
+  const loadQuestion = useCallback(
+    async (
+      targetConcept?: string,
+      subjectOverride?: string,
+      studyModeOverride?: StudySessionMode,
+      breadthOverride?: QuestionBreadth
+    ) => {
     const previousSnapshot = latestSnapshot.current;
     setIsLoading(true);
     setError(null);
@@ -235,12 +268,20 @@ export function usePracticeSession() {
     const currentLearnerId = learnerId.current || getOrCreateAnonymousLearnerId();
     learnerId.current = currentLearnerId;
     const requestedSubject = subjectOverride ?? activeSubjectRef.current;
+    const requestedStudyMode = studyModeOverride ?? activeStudyModeRef.current;
+    const requestedQuestionBreadth = breadthOverride ?? questionBreadthRef.current;
     const params = new URLSearchParams();
     if (targetConcept) {
       params.set("concept", targetConcept);
     }
     if (requestedSubject) {
       params.set("subject", requestedSubject);
+    }
+    if (requestedStudyMode) {
+      params.set("sessionMode", requestedStudyMode);
+    }
+    if (requestedQuestionBreadth) {
+      params.set("questionBreadth", requestedQuestionBreadth);
     }
     if (currentLearnerId) {
       params.set("learnerId", currentLearnerId);
@@ -396,14 +437,48 @@ export function usePracticeSession() {
     if (typeof window !== "undefined") {
       window.localStorage.setItem(SUBJECT_STORAGE_KEY, subject);
     }
-    void loadQuestion(undefined, subject);
+    void loadQuestion(undefined, subject, activeStudyModeRef.current, questionBreadthRef.current);
+  }, [loadQuestion]);
+
+  const selectStudyMode = useCallback((studyMode: StudySessionMode) => {
+    activeStudyModeRef.current = studyMode;
+    setActiveStudyMode(studyMode);
+    setSessionDecisionCount(0);
+    setAnsweredQuestionIds([]);
+    history.current = [];
+    setCanGoBack(false);
+    if (typeof window !== "undefined") {
+      window.localStorage.setItem(STUDY_MODE_STORAGE_KEY, studyMode);
+    }
+    void loadQuestion(undefined, activeSubjectRef.current, studyMode, questionBreadthRef.current);
+  }, [loadQuestion]);
+
+  const selectQuestionBreadth = useCallback((breadth: QuestionBreadth) => {
+    questionBreadthRef.current = breadth;
+    setQuestionBreadth(breadth);
+    setSessionDecisionCount(0);
+    setAnsweredQuestionIds([]);
+    history.current = [];
+    setCanGoBack(false);
+    if (typeof window !== "undefined") {
+      window.localStorage.setItem(QUESTION_BREADTH_STORAGE_KEY, breadth);
+    }
+    void loadQuestion(undefined, activeSubjectRef.current, activeStudyModeRef.current, breadth);
   }, [loadQuestion]);
 
   useEffect(() => {
     learnerId.current = getOrCreateAnonymousLearnerId();
     const savedSubject = window.localStorage.getItem(SUBJECT_STORAGE_KEY) || DEFAULT_SUBJECT;
+    const savedStudyMode = window.localStorage.getItem(STUDY_MODE_STORAGE_KEY);
+    const savedQuestionBreadth = window.localStorage.getItem(QUESTION_BREADTH_STORAGE_KEY);
+    const restoredStudyMode = isStudySessionMode(savedStudyMode) ? savedStudyMode : DEFAULT_STUDY_MODE;
+    const restoredQuestionBreadth = isQuestionBreadth(savedQuestionBreadth) ? savedQuestionBreadth : DEFAULT_QUESTION_BREADTH;
     activeSubjectRef.current = savedSubject;
+    activeStudyModeRef.current = restoredStudyMode;
+    questionBreadthRef.current = restoredQuestionBreadth;
     setActiveSubject(savedSubject);
+    setActiveStudyMode(restoredStudyMode);
+    setQuestionBreadth(restoredQuestionBreadth);
 
     void fetch("/api/subjects", { cache: "no-store" })
       .then((response) => response.ok ? response.json() as Promise<{ subjectCounts?: SubjectSummary[] }> : undefined)
@@ -419,8 +494,14 @@ export function usePracticeSession() {
 
     if (persisted) {
       const restoredSubject = persisted.activeSubject ?? persisted.question.specialty ?? savedSubject;
+      const persistedStudyMode = isStudySessionMode(persisted.activeStudyMode) ? persisted.activeStudyMode : restoredStudyMode;
+      const persistedBreadth = isQuestionBreadth(persisted.questionBreadth) ? persisted.questionBreadth : restoredQuestionBreadth;
       activeSubjectRef.current = restoredSubject;
+      activeStudyModeRef.current = persistedStudyMode;
+      questionBreadthRef.current = persistedBreadth;
       setActiveSubject(restoredSubject);
+      setActiveStudyMode(persistedStudyMode);
+      setQuestionBreadth(persistedBreadth);
       setQuestion(persisted.question);
       setAnswer(persisted.answer);
       setResult(persisted.result);
@@ -457,15 +538,19 @@ export function usePracticeSession() {
       sessionDecisionCount,
       answeredQuestionIds,
       activeSubject,
+      activeStudyMode,
+      questionBreadth,
       updatedAt: Date.now()
     });
   }, [
     activeSubject,
+    activeStudyMode,
     answer,
     answeredQuestionIds,
     isLoading,
     mode,
     question,
+    questionBreadth,
     reinforcementAnswer,
     reinforcementResult,
     result,
@@ -487,6 +572,8 @@ export function usePracticeSession() {
     isTeaching,
     error,
     activeSubject,
+    activeStudyMode,
+    questionBreadth,
     canGoBack,
     subjectSummaries,
     setAnswer,
@@ -495,6 +582,8 @@ export function usePracticeSession() {
     requestTeaching,
     submitReinforcementAnswer,
     selectSubject,
+    selectStudyMode,
+    selectQuestionBreadth,
     loadQuestion,
     goBack,
     resetCurrentQuestion

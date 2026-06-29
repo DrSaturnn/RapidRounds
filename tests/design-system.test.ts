@@ -203,31 +203,53 @@ describe("design system", () => {
     const subjectsRoute = readFileSync("app/api/subjects/route.ts", "utf8");
     const css = readFileSync("app/globals.css", "utf8");
 
-    [
-      "Internal Medicine",
-      "Surgery",
-      "Pediatrics",
-      "OB/GYN",
-      "Psychiatry",
-      "Family Medicine",
-      "Emergency Medicine",
-      "Neurology"
-    ].forEach((subject) => assert.match(practicePanel, new RegExp(subject.replace("/", "\\/"))));
+    assert.match(practicePanel, /import \{ SUBJECTS \} from "@\/lib\/subject-seeds"/);
+    assert.match(practicePanel, /const requiredSubjects = SUBJECTS/);
 
     assert.match(practicePanel, /isSubjectSelectorOpen/);
+    assert.match(practicePanel, /isStudyModeSelectorOpen/);
+    assert.match(practicePanel, /studyModes/);
+    assert.match(practicePanel, /New Concepts/);
+    assert.match(practicePanel, /Weak Areas/);
+    assert.match(practicePanel, /Rapid Round/);
+    assert.match(practicePanel, /questionBreadthOptions/);
+    assert.match(practicePanel, /Shelf breadth/);
+    assert.match(practicePanel, /Primary/);
+    assert.match(practicePanel, /Expanded/);
+    assert.match(practicePanel, /Comprehensive/);
     assert.match(practicePanel, /rr-subject-anchor/);
     assert.match(practicePanel, /rr-subject-popover/);
+    assert.match(practicePanel, /rr-study-mode-popover/);
     assert.match(practicePanel, /Coming soon/);
     assert.match(practicePanel, /disabled=\{!isAvailable\}/);
     assert.match(practicePanel, /selectSubject\(subject\)/);
     assert.match(hook, /rapidrounds\.activeSubject\.v1/);
+    assert.match(hook, /rapidrounds\.studyMode\.v1/);
+    assert.match(hook, /rapidrounds\.questionBreadth\.v1/);
     assert.match(hook, /params\.set\("subject", requestedSubject\)/);
+    assert.match(hook, /params\.set\("sessionMode", requestedStudyMode\)/);
+    assert.match(hook, /params\.set\("questionBreadth", requestedQuestionBreadth\)/);
     assert.match(route, /searchParams\.get\("subject"\)/);
+    assert.match(route, /searchParams\.get\("sessionMode"\)/);
+    assert.match(route, /searchParams\.get\("questionBreadth"\)/);
     assert.match(route, /getClinicalDecisionSubjectCounts/);
     assert.match(subjectsRoute, /getClinicalDecisionSubjectCounts/);
+    assert.match(subjectsRoute, /getGeneratedSubjectCounts/);
     assert.match(css, /\.rr-subject-popover/);
+    assert.match(css, /\.rr-study-mode-popover/);
     assert.match(css, /\.rr-subject-grid/);
     assert.match(css, /\.rr-subject-option/);
+    assert.match(css, /\.rr-breadth-option/);
+  });
+
+  it("keeps internal topic and variant metadata out of the primary question chrome", () => {
+    const questionMeta = readFileSync("components/QuestionMeta.tsx", "utf8");
+    const practicePanel = readFileSync("components/PracticePanel.tsx", "utf8");
+
+    assert.doesNotMatch(questionMeta, /Illness script:/);
+    assert.doesNotMatch(questionMeta, /Variant:/);
+    assert.doesNotMatch(practicePanel, /getRapidRoundsVariantDisplayText/);
+    assert.match(practicePanel, /getStudyModeLabel\(activeStudyMode\)/);
   });
 
   it("collapses top actions into specific mobile icons and exposes real back/reset controls", () => {

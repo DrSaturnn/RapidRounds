@@ -7,25 +7,17 @@ import { MoleskinePracticeRenderer } from "@/components/moleskine/MoleskinePract
 import { QuestionMeta } from "@/components/QuestionMeta";
 import { TutorMode } from "@/components/TutorMode";
 import { buildClinicalNotebookViewModel } from "@/lib/clinical-notebook-view-model";
-import { getRapidRoundsVariantDisplayText } from "@/lib/rapidrounds-case";
 import { usePracticeSession } from "@/hooks/usePracticeSession";
+import type { QuestionBreadth, StudySessionMode } from "@/hooks/usePracticeSession";
 import { getClinicalPromptText, getDecisionQuestionText } from "@/lib/decision-question-text";
+import { SUBJECTS } from "@/lib/subject-seeds";
 import type { VignetteFindingAnnotation } from "@/types/practice";
 
 type PracticeTool = "notes" | null;
 type PracticeSkin = "modern-academic" | "warm-notebook" | "dark-clinical" | "editorial";
 type SettingsAnchor = "top" | "rail" | null;
 
-const requiredSubjects = [
-  "Internal Medicine",
-  "Surgery",
-  "Pediatrics",
-  "OB/GYN",
-  "Psychiatry",
-  "Family Medicine",
-  "Emergency Medicine",
-  "Neurology"
-];
+const requiredSubjects = SUBJECTS;
 
 const SKIN_STORAGE_KEY = "rapidrounds.practiceSkin.v2";
 const practiceSkins: Array<{ value: PracticeSkin; label: string; description: string }> = [
@@ -50,6 +42,56 @@ const practiceSkins: Array<{ value: PracticeSkin; label: string; description: st
     description: "Article-like spacing with deep navy accents."
   }
 ];
+
+const studyModes: Array<{ value: StudySessionMode; label: string; description: string }> = [
+  {
+    value: "adaptive",
+    label: "Adaptive",
+    description: "RapidRounds chooses the next highest-value case."
+  },
+  {
+    value: "new_concepts",
+    label: "New Concepts",
+    description: "Prefer cases you have not completed yet."
+  },
+  {
+    value: "weak_areas",
+    label: "Weak Areas",
+    description: "Prioritize recent misses and fragile patterns."
+  },
+  {
+    value: "review",
+    label: "Review",
+    description: "Revisit prior material for reinforcement."
+  },
+  {
+    value: "rapid_round",
+    label: "Rapid Round",
+    description: "Keep moving through short clinical decisions."
+  }
+];
+
+const questionBreadthOptions: Array<{ value: QuestionBreadth; label: string; description: string }> = [
+  {
+    value: "primary",
+    label: "Primary",
+    description: "Core shelf-style presentations and first decisions."
+  },
+  {
+    value: "expanded",
+    label: "Expanded",
+    description: "Adds common variants and next-step transitions."
+  },
+  {
+    value: "comprehensive",
+    label: "Comprehensive",
+    description: "Includes downstream branches, complications, and broad review."
+  }
+];
+
+function getStudyModeLabel(studyMode: StudySessionMode) {
+  return studyModes.find((mode) => mode.value === studyMode)?.label ?? "Adaptive";
+}
 
 function isPracticeSkin(value: string | null): value is PracticeSkin {
   return Boolean(value && practiceSkins.some((skin) => skin.value === value));
@@ -109,6 +151,8 @@ export function PracticePanel() {
     isTeaching,
     error,
     activeSubject,
+    activeStudyMode,
+    questionBreadth,
     canGoBack,
     subjectSummaries,
     setAnswer,
@@ -117,6 +161,8 @@ export function PracticePanel() {
     requestTeaching,
     submitReinforcementAnswer,
     selectSubject,
+    selectStudyMode,
+    selectQuestionBreadth,
     loadQuestion,
     goBack,
     resetCurrentQuestion
@@ -128,10 +174,12 @@ export function PracticePanel() {
   const topSettingsRef = useRef<HTMLDivElement>(null);
   const railSettingsRef = useRef<HTMLDivElement>(null);
   const subjectSelectorRef = useRef<HTMLDivElement>(null);
+  const studyModeSelectorRef = useRef<HTMLDivElement>(null);
   const [showEndSessionConfirm, setShowEndSessionConfirm] = useState(false);
   const [activeTool, setActiveTool] = useState<PracticeTool>(null);
   const [settingsAnchor, setSettingsAnchor] = useState<SettingsAnchor>(null);
   const [isSubjectSelectorOpen, setIsSubjectSelectorOpen] = useState(false);
+  const [isStudyModeSelectorOpen, setIsStudyModeSelectorOpen] = useState(false);
   const [isAsterOpen, setIsAsterOpen] = useState(false);
   const [notes, setNotes] = useState("");
   const [skin, setSkin] = useState<PracticeSkin>("modern-academic");
@@ -245,8 +293,9 @@ export function PracticePanel() {
       if (event.key === "Escape") {
         event.preventDefault();
 
-        if (isSubjectSelectorOpen || settingsAnchor || isAsterOpen || activeTool) {
+        if (isSubjectSelectorOpen || isStudyModeSelectorOpen || settingsAnchor || isAsterOpen || activeTool) {
           setIsSubjectSelectorOpen(false);
+          setIsStudyModeSelectorOpen(false);
           setSettingsAnchor(null);
           setIsAsterOpen(false);
           setActiveTool(null);
@@ -261,7 +310,7 @@ export function PracticePanel() {
         return;
       }
 
-      if (isSubjectSelectorOpen || settingsAnchor || isAsterOpen) {
+      if (isSubjectSelectorOpen || isStudyModeSelectorOpen || settingsAnchor || isAsterOpen) {
         return;
       }
 
@@ -320,6 +369,7 @@ export function PracticePanel() {
     answer,
     activeTool,
     isSubjectSelectorOpen,
+    isStudyModeSelectorOpen,
     isAsterOpen,
     isLoading,
     isSubmitting,
@@ -336,7 +386,7 @@ export function PracticePanel() {
   ]);
 
   useEffect(() => {
-    if (!isSubjectSelectorOpen && !settingsAnchor && !isAsterOpen) {
+    if (!isSubjectSelectorOpen && !isStudyModeSelectorOpen && !settingsAnchor && !isAsterOpen) {
       return;
     }
 
@@ -348,6 +398,10 @@ export function PracticePanel() {
 
       if (isSubjectSelectorOpen && !subjectSelectorRef.current?.contains(target)) {
         setIsSubjectSelectorOpen(false);
+      }
+
+      if (isStudyModeSelectorOpen && !studyModeSelectorRef.current?.contains(target)) {
+        setIsStudyModeSelectorOpen(false);
       }
 
       if (
@@ -372,7 +426,7 @@ export function PracticePanel() {
     return () => {
       window.removeEventListener("pointerdown", onPointerDown);
     };
-  }, [isAsterOpen, isSubjectSelectorOpen, settingsAnchor]);
+  }, [isAsterOpen, isStudyModeSelectorOpen, isSubjectSelectorOpen, settingsAnchor]);
 
   if (isLoading) {
     return (
@@ -395,11 +449,11 @@ export function PracticePanel() {
   const hasAnsweredCurrentQuestion = Boolean(result) || isExplanationState;
   const clinicalPrompt = getClinicalPromptText(hasAnsweredCurrentQuestion ? question.displayStem ?? question.stem : question.stem);
   const decisionQuestion = getDecisionQuestionText(question.decisionType);
-  const learningGoal = question.topic ? `Learning goal: ${question.topic}` : "Learning goal: make the next clinical decision";
+  const learningGoal = "Learning goal: make the next clinical decision";
   const displayDecisionCount = Math.max(sessionDecisionCount, 1);
   const totalDecisionCount = 96;
-  const topicLabel = question.canonicalProblem ?? question.system ?? question.topic;
-  const variantLabel = getRapidRoundsVariantDisplayText(question.variantType);
+  const topicLabel = getStudyModeLabel(activeStudyMode);
+  const asterCaseTitle = question.topic || topicLabel;
   const visibleVignetteFindings = hasAnsweredCurrentQuestion
     ? tutor?.vignetteFindings ?? question.vignetteFindings ?? []
     : [];
@@ -427,6 +481,7 @@ export function PracticePanel() {
   const showTeaching = () => {
     setActiveTool(null);
     setIsSubjectSelectorOpen(false);
+    setIsStudyModeSelectorOpen(false);
     setSettingsAnchor(null);
     if (!isExplanationState) {
       answerInputRef.current?.focus();
@@ -440,6 +495,7 @@ export function PracticePanel() {
 
   const handleContinue = () => {
     setIsSubjectSelectorOpen(false);
+    setIsStudyModeSelectorOpen(false);
     setSettingsAnchor(null);
     setIsAsterOpen(false);
 
@@ -458,6 +514,7 @@ export function PracticePanel() {
     setSettingsAnchor(null);
     setIsAsterOpen(false);
     setIsSubjectSelectorOpen(false);
+    setIsStudyModeSelectorOpen(false);
     goBack();
   };
 
@@ -466,6 +523,7 @@ export function PracticePanel() {
     setSettingsAnchor(null);
     setIsAsterOpen(false);
     setIsSubjectSelectorOpen(false);
+    setIsStudyModeSelectorOpen(false);
     resetCurrentQuestion();
     window.requestAnimationFrame(() => {
       answerInputRef.current?.focus();
@@ -484,6 +542,7 @@ export function PracticePanel() {
     setActiveTool(null);
     setIsAsterOpen(false);
     setIsSubjectSelectorOpen(false);
+    setIsStudyModeSelectorOpen(false);
     setSettingsAnchor(settingsAnchor === anchor ? null : anchor);
   };
 
@@ -492,10 +551,16 @@ export function PracticePanel() {
     setSettingsAnchor(null);
   };
 
+  const handleQuestionBreadthSelect = (breadth: QuestionBreadth) => {
+    selectQuestionBreadth(breadth);
+    setSettingsAnchor(null);
+  };
+
   const toggleAster = () => {
     setActiveTool(null);
     setSettingsAnchor(null);
     setIsSubjectSelectorOpen(false);
+    setIsStudyModeSelectorOpen(false);
     setIsAsterOpen((current) => !current);
   };
 
@@ -503,6 +568,7 @@ export function PracticePanel() {
     setActiveTool(null);
     setSettingsAnchor(null);
     setIsAsterOpen(false);
+    setIsStudyModeSelectorOpen(false);
     setIsSubjectSelectorOpen((current) => !current);
   };
 
@@ -511,6 +577,21 @@ export function PracticePanel() {
     if (subject !== activeSubject) {
       selectSubject(subject);
     }
+  };
+
+  const handleStudyModeSelect = (studyMode: StudySessionMode) => {
+    setIsStudyModeSelectorOpen(false);
+    if (studyMode !== activeStudyMode) {
+      selectStudyMode(studyMode);
+    }
+  };
+
+  const toggleStudyModeSelector = () => {
+    setActiveTool(null);
+    setSettingsAnchor(null);
+    setIsAsterOpen(false);
+    setIsSubjectSelectorOpen(false);
+    setIsStudyModeSelectorOpen((current) => !current);
   };
 
   const renderSubjectSelector = () => (
@@ -547,6 +628,54 @@ export function PracticePanel() {
     </div>
   );
 
+  const renderStudyModeSelector = () => (
+    <div className="rr-popover rr-study-mode-popover" role="dialog" aria-label="Choose study mode">
+      <div className="mb-3 flex items-start justify-between gap-3">
+        <div>
+          <p className="rr-section-header">Study mode</p>
+          <p className="rr-meta mt-1">Choose the broad session style. RapidRounds picks the specific case.</p>
+        </div>
+        <button type="button" className="rr-icon-button" aria-label="Close study mode selector" onClick={() => setIsStudyModeSelectorOpen(false)}>
+          ×
+        </button>
+      </div>
+      <div className="rr-study-mode-list">
+        {studyModes.map((studyMode) => {
+          const isSelected = studyMode.value === activeStudyMode;
+
+          return (
+            <button
+              key={studyMode.value}
+              type="button"
+              className={`rr-study-mode-option ${isSelected ? "rr-study-mode-option-active" : ""}`}
+              onClick={() => handleStudyModeSelect(studyMode.value)}
+              aria-pressed={isSelected}
+            >
+              <span>{studyMode.label}</span>
+              <small>{studyMode.description}</small>
+            </button>
+          );
+        })}
+      </div>
+    </div>
+  );
+
+  const renderStudyModeControl = () => (
+    <div className="rr-study-mode-anchor" ref={studyModeSelectorRef}>
+      <button
+        type="button"
+        className="rr-study-mode-pill"
+        aria-label="Choose study mode"
+        aria-expanded={isStudyModeSelectorOpen}
+        onClick={toggleStudyModeSelector}
+      >
+        {getStudyModeLabel(activeStudyMode)}
+        <span aria-hidden="true">⌄</span>
+      </button>
+      {isStudyModeSelectorOpen ? renderStudyModeSelector() : null}
+    </div>
+  );
+
   const renderThemePopover = () => (
     <div className="rr-popover rr-theme-popover" role="dialog" aria-label="Choose visual skin">
       <div className="mb-3 flex items-start justify-between gap-3">
@@ -570,6 +699,26 @@ export function PracticePanel() {
           >
             <span>{practiceSkin.label}</span>
             <small>{practiceSkin.description}</small>
+          </button>
+        ))}
+      </div>
+      <div className="rr-settings-divider" />
+      <div>
+        <p className="rr-section-header">Shelf breadth</p>
+        <p className="rr-meta mt-1">Choose how broadly RapidRounds samples each shelf.</p>
+      </div>
+      <div className="rr-breadth-list mt-3" role="radiogroup" aria-label="Choose shelf breadth">
+        {questionBreadthOptions.map((option) => (
+          <button
+            key={option.value}
+            type="button"
+            className={`rr-breadth-option ${questionBreadth === option.value ? "rr-breadth-option-active" : ""}`}
+            onClick={() => handleQuestionBreadthSelect(option.value)}
+            role="radio"
+            aria-checked={questionBreadth === option.value}
+          >
+            <span>{option.label}</span>
+            <small>{option.description}</small>
           </button>
         ))}
       </div>
@@ -664,6 +813,7 @@ export function PracticePanel() {
             {isSubjectSelectorOpen ? renderSubjectSelector() : null}
           </div>
         }
+        studyModeSelector={renderStudyModeControl()}
         topActions={renderTopSessionActions()}
         sidebar={
           <>
@@ -685,6 +835,7 @@ export function PracticePanel() {
                 setSettingsAnchor(null);
                 setIsAsterOpen(false);
                 setIsSubjectSelectorOpen(false);
+                setIsStudyModeSelectorOpen(false);
                 setActiveTool(activeTool === "notes" ? null : "notes");
               }}
             >
@@ -724,7 +875,7 @@ export function PracticePanel() {
             {isAsterOpen ? (
               <AsterCompanion
                 ref={asterPanelRef}
-                currentCaseTitle={topicLabel}
+                currentCaseTitle={asterCaseTitle}
                 onClose={() => setIsAsterOpen(false)}
               />
             ) : null}
@@ -776,8 +927,7 @@ export function PracticePanel() {
             {isSubjectSelectorOpen ? renderSubjectSelector() : null}
           </div>
           <span className="rr-context-divider" aria-hidden="true" />
-          <span className="rr-context-topic">{topicLabel}</span>
-          {variantLabel ? <span className="rr-context-variant">{variantLabel}</span> : null}
+          {renderStudyModeControl()}
         </div>
         <div className="rr-product-progress" aria-label={`Question ${displayDecisionCount} of ${displayedTotalDecisionCount}`}>
           <span className="rr-progress-count">Q {displayDecisionCount} / {displayedTotalDecisionCount}</span>
@@ -810,6 +960,7 @@ export function PracticePanel() {
               setSettingsAnchor(null);
               setIsAsterOpen(false);
               setIsSubjectSelectorOpen(false);
+              setIsStudyModeSelectorOpen(false);
               setActiveTool(activeTool === "notes" ? null : "notes");
             }}
           >
@@ -941,7 +1092,7 @@ export function PracticePanel() {
       {isAsterOpen ? (
         <AsterCompanion
           ref={asterPanelRef}
-          currentCaseTitle={topicLabel}
+          currentCaseTitle={asterCaseTitle}
           onClose={() => setIsAsterOpen(false)}
         />
       ) : null}

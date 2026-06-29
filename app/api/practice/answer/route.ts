@@ -6,6 +6,7 @@ import { getLearnerState } from "@/lib/learner-state";
 import { normalizeLearnerId } from "@/lib/learner-id";
 import { prisma } from "@/lib/prisma";
 import { buildReasoningMemoryCoaching } from "@/lib/reasoning-memory";
+import { getGeneratedCaseById } from "@/lib/seed-case-generator";
 import { buildTutorContent } from "@/lib/tutor-content";
 import type { AnswerEvaluation, AnswerOutcome } from "@/types/practice";
 
@@ -212,6 +213,128 @@ export async function POST(request: NextRequest) {
       evaluation,
       boardPearl: decision.boardPearl,
       explanation: decision.pivotClue,
+      tutor
+    });
+  }
+
+  const generatedCase = getGeneratedCaseById(body.questionId);
+  if (generatedCase) {
+    const acceptedAnswers = [
+      generatedCase.correctAnswer,
+      generatedCase.correctAnswer.toLowerCase(),
+      ...generatedCase.seed.relatedConcepts.filter((concept) => concept.toLowerCase() === generatedCase.correctAnswer.toLowerCase())
+    ];
+    const localEvaluation = evaluateAnswer({
+      answer: body.answer,
+      acceptedAnswers,
+      canonicalAnswer: generatedCase.correctAnswer,
+      expectedTask: generatedCase.question.decisionType,
+      clinicalConcepts: conceptList(
+        generatedCase.topic,
+        generatedCase.schema,
+        generatedCase.seed.commonTraps,
+        generatedCase.seed.relatedConcepts
+      )
+    });
+    const evaluation = localEvaluation;
+    const isCorrect = evaluation.isCorrect;
+    const answerOutcome = getAnswerOutcome(evaluation);
+    const responseTimeMs = Math.max(0, Math.round(body.responseTimeMs ?? 0));
+    const tags = conceptList(
+      generatedCase.seed.id,
+      generatedCase.seed.schema,
+      generatedCase.seed.pivotClues,
+      generatedCase.seed.supportingClues,
+      generatedCase.seed.contextualClues,
+      generatedCase.seed.commonTraps,
+      generatedCase.seed.primaryDiscriminators,
+      generatedCase.seed.relatedConcepts
+    );
+    const decisionLike = {
+      specialty: generatedCase.subject,
+      system: generatedCase.subject,
+      topic: generatedCase.topic,
+      prompt: generatedCase.question.stem,
+      correctAnswer: generatedCase.correctAnswer,
+      acceptedAnswers: serializeList(acceptedAnswers),
+      boardPearl: generatedCase.seed.nextTimeRule,
+      tags: serializeList(tags),
+      pivotClue: generatedCase.seed.pivotClues[0],
+      commonTrap: generatedCase.seed.commonTraps[0],
+      clinicalPattern: generatedCase.schema,
+      decisionType: generatedCase.question.decisionType,
+      managementPearl: generatedCase.explanation
+    };
+    const tutor = buildTutorContent(decisionLike, body.answer, evaluation);
+    const learnerState = await getLearnerState(learnerId);
+    tutor.coaching = buildReasoningMemoryCoaching(tutor, answerOutcome, learnerState.recentReasoningAttempts);
+    const curriculumContext = resolveCurriculumContext({
+      topic: generatedCase.topic,
+      correctAnswer: generatedCase.correctAnswer,
+      system: generatedCase.subject,
+      clinicalPattern: generatedCase.schema,
+      decisionType: generatedCase.question.decisionType,
+      tags
+    });
+
+    await prisma.progress.create({
+      data: {
+        userId: learnerId,
+        answer: body.answer.trim(),
+        isCorrect,
+        expectedAnswer: generatedCase.correctAnswer,
+        answerOutcome,
+        evaluationClassification: evaluation.classification,
+        partialCredit: evaluation.partialCredit,
+        confidence: evaluation.confidence,
+        cognitiveErrorType: tutor.cognitiveError?.type,
+        reasoningPattern: tutor.reasoningAnalysis.primaryError,
+        repairType: tutor.repair.style,
+        decisionType: generatedCase.question.decisionType,
+        curriculumNodeId: curriculumContext.primaryNode?.id,
+        shelfTags: serializeList(curriculumContext.shelfTags.length ? curriculumContext.shelfTags : [generatedCase.subject]),
+        disciplineTags: serializeList(curriculumContext.disciplineTags),
+        responseTimeMs,
+        diagnosis: generatedCase.topic,
+        management: generatedCase.explanation,
+        pattern: generatedCase.schema
+      }
+    });
+
+    if (answerOutcome !== "UNKNOWN") {
+      const previousStats = await prisma.userStats.upsert({
+        where: { userId: learnerId },
+        update: {},
+        create: { userId: learnerId }
+      });
+      const questionsAnswered = previousStats.questionsAnswered + 1;
+      const correctAnswers = previousStats.correctAnswers + (isCorrect ? 1 : 0);
+      const currentStreak = isCorrect ? previousStats.currentStreak + 1 : 0;
+      const longestStreak = Math.max(previousStats.longestStreak, currentStreak);
+      const averageResponseTimeMs = Math.round(
+        (previousStats.averageResponseTimeMs * previousStats.questionsAnswered + responseTimeMs) /
+          questionsAnswered
+      );
+
+      await prisma.userStats.update({
+        where: { userId: learnerId },
+        data: {
+          questionsAnswered,
+          correctAnswers,
+          currentStreak,
+          longestStreak,
+          averageResponseTimeMs
+        }
+      });
+    }
+
+    return NextResponse.json({
+      isCorrect,
+      answerOutcome,
+      correctAnswer: generatedCase.correctAnswer,
+      evaluation,
+      boardPearl: generatedCase.seed.nextTimeRule,
+      explanation: generatedCase.seed.pivotClues[0],
       tutor
     });
   }

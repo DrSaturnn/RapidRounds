@@ -4,12 +4,29 @@ import { getAdaptiveDecisionRecommendation } from "@/lib/adaptive-decision";
 import { normalizeLearnerId } from "@/lib/learner-id";
 import { getAdaptiveTargetConcept } from "@/lib/learning-trajectory";
 import { prisma } from "@/lib/prisma";
+import { getGeneratedCasesForSubject, getGeneratedSubjectCounts } from "@/lib/seed-case-generator";
 import { toQuestionDto } from "@/lib/serializers";
+
+function mergeSubjectCounts(
+  persistedCounts: Array<{ subject: string; count: number }>,
+  generatedCounts: Array<{ subject: string; count: number }>
+) {
+  const countBySubject = new Map<string, number>();
+  for (const item of generatedCounts) {
+    countBySubject.set(item.subject, item.count);
+  }
+  for (const item of persistedCounts) {
+    countBySubject.set(item.subject, Math.max(countBySubject.get(item.subject) ?? 0, item.count));
+  }
+  return [...countBySubject.entries()].map(([subject, count]) => ({ subject, count }));
+}
 
 export async function GET(request: Request) {
   const searchParams = new URL(request.url).searchParams;
   const requestedConcept = searchParams.get("concept")?.trim();
   const requestedSubject = searchParams.get("subject")?.trim();
+  const requestedSessionMode = searchParams.get("sessionMode")?.trim();
+  const requestedQuestionBreadth = searchParams.get("questionBreadth")?.trim();
   const learnerId = normalizeLearnerId(searchParams.get("learnerId"));
   const [answered, completed, adaptiveRecommendation, subjectCounts] = await Promise.all([
     learnerId
@@ -31,13 +48,17 @@ export async function GET(request: Request) {
           where: { userId: learnerId },
           select: {
             questionId: true,
-            clinicalDecisionId: true
+            clinicalDecisionId: true,
+            diagnosis: true
           }
         })
       : Promise.resolve([]),
-    learnerId ? getAdaptiveDecisionRecommendation(learnerId, requestedConcept, requestedSubject) : Promise.resolve(undefined),
+    learnerId && requestedSessionMode !== "new_concepts" && requestedSessionMode !== "rapid_round"
+      ? getAdaptiveDecisionRecommendation(learnerId, requestedConcept, requestedSubject)
+      : Promise.resolve(undefined),
     getClinicalDecisionSubjectCounts()
   ]);
+  const responseSubjectCounts = mergeSubjectCounts(subjectCounts, getGeneratedSubjectCounts());
 
   const answeredDecisionIds = new Set(
     completed.map((row) => row.clinicalDecisionId).filter((id): id is string => Boolean(id))
@@ -46,7 +67,7 @@ export async function GET(request: Request) {
   if (adaptiveRecommendation?.decision) {
     return NextResponse.json({
       question: adaptiveRecommendation.decision,
-      subjectCounts,
+      subjectCounts: responseSubjectCounts,
       adaptive: {
         actionType: adaptiveRecommendation.actionType,
         explanation: adaptiveRecommendation.explanation
@@ -57,7 +78,7 @@ export async function GET(request: Request) {
   const adaptiveTarget = requestedConcept || getAdaptiveTargetConcept(answered)?.concept;
   const decision = await getNextClinicalDecision([...answeredDecisionIds], adaptiveTarget, requestedSubject);
   if (decision) {
-    return NextResponse.json({ question: decision, subjectCounts });
+    return NextResponse.json({ question: decision, subjectCounts: responseSubjectCounts });
   }
 
   const answeredQuestionIds = new Set(
@@ -82,10 +103,22 @@ export async function GET(request: Request) {
   }
 
   if (questions.length === 0) {
-    return NextResponse.json({ question: null, subjectCounts }, { status: 404 });
+    const generatedCases = getGeneratedCasesForSubject(requestedSubject, requestedQuestionBreadth);
+    const completedGeneratedIds = new Set(
+      completed.map((row) => row.questionId).filter((id): id is string => Boolean(id))
+    );
+    const generatedCase =
+      generatedCases.find((item) => !completedGeneratedIds.has(item.id)) ??
+      generatedCases[0];
+
+    if (generatedCase) {
+      return NextResponse.json({ question: generatedCase.question, subjectCounts: responseSubjectCounts });
+    }
+
+    return NextResponse.json({ question: null, subjectCounts: responseSubjectCounts }, { status: 404 });
   }
 
   const question = questions[Math.floor(Math.random() * questions.length)];
 
-  return NextResponse.json({ question: toQuestionDto(question), subjectCounts });
+  return NextResponse.json({ question: toQuestionDto(question), subjectCounts: responseSubjectCounts });
 }

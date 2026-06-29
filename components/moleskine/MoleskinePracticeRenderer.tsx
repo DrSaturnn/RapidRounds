@@ -7,6 +7,7 @@ import type { ClinicalNotebookAnnotation, ClinicalNotebookViewModel } from "@/li
 type MoleskinePracticeRendererProps = {
   notebook: ClinicalNotebookViewModel;
   subjectSelector: ReactNode;
+  studyModeSelector: ReactNode;
   topActions: ReactNode;
   sidebar: ReactNode;
   notes: ReactNode;
@@ -240,6 +241,7 @@ function NotebookRightPage({ notebook }: { notebook: ClinicalNotebookViewModel }
 export function MoleskinePracticeRenderer({
   notebook,
   subjectSelector,
+  studyModeSelector,
   topActions,
   sidebar,
   notes,
@@ -267,8 +269,7 @@ export function MoleskinePracticeRenderer({
         <div className="rr-product-context" aria-label="Current training context">
           {subjectSelector}
           <span className="rr-context-divider" aria-hidden="true" />
-          <span className="rr-context-topic">{notebook.header.topic}</span>
-          {notebook.header.variant ? <span className="rr-context-variant">{notebook.header.variant}</span> : null}
+          {studyModeSelector}
         </div>
         <div className="rr-product-progress" aria-label={notebook.header.progressLabel}>
           <span className="rr-progress-count">{notebook.header.progressLabel}</span>

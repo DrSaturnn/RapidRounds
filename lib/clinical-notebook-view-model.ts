@@ -250,7 +250,7 @@ export function buildClinicalNotebookViewModel({
       topic,
       progressLabel: `Q ${Math.max(sessionDecisionCount, 1)} / ${displayedTotalDecisionCount}`,
       progressDots,
-      learningGoal: question.topic ? `Learning goal: ${question.topic}` : "Learning goal: make the next clinical decision",
+      learningGoal: "Learning goal: make the next clinical decision",
       variant: getRapidRoundsVariantDisplayText(question.variantType)
     },
     vignette: {

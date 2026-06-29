@@ -1030,12 +1030,15 @@ body:has(.practice-focus) .app-main {
 
   [data-theme="warm-notebook"] .rr-tool-button,
   [data-theme="warm-notebook"] .rr-subject-pill,
+  [data-theme="warm-notebook"] .rr-study-mode-pill,
   [data-theme="warm-notebook"] .rr-header-action,
   [data-theme="warm-notebook"] .rr-aster-button,
   [data-theme="warm-notebook"] .rr-menu-button,
   [data-theme="warm-notebook"] .rr-mobile-action,
   [data-theme="warm-notebook"] .rr-skin-option,
+  [data-theme="warm-notebook"] .rr-breadth-option,
   [data-theme="warm-notebook"] .rr-subject-option,
+  [data-theme="warm-notebook"] .rr-study-mode-option,
   [data-theme="warm-notebook"] .rr-bottom-action,
   [data-theme="warm-notebook"] .rr-chip {
     border-color: transparent;
@@ -1049,12 +1052,15 @@ body:has(.practice-focus) .app-main {
 
   [data-theme="warm-notebook"] .rr-tool-button:hover,
   [data-theme="warm-notebook"] .rr-subject-pill:hover,
+  [data-theme="warm-notebook"] .rr-study-mode-pill:hover,
   [data-theme="warm-notebook"] .rr-header-action:hover,
   [data-theme="warm-notebook"] .rr-aster-button:hover,
   [data-theme="warm-notebook"] .rr-menu-button:hover,
   [data-theme="warm-notebook"] .rr-mobile-action:hover,
   [data-theme="warm-notebook"] .rr-skin-option:hover,
+  [data-theme="warm-notebook"] .rr-breadth-option:hover,
   [data-theme="warm-notebook"] .rr-subject-option:hover,
+  [data-theme="warm-notebook"] .rr-study-mode-option:hover,
   [data-theme="warm-notebook"] .rr-bottom-action:hover,
   [data-theme="warm-notebook"] .rr-chip:hover {
     border-color: rgb(112 76 42 / 0.24);
@@ -1065,7 +1071,9 @@ body:has(.practice-focus) .app-main {
 
   [data-theme="warm-notebook"] .rr-tool-button-active,
   [data-theme="warm-notebook"] .rr-skin-option-active,
-  [data-theme="warm-notebook"] .rr-subject-option-active {
+  [data-theme="warm-notebook"] .rr-breadth-option-active,
+  [data-theme="warm-notebook"] .rr-subject-option-active,
+  [data-theme="warm-notebook"] .rr-study-mode-option-active {
     border-color: rgb(92 55 26 / 0.32);
     background:
       linear-gradient(180deg, #ebd7ad, #dec28c);
@@ -1944,11 +1952,13 @@ body:has(.practice-focus) .app-main {
     @apply flex min-w-0 flex-wrap items-center gap-3 text-sm leading-6 text-rr-foreground;
   }
 
-  .rr-subject-anchor {
+  .rr-subject-anchor,
+  .rr-study-mode-anchor {
     @apply relative;
   }
 
-  .rr-subject-pill {
+  .rr-subject-pill,
+  .rr-study-mode-pill {
     @apply inline-flex min-h-10 items-center gap-2 border border-rr-border bg-rr-elevated px-4 font-semibold transition-colors hover:border-rr-accent hover:text-rr-accent;
     border-radius: var(--rr-radius-md);
     box-shadow: var(--rr-shadow-sm), var(--rr-card-edge);
@@ -2089,8 +2099,13 @@ body:has(.practice-focus) .app-main {
     @apply left-4 right-auto w-[min(46rem,calc(100vw-2rem))];
   }
 
+  .rr-study-mode-popover {
+    @apply left-4 right-auto w-[min(32rem,calc(100vw-2rem))];
+  }
+
   @media (min-width: 1024px) {
-    .rr-subject-anchor .rr-popover {
+    .rr-subject-anchor .rr-popover,
+    .rr-study-mode-anchor .rr-popover {
       @apply absolute left-0 right-auto top-[calc(100%+0.75rem)];
     }
 
@@ -2107,20 +2122,35 @@ body:has(.practice-focus) .app-main {
     @apply grid gap-2;
   }
 
+  .rr-breadth-list {
+    @apply grid gap-2;
+  }
+
+  .rr-settings-divider {
+    @apply my-4 h-px bg-rr-border;
+  }
+
   .rr-subject-grid {
     @apply grid gap-2 sm:grid-cols-2 lg:grid-cols-4;
   }
 
-  .rr-subject-option {
+  .rr-study-mode-list {
+    @apply grid gap-2;
+  }
+
+  .rr-subject-option,
+  .rr-study-mode-option {
     @apply grid min-h-20 gap-1 border border-rr-border bg-rr-surface px-3 py-3 text-left text-sm font-semibold text-rr-foreground transition-colors hover:border-rr-accent hover:text-rr-accent disabled:cursor-not-allowed disabled:opacity-55 disabled:hover:border-rr-border disabled:hover:text-rr-foreground;
     border-radius: var(--rr-radius-md);
   }
 
-  .rr-subject-option small {
+  .rr-subject-option small,
+  .rr-study-mode-option small {
     @apply text-xs font-normal leading-5 text-rr-muted;
   }
 
-  .rr-subject-option-active {
+  .rr-subject-option-active,
+  .rr-study-mode-option-active {
     border-color: var(--rr-color-accent-border);
     background: var(--rr-color-accent-tint);
     color: var(--rr-color-accent);
@@ -2145,11 +2175,18 @@ body:has(.practice-focus) .app-main {
     border-radius: var(--rr-radius-md);
   }
 
-  .rr-skin-option small {
+  .rr-breadth-option {
+    @apply grid gap-1 border border-rr-border bg-rr-surface px-3 py-3 text-left text-sm font-semibold text-rr-foreground transition-colors hover:border-rr-accent hover:text-rr-accent;
+    border-radius: var(--rr-radius-md);
+  }
+
+  .rr-skin-option small,
+  .rr-breadth-option small {
     @apply text-xs font-normal leading-5 text-rr-muted;
   }
 
-  .rr-skin-option-active {
+  .rr-skin-option-active,
+  .rr-breadth-option-active {
     border-color: var(--rr-color-accent-border);
     background: var(--rr-color-accent-tint);
     color: var(--rr-color-accent);
@@ -2880,10 +2917,13 @@ body:has(.practice-focus) .app-main {
 
   [data-theme="warm-notebook"] .rr-tool-button,
   [data-theme="warm-notebook"] .rr-subject-pill,
+  [data-theme="warm-notebook"] .rr-study-mode-pill,
   [data-theme="warm-notebook"] .rr-aster-button,
   [data-theme="warm-notebook"] .rr-menu-button,
   [data-theme="warm-notebook"] .rr-skin-option,
+  [data-theme="warm-notebook"] .rr-breadth-option,
   [data-theme="warm-notebook"] .rr-subject-option,
+  [data-theme="warm-notebook"] .rr-study-mode-option,
   [data-theme="warm-notebook"] .rr-bottom-action,
   [data-theme="warm-notebook"] .rr-chip,
   [data-theme="warm-notebook"] .rr-badge,
@@ -2896,10 +2936,13 @@ body:has(.practice-focus) .app-main {
 
   [data-theme="warm-notebook"] .rr-tool-button:hover,
   [data-theme="warm-notebook"] .rr-subject-pill:hover,
+  [data-theme="warm-notebook"] .rr-study-mode-pill:hover,
   [data-theme="warm-notebook"] .rr-aster-button:hover,
   [data-theme="warm-notebook"] .rr-menu-button:hover,
   [data-theme="warm-notebook"] .rr-skin-option:hover,
+  [data-theme="warm-notebook"] .rr-breadth-option:hover,
   [data-theme="warm-notebook"] .rr-subject-option:hover,
+  [data-theme="warm-notebook"] .rr-study-mode-option:hover,
   [data-theme="warm-notebook"] .rr-bottom-action:hover,
   [data-theme="warm-notebook"] .rr-chip:hover {
     background:
@@ -2909,7 +2952,9 @@ body:has(.practice-focus) .app-main {
 
   [data-theme="warm-notebook"] .rr-tool-button-active,
   [data-theme="warm-notebook"] .rr-skin-option-active,
-  [data-theme="warm-notebook"] .rr-subject-option-active {
+  [data-theme="warm-notebook"] .rr-breadth-option-active,
+  [data-theme="warm-notebook"] .rr-subject-option-active,
+  [data-theme="warm-notebook"] .rr-study-mode-option-active {
     background:
       linear-gradient(180deg, rgb(138 90 50 / 0.11), rgb(255 253 248 / 0.76));
     border-color: rgb(138 90 50 / 0.22);
