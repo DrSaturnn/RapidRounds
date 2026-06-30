@@ -1,0 +1,352 @@
+[
+  {
+    "knowledgeObjectId": "ko-37e1f941cd5a92e9-succenturiate-placental-lobe-diagnosis",
+    "matchedSchemaNodeId": "internal-medicine-acs--schema-diagnosis-diagnosis",
+    "duplicateScore": 22,
+    "noveltyScore": 78,
+    "action": "create_new_node"
+  },
+  {
+    "knowledgeObjectId": "ko-864ee53540de3398-herpes-simplex-virus-mechanism",
+    "matchedSchemaNodeId": "internal-medicine-dka-hhs--schema-mechanism-pathophysiology-mechanism",
+    "duplicateScore": 22,
+    "noveltyScore": 78,
+    "action": "create_new_node"
+  },
+  {
+    "knowledgeObjectId": "ko-932a800bd2b69e9a-ectopic-pregnancy-diagnosis",
+    "matchedSchemaNodeId": "ob-gyn-ectopic-pregnancy--schema-diagnosis-diagnosis",
+    "duplicateScore": 64,
+    "noveltyScore": 36,
+    "action": "update_existing_node"
+  },
+  {
+    "knowledgeObjectId": "ko-a9e4b410555a04b0-cesarean-delivery-diagnosis",
+    "matchedSchemaNodeId": "internal-medicine-acs--schema-diagnosis-diagnosis",
+    "duplicateScore": 22,
+    "noveltyScore": 78,
+    "action": "create_new_node"
+  },
+  {
+    "knowledgeObjectId": "ko-842fee31b1b296e7-chronic-anovulation-risk_factor_interpretation",
+    "matchedSchemaNodeId": "internal-medicine-tia-stroke-medical-evaluation--schema-risk-factor-risk_factor_interpretation",
+    "duplicateScore": 22,
+    "noveltyScore": 78,
+    "action": "create_new_node"
+  },
+  {
+    "knowledgeObjectId": "ko-b6b61a51c89ef066-different-shape-next_best_step",
+    "matchedSchemaNodeId": "internal-medicine-hfpef--schema-next-best-step-next_best_step",
+    "duplicateScore": 22,
+    "noveltyScore": 78,
+    "action": "create_new_node"
+  },
+  {
+    "knowledgeObjectId": "ko-6fd127b27cd2ad18-dicloxacillin-management",
+    "matchedSchemaNodeId": "internal-medicine-acs--schema-initial-management-management",
+    "duplicateScore": 22,
+    "noveltyScore": 78,
+    "action": "create_new_node"
+  },
+  {
+    "knowledgeObjectId": "ko-f72f29ed8ff90c4e-testing-of-the-wife-first-if-negative-no-further-testing-is-indicated-next_best_step",
+    "matchedSchemaNodeId": "internal-medicine-hfpef--schema-next-best-step-next_best_step",
+    "duplicateScore": 22,
+    "noveltyScore": 78,
+    "action": "create_new_node"
+  },
+  {
+    "knowledgeObjectId": "ko-4d4baf6e5a3691f0-prescribe-next_best_step",
+    "matchedSchemaNodeId": "internal-medicine-hfpef--schema-next-best-step-next_best_step",
+    "duplicateScore": 22,
+    "noveltyScore": 78,
+    "action": "create_new_node"
+  },
+  {
+    "knowledgeObjectId": "ko-6f15fc8260313084-depot-medroxyprogesterone-management",
+    "matchedSchemaNodeId": "internal-medicine-acs--schema-initial-management-management",
+    "duplicateScore": 22,
+    "noveltyScore": 78,
+    "action": "create_new_node"
+  },
+  {
+    "knowledgeObjectId": "ko-e455ac515682b0e1-influenza-virus-management",
+    "matchedSchemaNodeId": "internal-medicine-acs--schema-initial-management-management",
+    "duplicateScore": 22,
+    "noveltyScore": 78,
+    "action": "create_new_node"
+  },
+  {
+    "knowledgeObjectId": "ko-ccf1dfcd29666568-ultrasonograejhy-for-dating-next_best_step",
+    "matchedSchemaNodeId": "internal-medicine-hfpef--schema-next-best-step-next_best_step",
+    "duplicateScore": 22,
+    "noveltyScore": 78,
+    "action": "create_new_node"
+  },
+  {
+    "knowledgeObjectId": "ko-67b2d9f9ec89c0be-ergonovine-therapy-next_best_step",
+    "matchedSchemaNodeId": "internal-medicine-hfpef--schema-next-best-step-next_best_step",
+    "duplicateScore": 22,
+    "noveltyScore": 78,
+    "action": "create_new_node"
+  },
+  {
+    "knowledgeObjectId": "ko-b173a00396ddabe1-pyelonephritis-diagnosis",
+    "matchedSchemaNodeId": "internal-medicine-acs--schema-diagnosis-diagnosis",
+    "duplicateScore": 22,
+    "noveltyScore": 78,
+    "action": "create_new_node"
+  },
+  {
+    "knowledgeObjectId": "ko-6bcb3dbcc1d0f1f2-fibroadenoma-diagnosis",
+    "matchedSchemaNodeId": "internal-medicine-acs--schema-diagnosis-diagnosis",
+    "duplicateScore": 22,
+    "noveltyScore": 78,
+    "action": "create_new_node"
+  },
+  {
+    "knowledgeObjectId": "ko-761a86488e4b871d-parvovirus-mechanism",
+    "matchedSchemaNodeId": "internal-medicine-dka-hhs--schema-mechanism-pathophysiology-mechanism",
+    "duplicateScore": 22,
+    "noveltyScore": 78,
+    "action": "create_new_node"
+  },
+  {
+    "knowledgeObjectId": "ko-e8821dd490bf285b-pali-jable-right-ovary-diagnosis",
+    "matchedSchemaNodeId": "internal-medicine-acs--schema-diagnosis-diagnosis",
+    "duplicateScore": 22,
+    "noveltyScore": 78,
+    "action": "create_new_node"
+  },
+  {
+    "knowledgeObjectId": "ko-70b0b47a1e83e111-maternal-fever-diagnosis",
+    "matchedSchemaNodeId": "internal-medicine-acs--schema-diagnosis-diagnosis",
+    "duplicateScore": 22,
+    "noveltyScore": 78,
+    "action": "create_new_node"
+  },
+  {
+    "knowledgeObjectId": "ko-ccb3ae8698022af6-endometrial-ablation-next_best_step",
+    "matchedSchemaNodeId": "internal-medicine-hfpef--schema-next-best-step-next_best_step",
+    "duplicateScore": 22,
+    "noveltyScore": 78,
+    "action": "create_new_node"
+  },
+  {
+    "knowledgeObjectId": "ko-79f740034936b223-vaginal-miconazole-management",
+    "matchedSchemaNodeId": "internal-medicine-acs--schema-initial-management-management",
+    "duplicateScore": 22,
+    "noveltyScore": 78,
+    "action": "create_new_node"
+  },
+  {
+    "knowledgeObjectId": "ko-0221f32d2ac71131-l-l-l-l-l-diagnosis",
+    "matchedSchemaNodeId": "internal-medicine-acs--schema-diagnosis-diagnosis",
+    "duplicateScore": 22,
+    "noveltyScore": 78,
+    "action": "create_new_node"
+  },
+  {
+    "knowledgeObjectId": "ko-296458047249a382-chorioamnionitis-diagnosis",
+    "matchedSchemaNodeId": "internal-medicine-acs--schema-diagnosis-diagnosis",
+    "duplicateScore": 22,
+    "noveltyScore": 78,
+    "action": "create_new_node"
+  },
+  {
+    "knowledgeObjectId": "ko-20ffc28bee834f2d-hypotonic-contractions-risk_factor_interpretation",
+    "matchedSchemaNodeId": "internal-medicine-tia-stroke-medical-evaluation--schema-risk-factor-risk_factor_interpretation",
+    "duplicateScore": 22,
+    "noveltyScore": 78,
+    "action": "create_new_node"
+  },
+  {
+    "knowledgeObjectId": "ko-ed6b78b1b05607f1-sterile-speculum-examination-of-the-vagina-diagnosis",
+    "matchedSchemaNodeId": "internal-medicine-acs--schema-diagnosis-diagnosis",
+    "duplicateScore": 22,
+    "noveltyScore": 78,
+    "action": "create_new_node"
+  },
+  {
+    "knowledgeObjectId": "ko-5bd8e25ebf913926-insertion-of-next_best_step",
+    "matchedSchemaNodeId": "internal-medicine-hfpef--schema-next-best-step-next_best_step",
+    "duplicateScore": 22,
+    "noveltyScore": 78,
+    "action": "create_new_node"
+  },
+  {
+    "knowledgeObjectId": "ko-f4822a2dfd9ea2ea-induction-of-labor-next_best_step",
+    "matchedSchemaNodeId": "internal-medicine-hfpef--schema-next-best-step-next_best_step",
+    "duplicateScore": 22,
+    "noveltyScore": 78,
+    "action": "create_new_node"
+  },
+  {
+    "knowledgeObjectId": "ko-2c13ffacf4630900-increasing-catecholamine-mechanism",
+    "matchedSchemaNodeId": "internal-medicine-dka-hhs--schema-mechanism-pathophysiology-mechanism",
+    "duplicateScore": 22,
+    "noveltyScore": 78,
+    "action": "create_new_node"
+  },
+  {
+    "knowledgeObjectId": "ko-4dcd1140d936473f-pulmonary-embolism-diagnosis",
+    "matchedSchemaNodeId": "internal-medicine-pulmonary-embolism--schema-diagnosis-diagnosis",
+    "duplicateScore": 64,
+    "noveltyScore": 36,
+    "action": "update_existing_node"
+  },
+  {
+    "knowledgeObjectId": "ko-cb50752b237147d1-facial-nerve-injury-risk_factor_interpretation",
+    "matchedSchemaNodeId": "internal-medicine-tia-stroke-medical-evaluation--schema-risk-factor-risk_factor_interpretation",
+    "duplicateScore": 22,
+    "noveltyScore": 78,
+    "action": "create_new_node"
+  },
+  {
+    "knowledgeObjectId": "ko-8f6e7d89a3fc11e4-observation-only-next_best_step",
+    "matchedSchemaNodeId": "internal-medicine-hfpef--schema-next-best-step-next_best_step",
+    "duplicateScore": 22,
+    "noveltyScore": 78,
+    "action": "create_new_node"
+  },
+  {
+    "knowledgeObjectId": "ko-cb4ea8ee4ebd7d3d-repeat-rapid-i-ilasma-reagin-diagnosis",
+    "matchedSchemaNodeId": "internal-medicine-acs--schema-diagnosis-diagnosis",
+    "duplicateScore": 22,
+    "noveltyScore": 78,
+    "action": "create_new_node"
+  },
+  {
+    "knowledgeObjectId": "ko-b92fa999a4fc2bf9-undiagnosed-maternal-diabetes-mellitus-risk_factor_interpretation",
+    "matchedSchemaNodeId": "internal-medicine-tia-stroke-medical-evaluation--schema-risk-factor-risk_factor_interpretation",
+    "duplicateScore": 22,
+    "noveltyScore": 78,
+    "action": "create_new_node"
+  },
+  {
+    "knowledgeObjectId": "ko-925dcce62e604638-hiv-antibody-test-next_best_step",
+    "matchedSchemaNodeId": "internal-medicine-hfpef--schema-next-best-step-next_best_step",
+    "duplicateScore": 22,
+    "noveltyScore": 78,
+    "action": "create_new_node"
+  },
+  {
+    "knowledgeObjectId": "ko-b2c6a10ae8d3d865-mature-teratoma-diagnosis",
+    "matchedSchemaNodeId": "internal-medicine-acs--schema-diagnosis-diagnosis",
+    "duplicateScore": 22,
+    "noveltyScore": 78,
+    "action": "create_new_node"
+  },
+  {
+    "knowledgeObjectId": "ko-e8ee4aede2d4b385-urinary-retention-risk_factor_interpretation",
+    "matchedSchemaNodeId": "internal-medicine-tia-stroke-medical-evaluation--schema-risk-factor-risk_factor_interpretation",
+    "duplicateScore": 22,
+    "noveltyScore": 78,
+    "action": "create_new_node"
+  },
+  {
+    "knowledgeObjectId": "ko-17c0fe45d375689b-maternal-intramuscular-administration-of-rh-o-q-immune-globulin-now-next_best_step",
+    "matchedSchemaNodeId": "internal-medicine-hfpef--schema-next-best-step-next_best_step",
+    "duplicateScore": 22,
+    "noveltyScore": 78,
+    "action": "create_new_node"
+  },
+  {
+    "knowledgeObjectId": "ko-e9dbd97cfa421fd0-dehiscence-diagnosis",
+    "matchedSchemaNodeId": "internal-medicine-acs--schema-diagnosis-diagnosis",
+    "duplicateScore": 22,
+    "noveltyScore": 78,
+    "action": "create_new_node"
+  },
+  {
+    "knowledgeObjectId": "ko-52e978c46bc7cbed-podophyllum-resin-therapy-management",
+    "matchedSchemaNodeId": "internal-medicine-acs--schema-initial-management-management",
+    "duplicateScore": 22,
+    "noveltyScore": 78,
+    "action": "create_new_node"
+  },
+  {
+    "knowledgeObjectId": "ko-645f9ff75384de64-estradiol-risk_factor_interpretation",
+    "matchedSchemaNodeId": "internal-medicine-tia-stroke-medical-evaluation--schema-risk-factor-risk_factor_interpretation",
+    "duplicateScore": 22,
+    "noveltyScore": 78,
+    "action": "create_new_node"
+  },
+  {
+    "knowledgeObjectId": "ko-1ddf482c308e79f9-a-endicitis-diagnosis",
+    "matchedSchemaNodeId": "internal-medicine-acs--schema-diagnosis-diagnosis",
+    "duplicateScore": 22,
+    "noveltyScore": 78,
+    "action": "create_new_node"
+  },
+  {
+    "knowledgeObjectId": "ko-12bc71fe671cc81e-uterine-rupture-risk_factor_interpretation",
+    "matchedSchemaNodeId": "internal-medicine-tia-stroke-medical-evaluation--schema-risk-factor-risk_factor_interpretation",
+    "duplicateScore": 22,
+    "noveltyScore": 78,
+    "action": "create_new_node"
+  },
+  {
+    "knowledgeObjectId": "ko-4fd5a156964969e1-breast-diagnosis",
+    "matchedSchemaNodeId": "internal-medicine-acs--schema-diagnosis-diagnosis",
+    "duplicateScore": 22,
+    "noveltyScore": 78,
+    "action": "create_new_node"
+  },
+  {
+    "knowledgeObjectId": "ko-c70df2cc9b534ecb-kell-tyl-ing-of-the-father-s-blood-next_best_step",
+    "matchedSchemaNodeId": "internal-medicine-hfpef--schema-next-best-step-next_best_step",
+    "duplicateScore": 22,
+    "noveltyScore": 78,
+    "action": "create_new_node"
+  },
+  {
+    "knowledgeObjectId": "ko-9f50f733001b562c-gonadal-dysgenesis-45-x-turner-syndrome-diagnosis",
+    "matchedSchemaNodeId": "internal-medicine-acs--schema-diagnosis-diagnosis",
+    "duplicateScore": 22,
+    "noveltyScore": 78,
+    "action": "create_new_node"
+  },
+  {
+    "knowledgeObjectId": "ko-2b98e4cd246cd8bd-hepatitis-screening",
+    "matchedSchemaNodeId": "internal-medicine-anemia-workup--schema-screening-prevention-screening",
+    "duplicateScore": 22,
+    "noveltyScore": 78,
+    "action": "create_new_node"
+  },
+  {
+    "knowledgeObjectId": "ko-538d8c821df13ec1-endometrial-bioijsy-next_best_step",
+    "matchedSchemaNodeId": "internal-medicine-hfpef--schema-next-best-step-next_best_step",
+    "duplicateScore": 22,
+    "noveltyScore": 78,
+    "action": "create_new_node"
+  },
+  {
+    "knowledgeObjectId": "ko-6905bb347e4f8ece-pregnancy-test-diagnosis",
+    "matchedSchemaNodeId": "internal-medicine-acs--schema-diagnosis-diagnosis",
+    "duplicateScore": 22,
+    "noveltyScore": 78,
+    "action": "create_new_node"
+  },
+  {
+    "knowledgeObjectId": "ko-cb358901a2c1560a-hemorrhagic-shock-complication_recognition",
+    "matchedSchemaNodeId": "internal-medicine-acs--schema-complication-complication_recognition",
+    "duplicateScore": 22,
+    "noveltyScore": 78,
+    "action": "create_new_node"
+  },
+  {
+    "knowledgeObjectId": "ko-23a1abc7f099068a-endometriosis-diagnosis",
+    "matchedSchemaNodeId": "ob-gyn-endometriosis--schema-diagnosis-diagnosis",
+    "duplicateScore": 64,
+    "noveltyScore": 36,
+    "action": "update_existing_node"
+  },
+  {
+    "knowledgeObjectId": "ko-fa1af8f25d5d5fc4-race-diagnosis",
+    "matchedSchemaNodeId": "internal-medicine-acs--schema-diagnosis-diagnosis",
+    "duplicateScore": 22,
+    "noveltyScore": 78,
+    "action": "create_new_node"
+  }
+]
