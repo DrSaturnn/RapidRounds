@@ -1,0 +1,4138 @@
+[
+  {
+    "knowledgeObjectId": "ko-37e1f941cd5a92e9-succenturiate-placental-lobe-with-retained-placental-tissue-diagnosis",
+    "canonicalImageId": "anking-image-a826d12c122e4410",
+    "score": 100,
+    "reasons": [
+      "partial concept match: Succenturiate placental lobe",
+      "partial concept match: succenturiate placental lobe with retained placental tissue",
+      "partial concept match: Diagnose succenturiate placental lobe when postpartum hemorrhage follows abnormal placental vessel/membrane findings.",
+      "partial concept match: Prior to the onset of bleeding, the placenta delivered spontaneously with a nontapering vessel extending to the margin of the membranes",
+      "partial concept match: Obstetrics / postpartum hemorrhage",
+      "Step 2 / shelf tag match",
+      "management-stage visual match",
+      "linked through matched MedicalFact"
+    ],
+    "selectedRole": "primary"
+  },
+  {
+    "knowledgeObjectId": "ko-37e1f941cd5a92e9-succenturiate-placental-lobe-with-retained-placental-tissue-diagnosis",
+    "canonicalImageId": "anking-image-1e5665b5af9bb682",
+    "score": 100,
+    "reasons": [
+      "partial concept match: Succenturiate placental lobe",
+      "partial concept match: succenturiate placental lobe with retained placental tissue",
+      "partial concept match: Diagnose succenturiate placental lobe when postpartum hemorrhage follows abnormal placental vessel/membrane findings.",
+      "partial concept match: Prior to the onset of bleeding, the placenta delivered spontaneously with a nontapering vessel extending to the margin of the membranes",
+      "partial concept match: Obstetrics / postpartum hemorrhage",
+      "Step 2 / shelf tag match",
+      "management-stage visual match",
+      "linked through matched MedicalFact"
+    ],
+    "selectedRole": "related"
+  },
+  {
+    "knowledgeObjectId": "ko-37e1f941cd5a92e9-succenturiate-placental-lobe-with-retained-placental-tissue-diagnosis",
+    "canonicalImageId": "anking-image-a6c4e6f33c5d9e53",
+    "score": 100,
+    "reasons": [
+      "partial concept match: Succenturiate placental lobe",
+      "partial concept match: succenturiate placental lobe with retained placental tissue",
+      "partial concept match: Diagnose succenturiate placental lobe when postpartum hemorrhage follows abnormal placental vessel/membrane findings.",
+      "partial concept match: Prior to the onset of bleeding, the placenta delivered spontaneously with a nontapering vessel extending to the margin of the membranes",
+      "partial concept match: Obstetrics / postpartum hemorrhage",
+      "linked through matched MedicalFact"
+    ],
+    "selectedRole": "related"
+  },
+  {
+    "knowledgeObjectId": "ko-37e1f941cd5a92e9-succenturiate-placental-lobe-with-retained-placental-tissue-diagnosis",
+    "canonicalImageId": "anking-image-e2db9d7a9b89488f",
+    "score": 100,
+    "reasons": [
+      "partial concept match: Succenturiate placental lobe",
+      "partial concept match: succenturiate placental lobe with retained placental tissue",
+      "partial concept match: Diagnose succenturiate placental lobe when postpartum hemorrhage follows abnormal placental vessel/membrane findings.",
+      "partial concept match: Prior to the onset of bleeding, the placenta delivered spontaneously with a nontapering vessel extending to the margin of the membranes",
+      "partial concept match: Obstetrics / postpartum hemorrhage",
+      "linked through matched MedicalFact"
+    ],
+    "selectedRole": "related"
+  },
+  {
+    "knowledgeObjectId": "ko-37e1f941cd5a92e9-succenturiate-placental-lobe-with-retained-placental-tissue-diagnosis",
+    "canonicalImageId": "anking-image-7cac0cf6eb7f04b8",
+    "score": 100,
+    "reasons": [
+      "partial concept match: Succenturiate placental lobe",
+      "partial concept match: succenturiate placental lobe with retained placental tissue",
+      "partial concept match: Diagnose succenturiate placental lobe when postpartum hemorrhage follows abnormal placental vessel/membrane findings.",
+      "partial concept match: Prior to the onset of bleeding, the placenta delivered spontaneously with a nontapering vessel extending to the margin of the membranes",
+      "partial concept match: Obstetrics / postpartum hemorrhage",
+      "linked through matched MedicalFact"
+    ],
+    "selectedRole": "related"
+  },
+  {
+    "knowledgeObjectId": "ko-37e1f941cd5a92e9-succenturiate-placental-lobe-with-retained-placental-tissue-diagnosis",
+    "canonicalImageId": "anking-image-654d57fe9f1ccde2",
+    "score": 100,
+    "reasons": [
+      "partial concept match: Succenturiate placental lobe",
+      "partial concept match: succenturiate placental lobe with retained placental tissue",
+      "partial concept match: Diagnose succenturiate placental lobe when postpartum hemorrhage follows abnormal placental vessel/membrane findings.",
+      "partial concept match: Prior to the onset of bleeding, the placenta delivered spontaneously with a nontapering vessel extending to the margin of the membranes",
+      "partial concept match: Obstetrics / postpartum hemorrhage",
+      "linked through matched MedicalFact"
+    ],
+    "selectedRole": "related"
+  },
+  {
+    "knowledgeObjectId": "ko-864ee53540de3398-genital-herpes-due-to-hsv-mechanism",
+    "canonicalImageId": "anking-image-a826d12c122e4410",
+    "score": 100,
+    "reasons": [
+      "partial concept match: Herpes simplex virus",
+      "partial concept match: genital herpes due to HSV",
+      "partial concept match: Identify HSV as the cause of painful grouped genital vesicles or shallow ulcers.",
+      "partial concept match: Infection typically begins with the formation of vesicles, which lyse and progress to shallow, painful ulcers with an erythematous border",
+      "partial concept match: Vulvovaginal infections / STI",
+      "Step 2 / shelf tag match",
+      "linked through matched MedicalFact"
+    ],
+    "selectedRole": "primary"
+  },
+  {
+    "knowledgeObjectId": "ko-864ee53540de3398-genital-herpes-due-to-hsv-mechanism",
+    "canonicalImageId": "anking-image-e2db9d7a9b89488f",
+    "score": 100,
+    "reasons": [
+      "partial concept match: Herpes simplex virus",
+      "partial concept match: genital herpes due to HSV",
+      "partial concept match: Identify HSV as the cause of painful grouped genital vesicles or shallow ulcers.",
+      "partial concept match: Infection typically begins with the formation of vesicles, which lyse and progress to shallow, painful ulcers with an erythematous border",
+      "partial concept match: Vulvovaginal infections / STI",
+      "linked through matched MedicalFact"
+    ],
+    "selectedRole": "related"
+  },
+  {
+    "knowledgeObjectId": "ko-864ee53540de3398-genital-herpes-due-to-hsv-mechanism",
+    "canonicalImageId": "anking-image-7cac0cf6eb7f04b8",
+    "score": 100,
+    "reasons": [
+      "partial concept match: Herpes simplex virus",
+      "partial concept match: genital herpes due to HSV",
+      "partial concept match: Identify HSV as the cause of painful grouped genital vesicles or shallow ulcers.",
+      "partial concept match: Infection typically begins with the formation of vesicles, which lyse and progress to shallow, painful ulcers with an erythematous border",
+      "partial concept match: Vulvovaginal infections / STI",
+      "linked through matched MedicalFact"
+    ],
+    "selectedRole": "related"
+  },
+  {
+    "knowledgeObjectId": "ko-864ee53540de3398-genital-herpes-due-to-hsv-mechanism",
+    "canonicalImageId": "anking-image-654d57fe9f1ccde2",
+    "score": 100,
+    "reasons": [
+      "partial concept match: Herpes simplex virus",
+      "partial concept match: genital herpes due to HSV",
+      "partial concept match: Identify HSV as the cause of painful grouped genital vesicles or shallow ulcers.",
+      "partial concept match: Infection typically begins with the formation of vesicles, which lyse and progress to shallow, painful ulcers with an erythematous border",
+      "partial concept match: Vulvovaginal infections / STI",
+      "linked through matched MedicalFact"
+    ],
+    "selectedRole": "related"
+  },
+  {
+    "knowledgeObjectId": "ko-864ee53540de3398-genital-herpes-due-to-hsv-mechanism",
+    "canonicalImageId": "anking-image-035511713a4a540d",
+    "score": 100,
+    "reasons": [
+      "partial concept match: Herpes simplex virus",
+      "partial concept match: genital herpes due to HSV",
+      "partial concept match: Identify HSV as the cause of painful grouped genital vesicles or shallow ulcers.",
+      "partial concept match: Infection typically begins with the formation of vesicles, which lyse and progress to shallow, painful ulcers with an erythematous border",
+      "partial concept match: Vulvovaginal infections / STI",
+      "linked through matched MedicalFact"
+    ],
+    "selectedRole": "related"
+  },
+  {
+    "knowledgeObjectId": "ko-864ee53540de3398-genital-herpes-due-to-hsv-mechanism",
+    "canonicalImageId": "anking-image-1e5665b5af9bb682",
+    "score": 86,
+    "reasons": [
+      "partial concept match: Identify HSV as the cause of painful grouped genital vesicles or shallow ulcers.",
+      "partial concept match: Infection typically begins with the formation of vesicles, which lyse and progress to shallow, painful ulcers with an erythematous border",
+      "partial concept match: Vulvovaginal infections / STI",
+      "Step 2 / shelf tag match",
+      "linked through matched MedicalFact"
+    ],
+    "selectedRole": "related"
+  },
+  {
+    "knowledgeObjectId": "ko-932a800bd2b69e9a-ectopic-pregnancy-diagnosis",
+    "canonicalImageId": "anking-image-a826d12c122e4410",
+    "score": 100,
+    "reasons": [
+      "partial concept match: Ectopic pregnancy",
+      "partial concept match: Diagnose Ectopic pregnancy.",
+      "partial concept match: There is cervical motion tenderness with a firm cervix and a closed cervical os",
+      "partial concept match: Early pregnancy bleeding / acute pelvic pain",
+      "decision-boundary match: Pelvic inflammatory disease",
+      "Step 2 / shelf tag match",
+      "management-stage visual match",
+      "linked through matched MedicalFact"
+    ],
+    "selectedRole": "primary"
+  },
+  {
+    "knowledgeObjectId": "ko-932a800bd2b69e9a-ectopic-pregnancy-diagnosis",
+    "canonicalImageId": "anking-image-b7e53132a340363d",
+    "score": 100,
+    "reasons": [
+      "partial concept match: Ectopic pregnancy",
+      "decision-boundary match: Ectopic pregnancy",
+      "decision-boundary match: Appendicitis",
+      "Step 2 / shelf tag match",
+      "management-stage visual match",
+      "linked through matched MedicalFact"
+    ],
+    "selectedRole": "related"
+  },
+  {
+    "knowledgeObjectId": "ko-932a800bd2b69e9a-ectopic-pregnancy-diagnosis",
+    "canonicalImageId": "anking-image-992d8cb3a7829e9b",
+    "score": 100,
+    "reasons": [
+      "partial concept match: Ectopic pregnancy",
+      "decision-boundary match: Ectopic pregnancy",
+      "decision-boundary match: Appendicitis",
+      "decision-boundary match: Hydatidiform mole",
+      "Step 2 / shelf tag match",
+      "management-stage visual match"
+    ],
+    "selectedRole": "related"
+  },
+  {
+    "knowledgeObjectId": "ko-932a800bd2b69e9a-ectopic-pregnancy-diagnosis",
+    "canonicalImageId": "anking-image-6088625eae9a4ba3",
+    "score": 100,
+    "reasons": [
+      "partial concept match: Ectopic pregnancy",
+      "decision-boundary match: Ectopic pregnancy",
+      "decision-boundary match: Appendicitis",
+      "decision-boundary match: Hydatidiform mole",
+      "Step 2 / shelf tag match",
+      "management-stage visual match",
+      "linked through matched MedicalFact"
+    ],
+    "selectedRole": "related"
+  },
+  {
+    "knowledgeObjectId": "ko-932a800bd2b69e9a-ectopic-pregnancy-diagnosis",
+    "canonicalImageId": "anking-image-4286c5a83529b1c0",
+    "score": 100,
+    "reasons": [
+      "partial concept match: Ectopic pregnancy",
+      "decision-boundary match: Ectopic pregnancy",
+      "decision-boundary match: Appendicitis",
+      "decision-boundary match: Hydatidiform mole",
+      "Step 2 / shelf tag match",
+      "management-stage visual match",
+      "linked through matched MedicalFact"
+    ],
+    "selectedRole": "related"
+  },
+  {
+    "knowledgeObjectId": "ko-932a800bd2b69e9a-ectopic-pregnancy-diagnosis",
+    "canonicalImageId": "anking-image-fba9dcaaa0e9d1a4",
+    "score": 100,
+    "reasons": [
+      "partial concept match: Ectopic pregnancy",
+      "decision-boundary match: Ectopic pregnancy",
+      "Step 2 / shelf tag match",
+      "management-stage visual match",
+      "linked through matched MedicalFact"
+    ],
+    "selectedRole": "related"
+  },
+  {
+    "knowledgeObjectId": "ko-a9e4b410555a04b0-cesarean-delivery-diagnosis",
+    "canonicalImageId": "anking-image-a826d12c122e4410",
+    "score": 100,
+    "reasons": [
+      "partial concept match: Cesarean delivery",
+      "partial concept match: Diagnose Cesarean delivery.",
+      "partial concept match: Examination shows a uterus consistent in size with an 8-week gestation",
+      "partial concept match: Female Reproductive",
+      "decision-boundary match: Renal failure",
+      "Step 2 / shelf tag match",
+      "management-stage visual match",
+      "linked through matched MedicalFact"
+    ],
+    "selectedRole": "primary"
+  },
+  {
+    "knowledgeObjectId": "ko-a9e4b410555a04b0-cesarean-delivery-diagnosis",
+    "canonicalImageId": "anking-image-1e5665b5af9bb682",
+    "score": 100,
+    "reasons": [
+      "partial concept match: Cesarean delivery",
+      "partial concept match: Diagnose Cesarean delivery.",
+      "partial concept match: Examination shows a uterus consistent in size with an 8-week gestation",
+      "partial concept match: Female Reproductive",
+      "decision-boundary match: Preeclampsia",
+      "Step 2 / shelf tag match",
+      "management-stage visual match",
+      "linked through matched MedicalFact"
+    ],
+    "selectedRole": "related"
+  },
+  {
+    "knowledgeObjectId": "ko-a9e4b410555a04b0-cesarean-delivery-diagnosis",
+    "canonicalImageId": "anking-image-4286c5a83529b1c0",
+    "score": 88,
+    "reasons": [
+      "decision-boundary match: Preeclampsia",
+      "decision-boundary match: Renal failure",
+      "decision-boundary match: Uterine rupture",
+      "Step 2 / shelf tag match",
+      "management-stage visual match"
+    ],
+    "selectedRole": "related"
+  },
+  {
+    "knowledgeObjectId": "ko-a9e4b410555a04b0-cesarean-delivery-diagnosis",
+    "canonicalImageId": "anking-image-a6c4e6f33c5d9e53",
+    "score": 88,
+    "reasons": [
+      "partial concept match: Cesarean delivery",
+      "partial concept match: Diagnose Cesarean delivery.",
+      "partial concept match: Examination shows a uterus consistent in size with an 8-week gestation",
+      "partial concept match: Female Reproductive",
+      "linked through matched MedicalFact"
+    ],
+    "selectedRole": "related"
+  },
+  {
+    "knowledgeObjectId": "ko-a9e4b410555a04b0-cesarean-delivery-diagnosis",
+    "canonicalImageId": "anking-image-e2db9d7a9b89488f",
+    "score": 88,
+    "reasons": [
+      "partial concept match: Cesarean delivery",
+      "partial concept match: Diagnose Cesarean delivery.",
+      "partial concept match: Examination shows a uterus consistent in size with an 8-week gestation",
+      "partial concept match: Female Reproductive",
+      "linked through matched MedicalFact"
+    ],
+    "selectedRole": "related"
+  },
+  {
+    "knowledgeObjectId": "ko-a9e4b410555a04b0-cesarean-delivery-diagnosis",
+    "canonicalImageId": "anking-image-7cac0cf6eb7f04b8",
+    "score": 88,
+    "reasons": [
+      "partial concept match: Cesarean delivery",
+      "partial concept match: Diagnose Cesarean delivery.",
+      "partial concept match: Examination shows a uterus consistent in size with an 8-week gestation",
+      "partial concept match: Female Reproductive",
+      "linked through matched MedicalFact"
+    ],
+    "selectedRole": "related"
+  },
+  {
+    "knowledgeObjectId": "ko-842fee31b1b296e7-chronic-anovulation-risk_factor_interpretation",
+    "canonicalImageId": "anking-image-a826d12c122e4410",
+    "score": 100,
+    "reasons": [
+      "partial concept match: Chronic anovulation",
+      "partial concept match: Apply the Chronic anovulation reasoning schema.",
+      "partial concept match: Pelvic examination shows a small amount of blood at the cervical os",
+      "partial concept match: Gynecologic oncology",
+      "decision-boundary match: Diabetes mellitus",
+      "decision-boundary match: Hypertension",
+      "Step 2 / shelf tag match",
+      "linked through matched MedicalFact"
+    ],
+    "selectedRole": "primary"
+  },
+  {
+    "knowledgeObjectId": "ko-842fee31b1b296e7-chronic-anovulation-risk_factor_interpretation",
+    "canonicalImageId": "anking-image-1e5665b5af9bb682",
+    "score": 100,
+    "reasons": [
+      "partial concept match: Chronic anovulation",
+      "partial concept match: Apply the Chronic anovulation reasoning schema.",
+      "partial concept match: Pelvic examination shows a small amount of blood at the cervical os",
+      "partial concept match: Gynecologic oncology",
+      "decision-boundary match: Diabetes mellitus",
+      "decision-boundary match: Hypertension",
+      "Step 2 / shelf tag match",
+      "linked through matched MedicalFact"
+    ],
+    "selectedRole": "related"
+  },
+  {
+    "knowledgeObjectId": "ko-842fee31b1b296e7-chronic-anovulation-risk_factor_interpretation",
+    "canonicalImageId": "anking-image-a6c4e6f33c5d9e53",
+    "score": 88,
+    "reasons": [
+      "partial concept match: Chronic anovulation",
+      "partial concept match: Apply the Chronic anovulation reasoning schema.",
+      "partial concept match: Pelvic examination shows a small amount of blood at the cervical os",
+      "partial concept match: Gynecologic oncology",
+      "linked through matched MedicalFact"
+    ],
+    "selectedRole": "related"
+  },
+  {
+    "knowledgeObjectId": "ko-842fee31b1b296e7-chronic-anovulation-risk_factor_interpretation",
+    "canonicalImageId": "anking-image-dc26e1d5c8fcb63c",
+    "score": 88,
+    "reasons": [
+      "partial concept match: Chronic anovulation",
+      "partial concept match: Apply the Chronic anovulation reasoning schema.",
+      "partial concept match: Pelvic examination shows a small amount of blood at the cervical os",
+      "partial concept match: Gynecologic oncology",
+      "linked through matched MedicalFact"
+    ],
+    "selectedRole": "related"
+  },
+  {
+    "knowledgeObjectId": "ko-842fee31b1b296e7-chronic-anovulation-risk_factor_interpretation",
+    "canonicalImageId": "anking-image-1ad71ab7801654a2",
+    "score": 80,
+    "reasons": [
+      "decision-boundary match: Diabetes mellitus",
+      "decision-boundary match: Hypertension",
+      "decision-boundary match: Nulliparity",
+      "Step 2 / shelf tag match"
+    ],
+    "selectedRole": "related"
+  },
+  {
+    "knowledgeObjectId": "ko-842fee31b1b296e7-chronic-anovulation-risk_factor_interpretation",
+    "canonicalImageId": "anking-image-e2db9d7a9b89488f",
+    "score": 70,
+    "reasons": [
+      "partial concept match: Apply the Chronic anovulation reasoning schema.",
+      "partial concept match: Pelvic examination shows a small amount of blood at the cervical os",
+      "partial concept match: Gynecologic oncology",
+      "linked through matched MedicalFact"
+    ],
+    "selectedRole": "related"
+  },
+  {
+    "knowledgeObjectId": "ko-b6b61a51c89ef066-different-shape-next_best_step",
+    "canonicalImageId": "anking-image-a826d12c122e4410",
+    "score": 100,
+    "reasons": [
+      "partial concept match: Different shape",
+      "partial concept match: Choose the correct clinical action for Different shape.",
+      "partial concept match: They most commonly present with vaginal bleeding, pelvic pain, and miscarriage or infertility that can sometimes be asymptomatic",
+      "partial concept match: Contraception",
+      "Step 2 / shelf tag match",
+      "management-stage visual match",
+      "linked through matched MedicalFact"
+    ],
+    "selectedRole": "primary"
+  },
+  {
+    "knowledgeObjectId": "ko-b6b61a51c89ef066-different-shape-next_best_step",
+    "canonicalImageId": "anking-image-6088625eae9a4ba3",
+    "score": 100,
+    "reasons": [
+      "partial concept match: Contraception",
+      "Step 2 / shelf tag match",
+      "management-stage visual match",
+      "linked through matched MedicalFact"
+    ],
+    "selectedRole": "related"
+  },
+  {
+    "knowledgeObjectId": "ko-b6b61a51c89ef066-different-shape-next_best_step",
+    "canonicalImageId": "anking-image-f04042cf4821bdfd",
+    "score": 100,
+    "reasons": [
+      "partial concept match: Contraception",
+      "Step 2 / shelf tag match",
+      "management-stage visual match"
+    ],
+    "selectedRole": "related"
+  },
+  {
+    "knowledgeObjectId": "ko-b6b61a51c89ef066-different-shape-next_best_step",
+    "canonicalImageId": "anking-image-383c520723a33069",
+    "score": 100,
+    "reasons": [
+      "partial concept match: Contraception",
+      "Step 2 / shelf tag match",
+      "management-stage visual match",
+      "linked through matched MedicalFact"
+    ],
+    "selectedRole": "related"
+  },
+  {
+    "knowledgeObjectId": "ko-b6b61a51c89ef066-different-shape-next_best_step",
+    "canonicalImageId": "anking-image-65cb6781ccc4f644",
+    "score": 100,
+    "reasons": [
+      "partial concept match: Contraception",
+      "Step 2 / shelf tag match",
+      "management-stage visual match",
+      "linked through matched MedicalFact"
+    ],
+    "selectedRole": "related"
+  },
+  {
+    "knowledgeObjectId": "ko-b6b61a51c89ef066-different-shape-next_best_step",
+    "canonicalImageId": "anking-image-62ea89e639124cac",
+    "score": 100,
+    "reasons": [
+      "partial concept match: Contraception",
+      "Step 2 / shelf tag match",
+      "management-stage visual match",
+      "linked through matched MedicalFact"
+    ],
+    "selectedRole": "related"
+  },
+  {
+    "knowledgeObjectId": "ko-6fd127b27cd2ad18-lactational-mastitis-treated-with-anti-staphylococcal-therapy-management",
+    "canonicalImageId": "anking-image-a826d12c122e4410",
+    "score": 100,
+    "reasons": [
+      "partial concept match: Dicloxacillin",
+      "partial concept match: lactational mastitis treated with anti-staphylococcal therapy",
+      "partial concept match: Select anti-staphylococcal antibiotic therapy for lactational mastitis.",
+      "partial concept match: Examination of the breast shows an erythematous, hard, tender upper outer quadrant",
+      "partial concept match: Breast infection / lactation",
+      "decision-boundary match: Tetracycline",
+      "Step 2 / shelf tag match",
+      "management-stage visual match",
+      "linked through matched MedicalFact"
+    ],
+    "selectedRole": "primary"
+  },
+  {
+    "knowledgeObjectId": "ko-6fd127b27cd2ad18-lactational-mastitis-treated-with-anti-staphylococcal-therapy-management",
+    "canonicalImageId": "anking-image-1e5665b5af9bb682",
+    "score": 100,
+    "reasons": [
+      "partial concept match: Dicloxacillin",
+      "partial concept match: lactational mastitis treated with anti-staphylococcal therapy",
+      "partial concept match: Select anti-staphylococcal antibiotic therapy for lactational mastitis.",
+      "partial concept match: Breast infection / lactation",
+      "decision-boundary match: Ampicillin",
+      "decision-boundary match: Tetracycline",
+      "Step 2 / shelf tag match",
+      "management-stage visual match",
+      "linked through matched MedicalFact"
+    ],
+    "selectedRole": "related"
+  },
+  {
+    "knowledgeObjectId": "ko-6fd127b27cd2ad18-lactational-mastitis-treated-with-anti-staphylococcal-therapy-management",
+    "canonicalImageId": "anking-image-a6c4e6f33c5d9e53",
+    "score": 88,
+    "reasons": [
+      "partial concept match: Dicloxacillin",
+      "partial concept match: lactational mastitis treated with anti-staphylococcal therapy",
+      "partial concept match: Select anti-staphylococcal antibiotic therapy for lactational mastitis.",
+      "partial concept match: Breast infection / lactation",
+      "linked through matched MedicalFact"
+    ],
+    "selectedRole": "related"
+  },
+  {
+    "knowledgeObjectId": "ko-6fd127b27cd2ad18-lactational-mastitis-treated-with-anti-staphylococcal-therapy-management",
+    "canonicalImageId": "anking-image-e2db9d7a9b89488f",
+    "score": 88,
+    "reasons": [
+      "partial concept match: lactational mastitis treated with anti-staphylococcal therapy",
+      "partial concept match: Select anti-staphylococcal antibiotic therapy for lactational mastitis.",
+      "partial concept match: Examination of the breast shows an erythematous, hard, tender upper outer quadrant",
+      "partial concept match: Breast infection / lactation",
+      "linked through matched MedicalFact"
+    ],
+    "selectedRole": "related"
+  },
+  {
+    "knowledgeObjectId": "ko-6fd127b27cd2ad18-lactational-mastitis-treated-with-anti-staphylococcal-therapy-management",
+    "canonicalImageId": "anking-image-7cac0cf6eb7f04b8",
+    "score": 88,
+    "reasons": [
+      "partial concept match: lactational mastitis treated with anti-staphylococcal therapy",
+      "partial concept match: Select anti-staphylococcal antibiotic therapy for lactational mastitis.",
+      "partial concept match: Examination of the breast shows an erythematous, hard, tender upper outer quadrant",
+      "partial concept match: Breast infection / lactation",
+      "linked through matched MedicalFact"
+    ],
+    "selectedRole": "related"
+  },
+  {
+    "knowledgeObjectId": "ko-6fd127b27cd2ad18-lactational-mastitis-treated-with-anti-staphylococcal-therapy-management",
+    "canonicalImageId": "anking-image-654d57fe9f1ccde2",
+    "score": 88,
+    "reasons": [
+      "partial concept match: lactational mastitis treated with anti-staphylococcal therapy",
+      "partial concept match: Select anti-staphylococcal antibiotic therapy for lactational mastitis.",
+      "partial concept match: Examination of the breast shows an erythematous, hard, tender upper outer quadrant",
+      "partial concept match: Breast infection / lactation",
+      "linked through matched MedicalFact"
+    ],
+    "selectedRole": "related"
+  },
+  {
+    "knowledgeObjectId": "ko-f72f29ed8ff90c4e-pneumonia-next_best_step",
+    "canonicalImageId": "anking-image-97e7c5b3ef2d827b",
+    "score": 100,
+    "reasons": [
+      "partial concept match: Pneumonia",
+      "decision-boundary match: Pneumonia",
+      "Step 2 / shelf tag match",
+      "management-stage visual match"
+    ],
+    "selectedRole": "primary"
+  },
+  {
+    "knowledgeObjectId": "ko-f72f29ed8ff90c4e-pneumonia-next_best_step",
+    "canonicalImageId": "anking-image-a826d12c122e4410",
+    "score": 100,
+    "reasons": [
+      "partial concept match: Testing of the wife first; if negative, no further testing is indicated",
+      "partial concept match: Pneumonia",
+      "partial concept match: Choose the correct clinical action for Pneumonia.",
+      "partial concept match: He has no known relatives with Tay-Sachs disease",
+      "partial concept match: Vulvovaginal infections / STI",
+      "decision-boundary match: Pneumonia",
+      "Step 2 / shelf tag match",
+      "management-stage visual match",
+      "linked through matched MedicalFact"
+    ],
+    "selectedRole": "related"
+  },
+  {
+    "knowledgeObjectId": "ko-f72f29ed8ff90c4e-pneumonia-next_best_step",
+    "canonicalImageId": "anking-image-6ea59af9b192fbb5",
+    "score": 100,
+    "reasons": [
+      "partial concept match: Pneumonia",
+      "decision-boundary match: Pneumonia",
+      "Step 2 / shelf tag match",
+      "management-stage visual match"
+    ],
+    "selectedRole": "related"
+  },
+  {
+    "knowledgeObjectId": "ko-f72f29ed8ff90c4e-pneumonia-next_best_step",
+    "canonicalImageId": "anking-image-1ad71ab7801654a2",
+    "score": 100,
+    "reasons": [
+      "partial concept match: Pneumonia",
+      "decision-boundary match: Pneumonia",
+      "Step 2 / shelf tag match",
+      "management-stage visual match"
+    ],
+    "selectedRole": "related"
+  },
+  {
+    "knowledgeObjectId": "ko-f72f29ed8ff90c4e-pneumonia-next_best_step",
+    "canonicalImageId": "anking-image-dbbdf199f6da0b90",
+    "score": 100,
+    "reasons": [
+      "partial concept match: Pneumonia",
+      "decision-boundary match: Pneumonia",
+      "Step 2 / shelf tag match",
+      "management-stage visual match",
+      "linked through matched MedicalFact"
+    ],
+    "selectedRole": "related"
+  },
+  {
+    "knowledgeObjectId": "ko-f72f29ed8ff90c4e-pneumonia-next_best_step",
+    "canonicalImageId": "anking-image-992d8cb3a7829e9b",
+    "score": 100,
+    "reasons": [
+      "partial concept match: Pneumonia",
+      "decision-boundary match: Pneumonia",
+      "Step 2 / shelf tag match",
+      "management-stage visual match"
+    ],
+    "selectedRole": "related"
+  },
+  {
+    "knowledgeObjectId": "ko-4d4baf6e5a3691f0-prescribe-next_best_step",
+    "canonicalImageId": "anking-image-a826d12c122e4410",
+    "score": 100,
+    "reasons": [
+      "partial concept match: Prescribe",
+      "partial concept match: Choose the correct clinical action for Prescribe.",
+      "partial concept match: A variety of contraceptive methods are appropriate, including oral or injectable hormonal contraceptives or intrauterine or subdermal implant devices",
+      "partial concept match: Vulvovaginal infections / STI",
+      "decision-boundary match: Prescribe",
+      "Step 2 / shelf tag match",
+      "management-stage visual match",
+      "linked through matched MedicalFact"
+    ],
+    "selectedRole": "primary"
+  },
+  {
+    "knowledgeObjectId": "ko-4d4baf6e5a3691f0-prescribe-next_best_step",
+    "canonicalImageId": "anking-image-1e5665b5af9bb682",
+    "score": 100,
+    "reasons": [
+      "partial concept match: Prescribe",
+      "partial concept match: Choose the correct clinical action for Prescribe.",
+      "partial concept match: A variety of contraceptive methods are appropriate, including oral or injectable hormonal contraceptives or intrauterine or subdermal implant devices",
+      "partial concept match: Vulvovaginal infections / STI",
+      "Step 2 / shelf tag match",
+      "management-stage visual match",
+      "linked through matched MedicalFact"
+    ],
+    "selectedRole": "related"
+  },
+  {
+    "knowledgeObjectId": "ko-4d4baf6e5a3691f0-prescribe-next_best_step",
+    "canonicalImageId": "anking-image-a6c4e6f33c5d9e53",
+    "score": 88,
+    "reasons": [
+      "partial concept match: Prescribe",
+      "partial concept match: Choose the correct clinical action for Prescribe.",
+      "partial concept match: A variety of contraceptive methods are appropriate, including oral or injectable hormonal contraceptives or intrauterine or subdermal implant devices",
+      "partial concept match: Vulvovaginal infections / STI",
+      "linked through matched MedicalFact"
+    ],
+    "selectedRole": "related"
+  },
+  {
+    "knowledgeObjectId": "ko-4d4baf6e5a3691f0-prescribe-next_best_step",
+    "canonicalImageId": "anking-image-e2db9d7a9b89488f",
+    "score": 88,
+    "reasons": [
+      "partial concept match: Prescribe",
+      "partial concept match: Choose the correct clinical action for Prescribe.",
+      "partial concept match: A variety of contraceptive methods are appropriate, including oral or injectable hormonal contraceptives or intrauterine or subdermal implant devices",
+      "partial concept match: Vulvovaginal infections / STI",
+      "linked through matched MedicalFact"
+    ],
+    "selectedRole": "related"
+  },
+  {
+    "knowledgeObjectId": "ko-4d4baf6e5a3691f0-prescribe-next_best_step",
+    "canonicalImageId": "anking-image-7cac0cf6eb7f04b8",
+    "score": 88,
+    "reasons": [
+      "partial concept match: Prescribe",
+      "partial concept match: Choose the correct clinical action for Prescribe.",
+      "partial concept match: A variety of contraceptive methods are appropriate, including oral or injectable hormonal contraceptives or intrauterine or subdermal implant devices",
+      "partial concept match: Vulvovaginal infections / STI",
+      "linked through matched MedicalFact"
+    ],
+    "selectedRole": "related"
+  },
+  {
+    "knowledgeObjectId": "ko-4d4baf6e5a3691f0-prescribe-next_best_step",
+    "canonicalImageId": "anking-image-654d57fe9f1ccde2",
+    "score": 88,
+    "reasons": [
+      "partial concept match: Prescribe",
+      "partial concept match: Choose the correct clinical action for Prescribe.",
+      "partial concept match: A variety of contraceptive methods are appropriate, including oral or injectable hormonal contraceptives or intrauterine or subdermal implant devices",
+      "partial concept match: Vulvovaginal infections / STI",
+      "linked through matched MedicalFact"
+    ],
+    "selectedRole": "related"
+  },
+  {
+    "knowledgeObjectId": "ko-6f15fc8260313084-depot-medroxyprogesterone-management",
+    "canonicalImageId": "anking-image-a826d12c122e4410",
+    "score": 100,
+    "reasons": [
+      "partial concept match: Depot medroxyprogesterone",
+      "partial concept match: Choose the correct clinical action for Depot medroxyprogesterone.",
+      "partial concept match: She does not want to become pregnant now",
+      "partial concept match: Vulvovaginal infections / STI",
+      "decision-boundary match: Oral contraceptive",
+      "Step 2 / shelf tag match",
+      "management-stage visual match",
+      "linked through matched MedicalFact"
+    ],
+    "selectedRole": "primary"
+  },
+  {
+    "knowledgeObjectId": "ko-6f15fc8260313084-depot-medroxyprogesterone-management",
+    "canonicalImageId": "anking-image-1e5665b5af9bb682",
+    "score": 94,
+    "reasons": [
+      "partial concept match: Choose the correct clinical action for Depot medroxyprogesterone.",
+      "partial concept match: She does not want to become pregnant now",
+      "partial concept match: Vulvovaginal infections / STI",
+      "Step 2 / shelf tag match",
+      "management-stage visual match",
+      "linked through matched MedicalFact"
+    ],
+    "selectedRole": "related"
+  },
+  {
+    "knowledgeObjectId": "ko-6f15fc8260313084-depot-medroxyprogesterone-management",
+    "canonicalImageId": "anking-image-e2db9d7a9b89488f",
+    "score": 88,
+    "reasons": [
+      "partial concept match: Depot medroxyprogesterone",
+      "partial concept match: Choose the correct clinical action for Depot medroxyprogesterone.",
+      "partial concept match: She does not want to become pregnant now",
+      "partial concept match: Vulvovaginal infections / STI",
+      "linked through matched MedicalFact"
+    ],
+    "selectedRole": "related"
+  },
+  {
+    "knowledgeObjectId": "ko-6f15fc8260313084-depot-medroxyprogesterone-management",
+    "canonicalImageId": "anking-image-7cac0cf6eb7f04b8",
+    "score": 88,
+    "reasons": [
+      "partial concept match: Depot medroxyprogesterone",
+      "partial concept match: Choose the correct clinical action for Depot medroxyprogesterone.",
+      "partial concept match: She does not want to become pregnant now",
+      "partial concept match: Vulvovaginal infections / STI",
+      "linked through matched MedicalFact"
+    ],
+    "selectedRole": "related"
+  },
+  {
+    "knowledgeObjectId": "ko-6f15fc8260313084-depot-medroxyprogesterone-management",
+    "canonicalImageId": "anking-image-654d57fe9f1ccde2",
+    "score": 88,
+    "reasons": [
+      "partial concept match: Depot medroxyprogesterone",
+      "partial concept match: Choose the correct clinical action for Depot medroxyprogesterone.",
+      "partial concept match: She does not want to become pregnant now",
+      "partial concept match: Vulvovaginal infections / STI",
+      "linked through matched MedicalFact"
+    ],
+    "selectedRole": "related"
+  },
+  {
+    "knowledgeObjectId": "ko-6f15fc8260313084-depot-medroxyprogesterone-management",
+    "canonicalImageId": "anking-image-035511713a4a540d",
+    "score": 88,
+    "reasons": [
+      "partial concept match: Depot medroxyprogesterone",
+      "partial concept match: Choose the correct clinical action for Depot medroxyprogesterone.",
+      "partial concept match: She does not want to become pregnant now",
+      "partial concept match: Vulvovaginal infections / STI",
+      "linked through matched MedicalFact"
+    ],
+    "selectedRole": "related"
+  },
+  {
+    "knowledgeObjectId": "ko-e455ac515682b0e1-pneumonia-management",
+    "canonicalImageId": "anking-image-97e7c5b3ef2d827b",
+    "score": 100,
+    "reasons": [
+      "partial concept match: Pneumonia",
+      "decision-boundary match: Pneumonia",
+      "decision-boundary match: Meningococcal",
+      "Step 2 / shelf tag match",
+      "management-stage visual match"
+    ],
+    "selectedRole": "primary"
+  },
+  {
+    "knowledgeObjectId": "ko-e455ac515682b0e1-pneumonia-management",
+    "canonicalImageId": "anking-image-a826d12c122e4410",
+    "score": 100,
+    "reasons": [
+      "partial concept match: Influenza virus",
+      "partial concept match: Pneumonia",
+      "partial concept match: Choose the correct clinical action for Pneumonia.",
+      "partial concept match: The influenza vaccine is available in inactivated, recombinant, and live-attenuated forms",
+      "partial concept match: Female Reproductive",
+      "decision-boundary match: Pneumonia",
+      "Step 2 / shelf tag match",
+      "management-stage visual match",
+      "linked through matched MedicalFact"
+    ],
+    "selectedRole": "related"
+  },
+  {
+    "knowledgeObjectId": "ko-e455ac515682b0e1-pneumonia-management",
+    "canonicalImageId": "anking-image-6ea59af9b192fbb5",
+    "score": 100,
+    "reasons": [
+      "partial concept match: Pneumonia",
+      "decision-boundary match: Pneumonia",
+      "Step 2 / shelf tag match",
+      "management-stage visual match"
+    ],
+    "selectedRole": "related"
+  },
+  {
+    "knowledgeObjectId": "ko-e455ac515682b0e1-pneumonia-management",
+    "canonicalImageId": "anking-image-1ad71ab7801654a2",
+    "score": 100,
+    "reasons": [
+      "partial concept match: Pneumonia",
+      "decision-boundary match: Pneumonia",
+      "Step 2 / shelf tag match",
+      "management-stage visual match"
+    ],
+    "selectedRole": "related"
+  },
+  {
+    "knowledgeObjectId": "ko-e455ac515682b0e1-pneumonia-management",
+    "canonicalImageId": "anking-image-b7e53132a340363d",
+    "score": 100,
+    "reasons": [
+      "partial concept match: Pneumonia",
+      "decision-boundary match: Pneumonia",
+      "decision-boundary match: Varicella",
+      "Step 2 / shelf tag match",
+      "management-stage visual match",
+      "linked through matched MedicalFact"
+    ],
+    "selectedRole": "related"
+  },
+  {
+    "knowledgeObjectId": "ko-e455ac515682b0e1-pneumonia-management",
+    "canonicalImageId": "anking-image-dbbdf199f6da0b90",
+    "score": 100,
+    "reasons": [
+      "partial concept match: Pneumonia",
+      "partial concept match: Female Reproductive",
+      "decision-boundary match: Pneumonia",
+      "decision-boundary match: Varicella",
+      "Step 2 / shelf tag match",
+      "management-stage visual match",
+      "linked through matched MedicalFact"
+    ],
+    "selectedRole": "related"
+  },
+  {
+    "knowledgeObjectId": "ko-ccf1dfcd29666568-ultrasonograejhy-for-dating-next_best_step",
+    "canonicalImageId": "anking-image-a826d12c122e4410",
+    "score": 100,
+    "reasons": [
+      "partial concept match: UltrasonograEJhy for dating",
+      "partial concept match: Choose the correct clinical action for UltrasonograEJhy for dating.",
+      "partial concept match: Fetal heart tones are 160/min",
+      "partial concept match: Early pregnancy bleeding / acute pelvic pain",
+      "Step 2 / shelf tag match",
+      "management-stage visual match",
+      "linked through matched MedicalFact"
+    ],
+    "selectedRole": "primary"
+  },
+  {
+    "knowledgeObjectId": "ko-ccf1dfcd29666568-ultrasonograejhy-for-dating-next_best_step",
+    "canonicalImageId": "anking-image-e2db9d7a9b89488f",
+    "score": 88,
+    "reasons": [
+      "partial concept match: UltrasonograEJhy for dating",
+      "partial concept match: Choose the correct clinical action for UltrasonograEJhy for dating.",
+      "partial concept match: Fetal heart tones are 160/min",
+      "partial concept match: Early pregnancy bleeding / acute pelvic pain",
+      "linked through matched MedicalFact"
+    ],
+    "selectedRole": "related"
+  },
+  {
+    "knowledgeObjectId": "ko-ccf1dfcd29666568-ultrasonograejhy-for-dating-next_best_step",
+    "canonicalImageId": "anking-image-7cac0cf6eb7f04b8",
+    "score": 88,
+    "reasons": [
+      "partial concept match: UltrasonograEJhy for dating",
+      "partial concept match: Choose the correct clinical action for UltrasonograEJhy for dating.",
+      "partial concept match: Fetal heart tones are 160/min",
+      "partial concept match: Early pregnancy bleeding / acute pelvic pain",
+      "linked through matched MedicalFact"
+    ],
+    "selectedRole": "related"
+  },
+  {
+    "knowledgeObjectId": "ko-ccf1dfcd29666568-ultrasonograejhy-for-dating-next_best_step",
+    "canonicalImageId": "anking-image-654d57fe9f1ccde2",
+    "score": 88,
+    "reasons": [
+      "partial concept match: UltrasonograEJhy for dating",
+      "partial concept match: Choose the correct clinical action for UltrasonograEJhy for dating.",
+      "partial concept match: Fetal heart tones are 160/min",
+      "partial concept match: Early pregnancy bleeding / acute pelvic pain",
+      "linked through matched MedicalFact"
+    ],
+    "selectedRole": "related"
+  },
+  {
+    "knowledgeObjectId": "ko-ccf1dfcd29666568-ultrasonograejhy-for-dating-next_best_step",
+    "canonicalImageId": "anking-image-035511713a4a540d",
+    "score": 88,
+    "reasons": [
+      "partial concept match: UltrasonograEJhy for dating",
+      "partial concept match: Choose the correct clinical action for UltrasonograEJhy for dating.",
+      "partial concept match: Fetal heart tones are 160/min",
+      "partial concept match: Early pregnancy bleeding / acute pelvic pain",
+      "linked through matched MedicalFact"
+    ],
+    "selectedRole": "related"
+  },
+  {
+    "knowledgeObjectId": "ko-ccf1dfcd29666568-ultrasonograejhy-for-dating-next_best_step",
+    "canonicalImageId": "anking-image-1e5665b5af9bb682",
+    "score": 76,
+    "reasons": [
+      "partial concept match: Choose the correct clinical action for UltrasonograEJhy for dating.",
+      "partial concept match: Early pregnancy bleeding / acute pelvic pain",
+      "Step 2 / shelf tag match",
+      "management-stage visual match",
+      "linked through matched MedicalFact"
+    ],
+    "selectedRole": "related"
+  },
+  {
+    "knowledgeObjectId": "ko-67b2d9f9ec89c0be-persistent-uterine-atony-after-massage-and-oxytocin-requiring-second-line-uterotonic-escalation-next_best_step",
+    "canonicalImageId": "anking-image-a826d12c122e4410",
+    "score": 100,
+    "reasons": [
+      "partial concept match: Ergonovine therapy",
+      "partial concept match: persistent uterine atony after massage and oxytocin requiring second-line uterotonic escalation",
+      "partial concept match: Escalate to a second-line uterotonic when atony persists after massage and oxytocin.",
+      "partial concept match: Despite receiving oxytocin therapy in the recovery room , she has excessive vaginal bleeding and a boggy uterus",
+      "partial concept match: Obstetrics / postpartum hemorrhage",
+      "Step 2 / shelf tag match",
+      "management-stage visual match",
+      "linked through matched MedicalFact"
+    ],
+    "selectedRole": "primary"
+  },
+  {
+    "knowledgeObjectId": "ko-67b2d9f9ec89c0be-persistent-uterine-atony-after-massage-and-oxytocin-requiring-second-line-uterotonic-escalation-next_best_step",
+    "canonicalImageId": "anking-image-1e5665b5af9bb682",
+    "score": 100,
+    "reasons": [
+      "partial concept match: persistent uterine atony after massage and oxytocin requiring second-line uterotonic escalation",
+      "partial concept match: Escalate to a second-line uterotonic when atony persists after massage and oxytocin.",
+      "partial concept match: Despite receiving oxytocin therapy in the recovery room , she has excessive vaginal bleeding and a boggy uterus",
+      "partial concept match: Obstetrics / postpartum hemorrhage",
+      "Step 2 / shelf tag match",
+      "management-stage visual match",
+      "linked through matched MedicalFact"
+    ],
+    "selectedRole": "related"
+  },
+  {
+    "knowledgeObjectId": "ko-67b2d9f9ec89c0be-persistent-uterine-atony-after-massage-and-oxytocin-requiring-second-line-uterotonic-escalation-next_best_step",
+    "canonicalImageId": "anking-image-e2db9d7a9b89488f",
+    "score": 100,
+    "reasons": [
+      "partial concept match: Ergonovine therapy",
+      "partial concept match: persistent uterine atony after massage and oxytocin requiring second-line uterotonic escalation",
+      "partial concept match: Escalate to a second-line uterotonic when atony persists after massage and oxytocin.",
+      "partial concept match: Despite receiving oxytocin therapy in the recovery room , she has excessive vaginal bleeding and a boggy uterus",
+      "partial concept match: Obstetrics / postpartum hemorrhage",
+      "linked through matched MedicalFact"
+    ],
+    "selectedRole": "related"
+  },
+  {
+    "knowledgeObjectId": "ko-67b2d9f9ec89c0be-persistent-uterine-atony-after-massage-and-oxytocin-requiring-second-line-uterotonic-escalation-next_best_step",
+    "canonicalImageId": "anking-image-7cac0cf6eb7f04b8",
+    "score": 100,
+    "reasons": [
+      "partial concept match: Ergonovine therapy",
+      "partial concept match: persistent uterine atony after massage and oxytocin requiring second-line uterotonic escalation",
+      "partial concept match: Escalate to a second-line uterotonic when atony persists after massage and oxytocin.",
+      "partial concept match: Despite receiving oxytocin therapy in the recovery room , she has excessive vaginal bleeding and a boggy uterus",
+      "partial concept match: Obstetrics / postpartum hemorrhage",
+      "linked through matched MedicalFact"
+    ],
+    "selectedRole": "related"
+  },
+  {
+    "knowledgeObjectId": "ko-67b2d9f9ec89c0be-persistent-uterine-atony-after-massage-and-oxytocin-requiring-second-line-uterotonic-escalation-next_best_step",
+    "canonicalImageId": "anking-image-654d57fe9f1ccde2",
+    "score": 100,
+    "reasons": [
+      "partial concept match: Ergonovine therapy",
+      "partial concept match: persistent uterine atony after massage and oxytocin requiring second-line uterotonic escalation",
+      "partial concept match: Escalate to a second-line uterotonic when atony persists after massage and oxytocin.",
+      "partial concept match: Despite receiving oxytocin therapy in the recovery room , she has excessive vaginal bleeding and a boggy uterus",
+      "partial concept match: Obstetrics / postpartum hemorrhage",
+      "linked through matched MedicalFact"
+    ],
+    "selectedRole": "related"
+  },
+  {
+    "knowledgeObjectId": "ko-67b2d9f9ec89c0be-persistent-uterine-atony-after-massage-and-oxytocin-requiring-second-line-uterotonic-escalation-next_best_step",
+    "canonicalImageId": "anking-image-035511713a4a540d",
+    "score": 100,
+    "reasons": [
+      "partial concept match: Ergonovine therapy",
+      "partial concept match: persistent uterine atony after massage and oxytocin requiring second-line uterotonic escalation",
+      "partial concept match: Escalate to a second-line uterotonic when atony persists after massage and oxytocin.",
+      "partial concept match: Despite receiving oxytocin therapy in the recovery room , she has excessive vaginal bleeding and a boggy uterus",
+      "partial concept match: Obstetrics / postpartum hemorrhage",
+      "linked through matched MedicalFact"
+    ],
+    "selectedRole": "related"
+  },
+  {
+    "knowledgeObjectId": "ko-b173a00396ddabe1-pulmonary-embolism-diagnosis",
+    "canonicalImageId": "anking-image-97e7c5b3ef2d827b",
+    "score": 100,
+    "reasons": [
+      "partial concept match: Pyelonephritis",
+      "partial concept match: Pulmonary embolism",
+      "decision-boundary match: Pulmonary embolism",
+      "Step 2 / shelf tag match",
+      "management-stage visual match",
+      "linked through matched MedicalFact"
+    ],
+    "selectedRole": "primary"
+  },
+  {
+    "knowledgeObjectId": "ko-b173a00396ddabe1-pulmonary-embolism-diagnosis",
+    "canonicalImageId": "anking-image-a826d12c122e4410",
+    "score": 100,
+    "reasons": [
+      "partial concept match: Pyelonephritis",
+      "partial concept match: Pulmonary embolism",
+      "partial concept match: Diagnose Pulmonary embolism.",
+      "partial concept match: Bacteria are generally seen on microscopy, with Gram-negative rods being the most common pathogen",
+      "partial concept match: Female Reproductive",
+      "decision-boundary match: Pulmonary embolism",
+      "Step 2 / shelf tag match",
+      "management-stage visual match",
+      "linked through matched MedicalFact"
+    ],
+    "selectedRole": "related"
+  },
+  {
+    "knowledgeObjectId": "ko-b173a00396ddabe1-pulmonary-embolism-diagnosis",
+    "canonicalImageId": "anking-image-6ea59af9b192fbb5",
+    "score": 100,
+    "reasons": [
+      "partial concept match: Pyelonephritis",
+      "partial concept match: Pulmonary embolism",
+      "decision-boundary match: Pulmonary embolism",
+      "Step 2 / shelf tag match",
+      "management-stage visual match"
+    ],
+    "selectedRole": "related"
+  },
+  {
+    "knowledgeObjectId": "ko-b173a00396ddabe1-pulmonary-embolism-diagnosis",
+    "canonicalImageId": "anking-image-b7e53132a340363d",
+    "score": 100,
+    "reasons": [
+      "partial concept match: Pulmonary embolism",
+      "decision-boundary match: Pulmonary embolism",
+      "Step 2 / shelf tag match",
+      "management-stage visual match"
+    ],
+    "selectedRole": "related"
+  },
+  {
+    "knowledgeObjectId": "ko-b173a00396ddabe1-pulmonary-embolism-diagnosis",
+    "canonicalImageId": "anking-image-dbbdf199f6da0b90",
+    "score": 100,
+    "reasons": [
+      "partial concept match: Pyelonephritis",
+      "partial concept match: Pulmonary embolism",
+      "partial concept match: Female Reproductive",
+      "decision-boundary match: Pulmonary embolism",
+      "Step 2 / shelf tag match",
+      "management-stage visual match",
+      "linked through matched MedicalFact"
+    ],
+    "selectedRole": "related"
+  },
+  {
+    "knowledgeObjectId": "ko-b173a00396ddabe1-pulmonary-embolism-diagnosis",
+    "canonicalImageId": "anking-image-6088625eae9a4ba3",
+    "score": 100,
+    "reasons": [
+      "partial concept match: Pulmonary embolism",
+      "decision-boundary match: Pulmonary embolism",
+      "Step 2 / shelf tag match",
+      "management-stage visual match",
+      "linked through matched MedicalFact"
+    ],
+    "selectedRole": "related"
+  },
+  {
+    "knowledgeObjectId": "ko-6bcb3dbcc1d0f1f2-fibroadenoma-diagnosis",
+    "canonicalImageId": "anking-image-a826d12c122e4410",
+    "score": 100,
+    "reasons": [
+      "partial concept match: Fibroadenoma",
+      "partial concept match: Diagnose Fibroadenoma.",
+      "partial concept match: They present in women between the ages of 25 and 40 as a painless, mobile breast lump",
+      "partial concept match: Vulvovaginal infections / STI",
+      "decision-boundary match: Abscess",
+      "Step 2 / shelf tag match",
+      "management-stage visual match",
+      "linked through matched MedicalFact"
+    ],
+    "selectedRole": "primary"
+  },
+  {
+    "knowledgeObjectId": "ko-6bcb3dbcc1d0f1f2-fibroadenoma-diagnosis",
+    "canonicalImageId": "anking-image-dbbdf199f6da0b90",
+    "score": 88,
+    "reasons": [
+      "decision-boundary match: Abscess",
+      "decision-boundary match: Galactocele",
+      "decision-boundary match: Mastitis",
+      "Step 2 / shelf tag match",
+      "management-stage visual match"
+    ],
+    "selectedRole": "related"
+  },
+  {
+    "knowledgeObjectId": "ko-6bcb3dbcc1d0f1f2-fibroadenoma-diagnosis",
+    "canonicalImageId": "anking-image-e2db9d7a9b89488f",
+    "score": 88,
+    "reasons": [
+      "partial concept match: Fibroadenoma",
+      "partial concept match: Diagnose Fibroadenoma.",
+      "partial concept match: They present in women between the ages of 25 and 40 as a painless, mobile breast lump",
+      "partial concept match: Vulvovaginal infections / STI",
+      "linked through matched MedicalFact"
+    ],
+    "selectedRole": "related"
+  },
+  {
+    "knowledgeObjectId": "ko-6bcb3dbcc1d0f1f2-fibroadenoma-diagnosis",
+    "canonicalImageId": "anking-image-7cac0cf6eb7f04b8",
+    "score": 88,
+    "reasons": [
+      "partial concept match: Fibroadenoma",
+      "partial concept match: Diagnose Fibroadenoma.",
+      "partial concept match: They present in women between the ages of 25 and 40 as a painless, mobile breast lump",
+      "partial concept match: Vulvovaginal infections / STI",
+      "linked through matched MedicalFact"
+    ],
+    "selectedRole": "related"
+  },
+  {
+    "knowledgeObjectId": "ko-6bcb3dbcc1d0f1f2-fibroadenoma-diagnosis",
+    "canonicalImageId": "anking-image-654d57fe9f1ccde2",
+    "score": 88,
+    "reasons": [
+      "partial concept match: Fibroadenoma",
+      "partial concept match: Diagnose Fibroadenoma.",
+      "partial concept match: They present in women between the ages of 25 and 40 as a painless, mobile breast lump",
+      "partial concept match: Vulvovaginal infections / STI",
+      "linked through matched MedicalFact"
+    ],
+    "selectedRole": "related"
+  },
+  {
+    "knowledgeObjectId": "ko-6bcb3dbcc1d0f1f2-fibroadenoma-diagnosis",
+    "canonicalImageId": "anking-image-035511713a4a540d",
+    "score": 88,
+    "reasons": [
+      "partial concept match: Fibroadenoma",
+      "partial concept match: Diagnose Fibroadenoma.",
+      "partial concept match: They present in women between the ages of 25 and 40 as a painless, mobile breast lump",
+      "partial concept match: Vulvovaginal infections / STI",
+      "linked through matched MedicalFact"
+    ],
+    "selectedRole": "related"
+  },
+  {
+    "knowledgeObjectId": "ko-761a86488e4b871d-parvovirus-mechanism",
+    "canonicalImageId": "anking-image-a826d12c122e4410",
+    "score": 100,
+    "reasons": [
+      "partial concept match: Parvovirus",
+      "partial concept match: Identify the mechanism or causal explanation for Parvovirus.",
+      "partial concept match: Fetal anemia may present as fetal tachycardia, high-output heart failure, hydrops fetal is, and death",
+      "partial concept match: Intrapartum infection / fetal monitoring",
+      "decision-boundary match: Parvovirus",
+      "Step 2 / shelf tag match",
+      "linked through matched MedicalFact"
+    ],
+    "selectedRole": "primary"
+  },
+  {
+    "knowledgeObjectId": "ko-761a86488e4b871d-parvovirus-mechanism",
+    "canonicalImageId": "anking-image-dbbdf199f6da0b90",
+    "score": 98,
+    "reasons": [
+      "partial concept match: Parvovirus",
+      "decision-boundary match: Parvovirus",
+      "decision-boundary match: Human papillomavirus",
+      "decision-boundary match: Rubella",
+      "Step 2 / shelf tag match"
+    ],
+    "selectedRole": "related"
+  },
+  {
+    "knowledgeObjectId": "ko-761a86488e4b871d-parvovirus-mechanism",
+    "canonicalImageId": "anking-image-6ab6c682a4866c59",
+    "score": 94,
+    "reasons": [
+      "partial concept match: Parvovirus",
+      "decision-boundary match: Parvovirus",
+      "linked through matched MedicalFact"
+    ],
+    "selectedRole": "related"
+  },
+  {
+    "knowledgeObjectId": "ko-761a86488e4b871d-parvovirus-mechanism",
+    "canonicalImageId": "anking-image-1e5665b5af9bb682",
+    "score": 86,
+    "reasons": [
+      "partial concept match: Identify the mechanism or causal explanation for Parvovirus.",
+      "partial concept match: Fetal anemia may present as fetal tachycardia, high-output heart failure, hydrops fetal is, and death",
+      "partial concept match: Intrapartum infection / fetal monitoring",
+      "Step 2 / shelf tag match",
+      "linked through matched MedicalFact"
+    ],
+    "selectedRole": "related"
+  },
+  {
+    "knowledgeObjectId": "ko-761a86488e4b871d-parvovirus-mechanism",
+    "canonicalImageId": "anking-image-05987dc96631aa13",
+    "score": 76,
+    "reasons": [
+      "partial concept match: Parvovirus",
+      "decision-boundary match: Parvovirus",
+      "linked through matched MedicalFact"
+    ],
+    "selectedRole": "related"
+  },
+  {
+    "knowledgeObjectId": "ko-761a86488e4b871d-parvovirus-mechanism",
+    "canonicalImageId": "anking-image-4731bda1b2c3b85c",
+    "score": 72,
+    "reasons": [
+      "partial concept match: Parvovirus",
+      "partial concept match: Identify the mechanism or causal explanation for Parvovirus.",
+      "partial concept match: Intrapartum infection / fetal monitoring",
+      "Step 2 / shelf tag match"
+    ],
+    "selectedRole": "related"
+  },
+  {
+    "knowledgeObjectId": "ko-e8821dd490bf285b-pali-jable-right-ovary-diagnosis",
+    "canonicalImageId": "anking-image-a826d12c122e4410",
+    "score": 100,
+    "reasons": [
+      "partial concept match: Pali:Jable right ovary",
+      "partial concept match: Diagnose Pali:Jable right ovary.",
+      "partial concept match: In postmenopausal women, 30% of ovarian masses are malignant",
+      "partial concept match: Gynecologic oncology",
+      "Step 2 / shelf tag match",
+      "management-stage visual match",
+      "linked through matched MedicalFact"
+    ],
+    "selectedRole": "primary"
+  },
+  {
+    "knowledgeObjectId": "ko-e8821dd490bf285b-pali-jable-right-ovary-diagnosis",
+    "canonicalImageId": "anking-image-e2db9d7a9b89488f",
+    "score": 88,
+    "reasons": [
+      "partial concept match: Pali:Jable right ovary",
+      "partial concept match: Diagnose Pali:Jable right ovary.",
+      "partial concept match: In postmenopausal women, 30% of ovarian masses are malignant",
+      "partial concept match: Gynecologic oncology",
+      "linked through matched MedicalFact"
+    ],
+    "selectedRole": "related"
+  },
+  {
+    "knowledgeObjectId": "ko-e8821dd490bf285b-pali-jable-right-ovary-diagnosis",
+    "canonicalImageId": "anking-image-7cac0cf6eb7f04b8",
+    "score": 88,
+    "reasons": [
+      "partial concept match: Pali:Jable right ovary",
+      "partial concept match: Diagnose Pali:Jable right ovary.",
+      "partial concept match: In postmenopausal women, 30% of ovarian masses are malignant",
+      "partial concept match: Gynecologic oncology",
+      "linked through matched MedicalFact"
+    ],
+    "selectedRole": "related"
+  },
+  {
+    "knowledgeObjectId": "ko-e8821dd490bf285b-pali-jable-right-ovary-diagnosis",
+    "canonicalImageId": "anking-image-654d57fe9f1ccde2",
+    "score": 88,
+    "reasons": [
+      "partial concept match: Pali:Jable right ovary",
+      "partial concept match: Diagnose Pali:Jable right ovary.",
+      "partial concept match: In postmenopausal women, 30% of ovarian masses are malignant",
+      "partial concept match: Gynecologic oncology",
+      "linked through matched MedicalFact"
+    ],
+    "selectedRole": "related"
+  },
+  {
+    "knowledgeObjectId": "ko-e8821dd490bf285b-pali-jable-right-ovary-diagnosis",
+    "canonicalImageId": "anking-image-035511713a4a540d",
+    "score": 88,
+    "reasons": [
+      "partial concept match: Pali:Jable right ovary",
+      "partial concept match: Diagnose Pali:Jable right ovary.",
+      "partial concept match: In postmenopausal women, 30% of ovarian masses are malignant",
+      "partial concept match: Gynecologic oncology",
+      "linked through matched MedicalFact"
+    ],
+    "selectedRole": "related"
+  },
+  {
+    "knowledgeObjectId": "ko-e8821dd490bf285b-pali-jable-right-ovary-diagnosis",
+    "canonicalImageId": "anking-image-4731bda1b2c3b85c",
+    "score": 72,
+    "reasons": [
+      "partial concept match: Pali:Jable right ovary",
+      "partial concept match: Diagnose Pali:Jable right ovary.",
+      "partial concept match: In postmenopausal women, 30% of ovarian masses are malignant",
+      "Step 2 / shelf tag match"
+    ],
+    "selectedRole": "related"
+  },
+  {
+    "knowledgeObjectId": "ko-70b0b47a1e83e111-maternal-fever-diagnosis",
+    "canonicalImageId": "anking-image-a826d12c122e4410",
+    "score": 100,
+    "reasons": [
+      "partial concept match: Maternal fever",
+      "partial concept match: Diagnose Maternal fever.",
+      "partial concept match: Other causes of fetal tachycardia include hypoxia, fetal anemia, intra-amniotic infection, and maternal medications",
+      "partial concept match: Intrapartum infection / fetal monitoring",
+      "Step 2 / shelf tag match",
+      "management-stage visual match",
+      "linked through matched MedicalFact"
+    ],
+    "selectedRole": "primary"
+  },
+  {
+    "knowledgeObjectId": "ko-70b0b47a1e83e111-maternal-fever-diagnosis",
+    "canonicalImageId": "anking-image-e2db9d7a9b89488f",
+    "score": 88,
+    "reasons": [
+      "partial concept match: Maternal fever",
+      "partial concept match: Diagnose Maternal fever.",
+      "partial concept match: Other causes of fetal tachycardia include hypoxia, fetal anemia, intra-amniotic infection, and maternal medications",
+      "partial concept match: Intrapartum infection / fetal monitoring",
+      "linked through matched MedicalFact"
+    ],
+    "selectedRole": "related"
+  },
+  {
+    "knowledgeObjectId": "ko-70b0b47a1e83e111-maternal-fever-diagnosis",
+    "canonicalImageId": "anking-image-7cac0cf6eb7f04b8",
+    "score": 88,
+    "reasons": [
+      "partial concept match: Maternal fever",
+      "partial concept match: Diagnose Maternal fever.",
+      "partial concept match: Other causes of fetal tachycardia include hypoxia, fetal anemia, intra-amniotic infection, and maternal medications",
+      "partial concept match: Intrapartum infection / fetal monitoring",
+      "linked through matched MedicalFact"
+    ],
+    "selectedRole": "related"
+  },
+  {
+    "knowledgeObjectId": "ko-70b0b47a1e83e111-maternal-fever-diagnosis",
+    "canonicalImageId": "anking-image-654d57fe9f1ccde2",
+    "score": 88,
+    "reasons": [
+      "partial concept match: Maternal fever",
+      "partial concept match: Diagnose Maternal fever.",
+      "partial concept match: Other causes of fetal tachycardia include hypoxia, fetal anemia, intra-amniotic infection, and maternal medications",
+      "partial concept match: Intrapartum infection / fetal monitoring",
+      "linked through matched MedicalFact"
+    ],
+    "selectedRole": "related"
+  },
+  {
+    "knowledgeObjectId": "ko-70b0b47a1e83e111-maternal-fever-diagnosis",
+    "canonicalImageId": "anking-image-035511713a4a540d",
+    "score": 88,
+    "reasons": [
+      "partial concept match: Maternal fever",
+      "partial concept match: Diagnose Maternal fever.",
+      "partial concept match: Other causes of fetal tachycardia include hypoxia, fetal anemia, intra-amniotic infection, and maternal medications",
+      "partial concept match: Intrapartum infection / fetal monitoring",
+      "linked through matched MedicalFact"
+    ],
+    "selectedRole": "related"
+  },
+  {
+    "knowledgeObjectId": "ko-70b0b47a1e83e111-maternal-fever-diagnosis",
+    "canonicalImageId": "anking-image-1e5665b5af9bb682",
+    "score": 76,
+    "reasons": [
+      "partial concept match: Other causes of fetal tachycardia include hypoxia, fetal anemia, intra-amniotic infection, and maternal medications",
+      "partial concept match: Intrapartum infection / fetal monitoring",
+      "Step 2 / shelf tag match",
+      "management-stage visual match",
+      "linked through matched MedicalFact"
+    ],
+    "selectedRole": "related"
+  },
+  {
+    "knowledgeObjectId": "ko-ccb3ae8698022af6-endometrial-ablation-next_best_step",
+    "canonicalImageId": "anking-image-a826d12c122e4410",
+    "score": 100,
+    "reasons": [
+      "partial concept match: Endometrial ablation",
+      "partial concept match: Choose the correct clinical action for Endometrial ablation.",
+      "partial concept match: The pain begins 2 days before the onset of menses and lasts for 4 days",
+      "partial concept match: Vulvovaginal infections / STI",
+      "Step 2 / shelf tag match",
+      "management-stage visual match",
+      "linked through matched MedicalFact"
+    ],
+    "selectedRole": "primary"
+  },
+  {
+    "knowledgeObjectId": "ko-ccb3ae8698022af6-endometrial-ablation-next_best_step",
+    "canonicalImageId": "anking-image-e2db9d7a9b89488f",
+    "score": 88,
+    "reasons": [
+      "partial concept match: Endometrial ablation",
+      "partial concept match: Choose the correct clinical action for Endometrial ablation.",
+      "partial concept match: The pain begins 2 days before the onset of menses and lasts for 4 days",
+      "partial concept match: Vulvovaginal infections / STI",
+      "linked through matched MedicalFact"
+    ],
+    "selectedRole": "related"
+  },
+  {
+    "knowledgeObjectId": "ko-ccb3ae8698022af6-endometrial-ablation-next_best_step",
+    "canonicalImageId": "anking-image-7cac0cf6eb7f04b8",
+    "score": 88,
+    "reasons": [
+      "partial concept match: Endometrial ablation",
+      "partial concept match: Choose the correct clinical action for Endometrial ablation.",
+      "partial concept match: The pain begins 2 days before the onset of menses and lasts for 4 days",
+      "partial concept match: Vulvovaginal infections / STI",
+      "linked through matched MedicalFact"
+    ],
+    "selectedRole": "related"
+  },
+  {
+    "knowledgeObjectId": "ko-ccb3ae8698022af6-endometrial-ablation-next_best_step",
+    "canonicalImageId": "anking-image-654d57fe9f1ccde2",
+    "score": 88,
+    "reasons": [
+      "partial concept match: Endometrial ablation",
+      "partial concept match: Choose the correct clinical action for Endometrial ablation.",
+      "partial concept match: The pain begins 2 days before the onset of menses and lasts for 4 days",
+      "partial concept match: Vulvovaginal infections / STI",
+      "linked through matched MedicalFact"
+    ],
+    "selectedRole": "related"
+  },
+  {
+    "knowledgeObjectId": "ko-ccb3ae8698022af6-endometrial-ablation-next_best_step",
+    "canonicalImageId": "anking-image-035511713a4a540d",
+    "score": 88,
+    "reasons": [
+      "partial concept match: Endometrial ablation",
+      "partial concept match: Choose the correct clinical action for Endometrial ablation.",
+      "partial concept match: The pain begins 2 days before the onset of menses and lasts for 4 days",
+      "partial concept match: Vulvovaginal infections / STI",
+      "linked through matched MedicalFact"
+    ],
+    "selectedRole": "related"
+  },
+  {
+    "knowledgeObjectId": "ko-ccb3ae8698022af6-endometrial-ablation-next_best_step",
+    "canonicalImageId": "anking-image-1e5665b5af9bb682",
+    "score": 76,
+    "reasons": [
+      "partial concept match: Choose the correct clinical action for Endometrial ablation.",
+      "partial concept match: Vulvovaginal infections / STI",
+      "Step 2 / shelf tag match",
+      "management-stage visual match",
+      "linked through matched MedicalFact"
+    ],
+    "selectedRole": "related"
+  },
+  {
+    "knowledgeObjectId": "ko-79f740034936b223-vaginal-miconazole-management",
+    "canonicalImageId": "anking-image-a826d12c122e4410",
+    "score": 100,
+    "reasons": [
+      "partial concept match: Vaginal miconazole",
+      "partial concept match: Choose the correct clinical action for Vaginal miconazole.",
+      "partial concept match: She has had no vaginal bleeding or discharge",
+      "partial concept match: Vulvovaginal infections / STI",
+      "Step 2 / shelf tag match",
+      "management-stage visual match",
+      "linked through matched MedicalFact"
+    ],
+    "selectedRole": "primary"
+  },
+  {
+    "knowledgeObjectId": "ko-79f740034936b223-vaginal-miconazole-management",
+    "canonicalImageId": "anking-image-1e5665b5af9bb682",
+    "score": 100,
+    "reasons": [
+      "partial concept match: Vaginal miconazole",
+      "partial concept match: Choose the correct clinical action for Vaginal miconazole.",
+      "partial concept match: She has had no vaginal bleeding or discharge",
+      "partial concept match: Vulvovaginal infections / STI",
+      "Step 2 / shelf tag match",
+      "management-stage visual match",
+      "linked through matched MedicalFact"
+    ],
+    "selectedRole": "related"
+  },
+  {
+    "knowledgeObjectId": "ko-79f740034936b223-vaginal-miconazole-management",
+    "canonicalImageId": "anking-image-a6c4e6f33c5d9e53",
+    "score": 88,
+    "reasons": [
+      "partial concept match: Vaginal miconazole",
+      "partial concept match: Choose the correct clinical action for Vaginal miconazole.",
+      "partial concept match: She has had no vaginal bleeding or discharge",
+      "partial concept match: Vulvovaginal infections / STI",
+      "linked through matched MedicalFact"
+    ],
+    "selectedRole": "related"
+  },
+  {
+    "knowledgeObjectId": "ko-79f740034936b223-vaginal-miconazole-management",
+    "canonicalImageId": "anking-image-e2db9d7a9b89488f",
+    "score": 88,
+    "reasons": [
+      "partial concept match: Vaginal miconazole",
+      "partial concept match: Choose the correct clinical action for Vaginal miconazole.",
+      "partial concept match: She has had no vaginal bleeding or discharge",
+      "partial concept match: Vulvovaginal infections / STI",
+      "linked through matched MedicalFact"
+    ],
+    "selectedRole": "related"
+  },
+  {
+    "knowledgeObjectId": "ko-79f740034936b223-vaginal-miconazole-management",
+    "canonicalImageId": "anking-image-7cac0cf6eb7f04b8",
+    "score": 88,
+    "reasons": [
+      "partial concept match: Vaginal miconazole",
+      "partial concept match: Choose the correct clinical action for Vaginal miconazole.",
+      "partial concept match: She has had no vaginal bleeding or discharge",
+      "partial concept match: Vulvovaginal infections / STI",
+      "linked through matched MedicalFact"
+    ],
+    "selectedRole": "related"
+  },
+  {
+    "knowledgeObjectId": "ko-79f740034936b223-vaginal-miconazole-management",
+    "canonicalImageId": "anking-image-654d57fe9f1ccde2",
+    "score": 88,
+    "reasons": [
+      "partial concept match: Vaginal miconazole",
+      "partial concept match: Choose the correct clinical action for Vaginal miconazole.",
+      "partial concept match: She has had no vaginal bleeding or discharge",
+      "partial concept match: Vulvovaginal infections / STI",
+      "linked through matched MedicalFact"
+    ],
+    "selectedRole": "related"
+  },
+  {
+    "knowledgeObjectId": "ko-0221f32d2ac71131-sepsis-diagnosis",
+    "canonicalImageId": "anking-image-a826d12c122e4410",
+    "score": 100,
+    "reasons": [
+      "partial concept match: Sepsis",
+      "partial concept match: Diagnose Sepsis.",
+      "partial concept match: Massive obstetric hemorrhage requiring blood transfusion in this patient increases the risk for postpartum pituitary necrosis (Sheehan syndrome)",
+      "partial concept match: Obstetrics / postpartum hemorrhage",
+      "decision-boundary match: Sepsis",
+      "decision-boundary match: Normal",
+      "Step 2 / shelf tag match",
+      "management-stage visual match",
+      "linked through matched MedicalFact"
+    ],
+    "selectedRole": "primary"
+  },
+  {
+    "knowledgeObjectId": "ko-0221f32d2ac71131-sepsis-diagnosis",
+    "canonicalImageId": "anking-image-2ff9f494bb3564e4",
+    "score": 100,
+    "reasons": [
+      "partial concept match: Sepsis",
+      "decision-boundary match: Sepsis",
+      "decision-boundary match: Normal",
+      "Step 2 / shelf tag match",
+      "management-stage visual match"
+    ],
+    "selectedRole": "related"
+  },
+  {
+    "knowledgeObjectId": "ko-0221f32d2ac71131-sepsis-diagnosis",
+    "canonicalImageId": "anking-image-f04042cf4821bdfd",
+    "score": 100,
+    "reasons": [
+      "partial concept match: Sepsis",
+      "decision-boundary match: Sepsis",
+      "decision-boundary match: Normal",
+      "Step 2 / shelf tag match",
+      "management-stage visual match"
+    ],
+    "selectedRole": "related"
+  },
+  {
+    "knowledgeObjectId": "ko-0221f32d2ac71131-sepsis-diagnosis",
+    "canonicalImageId": "anking-image-9ad6449578d2a58b",
+    "score": 98,
+    "reasons": [
+      "partial concept match: Sepsis",
+      "decision-boundary match: Sepsis",
+      "decision-boundary match: Normal",
+      "Step 2 / shelf tag match",
+      "management-stage visual match",
+      "linked through matched MedicalFact"
+    ],
+    "selectedRole": "related"
+  },
+  {
+    "knowledgeObjectId": "ko-0221f32d2ac71131-sepsis-diagnosis",
+    "canonicalImageId": "anking-image-1e5665b5af9bb682",
+    "score": 96,
+    "reasons": [
+      "partial concept match: Massive obstetric hemorrhage requiring blood transfusion in this patient increases the risk for postpartum pituitary necrosis (Sheehan syndrome)",
+      "partial concept match: Obstetrics / postpartum hemorrhage",
+      "decision-boundary match: Normal",
+      "Step 2 / shelf tag match",
+      "management-stage visual match",
+      "linked through matched MedicalFact"
+    ],
+    "selectedRole": "related"
+  },
+  {
+    "knowledgeObjectId": "ko-0221f32d2ac71131-sepsis-diagnosis",
+    "canonicalImageId": "anking-image-e2db9d7a9b89488f",
+    "score": 88,
+    "reasons": [
+      "partial concept match: Sepsis",
+      "partial concept match: Diagnose Sepsis.",
+      "partial concept match: Massive obstetric hemorrhage requiring blood transfusion in this patient increases the risk for postpartum pituitary necrosis (Sheehan syndrome)",
+      "partial concept match: Obstetrics / postpartum hemorrhage",
+      "linked through matched MedicalFact"
+    ],
+    "selectedRole": "related"
+  },
+  {
+    "knowledgeObjectId": "ko-296458047249a382-chorioamnionitis-causing-fetal-tachycardia-diagnosis",
+    "canonicalImageId": "anking-image-a826d12c122e4410",
+    "score": 100,
+    "reasons": [
+      "partial concept match: Chorioamnionitis",
+      "partial concept match: chorioamnionitis causing fetal tachycardia",
+      "partial concept match: Identify intra-amniotic infection as the cause of fetal tachycardia with prolonged rupture and maternal infection signs.",
+      "partial concept match: She had spontaneous rupture of membranes 32 hours ago",
+      "partial concept match: Intrapartum infection / fetal monitoring",
+      "decision-boundary match: Pyelonephritis",
+      "Step 2 / shelf tag match",
+      "management-stage visual match",
+      "linked through matched MedicalFact"
+    ],
+    "selectedRole": "primary"
+  },
+  {
+    "knowledgeObjectId": "ko-296458047249a382-chorioamnionitis-causing-fetal-tachycardia-diagnosis",
+    "canonicalImageId": "anking-image-992d8cb3a7829e9b",
+    "score": 100,
+    "reasons": [
+      "exact concept match: Chorioamnionitis",
+      "partial concept match: chorioamnionitis causing fetal tachycardia",
+      "decision-boundary match: Pyelonephritis",
+      "Step 2 / shelf tag match",
+      "management-stage visual match",
+      "linked through matched MedicalFact"
+    ],
+    "selectedRole": "related"
+  },
+  {
+    "knowledgeObjectId": "ko-296458047249a382-chorioamnionitis-causing-fetal-tachycardia-diagnosis",
+    "canonicalImageId": "anking-image-1e5665b5af9bb682",
+    "score": 100,
+    "reasons": [
+      "partial concept match: Chorioamnionitis",
+      "partial concept match: chorioamnionitis causing fetal tachycardia",
+      "partial concept match: Identify intra-amniotic infection as the cause of fetal tachycardia with prolonged rupture and maternal infection signs.",
+      "partial concept match: Intrapartum infection / fetal monitoring",
+      "Step 2 / shelf tag match",
+      "management-stage visual match",
+      "linked through matched MedicalFact"
+    ],
+    "selectedRole": "related"
+  },
+  {
+    "knowledgeObjectId": "ko-296458047249a382-chorioamnionitis-causing-fetal-tachycardia-diagnosis",
+    "canonicalImageId": "anking-image-5c7224949a078dc4",
+    "score": 97,
+    "reasons": [
+      "partial concept match: Chorioamnionitis",
+      "exact concept match: Chorioamnionitis",
+      "partial concept match: chorioamnionitis causing fetal tachycardia",
+      "linked through matched MedicalFact"
+    ],
+    "selectedRole": "related"
+  },
+  {
+    "knowledgeObjectId": "ko-296458047249a382-chorioamnionitis-causing-fetal-tachycardia-diagnosis",
+    "canonicalImageId": "anking-image-b9177693a91ca404",
+    "score": 97,
+    "reasons": [
+      "partial concept match: Chorioamnionitis",
+      "exact concept match: Chorioamnionitis",
+      "partial concept match: chorioamnionitis causing fetal tachycardia",
+      "linked through matched MedicalFact"
+    ],
+    "selectedRole": "related"
+  },
+  {
+    "knowledgeObjectId": "ko-296458047249a382-chorioamnionitis-causing-fetal-tachycardia-diagnosis",
+    "canonicalImageId": "anking-image-a6c4e6f33c5d9e53",
+    "score": 88,
+    "reasons": [
+      "partial concept match: Chorioamnionitis",
+      "partial concept match: chorioamnionitis causing fetal tachycardia",
+      "partial concept match: Identify intra-amniotic infection as the cause of fetal tachycardia with prolonged rupture and maternal infection signs.",
+      "partial concept match: Intrapartum infection / fetal monitoring",
+      "linked through matched MedicalFact"
+    ],
+    "selectedRole": "related"
+  },
+  {
+    "knowledgeObjectId": "ko-20ffc28bee834f2d-hypotonic-contractions-risk_factor_interpretation",
+    "canonicalImageId": "anking-image-a826d12c122e4410",
+    "score": 100,
+    "reasons": [
+      "partial concept match: Hypotonic contractions",
+      "partial concept match: Apply the Hypotonic contractions reasoning schema.",
+      "partial concept match: Contractions occur every 5 minutes, last 30 seconds, and are 30 mm Hg in pressure",
+      "partial concept match: Vulvovaginal infections / STI",
+      "Step 2 / shelf tag match",
+      "linked through matched MedicalFact"
+    ],
+    "selectedRole": "primary"
+  },
+  {
+    "knowledgeObjectId": "ko-20ffc28bee834f2d-hypotonic-contractions-risk_factor_interpretation",
+    "canonicalImageId": "anking-image-1e5665b5af9bb682",
+    "score": 100,
+    "reasons": [
+      "partial concept match: Hypotonic contractions",
+      "partial concept match: Apply the Hypotonic contractions reasoning schema.",
+      "partial concept match: Contractions occur every 5 minutes, last 30 seconds, and are 30 mm Hg in pressure",
+      "partial concept match: Vulvovaginal infections / STI",
+      "Step 2 / shelf tag match",
+      "linked through matched MedicalFact"
+    ],
+    "selectedRole": "related"
+  },
+  {
+    "knowledgeObjectId": "ko-20ffc28bee834f2d-hypotonic-contractions-risk_factor_interpretation",
+    "canonicalImageId": "anking-image-a6c4e6f33c5d9e53",
+    "score": 88,
+    "reasons": [
+      "partial concept match: Hypotonic contractions",
+      "partial concept match: Apply the Hypotonic contractions reasoning schema.",
+      "partial concept match: Contractions occur every 5 minutes, last 30 seconds, and are 30 mm Hg in pressure",
+      "partial concept match: Vulvovaginal infections / STI",
+      "linked through matched MedicalFact"
+    ],
+    "selectedRole": "related"
+  },
+  {
+    "knowledgeObjectId": "ko-20ffc28bee834f2d-hypotonic-contractions-risk_factor_interpretation",
+    "canonicalImageId": "anking-image-dc26e1d5c8fcb63c",
+    "score": 88,
+    "reasons": [
+      "partial concept match: Hypotonic contractions",
+      "partial concept match: Apply the Hypotonic contractions reasoning schema.",
+      "partial concept match: Contractions occur every 5 minutes, last 30 seconds, and are 30 mm Hg in pressure",
+      "partial concept match: Vulvovaginal infections / STI",
+      "linked through matched MedicalFact"
+    ],
+    "selectedRole": "related"
+  },
+  {
+    "knowledgeObjectId": "ko-20ffc28bee834f2d-hypotonic-contractions-risk_factor_interpretation",
+    "canonicalImageId": "anking-image-e2db9d7a9b89488f",
+    "score": 70,
+    "reasons": [
+      "partial concept match: Apply the Hypotonic contractions reasoning schema.",
+      "partial concept match: Contractions occur every 5 minutes, last 30 seconds, and are 30 mm Hg in pressure",
+      "partial concept match: Vulvovaginal infections / STI",
+      "linked through matched MedicalFact"
+    ],
+    "selectedRole": "related"
+  },
+  {
+    "knowledgeObjectId": "ko-20ffc28bee834f2d-hypotonic-contractions-risk_factor_interpretation",
+    "canonicalImageId": "anking-image-7cac0cf6eb7f04b8",
+    "score": 70,
+    "reasons": [
+      "partial concept match: Apply the Hypotonic contractions reasoning schema.",
+      "partial concept match: Contractions occur every 5 minutes, last 30 seconds, and are 30 mm Hg in pressure",
+      "partial concept match: Vulvovaginal infections / STI",
+      "linked through matched MedicalFact"
+    ],
+    "selectedRole": "related"
+  },
+  {
+    "knowledgeObjectId": "ko-ed6b78b1b05607f1-sterile-speculum-examination-for-suspected-pprom-diagnosis",
+    "canonicalImageId": "anking-image-a826d12c122e4410",
+    "score": 100,
+    "reasons": [
+      "partial concept match: Sterile speculum examination of the vagina",
+      "partial concept match: sterile speculum examination for suspected PPROM",
+      "partial concept match: Use sterile speculum examination to evaluate suspected preterm rupture of membranes.",
+      "partial concept match: she has had fluid leaking from her vagina for 2 days",
+      "partial concept match: PPROM evaluation",
+      "Step 2 / shelf tag match",
+      "management-stage visual match",
+      "linked through matched MedicalFact"
+    ],
+    "selectedRole": "primary"
+  },
+  {
+    "knowledgeObjectId": "ko-ed6b78b1b05607f1-sterile-speculum-examination-for-suspected-pprom-diagnosis",
+    "canonicalImageId": "anking-image-e2db9d7a9b89488f",
+    "score": 100,
+    "reasons": [
+      "partial concept match: Sterile speculum examination of the vagina",
+      "partial concept match: sterile speculum examination for suspected PPROM",
+      "partial concept match: Use sterile speculum examination to evaluate suspected preterm rupture of membranes.",
+      "partial concept match: she has had fluid leaking from her vagina for 2 days",
+      "partial concept match: PPROM evaluation",
+      "linked through matched MedicalFact"
+    ],
+    "selectedRole": "related"
+  },
+  {
+    "knowledgeObjectId": "ko-ed6b78b1b05607f1-sterile-speculum-examination-for-suspected-pprom-diagnosis",
+    "canonicalImageId": "anking-image-7cac0cf6eb7f04b8",
+    "score": 100,
+    "reasons": [
+      "partial concept match: Sterile speculum examination of the vagina",
+      "partial concept match: sterile speculum examination for suspected PPROM",
+      "partial concept match: Use sterile speculum examination to evaluate suspected preterm rupture of membranes.",
+      "partial concept match: she has had fluid leaking from her vagina for 2 days",
+      "partial concept match: PPROM evaluation",
+      "linked through matched MedicalFact"
+    ],
+    "selectedRole": "related"
+  },
+  {
+    "knowledgeObjectId": "ko-ed6b78b1b05607f1-sterile-speculum-examination-for-suspected-pprom-diagnosis",
+    "canonicalImageId": "anking-image-654d57fe9f1ccde2",
+    "score": 100,
+    "reasons": [
+      "partial concept match: Sterile speculum examination of the vagina",
+      "partial concept match: sterile speculum examination for suspected PPROM",
+      "partial concept match: Use sterile speculum examination to evaluate suspected preterm rupture of membranes.",
+      "partial concept match: she has had fluid leaking from her vagina for 2 days",
+      "partial concept match: PPROM evaluation",
+      "linked through matched MedicalFact"
+    ],
+    "selectedRole": "related"
+  },
+  {
+    "knowledgeObjectId": "ko-ed6b78b1b05607f1-sterile-speculum-examination-for-suspected-pprom-diagnosis",
+    "canonicalImageId": "anking-image-035511713a4a540d",
+    "score": 100,
+    "reasons": [
+      "partial concept match: Sterile speculum examination of the vagina",
+      "partial concept match: sterile speculum examination for suspected PPROM",
+      "partial concept match: Use sterile speculum examination to evaluate suspected preterm rupture of membranes.",
+      "partial concept match: she has had fluid leaking from her vagina for 2 days",
+      "partial concept match: PPROM evaluation",
+      "linked through matched MedicalFact"
+    ],
+    "selectedRole": "related"
+  },
+  {
+    "knowledgeObjectId": "ko-ed6b78b1b05607f1-sterile-speculum-examination-for-suspected-pprom-diagnosis",
+    "canonicalImageId": "anking-image-1e5665b5af9bb682",
+    "score": 94,
+    "reasons": [
+      "partial concept match: Sterile speculum examination of the vagina",
+      "partial concept match: sterile speculum examination for suspected PPROM",
+      "partial concept match: Use sterile speculum examination to evaluate suspected preterm rupture of membranes.",
+      "Step 2 / shelf tag match",
+      "management-stage visual match",
+      "linked through matched MedicalFact"
+    ],
+    "selectedRole": "related"
+  },
+  {
+    "knowledgeObjectId": "ko-5bd8e25ebf913926-insertion-of-next_best_step",
+    "canonicalImageId": "anking-image-a826d12c122e4410",
+    "score": 100,
+    "reasons": [
+      "partial concept match: Insertion of",
+      "partial concept match: Choose the correct clinical action for Insertion of.",
+      "partial concept match: Examination shows partial prolapse of the uterine cervix through the introitus",
+      "partial concept match: Vulvovaginal infections / STI",
+      "Step 2 / shelf tag match",
+      "management-stage visual match",
+      "linked through matched MedicalFact"
+    ],
+    "selectedRole": "primary"
+  },
+  {
+    "knowledgeObjectId": "ko-5bd8e25ebf913926-insertion-of-next_best_step",
+    "canonicalImageId": "anking-image-1e5665b5af9bb682",
+    "score": 94,
+    "reasons": [
+      "partial concept match: Choose the correct clinical action for Insertion of.",
+      "partial concept match: Examination shows partial prolapse of the uterine cervix through the introitus",
+      "partial concept match: Vulvovaginal infections / STI",
+      "Step 2 / shelf tag match",
+      "management-stage visual match",
+      "linked through matched MedicalFact"
+    ],
+    "selectedRole": "related"
+  },
+  {
+    "knowledgeObjectId": "ko-5bd8e25ebf913926-insertion-of-next_best_step",
+    "canonicalImageId": "anking-image-e2db9d7a9b89488f",
+    "score": 88,
+    "reasons": [
+      "partial concept match: Insertion of",
+      "partial concept match: Choose the correct clinical action for Insertion of.",
+      "partial concept match: Examination shows partial prolapse of the uterine cervix through the introitus",
+      "partial concept match: Vulvovaginal infections / STI",
+      "linked through matched MedicalFact"
+    ],
+    "selectedRole": "related"
+  },
+  {
+    "knowledgeObjectId": "ko-5bd8e25ebf913926-insertion-of-next_best_step",
+    "canonicalImageId": "anking-image-7cac0cf6eb7f04b8",
+    "score": 88,
+    "reasons": [
+      "partial concept match: Insertion of",
+      "partial concept match: Choose the correct clinical action for Insertion of.",
+      "partial concept match: Examination shows partial prolapse of the uterine cervix through the introitus",
+      "partial concept match: Vulvovaginal infections / STI",
+      "linked through matched MedicalFact"
+    ],
+    "selectedRole": "related"
+  },
+  {
+    "knowledgeObjectId": "ko-5bd8e25ebf913926-insertion-of-next_best_step",
+    "canonicalImageId": "anking-image-654d57fe9f1ccde2",
+    "score": 88,
+    "reasons": [
+      "partial concept match: Insertion of",
+      "partial concept match: Choose the correct clinical action for Insertion of.",
+      "partial concept match: Examination shows partial prolapse of the uterine cervix through the introitus",
+      "partial concept match: Vulvovaginal infections / STI",
+      "linked through matched MedicalFact"
+    ],
+    "selectedRole": "related"
+  },
+  {
+    "knowledgeObjectId": "ko-5bd8e25ebf913926-insertion-of-next_best_step",
+    "canonicalImageId": "anking-image-035511713a4a540d",
+    "score": 88,
+    "reasons": [
+      "partial concept match: Insertion of",
+      "partial concept match: Choose the correct clinical action for Insertion of.",
+      "partial concept match: Examination shows partial prolapse of the uterine cervix through the introitus",
+      "partial concept match: Vulvovaginal infections / STI",
+      "linked through matched MedicalFact"
+    ],
+    "selectedRole": "related"
+  },
+  {
+    "knowledgeObjectId": "ko-f4822a2dfd9ea2ea-preeclampsia-eclampsia-next_best_step",
+    "canonicalImageId": "anking-image-a826d12c122e4410",
+    "score": 100,
+    "reasons": [
+      "partial concept match: Induction of labor",
+      "partial concept match: Preeclampsia/eclampsia",
+      "partial concept match: Choose the correct clinical action for Preeclampsia/eclampsia.",
+      "partial concept match: Labor typically begins 1 to 2 weeks after fetal demise",
+      "partial concept match: Vulvovaginal infections / STI",
+      "Step 2 / shelf tag match",
+      "management-stage visual match",
+      "linked through matched MedicalFact"
+    ],
+    "selectedRole": "primary"
+  },
+  {
+    "knowledgeObjectId": "ko-f4822a2dfd9ea2ea-preeclampsia-eclampsia-next_best_step",
+    "canonicalImageId": "anking-image-1e5665b5af9bb682",
+    "score": 100,
+    "reasons": [
+      "partial concept match: Induction of labor",
+      "partial concept match: Preeclampsia/eclampsia",
+      "partial concept match: Choose the correct clinical action for Preeclampsia/eclampsia.",
+      "partial concept match: Labor typically begins 1 to 2 weeks after fetal demise",
+      "partial concept match: Vulvovaginal infections / STI",
+      "Step 2 / shelf tag match",
+      "management-stage visual match",
+      "linked through matched MedicalFact"
+    ],
+    "selectedRole": "related"
+  },
+  {
+    "knowledgeObjectId": "ko-f4822a2dfd9ea2ea-preeclampsia-eclampsia-next_best_step",
+    "canonicalImageId": "anking-image-a6c4e6f33c5d9e53",
+    "score": 100,
+    "reasons": [
+      "partial concept match: Induction of labor",
+      "partial concept match: Preeclampsia/eclampsia",
+      "partial concept match: Choose the correct clinical action for Preeclampsia/eclampsia.",
+      "partial concept match: Labor typically begins 1 to 2 weeks after fetal demise",
+      "partial concept match: Vulvovaginal infections / STI",
+      "linked through matched MedicalFact"
+    ],
+    "selectedRole": "related"
+  },
+  {
+    "knowledgeObjectId": "ko-f4822a2dfd9ea2ea-preeclampsia-eclampsia-next_best_step",
+    "canonicalImageId": "anking-image-dc26e1d5c8fcb63c",
+    "score": 100,
+    "reasons": [
+      "partial concept match: Induction of labor",
+      "partial concept match: Preeclampsia/eclampsia",
+      "partial concept match: Choose the correct clinical action for Preeclampsia/eclampsia.",
+      "partial concept match: Labor typically begins 1 to 2 weeks after fetal demise",
+      "partial concept match: Vulvovaginal infections / STI",
+      "linked through matched MedicalFact"
+    ],
+    "selectedRole": "related"
+  },
+  {
+    "knowledgeObjectId": "ko-f4822a2dfd9ea2ea-preeclampsia-eclampsia-next_best_step",
+    "canonicalImageId": "anking-image-e2db9d7a9b89488f",
+    "score": 88,
+    "reasons": [
+      "partial concept match: Preeclampsia/eclampsia",
+      "partial concept match: Choose the correct clinical action for Preeclampsia/eclampsia.",
+      "partial concept match: Labor typically begins 1 to 2 weeks after fetal demise",
+      "partial concept match: Vulvovaginal infections / STI",
+      "linked through matched MedicalFact"
+    ],
+    "selectedRole": "related"
+  },
+  {
+    "knowledgeObjectId": "ko-f4822a2dfd9ea2ea-preeclampsia-eclampsia-next_best_step",
+    "canonicalImageId": "anking-image-7cac0cf6eb7f04b8",
+    "score": 88,
+    "reasons": [
+      "partial concept match: Preeclampsia/eclampsia",
+      "partial concept match: Choose the correct clinical action for Preeclampsia/eclampsia.",
+      "partial concept match: Labor typically begins 1 to 2 weeks after fetal demise",
+      "partial concept match: Vulvovaginal infections / STI",
+      "linked through matched MedicalFact"
+    ],
+    "selectedRole": "related"
+  },
+  {
+    "knowledgeObjectId": "ko-2c13ffacf4630900-increasing-catecholamine-mechanism",
+    "canonicalImageId": "anking-image-a826d12c122e4410",
+    "score": 100,
+    "reasons": [
+      "partial concept match: Increasing catecholamine",
+      "partial concept match: Identify the mechanism or causal explanation for Increasing catecholamine.",
+      "partial concept match: She has used crack cocaine during the pregnancy",
+      "partial concept match: PPROM evaluation",
+      "Step 2 / shelf tag match",
+      "linked through matched MedicalFact"
+    ],
+    "selectedRole": "primary"
+  },
+  {
+    "knowledgeObjectId": "ko-2c13ffacf4630900-increasing-catecholamine-mechanism",
+    "canonicalImageId": "anking-image-e2db9d7a9b89488f",
+    "score": 88,
+    "reasons": [
+      "partial concept match: Increasing catecholamine",
+      "partial concept match: Identify the mechanism or causal explanation for Increasing catecholamine.",
+      "partial concept match: She has used crack cocaine during the pregnancy",
+      "partial concept match: PPROM evaluation",
+      "linked through matched MedicalFact"
+    ],
+    "selectedRole": "related"
+  },
+  {
+    "knowledgeObjectId": "ko-2c13ffacf4630900-increasing-catecholamine-mechanism",
+    "canonicalImageId": "anking-image-7cac0cf6eb7f04b8",
+    "score": 88,
+    "reasons": [
+      "partial concept match: Increasing catecholamine",
+      "partial concept match: Identify the mechanism or causal explanation for Increasing catecholamine.",
+      "partial concept match: She has used crack cocaine during the pregnancy",
+      "partial concept match: PPROM evaluation",
+      "linked through matched MedicalFact"
+    ],
+    "selectedRole": "related"
+  },
+  {
+    "knowledgeObjectId": "ko-2c13ffacf4630900-increasing-catecholamine-mechanism",
+    "canonicalImageId": "anking-image-654d57fe9f1ccde2",
+    "score": 88,
+    "reasons": [
+      "partial concept match: Increasing catecholamine",
+      "partial concept match: Identify the mechanism or causal explanation for Increasing catecholamine.",
+      "partial concept match: She has used crack cocaine during the pregnancy",
+      "partial concept match: PPROM evaluation",
+      "linked through matched MedicalFact"
+    ],
+    "selectedRole": "related"
+  },
+  {
+    "knowledgeObjectId": "ko-2c13ffacf4630900-increasing-catecholamine-mechanism",
+    "canonicalImageId": "anking-image-035511713a4a540d",
+    "score": 88,
+    "reasons": [
+      "partial concept match: Increasing catecholamine",
+      "partial concept match: Identify the mechanism or causal explanation for Increasing catecholamine.",
+      "partial concept match: She has used crack cocaine during the pregnancy",
+      "partial concept match: PPROM evaluation",
+      "linked through matched MedicalFact"
+    ],
+    "selectedRole": "related"
+  },
+  {
+    "knowledgeObjectId": "ko-2c13ffacf4630900-increasing-catecholamine-mechanism",
+    "canonicalImageId": "anking-image-1e5665b5af9bb682",
+    "score": 86,
+    "reasons": [
+      "partial concept match: Increasing catecholamine",
+      "partial concept match: Identify the mechanism or causal explanation for Increasing catecholamine.",
+      "partial concept match: She has used crack cocaine during the pregnancy",
+      "Step 2 / shelf tag match",
+      "linked through matched MedicalFact"
+    ],
+    "selectedRole": "related"
+  },
+  {
+    "knowledgeObjectId": "ko-4dcd1140d936473f-pulmonary-embolism-postpartum-diagnosis",
+    "canonicalImageId": "anking-image-a826d12c122e4410",
+    "score": 100,
+    "reasons": [
+      "partial concept match: Thrombus within the pulmonary arteries",
+      "partial concept match: pulmonary embolism postpartum",
+      "partial concept match: Recognize postpartum pulmonary embolism as thrombus causing pleuritic dyspnea and hypoxemia.",
+      "partial concept match: Small pulmonary emboli may present only as pain or subjective shortness of breath and may be asymptomatic with normal vital signs",
+      "partial concept match: Pregnancy/postpartum cardiopulmonary disease",
+      "Step 2 / shelf tag match",
+      "management-stage visual match",
+      "linked through matched MedicalFact"
+    ],
+    "selectedRole": "primary"
+  },
+  {
+    "knowledgeObjectId": "ko-4dcd1140d936473f-pulmonary-embolism-postpartum-diagnosis",
+    "canonicalImageId": "anking-image-e2db9d7a9b89488f",
+    "score": 100,
+    "reasons": [
+      "partial concept match: Thrombus within the pulmonary arteries",
+      "partial concept match: pulmonary embolism postpartum",
+      "partial concept match: Recognize postpartum pulmonary embolism as thrombus causing pleuritic dyspnea and hypoxemia.",
+      "partial concept match: Small pulmonary emboli may present only as pain or subjective shortness of breath and may be asymptomatic with normal vital signs",
+      "partial concept match: Pregnancy/postpartum cardiopulmonary disease",
+      "linked through matched MedicalFact"
+    ],
+    "selectedRole": "related"
+  },
+  {
+    "knowledgeObjectId": "ko-4dcd1140d936473f-pulmonary-embolism-postpartum-diagnosis",
+    "canonicalImageId": "anking-image-7cac0cf6eb7f04b8",
+    "score": 100,
+    "reasons": [
+      "partial concept match: Thrombus within the pulmonary arteries",
+      "partial concept match: pulmonary embolism postpartum",
+      "partial concept match: Recognize postpartum pulmonary embolism as thrombus causing pleuritic dyspnea and hypoxemia.",
+      "partial concept match: Small pulmonary emboli may present only as pain or subjective shortness of breath and may be asymptomatic with normal vital signs",
+      "partial concept match: Pregnancy/postpartum cardiopulmonary disease",
+      "linked through matched MedicalFact"
+    ],
+    "selectedRole": "related"
+  },
+  {
+    "knowledgeObjectId": "ko-4dcd1140d936473f-pulmonary-embolism-postpartum-diagnosis",
+    "canonicalImageId": "anking-image-654d57fe9f1ccde2",
+    "score": 100,
+    "reasons": [
+      "partial concept match: Thrombus within the pulmonary arteries",
+      "partial concept match: pulmonary embolism postpartum",
+      "partial concept match: Recognize postpartum pulmonary embolism as thrombus causing pleuritic dyspnea and hypoxemia.",
+      "partial concept match: Small pulmonary emboli may present only as pain or subjective shortness of breath and may be asymptomatic with normal vital signs",
+      "partial concept match: Pregnancy/postpartum cardiopulmonary disease",
+      "linked through matched MedicalFact"
+    ],
+    "selectedRole": "related"
+  },
+  {
+    "knowledgeObjectId": "ko-4dcd1140d936473f-pulmonary-embolism-postpartum-diagnosis",
+    "canonicalImageId": "anking-image-035511713a4a540d",
+    "score": 100,
+    "reasons": [
+      "partial concept match: Thrombus within the pulmonary arteries",
+      "partial concept match: pulmonary embolism postpartum",
+      "partial concept match: Recognize postpartum pulmonary embolism as thrombus causing pleuritic dyspnea and hypoxemia.",
+      "partial concept match: Small pulmonary emboli may present only as pain or subjective shortness of breath and may be asymptomatic with normal vital signs",
+      "partial concept match: Pregnancy/postpartum cardiopulmonary disease",
+      "linked through matched MedicalFact"
+    ],
+    "selectedRole": "related"
+  },
+  {
+    "knowledgeObjectId": "ko-4dcd1140d936473f-pulmonary-embolism-postpartum-diagnosis",
+    "canonicalImageId": "anking-image-1e5665b5af9bb682",
+    "score": 94,
+    "reasons": [
+      "partial concept match: Recognize postpartum pulmonary embolism as thrombus causing pleuritic dyspnea and hypoxemia.",
+      "partial concept match: Small pulmonary emboli may present only as pain or subjective shortness of breath and may be asymptomatic with normal vital signs",
+      "partial concept match: Pregnancy/postpartum cardiopulmonary disease",
+      "Step 2 / shelf tag match",
+      "management-stage visual match",
+      "linked through matched MedicalFact"
+    ],
+    "selectedRole": "related"
+  },
+  {
+    "knowledgeObjectId": "ko-cb50752b237147d1-preeclampsia-eclampsia-risk_factor_interpretation",
+    "canonicalImageId": "anking-image-a826d12c122e4410",
+    "score": 100,
+    "reasons": [
+      "partial concept match: Facial nerve injury",
+      "partial concept match: Preeclampsia/eclampsia",
+      "partial concept match: Apply the Preeclampsia/eclampsia reasoning schema.",
+      "partial concept match: Successful assisted vaginal delivery requires a dilated and effaced cervix with ruptured membranes and an engaged occiput",
+      "partial concept match: Female Reproductive",
+      "decision-boundary match: Cerebral palsy",
+      "Step 2 / shelf tag match",
+      "linked through matched MedicalFact"
+    ],
+    "selectedRole": "primary"
+  },
+  {
+    "knowledgeObjectId": "ko-cb50752b237147d1-preeclampsia-eclampsia-risk_factor_interpretation",
+    "canonicalImageId": "anking-image-1e5665b5af9bb682",
+    "score": 100,
+    "reasons": [
+      "partial concept match: Facial nerve injury",
+      "partial concept match: Preeclampsia/eclampsia",
+      "partial concept match: Apply the Preeclampsia/eclampsia reasoning schema.",
+      "partial concept match: Successful assisted vaginal delivery requires a dilated and effaced cervix with ruptured membranes and an engaged occiput",
+      "partial concept match: Female Reproductive",
+      "Step 2 / shelf tag match",
+      "linked through matched MedicalFact"
+    ],
+    "selectedRole": "related"
+  },
+  {
+    "knowledgeObjectId": "ko-cb50752b237147d1-preeclampsia-eclampsia-risk_factor_interpretation",
+    "canonicalImageId": "anking-image-a6c4e6f33c5d9e53",
+    "score": 100,
+    "reasons": [
+      "partial concept match: Facial nerve injury",
+      "partial concept match: Preeclampsia/eclampsia",
+      "partial concept match: Apply the Preeclampsia/eclampsia reasoning schema.",
+      "partial concept match: Successful assisted vaginal delivery requires a dilated and effaced cervix with ruptured membranes and an engaged occiput",
+      "partial concept match: Female Reproductive",
+      "linked through matched MedicalFact"
+    ],
+    "selectedRole": "related"
+  },
+  {
+    "knowledgeObjectId": "ko-cb50752b237147d1-preeclampsia-eclampsia-risk_factor_interpretation",
+    "canonicalImageId": "anking-image-e2db9d7a9b89488f",
+    "score": 100,
+    "reasons": [
+      "partial concept match: Facial nerve injury",
+      "partial concept match: Preeclampsia/eclampsia",
+      "partial concept match: Apply the Preeclampsia/eclampsia reasoning schema.",
+      "partial concept match: Successful assisted vaginal delivery requires a dilated and effaced cervix with ruptured membranes and an engaged occiput",
+      "partial concept match: Female Reproductive",
+      "linked through matched MedicalFact"
+    ],
+    "selectedRole": "related"
+  },
+  {
+    "knowledgeObjectId": "ko-cb50752b237147d1-preeclampsia-eclampsia-risk_factor_interpretation",
+    "canonicalImageId": "anking-image-7cac0cf6eb7f04b8",
+    "score": 100,
+    "reasons": [
+      "partial concept match: Facial nerve injury",
+      "partial concept match: Preeclampsia/eclampsia",
+      "partial concept match: Apply the Preeclampsia/eclampsia reasoning schema.",
+      "partial concept match: Successful assisted vaginal delivery requires a dilated and effaced cervix with ruptured membranes and an engaged occiput",
+      "partial concept match: Female Reproductive",
+      "linked through matched MedicalFact"
+    ],
+    "selectedRole": "related"
+  },
+  {
+    "knowledgeObjectId": "ko-cb50752b237147d1-preeclampsia-eclampsia-risk_factor_interpretation",
+    "canonicalImageId": "anking-image-654d57fe9f1ccde2",
+    "score": 100,
+    "reasons": [
+      "partial concept match: Facial nerve injury",
+      "partial concept match: Preeclampsia/eclampsia",
+      "partial concept match: Apply the Preeclampsia/eclampsia reasoning schema.",
+      "partial concept match: Successful assisted vaginal delivery requires a dilated and effaced cervix with ruptured membranes and an engaged occiput",
+      "partial concept match: Female Reproductive",
+      "linked through matched MedicalFact"
+    ],
+    "selectedRole": "related"
+  },
+  {
+    "knowledgeObjectId": "ko-8f6e7d89a3fc11e4-observation-only-next_best_step",
+    "canonicalImageId": "anking-image-a826d12c122e4410",
+    "score": 100,
+    "reasons": [
+      "partial concept match: Observation only",
+      "partial concept match: Choose the correct clinical action for Observation only.",
+      "partial concept match: She has not had vaginal bleeding , pelvic pain , or loss of urine",
+      "partial concept match: Contraception",
+      "Step 2 / shelf tag match",
+      "management-stage visual match",
+      "linked through matched MedicalFact"
+    ],
+    "selectedRole": "primary"
+  },
+  {
+    "knowledgeObjectId": "ko-8f6e7d89a3fc11e4-observation-only-next_best_step",
+    "canonicalImageId": "anking-image-6088625eae9a4ba3",
+    "score": 100,
+    "reasons": [
+      "partial concept match: Contraception",
+      "Step 2 / shelf tag match",
+      "management-stage visual match",
+      "linked through matched MedicalFact"
+    ],
+    "selectedRole": "related"
+  },
+  {
+    "knowledgeObjectId": "ko-8f6e7d89a3fc11e4-observation-only-next_best_step",
+    "canonicalImageId": "anking-image-f04042cf4821bdfd",
+    "score": 100,
+    "reasons": [
+      "partial concept match: Contraception",
+      "Step 2 / shelf tag match",
+      "management-stage visual match"
+    ],
+    "selectedRole": "related"
+  },
+  {
+    "knowledgeObjectId": "ko-8f6e7d89a3fc11e4-observation-only-next_best_step",
+    "canonicalImageId": "anking-image-383c520723a33069",
+    "score": 100,
+    "reasons": [
+      "partial concept match: Contraception",
+      "Step 2 / shelf tag match",
+      "management-stage visual match",
+      "linked through matched MedicalFact"
+    ],
+    "selectedRole": "related"
+  },
+  {
+    "knowledgeObjectId": "ko-8f6e7d89a3fc11e4-observation-only-next_best_step",
+    "canonicalImageId": "anking-image-65cb6781ccc4f644",
+    "score": 100,
+    "reasons": [
+      "partial concept match: Contraception",
+      "Step 2 / shelf tag match",
+      "management-stage visual match",
+      "linked through matched MedicalFact"
+    ],
+    "selectedRole": "related"
+  },
+  {
+    "knowledgeObjectId": "ko-8f6e7d89a3fc11e4-observation-only-next_best_step",
+    "canonicalImageId": "anking-image-62ea89e639124cac",
+    "score": 100,
+    "reasons": [
+      "partial concept match: Contraception",
+      "Step 2 / shelf tag match",
+      "management-stage visual match",
+      "linked through matched MedicalFact"
+    ],
+    "selectedRole": "related"
+  },
+  {
+    "knowledgeObjectId": "ko-cb4ea8ee4ebd7d3d-repeat-rapid-i-ilasma-reagin-diagnosis",
+    "canonicalImageId": "anking-image-a826d12c122e4410",
+    "score": 100,
+    "reasons": [
+      "partial concept match: Repeat rapid i:ilasma reagin",
+      "partial concept match: Diagnose Repeat rapid i:ilasma reagin.",
+      "partial concept match: 5-cm nontender ulcer with slightly raised edges and a shallow base on the perineum",
+      "partial concept match: Vulvovaginal infections / STI",
+      "Step 2 / shelf tag match",
+      "management-stage visual match",
+      "linked through matched MedicalFact"
+    ],
+    "selectedRole": "primary"
+  },
+  {
+    "knowledgeObjectId": "ko-cb4ea8ee4ebd7d3d-repeat-rapid-i-ilasma-reagin-diagnosis",
+    "canonicalImageId": "anking-image-e2db9d7a9b89488f",
+    "score": 88,
+    "reasons": [
+      "partial concept match: Repeat rapid i:ilasma reagin",
+      "partial concept match: Diagnose Repeat rapid i:ilasma reagin.",
+      "partial concept match: 5-cm nontender ulcer with slightly raised edges and a shallow base on the perineum",
+      "partial concept match: Vulvovaginal infections / STI",
+      "linked through matched MedicalFact"
+    ],
+    "selectedRole": "related"
+  },
+  {
+    "knowledgeObjectId": "ko-cb4ea8ee4ebd7d3d-repeat-rapid-i-ilasma-reagin-diagnosis",
+    "canonicalImageId": "anking-image-7cac0cf6eb7f04b8",
+    "score": 88,
+    "reasons": [
+      "partial concept match: Repeat rapid i:ilasma reagin",
+      "partial concept match: Diagnose Repeat rapid i:ilasma reagin.",
+      "partial concept match: 5-cm nontender ulcer with slightly raised edges and a shallow base on the perineum",
+      "partial concept match: Vulvovaginal infections / STI",
+      "linked through matched MedicalFact"
+    ],
+    "selectedRole": "related"
+  },
+  {
+    "knowledgeObjectId": "ko-cb4ea8ee4ebd7d3d-repeat-rapid-i-ilasma-reagin-diagnosis",
+    "canonicalImageId": "anking-image-654d57fe9f1ccde2",
+    "score": 88,
+    "reasons": [
+      "partial concept match: Repeat rapid i:ilasma reagin",
+      "partial concept match: Diagnose Repeat rapid i:ilasma reagin.",
+      "partial concept match: 5-cm nontender ulcer with slightly raised edges and a shallow base on the perineum",
+      "partial concept match: Vulvovaginal infections / STI",
+      "linked through matched MedicalFact"
+    ],
+    "selectedRole": "related"
+  },
+  {
+    "knowledgeObjectId": "ko-cb4ea8ee4ebd7d3d-repeat-rapid-i-ilasma-reagin-diagnosis",
+    "canonicalImageId": "anking-image-035511713a4a540d",
+    "score": 88,
+    "reasons": [
+      "partial concept match: Repeat rapid i:ilasma reagin",
+      "partial concept match: Diagnose Repeat rapid i:ilasma reagin.",
+      "partial concept match: 5-cm nontender ulcer with slightly raised edges and a shallow base on the perineum",
+      "partial concept match: Vulvovaginal infections / STI",
+      "linked through matched MedicalFact"
+    ],
+    "selectedRole": "related"
+  },
+  {
+    "knowledgeObjectId": "ko-cb4ea8ee4ebd7d3d-repeat-rapid-i-ilasma-reagin-diagnosis",
+    "canonicalImageId": "anking-image-1e5665b5af9bb682",
+    "score": 76,
+    "reasons": [
+      "partial concept match: 5-cm nontender ulcer with slightly raised edges and a shallow base on the perineum",
+      "partial concept match: Vulvovaginal infections / STI",
+      "Step 2 / shelf tag match",
+      "management-stage visual match",
+      "linked through matched MedicalFact"
+    ],
+    "selectedRole": "related"
+  },
+  {
+    "knowledgeObjectId": "ko-b92fa999a4fc2bf9-undiagnosed-maternal-diabetes-mellitus-risk_factor_interpretation",
+    "canonicalImageId": "anking-image-a826d12c122e4410",
+    "score": 100,
+    "reasons": [
+      "partial concept match: Undiagnosed maternal diabetes mellitus",
+      "partial concept match: Apply the Undiagnosed maternal diabetes mellitus reasoning schema.",
+      "partial concept match: She weighed 77 kg (169 lb) prior to her pregnancy",
+      "partial concept match: Obstetrics / postpartum hemorrhage",
+      "Step 2 / shelf tag match",
+      "linked through matched MedicalFact"
+    ],
+    "selectedRole": "primary"
+  },
+  {
+    "knowledgeObjectId": "ko-b92fa999a4fc2bf9-undiagnosed-maternal-diabetes-mellitus-risk_factor_interpretation",
+    "canonicalImageId": "anking-image-e2db9d7a9b89488f",
+    "score": 88,
+    "reasons": [
+      "partial concept match: Undiagnosed maternal diabetes mellitus",
+      "partial concept match: Apply the Undiagnosed maternal diabetes mellitus reasoning schema.",
+      "partial concept match: She weighed 77 kg (169 lb) prior to her pregnancy",
+      "partial concept match: Obstetrics / postpartum hemorrhage",
+      "linked through matched MedicalFact"
+    ],
+    "selectedRole": "related"
+  },
+  {
+    "knowledgeObjectId": "ko-b92fa999a4fc2bf9-undiagnosed-maternal-diabetes-mellitus-risk_factor_interpretation",
+    "canonicalImageId": "anking-image-7cac0cf6eb7f04b8",
+    "score": 88,
+    "reasons": [
+      "partial concept match: Undiagnosed maternal diabetes mellitus",
+      "partial concept match: Apply the Undiagnosed maternal diabetes mellitus reasoning schema.",
+      "partial concept match: She weighed 77 kg (169 lb) prior to her pregnancy",
+      "partial concept match: Obstetrics / postpartum hemorrhage",
+      "linked through matched MedicalFact"
+    ],
+    "selectedRole": "related"
+  },
+  {
+    "knowledgeObjectId": "ko-b92fa999a4fc2bf9-undiagnosed-maternal-diabetes-mellitus-risk_factor_interpretation",
+    "canonicalImageId": "anking-image-654d57fe9f1ccde2",
+    "score": 88,
+    "reasons": [
+      "partial concept match: Undiagnosed maternal diabetes mellitus",
+      "partial concept match: Apply the Undiagnosed maternal diabetes mellitus reasoning schema.",
+      "partial concept match: She weighed 77 kg (169 lb) prior to her pregnancy",
+      "partial concept match: Obstetrics / postpartum hemorrhage",
+      "linked through matched MedicalFact"
+    ],
+    "selectedRole": "related"
+  },
+  {
+    "knowledgeObjectId": "ko-b92fa999a4fc2bf9-undiagnosed-maternal-diabetes-mellitus-risk_factor_interpretation",
+    "canonicalImageId": "anking-image-035511713a4a540d",
+    "score": 88,
+    "reasons": [
+      "partial concept match: Undiagnosed maternal diabetes mellitus",
+      "partial concept match: Apply the Undiagnosed maternal diabetes mellitus reasoning schema.",
+      "partial concept match: She weighed 77 kg (169 lb) prior to her pregnancy",
+      "partial concept match: Obstetrics / postpartum hemorrhage",
+      "linked through matched MedicalFact"
+    ],
+    "selectedRole": "related"
+  },
+  {
+    "knowledgeObjectId": "ko-b92fa999a4fc2bf9-undiagnosed-maternal-diabetes-mellitus-risk_factor_interpretation",
+    "canonicalImageId": "anking-image-1e5665b5af9bb682",
+    "score": 86,
+    "reasons": [
+      "partial concept match: Apply the Undiagnosed maternal diabetes mellitus reasoning schema.",
+      "partial concept match: She weighed 77 kg (169 lb) prior to her pregnancy",
+      "partial concept match: Obstetrics / postpartum hemorrhage",
+      "Step 2 / shelf tag match",
+      "linked through matched MedicalFact"
+    ],
+    "selectedRole": "related"
+  },
+  {
+    "knowledgeObjectId": "ko-925dcce62e604638-ectopic-pregnancy-next_best_step",
+    "canonicalImageId": "anking-image-a826d12c122e4410",
+    "score": 100,
+    "reasons": [
+      "partial concept match: HIV antibody test",
+      "partial concept match: Ectopic pregnancy",
+      "partial concept match: Choose the correct clinical action for Ectopic pregnancy.",
+      "partial concept match: Abdominal examination shows tenderness to palpation of the lower quadrants with no guarding or rebound",
+      "partial concept match: Early pregnancy bleeding / acute pelvic pain",
+      "Step 2 / shelf tag match",
+      "management-stage visual match",
+      "linked through matched MedicalFact"
+    ],
+    "selectedRole": "primary"
+  },
+  {
+    "knowledgeObjectId": "ko-925dcce62e604638-ectopic-pregnancy-next_best_step",
+    "canonicalImageId": "anking-image-b7e53132a340363d",
+    "score": 100,
+    "reasons": [
+      "partial concept match: Ectopic pregnancy",
+      "decision-boundary match: Ectopic pregnancy",
+      "Step 2 / shelf tag match",
+      "management-stage visual match",
+      "linked through matched MedicalFact"
+    ],
+    "selectedRole": "related"
+  },
+  {
+    "knowledgeObjectId": "ko-925dcce62e604638-ectopic-pregnancy-next_best_step",
+    "canonicalImageId": "anking-image-6088625eae9a4ba3",
+    "score": 100,
+    "reasons": [
+      "partial concept match: Ectopic pregnancy",
+      "decision-boundary match: Ectopic pregnancy",
+      "Step 2 / shelf tag match",
+      "management-stage visual match",
+      "linked through matched MedicalFact"
+    ],
+    "selectedRole": "related"
+  },
+  {
+    "knowledgeObjectId": "ko-925dcce62e604638-ectopic-pregnancy-next_best_step",
+    "canonicalImageId": "anking-image-4286c5a83529b1c0",
+    "score": 100,
+    "reasons": [
+      "partial concept match: Ectopic pregnancy",
+      "decision-boundary match: Ectopic pregnancy",
+      "Step 2 / shelf tag match",
+      "management-stage visual match",
+      "linked through matched MedicalFact"
+    ],
+    "selectedRole": "related"
+  },
+  {
+    "knowledgeObjectId": "ko-925dcce62e604638-ectopic-pregnancy-next_best_step",
+    "canonicalImageId": "anking-image-fba9dcaaa0e9d1a4",
+    "score": 100,
+    "reasons": [
+      "partial concept match: Ectopic pregnancy",
+      "decision-boundary match: Ectopic pregnancy",
+      "Step 2 / shelf tag match",
+      "management-stage visual match",
+      "linked through matched MedicalFact"
+    ],
+    "selectedRole": "related"
+  },
+  {
+    "knowledgeObjectId": "ko-925dcce62e604638-ectopic-pregnancy-next_best_step",
+    "canonicalImageId": "anking-image-5ce6db3659dd65d0",
+    "score": 100,
+    "reasons": [
+      "partial concept match: Ectopic pregnancy",
+      "decision-boundary match: Ectopic pregnancy",
+      "Step 2 / shelf tag match",
+      "management-stage visual match",
+      "linked through matched MedicalFact"
+    ],
+    "selectedRole": "related"
+  },
+  {
+    "knowledgeObjectId": "ko-b2c6a10ae8d3d865-ectopic-pregnancy-diagnosis",
+    "canonicalImageId": "anking-image-a826d12c122e4410",
+    "score": 100,
+    "reasons": [
+      "partial concept match: Mature teratoma",
+      "partial concept match: Ectopic pregnancy",
+      "partial concept match: Diagnose Ectopic pregnancy.",
+      "partial concept match: Ultrasonography shows an 8-cm complex mass in the right adnexa with echogenicity",
+      "partial concept match: Early pregnancy bleeding / acute pelvic pain",
+      "decision-boundary match: Adnexal mass",
+      "decision-boundary match: Appendiceal abscess",
+      "decision-boundary match: Epithelial ovarian cancer",
+      "Step 2 / shelf tag match",
+      "management-stage visual match",
+      "linked through matched MedicalFact"
+    ],
+    "selectedRole": "primary"
+  },
+  {
+    "knowledgeObjectId": "ko-b2c6a10ae8d3d865-ectopic-pregnancy-diagnosis",
+    "canonicalImageId": "anking-image-b7e53132a340363d",
+    "score": 100,
+    "reasons": [
+      "partial concept match: Ectopic pregnancy",
+      "decision-boundary match: Ectopic pregnancy",
+      "decision-boundary match: Adnexal mass",
+      "Step 2 / shelf tag match",
+      "management-stage visual match",
+      "linked through matched MedicalFact"
+    ],
+    "selectedRole": "related"
+  },
+  {
+    "knowledgeObjectId": "ko-b2c6a10ae8d3d865-ectopic-pregnancy-diagnosis",
+    "canonicalImageId": "anking-image-992d8cb3a7829e9b",
+    "score": 100,
+    "reasons": [
+      "partial concept match: Ectopic pregnancy",
+      "decision-boundary match: Ectopic pregnancy",
+      "decision-boundary match: Hydatidiform mole",
+      "Step 2 / shelf tag match",
+      "management-stage visual match"
+    ],
+    "selectedRole": "related"
+  },
+  {
+    "knowledgeObjectId": "ko-b2c6a10ae8d3d865-ectopic-pregnancy-diagnosis",
+    "canonicalImageId": "anking-image-6088625eae9a4ba3",
+    "score": 100,
+    "reasons": [
+      "partial concept match: Ectopic pregnancy",
+      "decision-boundary match: Ectopic pregnancy",
+      "decision-boundary match: Appendiceal abscess",
+      "decision-boundary match: Hydatidiform mole",
+      "Step 2 / shelf tag match",
+      "management-stage visual match",
+      "linked through matched MedicalFact"
+    ],
+    "selectedRole": "related"
+  },
+  {
+    "knowledgeObjectId": "ko-b2c6a10ae8d3d865-ectopic-pregnancy-diagnosis",
+    "canonicalImageId": "anking-image-4286c5a83529b1c0",
+    "score": 100,
+    "reasons": [
+      "partial concept match: Ectopic pregnancy",
+      "decision-boundary match: Ectopic pregnancy",
+      "decision-boundary match: Hydatidiform mole",
+      "Step 2 / shelf tag match",
+      "management-stage visual match",
+      "linked through matched MedicalFact"
+    ],
+    "selectedRole": "related"
+  },
+  {
+    "knowledgeObjectId": "ko-b2c6a10ae8d3d865-ectopic-pregnancy-diagnosis",
+    "canonicalImageId": "anking-image-fba9dcaaa0e9d1a4",
+    "score": 100,
+    "reasons": [
+      "partial concept match: Ectopic pregnancy",
+      "decision-boundary match: Ectopic pregnancy",
+      "Step 2 / shelf tag match",
+      "management-stage visual match",
+      "linked through matched MedicalFact"
+    ],
+    "selectedRole": "related"
+  },
+  {
+    "knowledgeObjectId": "ko-e8ee4aede2d4b385-urinary-retention-risk_factor_interpretation",
+    "canonicalImageId": "anking-image-a826d12c122e4410",
+    "score": 100,
+    "reasons": [
+      "partial concept match: Urinary retention",
+      "partial concept match: Apply the Urinary retention reasoning schema.",
+      "partial concept match: she has not voided since discharge 36 hours ago",
+      "partial concept match: Vulvovaginal infections / STI",
+      "decision-boundary match: Urinary retention",
+      "Step 2 / shelf tag match",
+      "linked through matched MedicalFact"
+    ],
+    "selectedRole": "primary"
+  },
+  {
+    "knowledgeObjectId": "ko-e8ee4aede2d4b385-urinary-retention-risk_factor_interpretation",
+    "canonicalImageId": "anking-image-ed71d91861178aad",
+    "score": 96,
+    "reasons": [
+      "partial concept match: Urinary retention",
+      "decision-boundary match: Urinary retention",
+      "linked through matched MedicalFact"
+    ],
+    "selectedRole": "related"
+  },
+  {
+    "knowledgeObjectId": "ko-e8ee4aede2d4b385-urinary-retention-risk_factor_interpretation",
+    "canonicalImageId": "anking-image-8fb80d54731b7c25",
+    "score": 96,
+    "reasons": [
+      "partial concept match: Urinary retention",
+      "decision-boundary match: Urinary retention",
+      "linked through matched MedicalFact"
+    ],
+    "selectedRole": "related"
+  },
+  {
+    "knowledgeObjectId": "ko-e8ee4aede2d4b385-urinary-retention-risk_factor_interpretation",
+    "canonicalImageId": "anking-image-f5d73244533afb51",
+    "score": 96,
+    "reasons": [
+      "partial concept match: Urinary retention",
+      "decision-boundary match: Urinary retention",
+      "linked through matched MedicalFact"
+    ],
+    "selectedRole": "related"
+  },
+  {
+    "knowledgeObjectId": "ko-e8ee4aede2d4b385-urinary-retention-risk_factor_interpretation",
+    "canonicalImageId": "anking-image-f12e5c489da1a2d7",
+    "score": 96,
+    "reasons": [
+      "partial concept match: Urinary retention",
+      "decision-boundary match: Urinary retention",
+      "linked through matched MedicalFact"
+    ],
+    "selectedRole": "related"
+  },
+  {
+    "knowledgeObjectId": "ko-e8ee4aede2d4b385-urinary-retention-risk_factor_interpretation",
+    "canonicalImageId": "anking-image-f04042cf4821bdfd",
+    "score": 88,
+    "reasons": [
+      "partial concept match: Urinary retention",
+      "decision-boundary match: Urinary retention",
+      "Step 2 / shelf tag match",
+      "linked through matched MedicalFact"
+    ],
+    "selectedRole": "related"
+  },
+  {
+    "knowledgeObjectId": "ko-17c0fe45d375689b-rh-negative-pregnancy-alloimmunization-prophylaxis-next_best_step",
+    "canonicalImageId": "anking-image-a826d12c122e4410",
+    "score": 100,
+    "reasons": [
+      "partial concept match: Maternal intramuscular administration of Rh o(Q) immune globulin now",
+      "partial concept match: Rh-negative pregnancy alloimmunization prophylaxis",
+      "partial concept match: Give Rh(D) immune globulin when an unsensitized Rh-negative pregnancy has bleeding or fetomaternal hemorrhage risk.",
+      "partial concept match: Examination shows a uterus consistent in size with a 12-week gestation",
+      "partial concept match: Rh alloimmunization prevention",
+      "Step 2 / shelf tag match",
+      "management-stage visual match",
+      "linked through matched MedicalFact"
+    ],
+    "selectedRole": "primary"
+  },
+  {
+    "knowledgeObjectId": "ko-17c0fe45d375689b-rh-negative-pregnancy-alloimmunization-prophylaxis-next_best_step",
+    "canonicalImageId": "anking-image-1e5665b5af9bb682",
+    "score": 100,
+    "reasons": [
+      "partial concept match: Maternal intramuscular administration of Rh o(Q) immune globulin now",
+      "partial concept match: Rh-negative pregnancy alloimmunization prophylaxis",
+      "partial concept match: Give Rh(D) immune globulin when an unsensitized Rh-negative pregnancy has bleeding or fetomaternal hemorrhage risk.",
+      "partial concept match: Examination shows a uterus consistent in size with a 12-week gestation",
+      "Step 2 / shelf tag match",
+      "management-stage visual match",
+      "linked through matched MedicalFact"
+    ],
+    "selectedRole": "related"
+  },
+  {
+    "knowledgeObjectId": "ko-17c0fe45d375689b-rh-negative-pregnancy-alloimmunization-prophylaxis-next_best_step",
+    "canonicalImageId": "anking-image-e2db9d7a9b89488f",
+    "score": 100,
+    "reasons": [
+      "partial concept match: Maternal intramuscular administration of Rh o(Q) immune globulin now",
+      "partial concept match: Rh-negative pregnancy alloimmunization prophylaxis",
+      "partial concept match: Give Rh(D) immune globulin when an unsensitized Rh-negative pregnancy has bleeding or fetomaternal hemorrhage risk.",
+      "partial concept match: Examination shows a uterus consistent in size with a 12-week gestation",
+      "partial concept match: Rh alloimmunization prevention",
+      "linked through matched MedicalFact"
+    ],
+    "selectedRole": "related"
+  },
+  {
+    "knowledgeObjectId": "ko-17c0fe45d375689b-rh-negative-pregnancy-alloimmunization-prophylaxis-next_best_step",
+    "canonicalImageId": "anking-image-7cac0cf6eb7f04b8",
+    "score": 100,
+    "reasons": [
+      "partial concept match: Maternal intramuscular administration of Rh o(Q) immune globulin now",
+      "partial concept match: Rh-negative pregnancy alloimmunization prophylaxis",
+      "partial concept match: Give Rh(D) immune globulin when an unsensitized Rh-negative pregnancy has bleeding or fetomaternal hemorrhage risk.",
+      "partial concept match: Examination shows a uterus consistent in size with a 12-week gestation",
+      "partial concept match: Rh alloimmunization prevention",
+      "linked through matched MedicalFact"
+    ],
+    "selectedRole": "related"
+  },
+  {
+    "knowledgeObjectId": "ko-17c0fe45d375689b-rh-negative-pregnancy-alloimmunization-prophylaxis-next_best_step",
+    "canonicalImageId": "anking-image-654d57fe9f1ccde2",
+    "score": 100,
+    "reasons": [
+      "partial concept match: Maternal intramuscular administration of Rh o(Q) immune globulin now",
+      "partial concept match: Rh-negative pregnancy alloimmunization prophylaxis",
+      "partial concept match: Give Rh(D) immune globulin when an unsensitized Rh-negative pregnancy has bleeding or fetomaternal hemorrhage risk.",
+      "partial concept match: Examination shows a uterus consistent in size with a 12-week gestation",
+      "partial concept match: Rh alloimmunization prevention",
+      "linked through matched MedicalFact"
+    ],
+    "selectedRole": "related"
+  },
+  {
+    "knowledgeObjectId": "ko-17c0fe45d375689b-rh-negative-pregnancy-alloimmunization-prophylaxis-next_best_step",
+    "canonicalImageId": "anking-image-035511713a4a540d",
+    "score": 100,
+    "reasons": [
+      "partial concept match: Maternal intramuscular administration of Rh o(Q) immune globulin now",
+      "partial concept match: Rh-negative pregnancy alloimmunization prophylaxis",
+      "partial concept match: Give Rh(D) immune globulin when an unsensitized Rh-negative pregnancy has bleeding or fetomaternal hemorrhage risk.",
+      "partial concept match: Examination shows a uterus consistent in size with a 12-week gestation",
+      "partial concept match: Rh alloimmunization prevention",
+      "linked through matched MedicalFact"
+    ],
+    "selectedRole": "related"
+  },
+  {
+    "knowledgeObjectId": "ko-e9dbd97cfa421fd0-fascial-dehiscence-after-abdominal-incision-diagnosis",
+    "canonicalImageId": "anking-image-a826d12c122e4410",
+    "score": 100,
+    "reasons": [
+      "partial concept match: Dehiscence",
+      "partial concept match: fascial dehiscence after abdominal incision",
+      "partial concept match: Diagnose fascial dehiscence when profuse serosanguineous drainage follows abdominal surgery.",
+      "partial concept match: Forty-eight hours later, there is profuse serosanguineous drainage from the midline skin incision",
+      "partial concept match: Female Reproductive",
+      "decision-boundary match: Hematoma",
+      "decision-boundary match: Infection",
+      "Step 2 / shelf tag match",
+      "management-stage visual match",
+      "linked through matched MedicalFact"
+    ],
+    "selectedRole": "primary"
+  },
+  {
+    "knowledgeObjectId": "ko-e9dbd97cfa421fd0-fascial-dehiscence-after-abdominal-incision-diagnosis",
+    "canonicalImageId": "anking-image-b7e53132a340363d",
+    "score": 100,
+    "reasons": [
+      "partial concept match: Dehiscence",
+      "decision-boundary match: Evisceration",
+      "decision-boundary match: Hematoma",
+      "decision-boundary match: Infection",
+      "Step 2 / shelf tag match",
+      "management-stage visual match"
+    ],
+    "selectedRole": "related"
+  },
+  {
+    "knowledgeObjectId": "ko-e9dbd97cfa421fd0-fascial-dehiscence-after-abdominal-incision-diagnosis",
+    "canonicalImageId": "anking-image-dbbdf199f6da0b90",
+    "score": 100,
+    "reasons": [
+      "partial concept match: Dehiscence",
+      "partial concept match: Female Reproductive",
+      "decision-boundary match: Evisceration",
+      "decision-boundary match: Hematoma",
+      "decision-boundary match: Infection",
+      "Step 2 / shelf tag match",
+      "management-stage visual match",
+      "linked through matched MedicalFact"
+    ],
+    "selectedRole": "related"
+  },
+  {
+    "knowledgeObjectId": "ko-e9dbd97cfa421fd0-fascial-dehiscence-after-abdominal-incision-diagnosis",
+    "canonicalImageId": "anking-image-992d8cb3a7829e9b",
+    "score": 100,
+    "reasons": [
+      "partial concept match: Dehiscence",
+      "decision-boundary match: Evisceration",
+      "decision-boundary match: Hematoma",
+      "decision-boundary match: Infection",
+      "Step 2 / shelf tag match",
+      "management-stage visual match"
+    ],
+    "selectedRole": "related"
+  },
+  {
+    "knowledgeObjectId": "ko-e9dbd97cfa421fd0-fascial-dehiscence-after-abdominal-incision-diagnosis",
+    "canonicalImageId": "anking-image-6088625eae9a4ba3",
+    "score": 100,
+    "reasons": [
+      "partial concept match: Dehiscence",
+      "decision-boundary match: Evisceration",
+      "decision-boundary match: Infection",
+      "Step 2 / shelf tag match",
+      "management-stage visual match",
+      "linked through matched MedicalFact"
+    ],
+    "selectedRole": "related"
+  },
+  {
+    "knowledgeObjectId": "ko-e9dbd97cfa421fd0-fascial-dehiscence-after-abdominal-incision-diagnosis",
+    "canonicalImageId": "anking-image-7a518e3167237580",
+    "score": 100,
+    "reasons": [
+      "partial concept match: Dehiscence",
+      "decision-boundary match: Evisceration",
+      "decision-boundary match: Infection",
+      "Step 2 / shelf tag match",
+      "management-stage visual match"
+    ],
+    "selectedRole": "related"
+  },
+  {
+    "knowledgeObjectId": "ko-52e978c46bc7cbed-podophyllum-resin-therapy-management",
+    "canonicalImageId": "anking-image-a826d12c122e4410",
+    "score": 100,
+    "reasons": [
+      "partial concept match: Podophyllum resin therapy",
+      "partial concept match: Choose the correct clinical action for Podophyllum resin therapy.",
+      "partial concept match: Examination shows multiple 5- to 10-mm soft pink papillary lesions with areas of pigmentation on the labia minora and posterior fourchette",
+      "partial concept match: Vulvovaginal infections / STI",
+      "Step 2 / shelf tag match",
+      "management-stage visual match",
+      "linked through matched MedicalFact"
+    ],
+    "selectedRole": "primary"
+  },
+  {
+    "knowledgeObjectId": "ko-52e978c46bc7cbed-podophyllum-resin-therapy-management",
+    "canonicalImageId": "anking-image-1e5665b5af9bb682",
+    "score": 94,
+    "reasons": [
+      "partial concept match: Choose the correct clinical action for Podophyllum resin therapy.",
+      "partial concept match: Examination shows multiple 5- to 10-mm soft pink papillary lesions with areas of pigmentation on the labia minora and posterior fourchette",
+      "partial concept match: Vulvovaginal infections / STI",
+      "Step 2 / shelf tag match",
+      "management-stage visual match",
+      "linked through matched MedicalFact"
+    ],
+    "selectedRole": "related"
+  },
+  {
+    "knowledgeObjectId": "ko-52e978c46bc7cbed-podophyllum-resin-therapy-management",
+    "canonicalImageId": "anking-image-e2db9d7a9b89488f",
+    "score": 88,
+    "reasons": [
+      "partial concept match: Podophyllum resin therapy",
+      "partial concept match: Choose the correct clinical action for Podophyllum resin therapy.",
+      "partial concept match: Examination shows multiple 5- to 10-mm soft pink papillary lesions with areas of pigmentation on the labia minora and posterior fourchette",
+      "partial concept match: Vulvovaginal infections / STI",
+      "linked through matched MedicalFact"
+    ],
+    "selectedRole": "related"
+  },
+  {
+    "knowledgeObjectId": "ko-52e978c46bc7cbed-podophyllum-resin-therapy-management",
+    "canonicalImageId": "anking-image-7cac0cf6eb7f04b8",
+    "score": 88,
+    "reasons": [
+      "partial concept match: Podophyllum resin therapy",
+      "partial concept match: Choose the correct clinical action for Podophyllum resin therapy.",
+      "partial concept match: Examination shows multiple 5- to 10-mm soft pink papillary lesions with areas of pigmentation on the labia minora and posterior fourchette",
+      "partial concept match: Vulvovaginal infections / STI",
+      "linked through matched MedicalFact"
+    ],
+    "selectedRole": "related"
+  },
+  {
+    "knowledgeObjectId": "ko-52e978c46bc7cbed-podophyllum-resin-therapy-management",
+    "canonicalImageId": "anking-image-654d57fe9f1ccde2",
+    "score": 88,
+    "reasons": [
+      "partial concept match: Podophyllum resin therapy",
+      "partial concept match: Choose the correct clinical action for Podophyllum resin therapy.",
+      "partial concept match: Examination shows multiple 5- to 10-mm soft pink papillary lesions with areas of pigmentation on the labia minora and posterior fourchette",
+      "partial concept match: Vulvovaginal infections / STI",
+      "linked through matched MedicalFact"
+    ],
+    "selectedRole": "related"
+  },
+  {
+    "knowledgeObjectId": "ko-52e978c46bc7cbed-podophyllum-resin-therapy-management",
+    "canonicalImageId": "anking-image-035511713a4a540d",
+    "score": 88,
+    "reasons": [
+      "partial concept match: Podophyllum resin therapy",
+      "partial concept match: Choose the correct clinical action for Podophyllum resin therapy.",
+      "partial concept match: Examination shows multiple 5- to 10-mm soft pink papillary lesions with areas of pigmentation on the labia minora and posterior fourchette",
+      "partial concept match: Vulvovaginal infections / STI",
+      "linked through matched MedicalFact"
+    ],
+    "selectedRole": "related"
+  },
+  {
+    "knowledgeObjectId": "ko-645f9ff75384de64-estradiol-risk_factor_interpretation",
+    "canonicalImageId": "anking-image-a826d12c122e4410",
+    "score": 100,
+    "reasons": [
+      "partial concept match: Estradiol",
+      "partial concept match: Apply the Estradiol reasoning schema.",
+      "partial concept match: patient patient has dysuria , nocturia, and frequent urination",
+      "partial concept match: Gynecologic oncology",
+      "decision-boundary match: Progesterone",
+      "Step 2 / shelf tag match",
+      "linked through matched MedicalFact"
+    ],
+    "selectedRole": "primary"
+  },
+  {
+    "knowledgeObjectId": "ko-645f9ff75384de64-estradiol-risk_factor_interpretation",
+    "canonicalImageId": "anking-image-1e5665b5af9bb682",
+    "score": 100,
+    "reasons": [
+      "partial concept match: Apply the Estradiol reasoning schema.",
+      "partial concept match: patient patient has dysuria , nocturia, and frequent urination",
+      "partial concept match: Gynecologic oncology",
+      "decision-boundary match: Progesterone",
+      "Step 2 / shelf tag match",
+      "linked through matched MedicalFact"
+    ],
+    "selectedRole": "related"
+  },
+  {
+    "knowledgeObjectId": "ko-645f9ff75384de64-estradiol-risk_factor_interpretation",
+    "canonicalImageId": "anking-image-e2db9d7a9b89488f",
+    "score": 88,
+    "reasons": [
+      "partial concept match: Estradiol",
+      "partial concept match: Apply the Estradiol reasoning schema.",
+      "partial concept match: patient patient has dysuria , nocturia, and frequent urination",
+      "partial concept match: Gynecologic oncology",
+      "linked through matched MedicalFact"
+    ],
+    "selectedRole": "related"
+  },
+  {
+    "knowledgeObjectId": "ko-645f9ff75384de64-estradiol-risk_factor_interpretation",
+    "canonicalImageId": "anking-image-7cac0cf6eb7f04b8",
+    "score": 88,
+    "reasons": [
+      "partial concept match: Estradiol",
+      "partial concept match: Apply the Estradiol reasoning schema.",
+      "partial concept match: patient patient has dysuria , nocturia, and frequent urination",
+      "partial concept match: Gynecologic oncology",
+      "linked through matched MedicalFact"
+    ],
+    "selectedRole": "related"
+  },
+  {
+    "knowledgeObjectId": "ko-645f9ff75384de64-estradiol-risk_factor_interpretation",
+    "canonicalImageId": "anking-image-654d57fe9f1ccde2",
+    "score": 88,
+    "reasons": [
+      "partial concept match: Estradiol",
+      "partial concept match: Apply the Estradiol reasoning schema.",
+      "partial concept match: patient patient has dysuria , nocturia, and frequent urination",
+      "partial concept match: Gynecologic oncology",
+      "linked through matched MedicalFact"
+    ],
+    "selectedRole": "related"
+  },
+  {
+    "knowledgeObjectId": "ko-645f9ff75384de64-estradiol-risk_factor_interpretation",
+    "canonicalImageId": "anking-image-035511713a4a540d",
+    "score": 88,
+    "reasons": [
+      "partial concept match: Estradiol",
+      "partial concept match: Apply the Estradiol reasoning schema.",
+      "partial concept match: patient patient has dysuria , nocturia, and frequent urination",
+      "partial concept match: Gynecologic oncology",
+      "linked through matched MedicalFact"
+    ],
+    "selectedRole": "related"
+  },
+  {
+    "knowledgeObjectId": "ko-1ddf482c308e79f9-pulmonary-embolism-diagnosis",
+    "canonicalImageId": "anking-image-97e7c5b3ef2d827b",
+    "score": 100,
+    "reasons": [
+      "partial concept match: Pulmonary embolism",
+      "decision-boundary match: Pulmonary embolism",
+      "decision-boundary match: Pyelonephritis",
+      "Step 2 / shelf tag match",
+      "management-stage visual match",
+      "linked through matched MedicalFact"
+    ],
+    "selectedRole": "primary"
+  },
+  {
+    "knowledgeObjectId": "ko-1ddf482c308e79f9-pulmonary-embolism-diagnosis",
+    "canonicalImageId": "anking-image-a826d12c122e4410",
+    "score": 100,
+    "reasons": [
+      "partial concept match: A~endicitis",
+      "partial concept match: Pulmonary embolism",
+      "partial concept match: Diagnose Pulmonary embolism.",
+      "partial concept match: She is unable to tolerate a bimanual examination because of extreme tenderness",
+      "partial concept match: PPROM evaluation",
+      "decision-boundary match: Pulmonary embolism",
+      "decision-boundary match: Cholecystitis",
+      "decision-boundary match: Pelvic inflammatory disease",
+      "decision-boundary match: Pyelonephritis",
+      "Step 2 / shelf tag match",
+      "management-stage visual match",
+      "linked through matched MedicalFact"
+    ],
+    "selectedRole": "related"
+  },
+  {
+    "knowledgeObjectId": "ko-1ddf482c308e79f9-pulmonary-embolism-diagnosis",
+    "canonicalImageId": "anking-image-6ea59af9b192fbb5",
+    "score": 100,
+    "reasons": [
+      "partial concept match: Pulmonary embolism",
+      "decision-boundary match: Pulmonary embolism",
+      "decision-boundary match: Pyelonephritis",
+      "Step 2 / shelf tag match",
+      "management-stage visual match"
+    ],
+    "selectedRole": "related"
+  },
+  {
+    "knowledgeObjectId": "ko-1ddf482c308e79f9-pulmonary-embolism-diagnosis",
+    "canonicalImageId": "anking-image-b7e53132a340363d",
+    "score": 100,
+    "reasons": [
+      "partial concept match: Pulmonary embolism",
+      "decision-boundary match: Pulmonary embolism",
+      "decision-boundary match: Cholecystitis",
+      "Step 2 / shelf tag match",
+      "management-stage visual match",
+      "linked through matched MedicalFact"
+    ],
+    "selectedRole": "related"
+  },
+  {
+    "knowledgeObjectId": "ko-1ddf482c308e79f9-pulmonary-embolism-diagnosis",
+    "canonicalImageId": "anking-image-dbbdf199f6da0b90",
+    "score": 100,
+    "reasons": [
+      "partial concept match: Pulmonary embolism",
+      "decision-boundary match: Pulmonary embolism",
+      "decision-boundary match: Pyelonephritis",
+      "Step 2 / shelf tag match",
+      "management-stage visual match",
+      "linked through matched MedicalFact"
+    ],
+    "selectedRole": "related"
+  },
+  {
+    "knowledgeObjectId": "ko-1ddf482c308e79f9-pulmonary-embolism-diagnosis",
+    "canonicalImageId": "anking-image-992d8cb3a7829e9b",
+    "score": 100,
+    "reasons": [
+      "partial concept match: Pulmonary embolism",
+      "decision-boundary match: Pulmonary embolism",
+      "decision-boundary match: Cholecystitis",
+      "decision-boundary match: Pyelonephritis",
+      "Step 2 / shelf tag match",
+      "management-stage visual match"
+    ],
+    "selectedRole": "related"
+  },
+  {
+    "knowledgeObjectId": "ko-12bc71fe671cc81e-pulmonary-embolism-risk_factor_interpretation",
+    "canonicalImageId": "anking-image-97e7c5b3ef2d827b",
+    "score": 100,
+    "reasons": [
+      "partial concept match: Pulmonary embolism",
+      "decision-boundary match: Pulmonary embolism",
+      "Step 2 / shelf tag match",
+      "linked through matched MedicalFact"
+    ],
+    "selectedRole": "primary"
+  },
+  {
+    "knowledgeObjectId": "ko-12bc71fe671cc81e-pulmonary-embolism-risk_factor_interpretation",
+    "canonicalImageId": "anking-image-a826d12c122e4410",
+    "score": 100,
+    "reasons": [
+      "partial concept match: Uterine rupture",
+      "partial concept match: Pulmonary embolism",
+      "partial concept match: Apply the Pulmonary embolism reasoning schema.",
+      "partial concept match: Fetal parts may be palpable above the fundus with Leopold maneuvers",
+      "partial concept match: Third-trimester bleeding",
+      "decision-boundary match: Pulmonary embolism",
+      "Step 2 / shelf tag match",
+      "linked through matched MedicalFact"
+    ],
+    "selectedRole": "related"
+  },
+  {
+    "knowledgeObjectId": "ko-12bc71fe671cc81e-pulmonary-embolism-risk_factor_interpretation",
+    "canonicalImageId": "anking-image-dbbdf199f6da0b90",
+    "score": 100,
+    "reasons": [
+      "partial concept match: Pulmonary embolism",
+      "decision-boundary match: Pulmonary embolism",
+      "Step 2 / shelf tag match",
+      "linked through matched MedicalFact"
+    ],
+    "selectedRole": "related"
+  },
+  {
+    "knowledgeObjectId": "ko-12bc71fe671cc81e-pulmonary-embolism-risk_factor_interpretation",
+    "canonicalImageId": "anking-image-6088625eae9a4ba3",
+    "score": 100,
+    "reasons": [
+      "partial concept match: Pulmonary embolism",
+      "decision-boundary match: Pulmonary embolism",
+      "Step 2 / shelf tag match",
+      "linked through matched MedicalFact"
+    ],
+    "selectedRole": "related"
+  },
+  {
+    "knowledgeObjectId": "ko-12bc71fe671cc81e-pulmonary-embolism-risk_factor_interpretation",
+    "canonicalImageId": "anking-image-525c23b39795f656",
+    "score": 100,
+    "reasons": [
+      "partial concept match: Pulmonary embolism",
+      "decision-boundary match: Pulmonary embolism",
+      "Step 2 / shelf tag match"
+    ],
+    "selectedRole": "related"
+  },
+  {
+    "knowledgeObjectId": "ko-12bc71fe671cc81e-pulmonary-embolism-risk_factor_interpretation",
+    "canonicalImageId": "anking-image-a7314eb2c95d1871",
+    "score": 100,
+    "reasons": [
+      "partial concept match: Pulmonary embolism",
+      "decision-boundary match: Pulmonary embolism",
+      "Step 2 / shelf tag match"
+    ],
+    "selectedRole": "related"
+  },
+  {
+    "knowledgeObjectId": "ko-4fd5a156964969e1-breast-diagnosis",
+    "canonicalImageId": "anking-image-97e7c5b3ef2d827b",
+    "score": 100,
+    "reasons": [
+      "partial concept match: Breast",
+      "decision-boundary match: Breast",
+      "decision-boundary match: Lung",
+      "decision-boundary match: Pancreas",
+      "decision-boundary match: Stomach",
+      "Step 2 / shelf tag match",
+      "management-stage visual match",
+      "linked through matched MedicalFact"
+    ],
+    "selectedRole": "primary"
+  },
+  {
+    "knowledgeObjectId": "ko-4fd5a156964969e1-breast-diagnosis",
+    "canonicalImageId": "anking-image-a826d12c122e4410",
+    "score": 100,
+    "reasons": [
+      "partial concept match: Breast",
+      "partial concept match: Diagnose Breast.",
+      "partial concept match: In patients with axillary lymphadenopathy, mammography should be the first diagnostic step",
+      "partial concept match: Vulvovaginal infections / STI",
+      "decision-boundary match: Breast",
+      "decision-boundary match: Lung",
+      "decision-boundary match: Pancreas",
+      "decision-boundary match: Stomach",
+      "Step 2 / shelf tag match",
+      "management-stage visual match",
+      "linked through matched MedicalFact"
+    ],
+    "selectedRole": "related"
+  },
+  {
+    "knowledgeObjectId": "ko-4fd5a156964969e1-breast-diagnosis",
+    "canonicalImageId": "anking-image-9ad6449578d2a58b",
+    "score": 100,
+    "reasons": [
+      "partial concept match: Breast",
+      "decision-boundary match: Breast",
+      "decision-boundary match: Lung",
+      "decision-boundary match: Pancreas",
+      "decision-boundary match: Stomach",
+      "Step 2 / shelf tag match",
+      "management-stage visual match",
+      "linked through matched MedicalFact"
+    ],
+    "selectedRole": "related"
+  },
+  {
+    "knowledgeObjectId": "ko-4fd5a156964969e1-breast-diagnosis",
+    "canonicalImageId": "anking-image-6ea59af9b192fbb5",
+    "score": 100,
+    "reasons": [
+      "partial concept match: Breast",
+      "decision-boundary match: Breast",
+      "decision-boundary match: Lung",
+      "decision-boundary match: Lymphatics",
+      "Step 2 / shelf tag match",
+      "management-stage visual match"
+    ],
+    "selectedRole": "related"
+  },
+  {
+    "knowledgeObjectId": "ko-4fd5a156964969e1-breast-diagnosis",
+    "canonicalImageId": "anking-image-b7e53132a340363d",
+    "score": 100,
+    "reasons": [
+      "partial concept match: Breast",
+      "decision-boundary match: Breast",
+      "decision-boundary match: Lung",
+      "decision-boundary match: Pancreas",
+      "decision-boundary match: Stomach",
+      "Step 2 / shelf tag match",
+      "management-stage visual match",
+      "linked through matched MedicalFact"
+    ],
+    "selectedRole": "related"
+  },
+  {
+    "knowledgeObjectId": "ko-4fd5a156964969e1-breast-diagnosis",
+    "canonicalImageId": "anking-image-5321707b585df6c2",
+    "score": 100,
+    "reasons": [
+      "partial concept match: Breast",
+      "decision-boundary match: Breast",
+      "decision-boundary match: Lung",
+      "decision-boundary match: Pancreas",
+      "decision-boundary match: Stomach",
+      "Step 2 / shelf tag match",
+      "management-stage visual match"
+    ],
+    "selectedRole": "related"
+  },
+  {
+    "knowledgeObjectId": "ko-c70df2cc9b534ecb-kell-tyl-ing-of-the-father-s-blood-next_best_step",
+    "canonicalImageId": "anking-image-a826d12c122e4410",
+    "score": 100,
+    "reasons": [
+      "partial concept match: Kell tyl'.)ing of the father's blood",
+      "partial concept match: Choose the correct clinical action for Kell tyl'.)ing of the father's blood.",
+      "partial concept match: maternal antibodies can cross the placenta, it is important to determine whether this patient's fetus has Kell-positive or Kell-negative RBCs",
+      "partial concept match: Rh alloimmunization prevention",
+      "Step 2 / shelf tag match",
+      "management-stage visual match",
+      "linked through matched MedicalFact"
+    ],
+    "selectedRole": "primary"
+  },
+  {
+    "knowledgeObjectId": "ko-c70df2cc9b534ecb-kell-tyl-ing-of-the-father-s-blood-next_best_step",
+    "canonicalImageId": "anking-image-e2db9d7a9b89488f",
+    "score": 88,
+    "reasons": [
+      "partial concept match: Kell tyl'.)ing of the father's blood",
+      "partial concept match: Choose the correct clinical action for Kell tyl'.)ing of the father's blood.",
+      "partial concept match: maternal antibodies can cross the placenta, it is important to determine whether this patient's fetus has Kell-positive or Kell-negative RBCs",
+      "partial concept match: Rh alloimmunization prevention",
+      "linked through matched MedicalFact"
+    ],
+    "selectedRole": "related"
+  },
+  {
+    "knowledgeObjectId": "ko-c70df2cc9b534ecb-kell-tyl-ing-of-the-father-s-blood-next_best_step",
+    "canonicalImageId": "anking-image-7cac0cf6eb7f04b8",
+    "score": 88,
+    "reasons": [
+      "partial concept match: Kell tyl'.)ing of the father's blood",
+      "partial concept match: Choose the correct clinical action for Kell tyl'.)ing of the father's blood.",
+      "partial concept match: maternal antibodies can cross the placenta, it is important to determine whether this patient's fetus has Kell-positive or Kell-negative RBCs",
+      "partial concept match: Rh alloimmunization prevention",
+      "linked through matched MedicalFact"
+    ],
+    "selectedRole": "related"
+  },
+  {
+    "knowledgeObjectId": "ko-c70df2cc9b534ecb-kell-tyl-ing-of-the-father-s-blood-next_best_step",
+    "canonicalImageId": "anking-image-654d57fe9f1ccde2",
+    "score": 88,
+    "reasons": [
+      "partial concept match: Kell tyl'.)ing of the father's blood",
+      "partial concept match: Choose the correct clinical action for Kell tyl'.)ing of the father's blood.",
+      "partial concept match: maternal antibodies can cross the placenta, it is important to determine whether this patient's fetus has Kell-positive or Kell-negative RBCs",
+      "partial concept match: Rh alloimmunization prevention",
+      "linked through matched MedicalFact"
+    ],
+    "selectedRole": "related"
+  },
+  {
+    "knowledgeObjectId": "ko-c70df2cc9b534ecb-kell-tyl-ing-of-the-father-s-blood-next_best_step",
+    "canonicalImageId": "anking-image-035511713a4a540d",
+    "score": 88,
+    "reasons": [
+      "partial concept match: Kell tyl'.)ing of the father's blood",
+      "partial concept match: Choose the correct clinical action for Kell tyl'.)ing of the father's blood.",
+      "partial concept match: maternal antibodies can cross the placenta, it is important to determine whether this patient's fetus has Kell-positive or Kell-negative RBCs",
+      "partial concept match: Rh alloimmunization prevention",
+      "linked through matched MedicalFact"
+    ],
+    "selectedRole": "related"
+  },
+  {
+    "knowledgeObjectId": "ko-c70df2cc9b534ecb-kell-tyl-ing-of-the-father-s-blood-next_best_step",
+    "canonicalImageId": "anking-image-1e5665b5af9bb682",
+    "score": 76,
+    "reasons": [
+      "partial concept match: Choose the correct clinical action for Kell tyl'.)ing of the father's blood.",
+      "partial concept match: maternal antibodies can cross the placenta, it is important to determine whether this patient's fetus has Kell-positive or Kell-negative RBCs",
+      "Step 2 / shelf tag match",
+      "management-stage visual match",
+      "linked through matched MedicalFact"
+    ],
+    "selectedRole": "related"
+  },
+  {
+    "knowledgeObjectId": "ko-9f50f733001b562c-gonadal-dysgenesis-45-x-turner-syndrome-diagnosis",
+    "canonicalImageId": "anking-image-a826d12c122e4410",
+    "score": 100,
+    "reasons": [
+      "partial concept match: Gonadal dysgenesis 45,X (Turner syndrome)",
+      "partial concept match: Diagnose Gonadal dysgenesis 45,X (Turner syndrome).",
+      "partial concept match: she has never had a menstrual period",
+      "partial concept match: Gynecologic oncology",
+      "decision-boundary match: Pregnancy",
+      "Step 2 / shelf tag match",
+      "management-stage visual match",
+      "linked through matched MedicalFact"
+    ],
+    "selectedRole": "primary"
+  },
+  {
+    "knowledgeObjectId": "ko-9f50f733001b562c-gonadal-dysgenesis-45-x-turner-syndrome-diagnosis",
+    "canonicalImageId": "anking-image-d60a11cde2243d12",
+    "score": 90,
+    "reasons": [
+      "partial concept match: Gonadal dysgenesis 45,X (Turner syndrome)",
+      "partial concept match: Diagnose Gonadal dysgenesis 45,X (Turner syndrome).",
+      "partial concept match: she has never had a menstrual period",
+      "partial concept match: Gynecologic oncology",
+      "management-stage visual match"
+    ],
+    "selectedRole": "related"
+  },
+  {
+    "knowledgeObjectId": "ko-9f50f733001b562c-gonadal-dysgenesis-45-x-turner-syndrome-diagnosis",
+    "canonicalImageId": "anking-image-9ad6449578d2a58b",
+    "score": 88,
+    "reasons": [
+      "decision-boundary match: Primary amenorrhea",
+      "decision-boundary match: Hyperprolactinemia",
+      "decision-boundary match: Pregnancy",
+      "Step 2 / shelf tag match",
+      "management-stage visual match"
+    ],
+    "selectedRole": "related"
+  },
+  {
+    "knowledgeObjectId": "ko-9f50f733001b562c-gonadal-dysgenesis-45-x-turner-syndrome-diagnosis",
+    "canonicalImageId": "anking-image-4286c5a83529b1c0",
+    "score": 88,
+    "reasons": [
+      "decision-boundary match: Primary amenorrhea",
+      "decision-boundary match: Polycystic ovarian syndrome",
+      "decision-boundary match: Pregnancy",
+      "Step 2 / shelf tag match",
+      "management-stage visual match"
+    ],
+    "selectedRole": "related"
+  },
+  {
+    "knowledgeObjectId": "ko-9f50f733001b562c-gonadal-dysgenesis-45-x-turner-syndrome-diagnosis",
+    "canonicalImageId": "anking-image-a032fb1ac279886d",
+    "score": 88,
+    "reasons": [
+      "decision-boundary match: Primary amenorrhea",
+      "decision-boundary match: Anorexia nervosa",
+      "decision-boundary match: Pregnancy",
+      "Step 2 / shelf tag match",
+      "management-stage visual match"
+    ],
+    "selectedRole": "related"
+  },
+  {
+    "knowledgeObjectId": "ko-9f50f733001b562c-gonadal-dysgenesis-45-x-turner-syndrome-diagnosis",
+    "canonicalImageId": "anking-image-e2db9d7a9b89488f",
+    "score": 88,
+    "reasons": [
+      "partial concept match: Gonadal dysgenesis 45,X (Turner syndrome)",
+      "partial concept match: Diagnose Gonadal dysgenesis 45,X (Turner syndrome).",
+      "partial concept match: she has never had a menstrual period",
+      "partial concept match: Gynecologic oncology",
+      "linked through matched MedicalFact"
+    ],
+    "selectedRole": "related"
+  },
+  {
+    "knowledgeObjectId": "ko-2b98e4cd246cd8bd-hepatitis-screening",
+    "canonicalImageId": "anking-image-97e7c5b3ef2d827b",
+    "score": 100,
+    "reasons": [
+      "partial concept match: Hepatitis",
+      "decision-boundary match: Hepatitis",
+      "decision-boundary match: Measles",
+      "decision-boundary match: Mumps",
+      "decision-boundary match: Rubella",
+      "Step 2 / shelf tag match",
+      "management-stage visual match",
+      "linked through matched MedicalFact"
+    ],
+    "selectedRole": "primary"
+  },
+  {
+    "knowledgeObjectId": "ko-2b98e4cd246cd8bd-hepatitis-screening",
+    "canonicalImageId": "anking-image-a826d12c122e4410",
+    "score": 100,
+    "reasons": [
+      "partial concept match: Hepatitis",
+      "partial concept match: Choose the correct clinical action for Hepatitis.",
+      "partial concept match: Her patient daughter developed a low-grade fever, respiratory symptoms, and a rash 24 hours ago",
+      "partial concept match: Female Reproductive",
+      "decision-boundary match: Hepatitis",
+      "Step 2 / shelf tag match",
+      "management-stage visual match",
+      "linked through matched MedicalFact"
+    ],
+    "selectedRole": "related"
+  },
+  {
+    "knowledgeObjectId": "ko-2b98e4cd246cd8bd-hepatitis-screening",
+    "canonicalImageId": "anking-image-6ea59af9b192fbb5",
+    "score": 100,
+    "reasons": [
+      "partial concept match: Hepatitis",
+      "partial concept match: Her patient daughter developed a low-grade fever, respiratory symptoms, and a rash 24 hours ago",
+      "decision-boundary match: Hepatitis",
+      "decision-boundary match: Rubella",
+      "Step 2 / shelf tag match",
+      "management-stage visual match"
+    ],
+    "selectedRole": "related"
+  },
+  {
+    "knowledgeObjectId": "ko-2b98e4cd246cd8bd-hepatitis-screening",
+    "canonicalImageId": "anking-image-5321707b585df6c2",
+    "score": 100,
+    "reasons": [
+      "partial concept match: Hepatitis",
+      "decision-boundary match: Hepatitis",
+      "Step 2 / shelf tag match",
+      "management-stage visual match",
+      "linked through matched MedicalFact"
+    ],
+    "selectedRole": "related"
+  },
+  {
+    "knowledgeObjectId": "ko-2b98e4cd246cd8bd-hepatitis-screening",
+    "canonicalImageId": "anking-image-dbbdf199f6da0b90",
+    "score": 100,
+    "reasons": [
+      "partial concept match: Hepatitis",
+      "partial concept match: Her patient daughter developed a low-grade fever, respiratory symptoms, and a rash 24 hours ago",
+      "partial concept match: Female Reproductive",
+      "decision-boundary match: Hepatitis",
+      "decision-boundary match: Rubella",
+      "Step 2 / shelf tag match",
+      "management-stage visual match",
+      "linked through matched MedicalFact"
+    ],
+    "selectedRole": "related"
+  },
+  {
+    "knowledgeObjectId": "ko-2b98e4cd246cd8bd-hepatitis-screening",
+    "canonicalImageId": "anking-image-1e5665b5af9bb682",
+    "score": 100,
+    "reasons": [
+      "partial concept match: Hepatitis",
+      "partial concept match: Choose the correct clinical action for Hepatitis.",
+      "partial concept match: Female Reproductive",
+      "decision-boundary match: Hepatitis",
+      "decision-boundary match: Measles",
+      "Step 2 / shelf tag match",
+      "management-stage visual match",
+      "linked through matched MedicalFact"
+    ],
+    "selectedRole": "related"
+  },
+  {
+    "knowledgeObjectId": "ko-538d8c821df13ec1-endometrial-bioijsy-next_best_step",
+    "canonicalImageId": "anking-image-a826d12c122e4410",
+    "score": 100,
+    "reasons": [
+      "partial concept match: Endometrial biOIJSY",
+      "partial concept match: Choose the correct clinical action for Endometrial biOIJSY.",
+      "partial concept match: Pelvic examination shows an irregularly shaped uterus consistent in size with a 12-week gestation",
+      "partial concept match: Gynecologic oncology",
+      "Step 2 / shelf tag match",
+      "management-stage visual match",
+      "linked through matched MedicalFact"
+    ],
+    "selectedRole": "primary"
+  },
+  {
+    "knowledgeObjectId": "ko-538d8c821df13ec1-endometrial-bioijsy-next_best_step",
+    "canonicalImageId": "anking-image-1e5665b5af9bb682",
+    "score": 94,
+    "reasons": [
+      "partial concept match: Choose the correct clinical action for Endometrial biOIJSY.",
+      "partial concept match: Pelvic examination shows an irregularly shaped uterus consistent in size with a 12-week gestation",
+      "partial concept match: Gynecologic oncology",
+      "Step 2 / shelf tag match",
+      "management-stage visual match",
+      "linked through matched MedicalFact"
+    ],
+    "selectedRole": "related"
+  },
+  {
+    "knowledgeObjectId": "ko-538d8c821df13ec1-endometrial-bioijsy-next_best_step",
+    "canonicalImageId": "anking-image-e2db9d7a9b89488f",
+    "score": 88,
+    "reasons": [
+      "partial concept match: Endometrial biOIJSY",
+      "partial concept match: Choose the correct clinical action for Endometrial biOIJSY.",
+      "partial concept match: Pelvic examination shows an irregularly shaped uterus consistent in size with a 12-week gestation",
+      "partial concept match: Gynecologic oncology",
+      "linked through matched MedicalFact"
+    ],
+    "selectedRole": "related"
+  },
+  {
+    "knowledgeObjectId": "ko-538d8c821df13ec1-endometrial-bioijsy-next_best_step",
+    "canonicalImageId": "anking-image-7cac0cf6eb7f04b8",
+    "score": 88,
+    "reasons": [
+      "partial concept match: Endometrial biOIJSY",
+      "partial concept match: Choose the correct clinical action for Endometrial biOIJSY.",
+      "partial concept match: Pelvic examination shows an irregularly shaped uterus consistent in size with a 12-week gestation",
+      "partial concept match: Gynecologic oncology",
+      "linked through matched MedicalFact"
+    ],
+    "selectedRole": "related"
+  },
+  {
+    "knowledgeObjectId": "ko-538d8c821df13ec1-endometrial-bioijsy-next_best_step",
+    "canonicalImageId": "anking-image-654d57fe9f1ccde2",
+    "score": 88,
+    "reasons": [
+      "partial concept match: Endometrial biOIJSY",
+      "partial concept match: Choose the correct clinical action for Endometrial biOIJSY.",
+      "partial concept match: Pelvic examination shows an irregularly shaped uterus consistent in size with a 12-week gestation",
+      "partial concept match: Gynecologic oncology",
+      "linked through matched MedicalFact"
+    ],
+    "selectedRole": "related"
+  },
+  {
+    "knowledgeObjectId": "ko-538d8c821df13ec1-endometrial-bioijsy-next_best_step",
+    "canonicalImageId": "anking-image-035511713a4a540d",
+    "score": 88,
+    "reasons": [
+      "partial concept match: Endometrial biOIJSY",
+      "partial concept match: Choose the correct clinical action for Endometrial biOIJSY.",
+      "partial concept match: Pelvic examination shows an irregularly shaped uterus consistent in size with a 12-week gestation",
+      "partial concept match: Gynecologic oncology",
+      "linked through matched MedicalFact"
+    ],
+    "selectedRole": "related"
+  },
+  {
+    "knowledgeObjectId": "ko-6905bb347e4f8ece-pregnancy-test-diagnosis",
+    "canonicalImageId": "anking-image-a826d12c122e4410",
+    "score": 100,
+    "reasons": [
+      "partial concept match: Pregnancy test",
+      "partial concept match: Diagnose Pregnancy test.",
+      "partial concept match: Early symptoms of pregnancy include fatigue, nausea, urinary frequency, and irregular menstruation",
+      "partial concept match: Contraception",
+      "Step 2 / shelf tag match",
+      "management-stage visual match",
+      "linked through matched MedicalFact"
+    ],
+    "selectedRole": "primary"
+  },
+  {
+    "knowledgeObjectId": "ko-6905bb347e4f8ece-pregnancy-test-diagnosis",
+    "canonicalImageId": "anking-image-6088625eae9a4ba3",
+    "score": 100,
+    "reasons": [
+      "partial concept match: Contraception",
+      "Step 2 / shelf tag match",
+      "management-stage visual match",
+      "linked through matched MedicalFact"
+    ],
+    "selectedRole": "related"
+  },
+  {
+    "knowledgeObjectId": "ko-6905bb347e4f8ece-pregnancy-test-diagnosis",
+    "canonicalImageId": "anking-image-f04042cf4821bdfd",
+    "score": 100,
+    "reasons": [
+      "partial concept match: Contraception",
+      "Step 2 / shelf tag match",
+      "management-stage visual match"
+    ],
+    "selectedRole": "related"
+  },
+  {
+    "knowledgeObjectId": "ko-6905bb347e4f8ece-pregnancy-test-diagnosis",
+    "canonicalImageId": "anking-image-1e5665b5af9bb682",
+    "score": 100,
+    "reasons": [
+      "partial concept match: Pregnancy test",
+      "partial concept match: Diagnose Pregnancy test.",
+      "partial concept match: Early symptoms of pregnancy include fatigue, nausea, urinary frequency, and irregular menstruation",
+      "partial concept match: Contraception",
+      "Step 2 / shelf tag match",
+      "management-stage visual match",
+      "linked through matched MedicalFact"
+    ],
+    "selectedRole": "related"
+  },
+  {
+    "knowledgeObjectId": "ko-6905bb347e4f8ece-pregnancy-test-diagnosis",
+    "canonicalImageId": "anking-image-383c520723a33069",
+    "score": 100,
+    "reasons": [
+      "partial concept match: Contraception",
+      "Step 2 / shelf tag match",
+      "management-stage visual match",
+      "linked through matched MedicalFact"
+    ],
+    "selectedRole": "related"
+  },
+  {
+    "knowledgeObjectId": "ko-6905bb347e4f8ece-pregnancy-test-diagnosis",
+    "canonicalImageId": "anking-image-65cb6781ccc4f644",
+    "score": 100,
+    "reasons": [
+      "partial concept match: Contraception",
+      "Step 2 / shelf tag match",
+      "management-stage visual match",
+      "linked through matched MedicalFact"
+    ],
+    "selectedRole": "related"
+  },
+  {
+    "knowledgeObjectId": "ko-cb358901a2c1560a-placenta-previa-and-hemorrhagic-shock-risk-complication_recognition",
+    "canonicalImageId": "anking-image-a826d12c122e4410",
+    "score": 100,
+    "reasons": [
+      "partial concept match: Hemorrhagic shock",
+      "partial concept match: placenta previa and hemorrhagic shock risk",
+      "partial concept match: Recognize hemorrhagic shock as the major risk of placenta previa with heavy painless bleeding.",
+      "partial concept match: Its most common presenting symptom is painless vaginal bleeding during the third trimester",
+      "partial concept match: Third-trimester bleeding",
+      "decision-boundary match: Sepsis",
+      "Step 2 / shelf tag match",
+      "management-stage visual match",
+      "linked through matched MedicalFact"
+    ],
+    "selectedRole": "primary"
+  },
+  {
+    "knowledgeObjectId": "ko-cb358901a2c1560a-placenta-previa-and-hemorrhagic-shock-risk-complication_recognition",
+    "canonicalImageId": "anking-image-1e5665b5af9bb682",
+    "score": 100,
+    "reasons": [
+      "partial concept match: Hemorrhagic shock",
+      "partial concept match: placenta previa and hemorrhagic shock risk",
+      "partial concept match: Recognize hemorrhagic shock as the major risk of placenta previa with heavy painless bleeding.",
+      "partial concept match: Its most common presenting symptom is painless vaginal bleeding during the third trimester",
+      "Step 2 / shelf tag match",
+      "management-stage visual match",
+      "linked through matched MedicalFact"
+    ],
+    "selectedRole": "related"
+  },
+  {
+    "knowledgeObjectId": "ko-cb358901a2c1560a-placenta-previa-and-hemorrhagic-shock-risk-complication_recognition",
+    "canonicalImageId": "anking-image-e2db9d7a9b89488f",
+    "score": 100,
+    "reasons": [
+      "partial concept match: Hemorrhagic shock",
+      "partial concept match: placenta previa and hemorrhagic shock risk",
+      "partial concept match: Recognize hemorrhagic shock as the major risk of placenta previa with heavy painless bleeding.",
+      "partial concept match: Its most common presenting symptom is painless vaginal bleeding during the third trimester",
+      "partial concept match: Third-trimester bleeding",
+      "linked through matched MedicalFact"
+    ],
+    "selectedRole": "related"
+  },
+  {
+    "knowledgeObjectId": "ko-cb358901a2c1560a-placenta-previa-and-hemorrhagic-shock-risk-complication_recognition",
+    "canonicalImageId": "anking-image-7cac0cf6eb7f04b8",
+    "score": 100,
+    "reasons": [
+      "partial concept match: Hemorrhagic shock",
+      "partial concept match: placenta previa and hemorrhagic shock risk",
+      "partial concept match: Recognize hemorrhagic shock as the major risk of placenta previa with heavy painless bleeding.",
+      "partial concept match: Its most common presenting symptom is painless vaginal bleeding during the third trimester",
+      "partial concept match: Third-trimester bleeding",
+      "linked through matched MedicalFact"
+    ],
+    "selectedRole": "related"
+  },
+  {
+    "knowledgeObjectId": "ko-cb358901a2c1560a-placenta-previa-and-hemorrhagic-shock-risk-complication_recognition",
+    "canonicalImageId": "anking-image-654d57fe9f1ccde2",
+    "score": 100,
+    "reasons": [
+      "partial concept match: Hemorrhagic shock",
+      "partial concept match: placenta previa and hemorrhagic shock risk",
+      "partial concept match: Recognize hemorrhagic shock as the major risk of placenta previa with heavy painless bleeding.",
+      "partial concept match: Its most common presenting symptom is painless vaginal bleeding during the third trimester",
+      "partial concept match: Third-trimester bleeding",
+      "linked through matched MedicalFact"
+    ],
+    "selectedRole": "related"
+  },
+  {
+    "knowledgeObjectId": "ko-cb358901a2c1560a-placenta-previa-and-hemorrhagic-shock-risk-complication_recognition",
+    "canonicalImageId": "anking-image-035511713a4a540d",
+    "score": 100,
+    "reasons": [
+      "partial concept match: Hemorrhagic shock",
+      "partial concept match: placenta previa and hemorrhagic shock risk",
+      "partial concept match: Recognize hemorrhagic shock as the major risk of placenta previa with heavy painless bleeding.",
+      "partial concept match: Its most common presenting symptom is painless vaginal bleeding during the third trimester",
+      "partial concept match: Third-trimester bleeding",
+      "linked through matched MedicalFact"
+    ],
+    "selectedRole": "related"
+  },
+  {
+    "knowledgeObjectId": "ko-23a1abc7f099068a-ectopic-pregnancy-diagnosis",
+    "canonicalImageId": "anking-image-a826d12c122e4410",
+    "score": 100,
+    "reasons": [
+      "partial concept match: Endometriosis",
+      "partial concept match: Ectopic pregnancy",
+      "partial concept match: Diagnose Ectopic pregnancy.",
+      "partial concept match: she has been unable to conceive for 18 months",
+      "partial concept match: Early pregnancy bleeding / acute pelvic pain",
+      "decision-boundary match: Hypothyroidism",
+      "Step 2 / shelf tag match",
+      "management-stage visual match",
+      "linked through matched MedicalFact"
+    ],
+    "selectedRole": "primary"
+  },
+  {
+    "knowledgeObjectId": "ko-23a1abc7f099068a-ectopic-pregnancy-diagnosis",
+    "canonicalImageId": "anking-image-b7e53132a340363d",
+    "score": 100,
+    "reasons": [
+      "partial concept match: Endometriosis",
+      "partial concept match: Ectopic pregnancy",
+      "decision-boundary match: Ectopic pregnancy",
+      "decision-boundary match: Hypothyroidism",
+      "Step 2 / shelf tag match",
+      "management-stage visual match",
+      "linked through matched MedicalFact"
+    ],
+    "selectedRole": "related"
+  },
+  {
+    "knowledgeObjectId": "ko-23a1abc7f099068a-ectopic-pregnancy-diagnosis",
+    "canonicalImageId": "anking-image-5321707b585df6c2",
+    "score": 100,
+    "reasons": [
+      "partial concept match: Ectopic pregnancy",
+      "decision-boundary match: Ectopic pregnancy",
+      "decision-boundary match: Hypothyroidism",
+      "Step 2 / shelf tag match",
+      "management-stage visual match",
+      "linked through matched MedicalFact"
+    ],
+    "selectedRole": "related"
+  },
+  {
+    "knowledgeObjectId": "ko-23a1abc7f099068a-ectopic-pregnancy-diagnosis",
+    "canonicalImageId": "anking-image-992d8cb3a7829e9b",
+    "score": 100,
+    "reasons": [
+      "partial concept match: Endometriosis",
+      "partial concept match: Ectopic pregnancy",
+      "decision-boundary match: Ectopic pregnancy",
+      "Step 2 / shelf tag match",
+      "management-stage visual match"
+    ],
+    "selectedRole": "related"
+  },
+  {
+    "knowledgeObjectId": "ko-23a1abc7f099068a-ectopic-pregnancy-diagnosis",
+    "canonicalImageId": "anking-image-6088625eae9a4ba3",
+    "score": 100,
+    "reasons": [
+      "partial concept match: Ectopic pregnancy",
+      "decision-boundary match: Ectopic pregnancy",
+      "decision-boundary match: Hypothyroidism",
+      "Step 2 / shelf tag match",
+      "management-stage visual match",
+      "linked through matched MedicalFact"
+    ],
+    "selectedRole": "related"
+  },
+  {
+    "knowledgeObjectId": "ko-23a1abc7f099068a-ectopic-pregnancy-diagnosis",
+    "canonicalImageId": "anking-image-4286c5a83529b1c0",
+    "score": 100,
+    "reasons": [
+      "partial concept match: Ectopic pregnancy",
+      "decision-boundary match: Ectopic pregnancy",
+      "Step 2 / shelf tag match",
+      "management-stage visual match",
+      "linked through matched MedicalFact"
+    ],
+    "selectedRole": "related"
+  },
+  {
+    "knowledgeObjectId": "ko-fa1af8f25d5d5fc4-race-diagnosis",
+    "canonicalImageId": "anking-image-97e7c5b3ef2d827b",
+    "score": 100,
+    "reasons": [
+      "partial concept match: Race",
+      "decision-boundary match: Race",
+      "decision-boundary match: Hypertension",
+      "decision-boundary match: Use of",
+      "Step 2 / shelf tag match",
+      "management-stage visual match",
+      "linked through matched MedicalFact"
+    ],
+    "selectedRole": "primary"
+  },
+  {
+    "knowledgeObjectId": "ko-fa1af8f25d5d5fc4-race-diagnosis",
+    "canonicalImageId": "anking-image-a826d12c122e4410",
+    "score": 100,
+    "reasons": [
+      "partial concept match: Race",
+      "partial concept match: Diagnose Race.",
+      "partial concept match: patient nulliparous white patient has the sudden onset of severe pain in the upper back after sitting down",
+      "partial concept match: Gynecologic oncology",
+      "decision-boundary match: Race",
+      "decision-boundary match: Hypertension",
+      "decision-boundary match: Use of",
+      "Step 2 / shelf tag match",
+      "management-stage visual match",
+      "linked through matched MedicalFact"
+    ],
+    "selectedRole": "related"
+  },
+  {
+    "knowledgeObjectId": "ko-fa1af8f25d5d5fc4-race-diagnosis",
+    "canonicalImageId": "anking-image-9ad6449578d2a58b",
+    "score": 100,
+    "reasons": [
+      "partial concept match: Race",
+      "decision-boundary match: Race",
+      "decision-boundary match: Hypertension",
+      "decision-boundary match: Use of",
+      "Step 2 / shelf tag match",
+      "management-stage visual match"
+    ],
+    "selectedRole": "related"
+  },
+  {
+    "knowledgeObjectId": "ko-fa1af8f25d5d5fc4-race-diagnosis",
+    "canonicalImageId": "anking-image-1ad71ab7801654a2",
+    "score": 100,
+    "reasons": [
+      "partial concept match: Race",
+      "decision-boundary match: Race",
+      "decision-boundary match: Hypertension",
+      "decision-boundary match: Nulliparity",
+      "decision-boundary match: Use of",
+      "Step 2 / shelf tag match",
+      "management-stage visual match",
+      "linked through matched MedicalFact"
+    ],
+    "selectedRole": "related"
+  },
+  {
+    "knowledgeObjectId": "ko-fa1af8f25d5d5fc4-race-diagnosis",
+    "canonicalImageId": "anking-image-992d8cb3a7829e9b",
+    "score": 100,
+    "reasons": [
+      "partial concept match: Race",
+      "decision-boundary match: Race",
+      "decision-boundary match: Hypertension",
+      "decision-boundary match: Use of",
+      "Step 2 / shelf tag match",
+      "management-stage visual match",
+      "linked through matched MedicalFact"
+    ],
+    "selectedRole": "related"
+  },
+  {
+    "knowledgeObjectId": "ko-fa1af8f25d5d5fc4-race-diagnosis",
+    "canonicalImageId": "anking-image-6088625eae9a4ba3",
+    "score": 100,
+    "reasons": [
+      "partial concept match: Race",
+      "decision-boundary match: Race",
+      "decision-boundary match: Hypertension",
+      "decision-boundary match: Use of",
+      "Step 2 / shelf tag match",
+      "management-stage visual match",
+      "linked through matched MedicalFact"
+    ],
+    "selectedRole": "related"
+  }
+]

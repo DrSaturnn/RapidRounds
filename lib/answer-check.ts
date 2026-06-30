@@ -22,6 +22,10 @@ type EvaluationInput = {
   answer: string;
   acceptedAnswers: string[];
   canonicalAnswer?: string;
+  displayAnswer?: string;
+  aliases?: string[];
+  acceptableAnswerPatterns?: string[];
+  unacceptableNearMisses?: string[];
   expectedTask?: string | null;
   clinicalConcepts?: string[];
 };
@@ -135,8 +139,10 @@ function isConservativeSpellingVariation(answer: string, expected: string) {
   return edits > 0 && edits <= 2;
 }
 
-function aliasesFor(acceptedAnswers: string[], canonicalAnswer: string) {
-  return Array.from(new Set([canonicalAnswer, ...acceptedAnswers].map((value) => value.trim()).filter(Boolean)));
+function aliasesFor(acceptedAnswers: string[], canonicalAnswer: string, extraAliases: string[] = [], displayAnswer?: string) {
+  return Array.from(
+    new Set([canonicalAnswer, displayAnswer, ...acceptedAnswers, ...extraAliases].map((value) => value?.trim()).filter(Boolean))
+  ) as string[];
 }
 
 const preferredTerminologyAliases = [
@@ -212,6 +218,26 @@ function findPreferredTerminologyMatch(answer: string, canonicalAnswer: string, 
     const answerMatchesOlderTerm = entry.olderTerms.some((term) => normalizeAnswer(term) === normalizedAnswer);
 
     return expectedMatchesPreferred && answerMatchesOlderTerm;
+  });
+}
+
+function patternMatches(answer: string, pattern: string) {
+  try {
+    return new RegExp(pattern, "i").test(answer);
+  } catch {
+    return normalizeAnswer(answer) === normalizeAnswer(pattern);
+  }
+}
+
+function findPatternMatch(answer: string, patterns: string[]) {
+  return patterns.find((pattern) => patternMatches(answer, pattern));
+}
+
+function findUnacceptableNearMiss(answer: string, nearMisses: string[]) {
+  const normalizedAnswer = normalizeAnswer(answer);
+  return nearMisses.find((nearMiss) => {
+    const normalizedNearMiss = normalizeAnswer(nearMiss);
+    return normalizedAnswer === normalizedNearMiss || patternMatches(answer, nearMiss);
   });
 }
 
@@ -388,6 +414,28 @@ function classifyAgainstAliases(answer: string, aliases: string[], canonicalAnsw
   return undefined;
 }
 
+function classifyAgainstAcceptablePatterns(
+  answer: string,
+  patterns: string[],
+  canonicalAnswer: string
+): MatchResult | undefined {
+  const pattern = findPatternMatch(answer, patterns);
+  if (!pattern) {
+    return undefined;
+  }
+
+  return {
+    classification: "EQUIVALENT",
+    learnerFacingClassification: specificity("Equivalent", "Answer describes the same tested clinical answer."),
+    canonicalAnswer,
+    recognizedConcept: canonicalAnswer,
+    confidence: 0.94,
+    spellingCorrected: false,
+    matchedAlias: pattern,
+    reason: "Answer matches an acceptable answer pattern for the same clinical concept."
+  };
+}
+
 function buildEvaluation(
   classification: AnswerEvaluationClassification,
   canonicalAnswer: string,
@@ -419,10 +467,14 @@ export function evaluateAnswer({
   answer,
   acceptedAnswers,
   canonicalAnswer = acceptedAnswers[0] ?? "",
+  displayAnswer,
+  aliases: extraAliases = [],
+  acceptableAnswerPatterns = [],
+  unacceptableNearMisses = [],
   expectedTask,
   clinicalConcepts = []
 }: EvaluationInput): AnswerEvaluation {
-  const aliases = aliasesFor(acceptedAnswers, canonicalAnswer);
+  const aliases = aliasesFor(acceptedAnswers, canonicalAnswer, extraAliases, displayAnswer);
   const recognizedTask = recognizeTask(answer, expectedTask);
   const canonical = canonicalAnswer || aliases[0] || "";
 
@@ -434,6 +486,25 @@ export function evaluateAnswer({
       learnerFacingClassification: specificity("Unknown", "No answer submitted."),
       reason: "Learner indicated the concept is not in memory yet."
     });
+  }
+
+  const nearMiss = findUnacceptableNearMiss(answer, unacceptableNearMisses);
+  if (nearMiss) {
+    return buildEvaluation("PARTIAL", canonical, recognizedTask, {
+      recognizedConcept: nearMiss,
+      confidence: 0.7,
+      partialCredit: 0.25,
+      learnerFacingClassification: specificity(
+        "Related but incorrect",
+        "You named a related or overly broad answer, but this decision requires a different specific answer."
+      ),
+      reason: `${nearMiss} is a configured near miss for ${canonical}, not an equivalent answer.`
+    });
+  }
+
+  const patternMatch = classifyAgainstAcceptablePatterns(answer, acceptableAnswerPatterns, canonical);
+  if (patternMatch) {
+    return buildEvaluation(patternMatch.classification, canonical, recognizedTask, patternMatch);
   }
 
   const aliasMatch = classifyAgainstAliases(answer, aliases, canonical);

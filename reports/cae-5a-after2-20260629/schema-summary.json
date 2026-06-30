@@ -1,0 +1,2105 @@
+{
+  "generatedAt": "2026-06-30T02:11:04.921Z",
+  "schemaNodes": [
+    {
+      "id": "acquired-ko-37e1f941cd5a92e9-succenturiate-placental-lobe-with-retained-placental-tissue-diagnosis",
+      "subject": "OB/GYN",
+      "system": "Obstetrics / postpartum hemorrhage",
+      "topic": "succenturiate placental lobe with retained placental tissue",
+      "competency": "diagnosis",
+      "blueprintCategory": "Obstetrics / postpartum hemorrhage",
+      "pivot": "Prior to the onset of bleeding, the placenta delivered spontaneously with a nontapering vessel extending to the margin of the membranes",
+      "discriminatorPair": {
+        "conceptA": "Succenturiate placental lobe with retained placental tissue",
+        "conceptB": "Abruptio placentae/Placenta accreta/Placenta percreta",
+        "sharedPresentation": "Succenturiate placental lobes are accessory lobes of the placenta (one or more) that are connected to the main placenta by fetal vessels",
+        "pivot": "Prior to the onset of bleeding, the placenta delivered spontaneously with a nontapering vessel extending to the margin of the membranes",
+        "pivotThatSeparates": "Prior to the onset of bleeding, the placenta delivered spontaneously with a nontapering vessel extending to the margin of the membranes",
+        "whyPivotSupportsA": "Prior to the onset of bleeding, the placenta delivered spontaneously with a nontapering vessel extending to the margin of the membranes supports the Succenturiate placental lobe with retained placental tissue branch.",
+        "whatWouldSupportB": "A finding specific to Abruptio placentae/Placenta accreta/Placenta percreta would move the learner to that schema.",
+        "commonWrongSchema": "Abruptio placentae/Placenta accreta/Placenta percreta",
+        "conceptASchema": [
+          "Obstetrics / postpartum hemorrhage",
+          "Succenturiate placental lobes are accessory lobes of the placenta (one or more) that are connected to the main placenta by fetal vessels",
+          "Prior to the onset of bleeding, the placenta delivered spontaneously with a nontapering vessel extending to the margin of the membranes",
+          "succenturiate placental lobe with retained placental tissue"
+        ],
+        "conceptBSchema": [
+          "Obstetrics / postpartum hemorrhage",
+          "Abruptio placentae/Placenta accreta/Placenta percreta",
+          "A finding specific to Abruptio placentae/Placenta accreta/Placenta percreta would move the learner to that schema."
+        ],
+        "alternativeWouldNeed": "A finding specific to Abruptio placentae/Placenta accreta/Placenta percreta would move the learner to that schema.",
+        "boardRule": "Prior to the onset of bleeding, the placenta delivered spontaneously with a nontapering vessel extending to the margin of the membranes is the discriminator for Succenturiate placental lobe with retained placental tissue."
+      },
+      "semanticLinks": [
+        {
+          "sourceText": "Prior to the onset of bleeding, the placenta delivered spontaneously with a nontapering vessel extending to the margin of the membranes",
+          "relationship": "proves",
+          "targetConcept": "Obstetrics / postpartum hemorrhage",
+          "targetDiagnosis": "succenturiate placental lobe with retained placental tissue"
+        }
+      ],
+      "confidence": 0.95,
+      "noveltyScore": 78
+    },
+    {
+      "id": "acquired-ko-864ee53540de3398-genital-herpes-due-to-hsv-mechanism",
+      "subject": "OB/GYN",
+      "system": "Vulvovaginal infections / STI",
+      "topic": "genital herpes due to HSV",
+      "competency": "mechanism",
+      "blueprintCategory": "Vulvovaginal infections / STI",
+      "pivot": "one patient partner, does not use contraception, Examination shows bilateral, tender, firm inguinal lymphadenopathy",
+      "discriminatorPair": {
+        "conceptA": "Genital herpes due to HSV",
+        "conceptB": "Chlamydia trachomatis/Gardnerella vaginalis/chancroid organism",
+        "sharedPresentation": "Genital herpes infections present with painful vesicles and erosions, which may be accompanied by dysuria",
+        "pivot": "one patient partner, does not use contraception, Examination shows bilateral, tender, firm inguinal lymphadenopathy",
+        "pivotThatSeparates": "one patient partner, does not use contraception, Examination shows bilateral, tender, firm inguinal lymphadenopathy",
+        "whyPivotSupportsA": "one patient partner, does not use contraception, Examination shows bilateral, tender, firm inguinal lymphadenopathy supports the Genital herpes due to HSV branch.",
+        "whatWouldSupportB": "A finding specific to Chlamydia trachomatis/Gardnerella vaginalis/chancroid organism would move the learner to that schema.",
+        "commonWrongSchema": "Chlamydia trachomatis/Gardnerella vaginalis/chancroid organism",
+        "conceptASchema": [
+          "Vulvovaginal infections / STI",
+          "Genital herpes infections present with painful vesicles and erosions, which may be accompanied by dysuria",
+          "one patient partner, does not use contraception, Examination shows bilateral, tender, firm inguinal lymphadenopathy",
+          "genital herpes due to HSV"
+        ],
+        "conceptBSchema": [
+          "Vulvovaginal infections / STI",
+          "Chlamydia trachomatis/Gardnerella vaginalis/chancroid organism",
+          "A finding specific to Chlamydia trachomatis/Gardnerella vaginalis/chancroid organism would move the learner to that schema."
+        ],
+        "alternativeWouldNeed": "A finding specific to Chlamydia trachomatis/Gardnerella vaginalis/chancroid organism would move the learner to that schema.",
+        "boardRule": "one patient partner, does not use contraception, Examination shows bilateral, tender, firm inguinal lymphadenopathy is the discriminator for Genital herpes due to HSV."
+      },
+      "semanticLinks": [
+        {
+          "sourceText": "one patient partner, does not use contraception, Examination shows bilateral, tender, firm inguinal lymphadenopathy",
+          "relationship": "supports",
+          "targetConcept": "Vulvovaginal infections / STI",
+          "targetDiagnosis": "genital herpes due to HSV"
+        }
+      ],
+      "confidence": 0.95,
+      "noveltyScore": 78
+    },
+    {
+      "id": "acquired-ko-932a800bd2b69e9a-ectopic-pregnancy-diagnosis",
+      "subject": "OB/GYN",
+      "system": "Early pregnancy bleeding / acute pelvic pain",
+      "topic": "Ectopic pregnancy",
+      "competency": "diagnosis",
+      "blueprintCategory": "Early pregnancy bleeding / acute pelvic pain",
+      "pivot": "Menses occur at regular 30-day intervals, There is cervical motion tenderness, a closed cervical os, tender, The right adnexa is tender",
+      "discriminatorPair": {
+        "conceptA": "Ectopic pregnancy",
+        "conceptB": "Appendicitis/Hemorrhagic corpus luteal cyst/Hydatidiform mole",
+        "sharedPresentation": "Ectopic pregnancy is an abnormal extrauterine pregnancy (eg, in the fallopian tube, cervix, ovary, or peritoneum) occurring in an anatomic location that cannot support a pregnancy",
+        "pivot": "Menses occur at regular 30-day intervals, There is cervical motion tenderness, a closed cervical os, tender, The right adnexa is tender",
+        "pivotThatSeparates": "Menses occur at regular 30-day intervals, There is cervical motion tenderness, a closed cervical os, tender, The right adnexa is tender",
+        "whyPivotSupportsA": "Menses occur at regular 30-day intervals, There is cervical motion tenderness, a closed cervical os, tender, The right adnexa is tender supports the Ectopic pregnancy branch.",
+        "whatWouldSupportB": "A finding specific to Appendicitis/Hemorrhagic corpus luteal cyst/Hydatidiform mole would move the learner to that schema.",
+        "commonWrongSchema": "Appendicitis/Hemorrhagic corpus luteal cyst/Hydatidiform mole",
+        "conceptASchema": [
+          "Early pregnancy bleeding / acute pelvic pain",
+          "Ectopic pregnancy is an abnormal extrauterine pregnancy (eg, in the fallopian tube, cervix, ovary, or peritoneum) occurring in an anatomic location that cannot support a pregnancy",
+          "Menses occur at regular 30-day intervals, There is cervical motion tenderness, a closed cervical os, tender, The right adnexa is tender",
+          "Ectopic pregnancy"
+        ],
+        "conceptBSchema": [
+          "Early pregnancy bleeding / acute pelvic pain",
+          "Appendicitis/Hemorrhagic corpus luteal cyst/Hydatidiform mole",
+          "A finding specific to Appendicitis/Hemorrhagic corpus luteal cyst/Hydatidiform mole would move the learner to that schema."
+        ],
+        "alternativeWouldNeed": "A finding specific to Appendicitis/Hemorrhagic corpus luteal cyst/Hydatidiform mole would move the learner to that schema.",
+        "boardRule": "Menses occur at regular 30-day intervals, There is cervical motion tenderness, a closed cervical os, tender, The right adnexa is tender is the discriminator for Ectopic pregnancy."
+      },
+      "semanticLinks": [
+        {
+          "sourceText": "Menses occur at regular 30-day intervals, There is cervical motion tenderness, a closed cervical os, tender, The right adnexa is tender",
+          "relationship": "proves",
+          "targetConcept": "Early pregnancy bleeding / acute pelvic pain",
+          "targetDiagnosis": "Ectopic pregnancy"
+        }
+      ],
+      "confidence": 0.95,
+      "noveltyScore": 36
+    },
+    {
+      "id": "acquired-ko-a9e4b410555a04b0-cesarean-delivery-diagnosis",
+      "subject": "OB/GYN",
+      "system": "Female Reproductive",
+      "topic": "Cesarean delivery",
+      "competency": "diagnosis",
+      "blueprintCategory": "Female Reproductive",
+      "pivot": "She has achondroplasia, She does not use tobacco, She works as a chef 10 to 12 hours daily, She is 107 cm (3 ft 6 in) tall, weighs 36 kg (80 lb)",
+      "discriminatorPair": {
+        "conceptA": "Cesarean delivery",
+        "conceptB": "Fetal achondroplasia/Preeclampsia/Renal failure",
+        "sharedPresentation": "Achondroplasia is an autosomal dominant disorder of abnormal long bone growth",
+        "pivot": "She has achondroplasia, She does not use tobacco, She works as a chef 10 to 12 hours daily, She is 107 cm (3 ft 6 in) tall, weighs 36 kg (80 lb)",
+        "pivotThatSeparates": "She has achondroplasia, She does not use tobacco, She works as a chef 10 to 12 hours daily, She is 107 cm (3 ft 6 in) tall, weighs 36 kg (80 lb)",
+        "whyPivotSupportsA": "She has achondroplasia, She does not use tobacco, She works as a chef 10 to 12 hours daily, She is 107 cm (3 ft 6 in) tall, weighs 36 kg (80 lb) supports the Cesarean delivery branch.",
+        "whatWouldSupportB": "A finding specific to Fetal achondroplasia/Preeclampsia/Renal failure would move the learner to that schema.",
+        "commonWrongSchema": "Fetal achondroplasia/Preeclampsia/Renal failure",
+        "conceptASchema": [
+          "Female Reproductive",
+          "Achondroplasia is an autosomal dominant disorder of abnormal long bone growth",
+          "She has achondroplasia, She does not use tobacco, She works as a chef 10 to 12 hours daily, She is 107 cm (3 ft 6 in) tall, weighs 36 kg (80 lb)",
+          "Cesarean delivery"
+        ],
+        "conceptBSchema": [
+          "Female Reproductive",
+          "Fetal achondroplasia/Preeclampsia/Renal failure",
+          "A finding specific to Fetal achondroplasia/Preeclampsia/Renal failure would move the learner to that schema."
+        ],
+        "alternativeWouldNeed": "A finding specific to Fetal achondroplasia/Preeclampsia/Renal failure would move the learner to that schema.",
+        "boardRule": "She has achondroplasia, She does not use tobacco, She works as a chef 10 to 12 hours daily, She is 107 cm (3 ft 6 in) tall, weighs 36 kg (80 lb) is the discriminator for Cesarean delivery."
+      },
+      "semanticLinks": [
+        {
+          "sourceText": "She has achondroplasia, She does not use tobacco, She works as a chef 10 to 12 hours daily, She is 107 cm (3 ft 6 in) tall, weighs 36 kg (80 lb)",
+          "relationship": "proves",
+          "targetConcept": "Female Reproductive",
+          "targetDiagnosis": "Cesarean delivery"
+        }
+      ],
+      "confidence": 0.95,
+      "noveltyScore": 78
+    },
+    {
+      "id": "acquired-ko-842fee31b1b296e7-chronic-anovulation-risk_factor_interpretation",
+      "subject": "OB/GYN",
+      "system": "Gynecologic oncology",
+      "topic": "Chronic anovulation",
+      "competency": "risk_factor_interpretation",
+      "blueprintCategory": "Gynecologic oncology",
+      "pivot": "Pelvic examination shows a small amount of blood at the cervical os",
+      "discriminatorPair": {
+        "conceptA": "Chronic anovulation",
+        "conceptB": "Diabetes mellitus/Early menarche/Hypertension",
+        "sharedPresentation": "Menarche was at the age of 11 years , and she has four to six menstrual periods each year with moderate flow",
+        "pivot": "Pelvic examination shows a small amount of blood at the cervical os",
+        "pivotThatSeparates": "Pelvic examination shows a small amount of blood at the cervical os",
+        "whyPivotSupportsA": "Pelvic examination shows a small amount of blood at the cervical os supports the Chronic anovulation branch.",
+        "whatWouldSupportB": "A finding specific to Diabetes mellitus/Early menarche/Hypertension would move the learner to that schema.",
+        "commonWrongSchema": "Diabetes mellitus/Early menarche/Hypertension",
+        "conceptASchema": [
+          "Gynecologic oncology",
+          "Menarche was at the age of 11 years , and she has four to six menstrual periods each year with moderate flow",
+          "Pelvic examination shows a small amount of blood at the cervical os",
+          "Chronic anovulation"
+        ],
+        "conceptBSchema": [
+          "Gynecologic oncology",
+          "Diabetes mellitus/Early menarche/Hypertension",
+          "A finding specific to Diabetes mellitus/Early menarche/Hypertension would move the learner to that schema."
+        ],
+        "alternativeWouldNeed": "A finding specific to Diabetes mellitus/Early menarche/Hypertension would move the learner to that schema.",
+        "boardRule": "Pelvic examination shows a small amount of blood at the cervical os is the discriminator for Chronic anovulation."
+      },
+      "semanticLinks": [
+        {
+          "sourceText": "Pelvic examination shows a small amount of blood at the cervical os",
+          "relationship": "supports",
+          "targetConcept": "Gynecologic oncology",
+          "targetDiagnosis": "Chronic anovulation"
+        }
+      ],
+      "confidence": 0.95,
+      "noveltyScore": 78
+    },
+    {
+      "id": "acquired-ko-b6b61a51c89ef066-different-shape-next_best_step",
+      "subject": "OB/GYN",
+      "system": "Contraception",
+      "topic": "Different shape",
+      "competency": "next_best_step",
+      "blueprintCategory": "Contraception",
+      "pivot": "She has used a copper-containing IUD for contraception for 2 years, Examination shows an enlarged uterus, a visible IUD string",
+      "discriminatorPair": {
+        "conceptA": "Different shape",
+        "conceptB": "Remove the IUD, and recommend another contraceptive method/Remove the IUD, and recommend removal of the leiomyoma/Replace the IUD with an IUD of",
+        "sharedPresentation": "Leiomyomata uteri, or benign tumors of the uterine myometrial smooth muscle, can present as subserosal, intramural, or submucosal myometrial masses",
+        "pivot": "She has used a copper-containing IUD for contraception for 2 years, Examination shows an enlarged uterus, a visible IUD string",
+        "pivotThatSeparates": "She has used a copper-containing IUD for contraception for 2 years, Examination shows an enlarged uterus, a visible IUD string",
+        "whyPivotSupportsA": "She has used a copper-containing IUD for contraception for 2 years, Examination shows an enlarged uterus, a visible IUD string supports the Different shape branch.",
+        "whatWouldSupportB": "A finding specific to Remove the IUD, and recommend another contraceptive method/Remove the IUD, and recommend removal of the leiomyoma/Replace the IUD with an IUD of would move the learner to that schema.",
+        "commonWrongSchema": "Remove the IUD, and recommend another contraceptive method/Remove the IUD, and recommend removal of the leiomyoma/Replace the IUD with an IUD of",
+        "conceptASchema": [
+          "Contraception",
+          "Leiomyomata uteri, or benign tumors of the uterine myometrial smooth muscle, can present as subserosal, intramural, or submucosal myometrial masses",
+          "She has used a copper-containing IUD for contraception for 2 years, Examination shows an enlarged uterus, a visible IUD string",
+          "Different shape"
+        ],
+        "conceptBSchema": [
+          "Contraception",
+          "Remove the IUD, and recommend another contraceptive method/Remove the IUD, and recommend removal of the leiomyoma/Replace the IUD with an IUD of",
+          "A finding specific to Remove the IUD, and recommend another contraceptive method/Remove the IUD, and recommend removal of the leiomyoma/Replace the IUD with an IUD of would move the learner to that schema."
+        ],
+        "alternativeWouldNeed": "A finding specific to Remove the IUD, and recommend another contraceptive method/Remove the IUD, and recommend removal of the leiomyoma/Replace the IUD with an IUD of would move the learner to that schema.",
+        "boardRule": "She has used a copper-containing IUD for contraception for 2 years, Examination shows an enlarged uterus, a visible IUD string is the discriminator for Different shape."
+      },
+      "semanticLinks": [
+        {
+          "sourceText": "She has used a copper-containing IUD for contraception for 2 years, Examination shows an enlarged uterus, a visible IUD string",
+          "relationship": "supports",
+          "targetConcept": "Contraception",
+          "targetDiagnosis": "Different shape"
+        }
+      ],
+      "confidence": 0.95,
+      "noveltyScore": 78
+    },
+    {
+      "id": "acquired-ko-6fd127b27cd2ad18-lactational-mastitis-treated-with-anti-staphylococcal-therapy-management",
+      "subject": "OB/GYN",
+      "system": "Breast infection / lactation",
+      "topic": "lactational mastitis treated with anti-staphylococcal therapy",
+      "competency": "management",
+      "blueprintCategory": "Breast infection / lactation",
+      "pivot": "She has been breast-feeding for 2 weeks, Examination of the breast shows an erythematous, tender upper outer quadrant, The nipple has fissures",
+      "discriminatorPair": {
+        "conceptA": "Lactational mastitis treated with anti-staphylococcal therapy",
+        "conceptB": "Ampicillin/Erythromycin/Tetracycline",
+        "sharedPresentation": "aureus (MSSA) and treatment is with continued breastfeeding and dicloxacillin",
+        "pivot": "She has been breast-feeding for 2 weeks, Examination of the breast shows an erythematous, tender upper outer quadrant, The nipple has fissures",
+        "pivotThatSeparates": "She has been breast-feeding for 2 weeks, Examination of the breast shows an erythematous, tender upper outer quadrant, The nipple has fissures",
+        "whyPivotSupportsA": "She has been breast-feeding for 2 weeks, Examination of the breast shows an erythematous, tender upper outer quadrant, The nipple has fissures supports the Lactational mastitis treated with anti-staphylococcal therapy branch.",
+        "whatWouldSupportB": "A finding specific to Ampicillin/Erythromycin/Tetracycline would move the learner to that schema.",
+        "commonWrongSchema": "Ampicillin/Erythromycin/Tetracycline",
+        "conceptASchema": [
+          "Breast infection / lactation",
+          "aureus (MSSA) and treatment is with continued breastfeeding and dicloxacillin",
+          "She has been breast-feeding for 2 weeks, Examination of the breast shows an erythematous, tender upper outer quadrant, The nipple has fissures",
+          "lactational mastitis treated with anti-staphylococcal therapy"
+        ],
+        "conceptBSchema": [
+          "Breast infection / lactation",
+          "Ampicillin/Erythromycin/Tetracycline",
+          "A finding specific to Ampicillin/Erythromycin/Tetracycline would move the learner to that schema."
+        ],
+        "alternativeWouldNeed": "A finding specific to Ampicillin/Erythromycin/Tetracycline would move the learner to that schema.",
+        "boardRule": "She has been breast-feeding for 2 weeks, Examination of the breast shows an erythematous, tender upper outer quadrant, The nipple has fissures is the discriminator for Lactational mastitis treated with anti-staphylococcal therapy."
+      },
+      "semanticLinks": [
+        {
+          "sourceText": "She has been breast-feeding for 2 weeks, Examination of the breast shows an erythematous, tender upper outer quadrant, The nipple has fissures",
+          "relationship": "supports",
+          "targetConcept": "Breast infection / lactation",
+          "targetDiagnosis": "lactational mastitis treated with anti-staphylococcal therapy"
+        }
+      ],
+      "confidence": 0.95,
+      "noveltyScore": 78
+    },
+    {
+      "id": "acquired-ko-f72f29ed8ff90c4e-pneumonia-next_best_step",
+      "subject": "OB/GYN",
+      "system": "Vulvovaginal infections / STI",
+      "topic": "Pneumonia",
+      "competency": "next_best_step",
+      "blueprintCategory": "Vulvovaginal infections / STI",
+      "pivot": "patient nulligravid patient, She is French-Canadian, has some distant cousins who died during early childhood, Her husband is Jewish, not of Ashkenazi descent",
+      "discriminatorPair": {
+        "conceptA": "Pneumonia",
+        "conceptB": "Testing of the husband first; if positive, no further testing is indicated/Testing of the wife first; if positive, no further testing is indicated/No testing is indicated",
+        "sharedPresentation": "If the high-risk parent tests negative, no additional testing is needed",
+        "pivot": "patient nulligravid patient, She is French-Canadian, has some distant cousins who died during early childhood, Her husband is Jewish, not of Ashkenazi descent",
+        "pivotThatSeparates": "patient nulligravid patient, She is French-Canadian, has some distant cousins who died during early childhood, Her husband is Jewish, not of Ashkenazi descent",
+        "whyPivotSupportsA": "patient nulligravid patient, She is French-Canadian, has some distant cousins who died during early childhood, Her husband is Jewish, not of Ashkenazi descent supports the Pneumonia branch.",
+        "whatWouldSupportB": "A finding specific to Testing of the husband first; if positive, no further testing is indicated/Testing of the wife first; if positive, no further testing is indicated/No testing is indicated would move the learner to that schema.",
+        "commonWrongSchema": "Testing of the husband first; if positive, no further testing is indicated/Testing of the wife first; if positive, no further testing is indicated/No testing is indicated",
+        "conceptASchema": [
+          "Vulvovaginal infections / STI",
+          "If the high-risk parent tests negative, no additional testing is needed",
+          "patient nulligravid patient, She is French-Canadian, has some distant cousins who died during early childhood, Her husband is Jewish, not of Ashkenazi descent",
+          "Pneumonia"
+        ],
+        "conceptBSchema": [
+          "Vulvovaginal infections / STI",
+          "Testing of the husband first; if positive, no further testing is indicated/Testing of the wife first; if positive, no further testing is indicated/No testing is indicated",
+          "A finding specific to Testing of the husband first; if positive, no further testing is indicated/Testing of the wife first; if positive, no further testing is indicated/No testing is indicated would move the learner to that schema."
+        ],
+        "alternativeWouldNeed": "A finding specific to Testing of the husband first; if positive, no further testing is indicated/Testing of the wife first; if positive, no further testing is indicated/No testing is indicated would move the learner to that schema.",
+        "boardRule": "patient nulligravid patient, She is French-Canadian, has some distant cousins who died during early childhood, Her husband is Jewish, not of Ashkenazi descent is the discriminator for Pneumonia."
+      },
+      "semanticLinks": [
+        {
+          "sourceText": "patient nulligravid patient, She is French-Canadian, has some distant cousins who died during early childhood, Her husband is Jewish, not of Ashkenazi descent",
+          "relationship": "supports",
+          "targetConcept": "Vulvovaginal infections / STI",
+          "targetDiagnosis": "Pneumonia"
+        }
+      ],
+      "confidence": 0.95,
+      "noveltyScore": 36
+    },
+    {
+      "id": "acquired-ko-4d4baf6e5a3691f0-prescribe-next_best_step",
+      "subject": "OB/GYN",
+      "system": "Vulvovaginal infections / STI",
+      "topic": "Prescribe",
+      "competency": "next_best_step",
+      "blueprintCategory": "Vulvovaginal infections / STI",
+      "pivot": "Menses occur at regular 28-day intervals, Physical examination shows no abnormalities",
+      "discriminatorPair": {
+        "conceptA": "Prescribe",
+        "conceptB": "Population Services International (1977) affirmed the rights of minors to access contraceptive services",
+        "sharedPresentation": "Minors have the right to access contraceptive services",
+        "pivot": "Menses occur at regular 28-day intervals, Physical examination shows no abnormalities",
+        "pivotThatSeparates": "Menses occur at regular 28-day intervals, Physical examination shows no abnormalities",
+        "whyPivotSupportsA": "Menses occur at regular 28-day intervals, Physical examination shows no abnormalities supports the Prescribe branch.",
+        "whatWouldSupportB": "A finding specific to Population Services International (1977) affirmed the rights of minors to access contraceptive services would move the learner to that schema.",
+        "commonWrongSchema": "Population Services International (1977) affirmed the rights of minors to access contraceptive services",
+        "conceptASchema": [
+          "Vulvovaginal infections / STI",
+          "Minors have the right to access contraceptive services",
+          "Menses occur at regular 28-day intervals, Physical examination shows no abnormalities",
+          "Prescribe"
+        ],
+        "conceptBSchema": [
+          "Vulvovaginal infections / STI",
+          "Population Services International (1977) affirmed the rights of minors to access contraceptive services",
+          "A finding specific to Population Services International (1977) affirmed the rights of minors to access contraceptive services would move the learner to that schema."
+        ],
+        "alternativeWouldNeed": "A finding specific to Population Services International (1977) affirmed the rights of minors to access contraceptive services would move the learner to that schema.",
+        "boardRule": "Menses occur at regular 28-day intervals, Physical examination shows no abnormalities is the discriminator for Prescribe."
+      },
+      "semanticLinks": [
+        {
+          "sourceText": "Menses occur at regular 28-day intervals, Physical examination shows no abnormalities",
+          "relationship": "supports",
+          "targetConcept": "Vulvovaginal infections / STI",
+          "targetDiagnosis": "Prescribe"
+        }
+      ],
+      "confidence": 0.95,
+      "noveltyScore": 78
+    },
+    {
+      "id": "acquired-ko-6f15fc8260313084-depot-medroxyprogesterone-management",
+      "subject": "OB/GYN",
+      "system": "Vulvovaginal infections / STI",
+      "topic": "Depot medroxyprogesterone",
+      "competency": "management",
+      "blueprintCategory": "Vulvovaginal infections / STI",
+      "pivot": "She does not want to become pregnant now",
+      "discriminatorPair": {
+        "conceptA": "Depot medroxyprogesterone",
+        "conceptB": "Vaginal contraceptive ring/Laparoscopic tubal ligation/Oral contraceptive",
+        "sharedPresentation": "Depot medroxyprogesterone is an effective form of birth control that is given every 14 weeks and can be utilized in patients at risk for complications from estrogen therapy",
+        "pivot": "She does not want to become pregnant now",
+        "pivotThatSeparates": "She does not want to become pregnant now",
+        "whyPivotSupportsA": "She does not want to become pregnant now supports the Depot medroxyprogesterone branch.",
+        "whatWouldSupportB": "A finding specific to Vaginal contraceptive ring/Laparoscopic tubal ligation/Oral contraceptive would move the learner to that schema.",
+        "commonWrongSchema": "Vaginal contraceptive ring/Laparoscopic tubal ligation/Oral contraceptive",
+        "conceptASchema": [
+          "Vulvovaginal infections / STI",
+          "Depot medroxyprogesterone is an effective form of birth control that is given every 14 weeks and can be utilized in patients at risk for complications from estrogen therapy",
+          "She does not want to become pregnant now",
+          "Depot medroxyprogesterone"
+        ],
+        "conceptBSchema": [
+          "Vulvovaginal infections / STI",
+          "Vaginal contraceptive ring/Laparoscopic tubal ligation/Oral contraceptive",
+          "A finding specific to Vaginal contraceptive ring/Laparoscopic tubal ligation/Oral contraceptive would move the learner to that schema."
+        ],
+        "alternativeWouldNeed": "A finding specific to Vaginal contraceptive ring/Laparoscopic tubal ligation/Oral contraceptive would move the learner to that schema.",
+        "boardRule": "She does not want to become pregnant now is the discriminator for Depot medroxyprogesterone."
+      },
+      "semanticLinks": [
+        {
+          "sourceText": "She does not want to become pregnant now",
+          "relationship": "supports",
+          "targetConcept": "Vulvovaginal infections / STI",
+          "targetDiagnosis": "Depot medroxyprogesterone"
+        }
+      ],
+      "confidence": 0.95,
+      "noveltyScore": 78
+    },
+    {
+      "id": "acquired-ko-e455ac515682b0e1-pneumonia-management",
+      "subject": "OB/GYN",
+      "system": "Female Reproductive",
+      "topic": "Pneumonia",
+      "competency": "management",
+      "blueprintCategory": "Female Reproductive",
+      "pivot": "The influenza vaccine is available in inactivated, recombinant, and live-attenuated forms",
+      "discriminatorPair": {
+        "conceptA": "Pneumonia",
+        "conceptB": "B) Human papillomavirus/Meningococcal/Varicella",
+        "sharedPresentation": "Annual influenza vaccinations are recommended for all patients older than 6 months",
+        "pivot": "The influenza vaccine is available in inactivated, recombinant, and live-attenuated forms",
+        "pivotThatSeparates": "The influenza vaccine is available in inactivated, recombinant, and live-attenuated forms",
+        "whyPivotSupportsA": "The influenza vaccine is available in inactivated, recombinant, and live-attenuated forms supports the Pneumonia branch.",
+        "whatWouldSupportB": "A finding specific to B) Human papillomavirus/Meningococcal/Varicella would move the learner to that schema.",
+        "commonWrongSchema": "B) Human papillomavirus/Meningococcal/Varicella",
+        "conceptASchema": [
+          "Female Reproductive",
+          "Annual influenza vaccinations are recommended for all patients older than 6 months",
+          "The influenza vaccine is available in inactivated, recombinant, and live-attenuated forms",
+          "Pneumonia"
+        ],
+        "conceptBSchema": [
+          "Female Reproductive",
+          "B) Human papillomavirus/Meningococcal/Varicella",
+          "A finding specific to B) Human papillomavirus/Meningococcal/Varicella would move the learner to that schema."
+        ],
+        "alternativeWouldNeed": "A finding specific to B) Human papillomavirus/Meningococcal/Varicella would move the learner to that schema.",
+        "boardRule": "The influenza vaccine is available in inactivated, recombinant, and live-attenuated forms is the discriminator for Pneumonia."
+      },
+      "semanticLinks": [
+        {
+          "sourceText": "The influenza vaccine is available in inactivated, recombinant, and live-attenuated forms",
+          "relationship": "supports",
+          "targetConcept": "Female Reproductive",
+          "targetDiagnosis": "Pneumonia"
+        }
+      ],
+      "confidence": 0.95,
+      "noveltyScore": 58
+    },
+    {
+      "id": "acquired-ko-ccf1dfcd29666568-ultrasonograejhy-for-dating-next_best_step",
+      "subject": "OB/GYN",
+      "system": "Early pregnancy bleeding / acute pelvic pain",
+      "topic": "UltrasonograEJhy for dating",
+      "competency": "next_best_step",
+      "blueprintCategory": "Early pregnancy bleeding / acute pelvic pain",
+      "pivot": "Abdominal examination shows a uterus that measures 23 cm above the pubic symphysis, 5 kg (10 lb) since her last visit 4 weeks ago, Fetal heart tones are 160/min",
+      "discriminatorPair": {
+        "conceptA": "UltrasonograEJhy for dating",
+        "conceptB": "Schedule an appointment in 1 week/Nutritional counseling/Measurement of serum estriol concentration",
+        "sharedPresentation": "Abdominal examination shows a uterus that measures 23 cm above the pubic symphysis",
+        "pivot": "Abdominal examination shows a uterus that measures 23 cm above the pubic symphysis, 5 kg (10 lb) since her last visit 4 weeks ago, Fetal heart tones are 160/min",
+        "pivotThatSeparates": "Abdominal examination shows a uterus that measures 23 cm above the pubic symphysis, 5 kg (10 lb) since her last visit 4 weeks ago, Fetal heart tones are 160/min",
+        "whyPivotSupportsA": "Abdominal examination shows a uterus that measures 23 cm above the pubic symphysis, 5 kg (10 lb) since her last visit 4 weeks ago, Fetal heart tones are 160/min supports the UltrasonograEJhy for dating branch.",
+        "whatWouldSupportB": "A finding specific to Schedule an appointment in 1 week/Nutritional counseling/Measurement of serum estriol concentration would move the learner to that schema.",
+        "commonWrongSchema": "Schedule an appointment in 1 week/Nutritional counseling/Measurement of serum estriol concentration",
+        "conceptASchema": [
+          "Early pregnancy bleeding / acute pelvic pain",
+          "Abdominal examination shows a uterus that measures 23 cm above the pubic symphysis",
+          "Abdominal examination shows a uterus that measures 23 cm above the pubic symphysis, 5 kg (10 lb) since her last visit 4 weeks ago, Fetal heart tones are 160/min",
+          "UltrasonograEJhy for dating"
+        ],
+        "conceptBSchema": [
+          "Early pregnancy bleeding / acute pelvic pain",
+          "Schedule an appointment in 1 week/Nutritional counseling/Measurement of serum estriol concentration",
+          "A finding specific to Schedule an appointment in 1 week/Nutritional counseling/Measurement of serum estriol concentration would move the learner to that schema."
+        ],
+        "alternativeWouldNeed": "A finding specific to Schedule an appointment in 1 week/Nutritional counseling/Measurement of serum estriol concentration would move the learner to that schema.",
+        "boardRule": "Abdominal examination shows a uterus that measures 23 cm above the pubic symphysis, 5 kg (10 lb) since her last visit 4 weeks ago, Fetal heart tones are 160/min is the discriminator for UltrasonograEJhy for dating."
+      },
+      "semanticLinks": [
+        {
+          "sourceText": "Abdominal examination shows a uterus that measures 23 cm above the pubic symphysis, 5 kg (10 lb) since her last visit 4 weeks ago, Fetal heart tones are 160/min",
+          "relationship": "supports",
+          "targetConcept": "Early pregnancy bleeding / acute pelvic pain",
+          "targetDiagnosis": "UltrasonograEJhy for dating"
+        }
+      ],
+      "confidence": 0.95,
+      "noveltyScore": 78
+    },
+    {
+      "id": "acquired-ko-67b2d9f9ec89c0be-persistent-uterine-atony-after-massage-and-oxytocin-requiring-second-line-uterotonic-escalation-next_best_step",
+      "subject": "OB/GYN",
+      "system": "Obstetrics / postpartum hemorrhage",
+      "topic": "persistent uterine atony after massage and oxytocin requiring second-line uterotonic escalation",
+      "competency": "next_best_step",
+      "blueprintCategory": "Obstetrics / postpartum hemorrhage",
+      "pivot": "Despite receiving oxytocin therapy in the recovery room, she has excessive vaginal bleeding, a boggy uterus, The bleeding continues, uterine massage",
+      "discriminatorPair": {
+        "conceptA": "Persistent uterine atony after massage and oxytocin requiring second-line uterotonic escalation",
+        "conceptB": "Measurement of plasma fibrinogen concentration , prothrombin time , partial thromboplastin time , and factor VIII/Endometrial curettage/Uterine artery embolization",
+        "sharedPresentation": "Uterine atony",
+        "pivot": "Despite receiving oxytocin therapy in the recovery room, she has excessive vaginal bleeding, a boggy uterus, The bleeding continues, uterine massage",
+        "pivotThatSeparates": "Despite receiving oxytocin therapy in the recovery room, she has excessive vaginal bleeding, a boggy uterus, The bleeding continues, uterine massage",
+        "whyPivotSupportsA": "Despite receiving oxytocin therapy in the recovery room, she has excessive vaginal bleeding, a boggy uterus, The bleeding continues, uterine massage supports the Persistent uterine atony after massage and oxytocin requiring second-line uterotonic escalation branch.",
+        "whatWouldSupportB": "A finding specific to Measurement of plasma fibrinogen concentration , prothrombin time , partial thromboplastin time , and factor VIII/Endometrial curettage/Uterine artery embolization would move the learner to that schema.",
+        "commonWrongSchema": "Measurement of plasma fibrinogen concentration , prothrombin time , partial thromboplastin time , and factor VIII/Endometrial curettage/Uterine artery embolization",
+        "conceptASchema": [
+          "Obstetrics / postpartum hemorrhage",
+          "Uterine atony",
+          "Despite receiving oxytocin therapy in the recovery room, she has excessive vaginal bleeding, a boggy uterus, The bleeding continues, uterine massage",
+          "persistent uterine atony after massage and oxytocin requiring second-line uterotonic escalation"
+        ],
+        "conceptBSchema": [
+          "Obstetrics / postpartum hemorrhage",
+          "Measurement of plasma fibrinogen concentration , prothrombin time , partial thromboplastin time , and factor VIII/Endometrial curettage/Uterine artery embolization",
+          "A finding specific to Measurement of plasma fibrinogen concentration , prothrombin time , partial thromboplastin time , and factor VIII/Endometrial curettage/Uterine artery embolization would move the learner to that schema."
+        ],
+        "alternativeWouldNeed": "A finding specific to Measurement of plasma fibrinogen concentration , prothrombin time , partial thromboplastin time , and factor VIII/Endometrial curettage/Uterine artery embolization would move the learner to that schema.",
+        "boardRule": "Despite receiving oxytocin therapy in the recovery room, she has excessive vaginal bleeding, a boggy uterus, The bleeding continues, uterine massage is the discriminator for Persistent uterine atony after massage and oxytocin requiring second-line uterotonic escalation."
+      },
+      "semanticLinks": [
+        {
+          "sourceText": "Despite receiving oxytocin therapy in the recovery room, she has excessive vaginal bleeding, a boggy uterus, The bleeding continues, uterine massage",
+          "relationship": "supports",
+          "targetConcept": "Obstetrics / postpartum hemorrhage",
+          "targetDiagnosis": "persistent uterine atony after massage and oxytocin requiring second-line uterotonic escalation"
+        }
+      ],
+      "confidence": 0.95,
+      "noveltyScore": 78
+    },
+    {
+      "id": "acquired-ko-b173a00396ddabe1-pulmonary-embolism-diagnosis",
+      "subject": "OB/GYN",
+      "system": "Female Reproductive",
+      "topic": "Pulmonary embolism",
+      "competency": "diagnosis",
+      "blueprintCategory": "Female Reproductive",
+      "pivot": "On urinalysis, RBCs without casts are common",
+      "discriminatorPair": {
+        "conceptA": "Pulmonary embolism",
+        "conceptB": "Bilateral ureteral obstruction/Hemorrhagic cystitis/Renal vein thrombosis",
+        "sharedPresentation": "Pyelonephritis typically",
+        "pivot": "On urinalysis, RBCs without casts are common",
+        "pivotThatSeparates": "On urinalysis, RBCs without casts are common",
+        "whyPivotSupportsA": "On urinalysis, RBCs without casts are common supports the Pulmonary embolism branch.",
+        "whatWouldSupportB": "A finding specific to Bilateral ureteral obstruction/Hemorrhagic cystitis/Renal vein thrombosis would move the learner to that schema.",
+        "commonWrongSchema": "Bilateral ureteral obstruction/Hemorrhagic cystitis/Renal vein thrombosis",
+        "conceptASchema": [
+          "Female Reproductive",
+          "Pyelonephritis typically",
+          "On urinalysis, RBCs without casts are common",
+          "Pulmonary embolism"
+        ],
+        "conceptBSchema": [
+          "Female Reproductive",
+          "Bilateral ureteral obstruction/Hemorrhagic cystitis/Renal vein thrombosis",
+          "A finding specific to Bilateral ureteral obstruction/Hemorrhagic cystitis/Renal vein thrombosis would move the learner to that schema."
+        ],
+        "alternativeWouldNeed": "A finding specific to Bilateral ureteral obstruction/Hemorrhagic cystitis/Renal vein thrombosis would move the learner to that schema.",
+        "boardRule": "On urinalysis, RBCs without casts are common is the discriminator for Pulmonary embolism."
+      },
+      "semanticLinks": [
+        {
+          "sourceText": "On urinalysis, RBCs without casts are common",
+          "relationship": "proves",
+          "targetConcept": "Female Reproductive",
+          "targetDiagnosis": "Pulmonary embolism"
+        }
+      ],
+      "confidence": 0.95,
+      "noveltyScore": 36
+    },
+    {
+      "id": "acquired-ko-6bcb3dbcc1d0f1f2-fibroadenoma-diagnosis",
+      "subject": "OB/GYN",
+      "system": "Vulvovaginal infections / STI",
+      "topic": "Fibroadenoma",
+      "competency": "diagnosis",
+      "blueprintCategory": "Vulvovaginal infections / STI",
+      "pivot": "She notes that the lump has increased in size, Menses occur at regular 28-day intervals, Vital signs are within normal limits",
+      "discriminatorPair": {
+        "conceptA": "Fibroadenoma",
+        "conceptB": "Abscess/Fat necrosis/Fibrocystic changes of the breast",
+        "sharedPresentation": "Fibroadenomas are the most common breast mass in young women and are benign masses composed of epithelial and fibroblastic stromal tissue",
+        "pivot": "She notes that the lump has increased in size, Menses occur at regular 28-day intervals, Vital signs are within normal limits",
+        "pivotThatSeparates": "She notes that the lump has increased in size, Menses occur at regular 28-day intervals, Vital signs are within normal limits",
+        "whyPivotSupportsA": "She notes that the lump has increased in size, Menses occur at regular 28-day intervals, Vital signs are within normal limits supports the Fibroadenoma branch.",
+        "whatWouldSupportB": "A finding specific to Abscess/Fat necrosis/Fibrocystic changes of the breast would move the learner to that schema.",
+        "commonWrongSchema": "Abscess/Fat necrosis/Fibrocystic changes of the breast",
+        "conceptASchema": [
+          "Vulvovaginal infections / STI",
+          "Fibroadenomas are the most common breast mass in young women and are benign masses composed of epithelial and fibroblastic stromal tissue",
+          "She notes that the lump has increased in size, Menses occur at regular 28-day intervals, Vital signs are within normal limits",
+          "Fibroadenoma"
+        ],
+        "conceptBSchema": [
+          "Vulvovaginal infections / STI",
+          "Abscess/Fat necrosis/Fibrocystic changes of the breast",
+          "A finding specific to Abscess/Fat necrosis/Fibrocystic changes of the breast would move the learner to that schema."
+        ],
+        "alternativeWouldNeed": "A finding specific to Abscess/Fat necrosis/Fibrocystic changes of the breast would move the learner to that schema.",
+        "boardRule": "She notes that the lump has increased in size, Menses occur at regular 28-day intervals, Vital signs are within normal limits is the discriminator for Fibroadenoma."
+      },
+      "semanticLinks": [
+        {
+          "sourceText": "She notes that the lump has increased in size, Menses occur at regular 28-day intervals, Vital signs are within normal limits",
+          "relationship": "proves",
+          "targetConcept": "Vulvovaginal infections / STI",
+          "targetDiagnosis": "Fibroadenoma"
+        }
+      ],
+      "confidence": 0.95,
+      "noveltyScore": 78
+    },
+    {
+      "id": "acquired-ko-761a86488e4b871d-parvovirus-mechanism",
+      "subject": "OB/GYN",
+      "system": "Intrapartum infection / fetal monitoring",
+      "topic": "Parvovirus",
+      "competency": "mechanism",
+      "blueprintCategory": "Intrapartum infection / fetal monitoring",
+      "pivot": "Fetal anemia may present as fetal tachycardia, high-output heart failure, hydrops fetal is, and death",
+      "discriminatorPair": {
+        "conceptA": "Parvovirus",
+        "conceptB": "Cytomegalovirus/Herpes simplex virus 1/Human papillomavirus",
+        "sharedPresentation": "She reports that, 1 week ago, she had malaise for 2 days followed by a bright rash over her cheeks that resolved within 3 days",
+        "pivot": "Fetal anemia may present as fetal tachycardia, high-output heart failure, hydrops fetal is, and death",
+        "pivotThatSeparates": "Fetal anemia may present as fetal tachycardia, high-output heart failure, hydrops fetal is, and death",
+        "whyPivotSupportsA": "Fetal anemia may present as fetal tachycardia, high-output heart failure, hydrops fetal is, and death supports the Parvovirus branch.",
+        "whatWouldSupportB": "A finding specific to Cytomegalovirus/Herpes simplex virus 1/Human papillomavirus would move the learner to that schema.",
+        "commonWrongSchema": "Cytomegalovirus/Herpes simplex virus 1/Human papillomavirus",
+        "conceptASchema": [
+          "Intrapartum infection / fetal monitoring",
+          "She reports that, 1 week ago, she had malaise for 2 days followed by a bright rash over her cheeks that resolved within 3 days",
+          "Fetal anemia may present as fetal tachycardia, high-output heart failure, hydrops fetal is, and death",
+          "Parvovirus"
+        ],
+        "conceptBSchema": [
+          "Intrapartum infection / fetal monitoring",
+          "Cytomegalovirus/Herpes simplex virus 1/Human papillomavirus",
+          "A finding specific to Cytomegalovirus/Herpes simplex virus 1/Human papillomavirus would move the learner to that schema."
+        ],
+        "alternativeWouldNeed": "A finding specific to Cytomegalovirus/Herpes simplex virus 1/Human papillomavirus would move the learner to that schema.",
+        "boardRule": "Fetal anemia may present as fetal tachycardia, high-output heart failure, hydrops fetal is, and death is the discriminator for Parvovirus."
+      },
+      "semanticLinks": [
+        {
+          "sourceText": "Fetal anemia may present as fetal tachycardia, high-output heart failure, hydrops fetal is, and death",
+          "relationship": "supports",
+          "targetConcept": "Intrapartum infection / fetal monitoring",
+          "targetDiagnosis": "Parvovirus"
+        }
+      ],
+      "confidence": 0.95,
+      "noveltyScore": 78
+    },
+    {
+      "id": "acquired-ko-e8821dd490bf285b-pali-jable-right-ovary-diagnosis",
+      "subject": "OB/GYN",
+      "system": "Gynecologic oncology",
+      "topic": "Pali:Jable right ovary",
+      "competency": "diagnosis",
+      "blueprintCategory": "Gynecologic oncology",
+      "pivot": "The right ovary is palpable, less than 5 cm in diameter, the left ovary cannot be palpated",
+      "discriminatorPair": {
+        "conceptA": "Pali:Jable right ovary",
+        "conceptB": "Cystocele/Nonpalpable left ovary/Rectocele",
+        "sharedPresentation": "In postmenopausal women, a palpable ovary raises concern for an ovarian malignancy",
+        "pivot": "The right ovary is palpable, less than 5 cm in diameter, the left ovary cannot be palpated",
+        "pivotThatSeparates": "The right ovary is palpable, less than 5 cm in diameter, the left ovary cannot be palpated",
+        "whyPivotSupportsA": "The right ovary is palpable, less than 5 cm in diameter, the left ovary cannot be palpated supports the Pali:Jable right ovary branch.",
+        "whatWouldSupportB": "A finding specific to Cystocele/Nonpalpable left ovary/Rectocele would move the learner to that schema.",
+        "commonWrongSchema": "Cystocele/Nonpalpable left ovary/Rectocele",
+        "conceptASchema": [
+          "Gynecologic oncology",
+          "In postmenopausal women, a palpable ovary raises concern for an ovarian malignancy",
+          "The right ovary is palpable, less than 5 cm in diameter, the left ovary cannot be palpated",
+          "Pali:Jable right ovary"
+        ],
+        "conceptBSchema": [
+          "Gynecologic oncology",
+          "Cystocele/Nonpalpable left ovary/Rectocele",
+          "A finding specific to Cystocele/Nonpalpable left ovary/Rectocele would move the learner to that schema."
+        ],
+        "alternativeWouldNeed": "A finding specific to Cystocele/Nonpalpable left ovary/Rectocele would move the learner to that schema.",
+        "boardRule": "The right ovary is palpable, less than 5 cm in diameter, the left ovary cannot be palpated is the discriminator for Pali:Jable right ovary."
+      },
+      "semanticLinks": [
+        {
+          "sourceText": "The right ovary is palpable, less than 5 cm in diameter, the left ovary cannot be palpated",
+          "relationship": "proves",
+          "targetConcept": "Gynecologic oncology",
+          "targetDiagnosis": "Pali:Jable right ovary"
+        }
+      ],
+      "confidence": 0.95,
+      "noveltyScore": 78
+    },
+    {
+      "id": "acquired-ko-70b0b47a1e83e111-maternal-fever-diagnosis",
+      "subject": "OB/GYN",
+      "system": "Intrapartum infection / fetal monitoring",
+      "topic": "Maternal fever",
+      "competency": "diagnosis",
+      "blueprintCategory": "Intrapartum infection / fetal monitoring",
+      "pivot": "Pregnancy has been complicated by a positive urine culture for Streptococcus aga/actiae (group",
+      "discriminatorPair": {
+        "conceptA": "Maternal fever",
+        "conceptB": "Fetal anemia/Fetal dehydration/Maternal anemia",
+        "sharedPresentation": "Causes of fetal tachycardia, or a heart rate greater than 160/min, include maternal fever, fetal hypoxia, fetal anemia, intra-amniotic infection, and maternal medications",
+        "pivot": "Pregnancy has been complicated by a positive urine culture for Streptococcus aga/actiae (group",
+        "pivotThatSeparates": "Pregnancy has been complicated by a positive urine culture for Streptococcus aga/actiae (group",
+        "whyPivotSupportsA": "Pregnancy has been complicated by a positive urine culture for Streptococcus aga/actiae (group supports the Maternal fever branch.",
+        "whatWouldSupportB": "A finding specific to Fetal anemia/Fetal dehydration/Maternal anemia would move the learner to that schema.",
+        "commonWrongSchema": "Fetal anemia/Fetal dehydration/Maternal anemia",
+        "conceptASchema": [
+          "Intrapartum infection / fetal monitoring",
+          "Causes of fetal tachycardia, or a heart rate greater than 160/min, include maternal fever, fetal hypoxia, fetal anemia, intra-amniotic infection, and maternal medications",
+          "Pregnancy has been complicated by a positive urine culture for Streptococcus aga/actiae (group",
+          "Maternal fever"
+        ],
+        "conceptBSchema": [
+          "Intrapartum infection / fetal monitoring",
+          "Fetal anemia/Fetal dehydration/Maternal anemia",
+          "A finding specific to Fetal anemia/Fetal dehydration/Maternal anemia would move the learner to that schema."
+        ],
+        "alternativeWouldNeed": "A finding specific to Fetal anemia/Fetal dehydration/Maternal anemia would move the learner to that schema.",
+        "boardRule": "Pregnancy has been complicated by a positive urine culture for Streptococcus aga/actiae (group is the discriminator for Maternal fever."
+      },
+      "semanticLinks": [
+        {
+          "sourceText": "Pregnancy has been complicated by a positive urine culture for Streptococcus aga/actiae (group",
+          "relationship": "proves",
+          "targetConcept": "Intrapartum infection / fetal monitoring",
+          "targetDiagnosis": "Maternal fever"
+        }
+      ],
+      "confidence": 0.95,
+      "noveltyScore": 78
+    },
+    {
+      "id": "acquired-ko-ccb3ae8698022af6-endometrial-ablation-next_best_step",
+      "subject": "OB/GYN",
+      "system": "Vulvovaginal infections / STI",
+      "topic": "Endometrial ablation",
+      "competency": "next_best_step",
+      "blueprintCategory": "Vulvovaginal infections / STI",
+      "pivot": "The pain begins 2 days before the onset of menses and lasts for 4 days",
+      "discriminatorPair": {
+        "conceptA": "Endometrial ablation",
+        "conceptB": "Copper IUD/Placement of/Dilatation and curettage",
+        "sharedPresentation": "Abnormal uterine bleeding refers to irregular menstrual bleeding that may be abnormal in quality, duration, or timing",
+        "pivot": "The pain begins 2 days before the onset of menses and lasts for 4 days",
+        "pivotThatSeparates": "The pain begins 2 days before the onset of menses and lasts for 4 days",
+        "whyPivotSupportsA": "The pain begins 2 days before the onset of menses and lasts for 4 days supports the Endometrial ablation branch.",
+        "whatWouldSupportB": "A finding specific to Copper IUD/Placement of/Dilatation and curettage would move the learner to that schema.",
+        "commonWrongSchema": "Copper IUD/Placement of/Dilatation and curettage",
+        "conceptASchema": [
+          "Vulvovaginal infections / STI",
+          "Abnormal uterine bleeding refers to irregular menstrual bleeding that may be abnormal in quality, duration, or timing",
+          "The pain begins 2 days before the onset of menses and lasts for 4 days",
+          "Endometrial ablation"
+        ],
+        "conceptBSchema": [
+          "Vulvovaginal infections / STI",
+          "Copper IUD/Placement of/Dilatation and curettage",
+          "A finding specific to Copper IUD/Placement of/Dilatation and curettage would move the learner to that schema."
+        ],
+        "alternativeWouldNeed": "A finding specific to Copper IUD/Placement of/Dilatation and curettage would move the learner to that schema.",
+        "boardRule": "The pain begins 2 days before the onset of menses and lasts for 4 days is the discriminator for Endometrial ablation."
+      },
+      "semanticLinks": [
+        {
+          "sourceText": "The pain begins 2 days before the onset of menses and lasts for 4 days",
+          "relationship": "supports",
+          "targetConcept": "Vulvovaginal infections / STI",
+          "targetDiagnosis": "Endometrial ablation"
+        }
+      ],
+      "confidence": 0.95,
+      "noveltyScore": 78
+    },
+    {
+      "id": "acquired-ko-79f740034936b223-vaginal-miconazole-management",
+      "subject": "OB/GYN",
+      "system": "Vulvovaginal infections / STI",
+      "topic": "Vaginal miconazole",
+      "competency": "management",
+      "blueprintCategory": "Vulvovaginal infections / STI",
+      "pivot": "She has had no vaginal bleeding or discharge",
+      "discriminatorPair": {
+        "conceptA": "Vaginal miconazole",
+        "conceptB": "Oral clindamycin/Oral metronidazole/Vaginal clindamycin",
+        "sharedPresentation": "Vaginal candidiasis results from the overgrowth of Candida",
+        "pivot": "She has had no vaginal bleeding or discharge",
+        "pivotThatSeparates": "She has had no vaginal bleeding or discharge",
+        "whyPivotSupportsA": "She has had no vaginal bleeding or discharge supports the Vaginal miconazole branch.",
+        "whatWouldSupportB": "A finding specific to Oral clindamycin/Oral metronidazole/Vaginal clindamycin would move the learner to that schema.",
+        "commonWrongSchema": "Oral clindamycin/Oral metronidazole/Vaginal clindamycin",
+        "conceptASchema": [
+          "Vulvovaginal infections / STI",
+          "Vaginal candidiasis results from the overgrowth of Candida",
+          "She has had no vaginal bleeding or discharge",
+          "Vaginal miconazole"
+        ],
+        "conceptBSchema": [
+          "Vulvovaginal infections / STI",
+          "Oral clindamycin/Oral metronidazole/Vaginal clindamycin",
+          "A finding specific to Oral clindamycin/Oral metronidazole/Vaginal clindamycin would move the learner to that schema."
+        ],
+        "alternativeWouldNeed": "A finding specific to Oral clindamycin/Oral metronidazole/Vaginal clindamycin would move the learner to that schema.",
+        "boardRule": "She has had no vaginal bleeding or discharge is the discriminator for Vaginal miconazole."
+      },
+      "semanticLinks": [
+        {
+          "sourceText": "She has had no vaginal bleeding or discharge",
+          "relationship": "supports",
+          "targetConcept": "Vulvovaginal infections / STI",
+          "targetDiagnosis": "Vaginal miconazole"
+        }
+      ],
+      "confidence": 0.95,
+      "noveltyScore": 78
+    },
+    {
+      "id": "acquired-ko-0221f32d2ac71131-sepsis-diagnosis",
+      "subject": "OB/GYN",
+      "system": "Obstetrics / postpartum hemorrhage",
+      "topic": "Sepsis",
+      "competency": "diagnosis",
+      "blueprintCategory": "Obstetrics / postpartum hemorrhage",
+      "pivot": "her \"milk never came in",
+      "discriminatorPair": {
+        "conceptA": "Sepsis",
+        "conceptB": "I normal normal normal normal/L l normal normal normal/Normal normal l l normal",
+        "sharedPresentation": "It may cause a variety of symptoms, including failure to lactate, weakness, lethargy, genital atrophy, and menstrual disorders",
+        "pivot": "her \"milk never came in",
+        "pivotThatSeparates": "her \"milk never came in",
+        "whyPivotSupportsA": "her \"milk never came in supports the Sepsis branch.",
+        "whatWouldSupportB": "A finding specific to I normal normal normal normal/L l normal normal normal/Normal normal l l normal would move the learner to that schema.",
+        "commonWrongSchema": "I normal normal normal normal/L l normal normal normal/Normal normal l l normal",
+        "conceptASchema": [
+          "Obstetrics / postpartum hemorrhage",
+          "It may cause a variety of symptoms, including failure to lactate, weakness, lethargy, genital atrophy, and menstrual disorders",
+          "her \"milk never came in",
+          "Sepsis"
+        ],
+        "conceptBSchema": [
+          "Obstetrics / postpartum hemorrhage",
+          "I normal normal normal normal/L l normal normal normal/Normal normal l l normal",
+          "A finding specific to I normal normal normal normal/L l normal normal normal/Normal normal l l normal would move the learner to that schema."
+        ],
+        "alternativeWouldNeed": "A finding specific to I normal normal normal normal/L l normal normal normal/Normal normal l l normal would move the learner to that schema.",
+        "boardRule": "her \"milk never came in is the discriminator for Sepsis."
+      },
+      "semanticLinks": [
+        {
+          "sourceText": "her \"milk never came in",
+          "relationship": "proves",
+          "targetConcept": "Obstetrics / postpartum hemorrhage",
+          "targetDiagnosis": "Sepsis"
+        }
+      ],
+      "confidence": 0.95,
+      "noveltyScore": 36
+    },
+    {
+      "id": "acquired-ko-296458047249a382-chorioamnionitis-causing-fetal-tachycardia-diagnosis",
+      "subject": "OB/GYN",
+      "system": "Intrapartum infection / fetal monitoring",
+      "topic": "chorioamnionitis causing fetal tachycardia",
+      "competency": "diagnosis",
+      "blueprintCategory": "Intrapartum infection / fetal monitoring",
+      "pivot": "She had spontaneous rupture of membranes 32 hours ago, The uterus is tender to palpation, There is no costovertebral angle tenderness",
+      "discriminatorPair": {
+        "conceptA": "Chorioamnionitis causing fetal tachycardia",
+        "conceptB": "Oligohydramnios/Pyelonephritis/True knot in the umbilical cord",
+        "sharedPresentation": "Chorioamnionitis is a polymicrobial bacterial infection of the fetal membranes and commonly occurs in the setting of premature or prolonged rupture of membranes",
+        "pivot": "She had spontaneous rupture of membranes 32 hours ago, The uterus is tender to palpation, There is no costovertebral angle tenderness",
+        "pivotThatSeparates": "She had spontaneous rupture of membranes 32 hours ago, The uterus is tender to palpation, There is no costovertebral angle tenderness",
+        "whyPivotSupportsA": "She had spontaneous rupture of membranes 32 hours ago, The uterus is tender to palpation, There is no costovertebral angle tenderness supports the Chorioamnionitis causing fetal tachycardia branch.",
+        "whatWouldSupportB": "A finding specific to Oligohydramnios/Pyelonephritis/True knot in the umbilical cord would move the learner to that schema.",
+        "commonWrongSchema": "Oligohydramnios/Pyelonephritis/True knot in the umbilical cord",
+        "conceptASchema": [
+          "Intrapartum infection / fetal monitoring",
+          "Chorioamnionitis is a polymicrobial bacterial infection of the fetal membranes and commonly occurs in the setting of premature or prolonged rupture of membranes",
+          "She had spontaneous rupture of membranes 32 hours ago, The uterus is tender to palpation, There is no costovertebral angle tenderness",
+          "chorioamnionitis causing fetal tachycardia"
+        ],
+        "conceptBSchema": [
+          "Intrapartum infection / fetal monitoring",
+          "Oligohydramnios/Pyelonephritis/True knot in the umbilical cord",
+          "A finding specific to Oligohydramnios/Pyelonephritis/True knot in the umbilical cord would move the learner to that schema."
+        ],
+        "alternativeWouldNeed": "A finding specific to Oligohydramnios/Pyelonephritis/True knot in the umbilical cord would move the learner to that schema.",
+        "boardRule": "She had spontaneous rupture of membranes 32 hours ago, The uterus is tender to palpation, There is no costovertebral angle tenderness is the discriminator for Chorioamnionitis causing fetal tachycardia."
+      },
+      "semanticLinks": [
+        {
+          "sourceText": "She had spontaneous rupture of membranes 32 hours ago, The uterus is tender to palpation, There is no costovertebral angle tenderness",
+          "relationship": "proves",
+          "targetConcept": "Intrapartum infection / fetal monitoring",
+          "targetDiagnosis": "chorioamnionitis causing fetal tachycardia"
+        }
+      ],
+      "confidence": 0.95,
+      "noveltyScore": 78
+    },
+    {
+      "id": "acquired-ko-20ffc28bee834f2d-hypotonic-contractions-risk_factor_interpretation",
+      "subject": "OB/GYN",
+      "system": "Vulvovaginal infections / STI",
+      "topic": "Hypotonic contractions",
+      "competency": "risk_factor_interpretation",
+      "blueprintCategory": "Vulvovaginal infections / STI",
+      "pivot": "is in the left occiput posterior position, Contractions occur every 5 minutes, Her first pregnancy ended in spontaneous vaginal delivery of a 3629-g (8-lb) boy 3 years ago",
+      "discriminatorPair": {
+        "conceptA": "Hypotonic contractions",
+        "conceptB": "Cephalopelvic disproportion/Fetal macrosomia/Maternal age",
+        "sharedPresentation": "Inadequate uterine contractions can lead to protraction or arrest of the active phase of labor",
+        "pivot": "is in the left occiput posterior position, Contractions occur every 5 minutes, Her first pregnancy ended in spontaneous vaginal delivery of a 3629-g (8-lb) boy 3 years ago",
+        "pivotThatSeparates": "is in the left occiput posterior position, Contractions occur every 5 minutes, Her first pregnancy ended in spontaneous vaginal delivery of a 3629-g (8-lb) boy 3 years ago",
+        "whyPivotSupportsA": "is in the left occiput posterior position, Contractions occur every 5 minutes, Her first pregnancy ended in spontaneous vaginal delivery of a 3629-g (8-lb) boy 3 years ago supports the Hypotonic contractions branch.",
+        "whatWouldSupportB": "A finding specific to Cephalopelvic disproportion/Fetal macrosomia/Maternal age would move the learner to that schema.",
+        "commonWrongSchema": "Cephalopelvic disproportion/Fetal macrosomia/Maternal age",
+        "conceptASchema": [
+          "Vulvovaginal infections / STI",
+          "Inadequate uterine contractions can lead to protraction or arrest of the active phase of labor",
+          "is in the left occiput posterior position, Contractions occur every 5 minutes, Her first pregnancy ended in spontaneous vaginal delivery of a 3629-g (8-lb) boy 3 years ago",
+          "Hypotonic contractions"
+        ],
+        "conceptBSchema": [
+          "Vulvovaginal infections / STI",
+          "Cephalopelvic disproportion/Fetal macrosomia/Maternal age",
+          "A finding specific to Cephalopelvic disproportion/Fetal macrosomia/Maternal age would move the learner to that schema."
+        ],
+        "alternativeWouldNeed": "A finding specific to Cephalopelvic disproportion/Fetal macrosomia/Maternal age would move the learner to that schema.",
+        "boardRule": "is in the left occiput posterior position, Contractions occur every 5 minutes, Her first pregnancy ended in spontaneous vaginal delivery of a 3629-g (8-lb) boy 3 years ago is the discriminator for Hypotonic contractions."
+      },
+      "semanticLinks": [
+        {
+          "sourceText": "is in the left occiput posterior position, Contractions occur every 5 minutes, Her first pregnancy ended in spontaneous vaginal delivery of a 3629-g (8-lb) boy 3 years ago",
+          "relationship": "supports",
+          "targetConcept": "Vulvovaginal infections / STI",
+          "targetDiagnosis": "Hypotonic contractions"
+        }
+      ],
+      "confidence": 0.95,
+      "noveltyScore": 78
+    },
+    {
+      "id": "acquired-ko-ed6b78b1b05607f1-sterile-speculum-examination-for-suspected-pprom-diagnosis",
+      "subject": "OB/GYN",
+      "system": "PPROM evaluation",
+      "topic": "sterile speculum examination for suspected PPROM",
+      "competency": "diagnosis",
+      "blueprintCategory": "PPROM evaluation",
+      "pivot": "Her fetus is active, Examination shows a uterus consistent in size, a 32-week gestation, The fetal heart rate is 140/min",
+      "discriminatorPair": {
+        "conceptA": "Sterile speculum examination for suspected PPROM",
+        "conceptB": "Fetal fibronectin test/Fetal scalp electrode monitoring/Digital examination of the cervix",
+        "sharedPresentation": "Preterm premature rupture of membranes is the rupture of the amniotic sac before the onset of labor in pregnancies less than 37 weeks' gestation",
+        "pivot": "Her fetus is active, Examination shows a uterus consistent in size, a 32-week gestation, The fetal heart rate is 140/min",
+        "pivotThatSeparates": "Her fetus is active, Examination shows a uterus consistent in size, a 32-week gestation, The fetal heart rate is 140/min",
+        "whyPivotSupportsA": "Her fetus is active, Examination shows a uterus consistent in size, a 32-week gestation, The fetal heart rate is 140/min supports the Sterile speculum examination for suspected PPROM branch.",
+        "whatWouldSupportB": "A finding specific to Fetal fibronectin test/Fetal scalp electrode monitoring/Digital examination of the cervix would move the learner to that schema.",
+        "commonWrongSchema": "Fetal fibronectin test/Fetal scalp electrode monitoring/Digital examination of the cervix",
+        "conceptASchema": [
+          "PPROM evaluation",
+          "Preterm premature rupture of membranes is the rupture of the amniotic sac before the onset of labor in pregnancies less than 37 weeks' gestation",
+          "Her fetus is active, Examination shows a uterus consistent in size, a 32-week gestation, The fetal heart rate is 140/min",
+          "sterile speculum examination for suspected PPROM"
+        ],
+        "conceptBSchema": [
+          "PPROM evaluation",
+          "Fetal fibronectin test/Fetal scalp electrode monitoring/Digital examination of the cervix",
+          "A finding specific to Fetal fibronectin test/Fetal scalp electrode monitoring/Digital examination of the cervix would move the learner to that schema."
+        ],
+        "alternativeWouldNeed": "A finding specific to Fetal fibronectin test/Fetal scalp electrode monitoring/Digital examination of the cervix would move the learner to that schema.",
+        "boardRule": "Her fetus is active, Examination shows a uterus consistent in size, a 32-week gestation, The fetal heart rate is 140/min is the discriminator for Sterile speculum examination for suspected PPROM."
+      },
+      "semanticLinks": [
+        {
+          "sourceText": "Her fetus is active, Examination shows a uterus consistent in size, a 32-week gestation, The fetal heart rate is 140/min",
+          "relationship": "proves",
+          "targetConcept": "PPROM evaluation",
+          "targetDiagnosis": "sterile speculum examination for suspected PPROM"
+        }
+      ],
+      "confidence": 0.95,
+      "noveltyScore": 78
+    },
+    {
+      "id": "acquired-ko-5bd8e25ebf913926-insertion-of-next_best_step",
+      "subject": "OB/GYN",
+      "system": "Vulvovaginal infections / STI",
+      "topic": "Insertion of",
+      "competency": "next_best_step",
+      "blueprintCategory": "Vulvovaginal infections / STI",
+      "pivot": "Examination shows partial prolapse of the uterine cervix through the introitus",
+      "discriminatorPair": {
+        "conceptA": "Insertion of",
+        "conceptB": "Vaginal i:iessary/Endometrial biopsy/Cervical amputation",
+        "sharedPresentation": "Management may include the insertion of a vaginal pessary, which is a mechanical device that improves pelvic support, along with pelvic floor exercises",
+        "pivot": "Examination shows partial prolapse of the uterine cervix through the introitus",
+        "pivotThatSeparates": "Examination shows partial prolapse of the uterine cervix through the introitus",
+        "whyPivotSupportsA": "Examination shows partial prolapse of the uterine cervix through the introitus supports the Insertion of branch.",
+        "whatWouldSupportB": "A finding specific to Vaginal i:iessary/Endometrial biopsy/Cervical amputation would move the learner to that schema.",
+        "commonWrongSchema": "Vaginal i:iessary/Endometrial biopsy/Cervical amputation",
+        "conceptASchema": [
+          "Vulvovaginal infections / STI",
+          "Management may include the insertion of a vaginal pessary, which is a mechanical device that improves pelvic support, along with pelvic floor exercises",
+          "Examination shows partial prolapse of the uterine cervix through the introitus",
+          "Insertion of"
+        ],
+        "conceptBSchema": [
+          "Vulvovaginal infections / STI",
+          "Vaginal i:iessary/Endometrial biopsy/Cervical amputation",
+          "A finding specific to Vaginal i:iessary/Endometrial biopsy/Cervical amputation would move the learner to that schema."
+        ],
+        "alternativeWouldNeed": "A finding specific to Vaginal i:iessary/Endometrial biopsy/Cervical amputation would move the learner to that schema.",
+        "boardRule": "Examination shows partial prolapse of the uterine cervix through the introitus is the discriminator for Insertion of."
+      },
+      "semanticLinks": [
+        {
+          "sourceText": "Examination shows partial prolapse of the uterine cervix through the introitus",
+          "relationship": "supports",
+          "targetConcept": "Vulvovaginal infections / STI",
+          "targetDiagnosis": "Insertion of"
+        }
+      ],
+      "confidence": 0.95,
+      "noveltyScore": 78
+    },
+    {
+      "id": "acquired-ko-f4822a2dfd9ea2ea-preeclampsia-eclampsia-next_best_step",
+      "subject": "OB/GYN",
+      "system": "Vulvovaginal infections / STI",
+      "topic": "Preeclampsia/eclampsia",
+      "competency": "next_best_step",
+      "blueprintCategory": "Vulvovaginal infections / STI",
+      "pivot": "She weighed 59 kg (130 lb) prior to her pregnancy, The • fundal height is 29 cm, No fetal heart tones are heard on Doppler",
+      "discriminatorPair": {
+        "conceptA": "Preeclampsia/eclampsia",
+        "conceptB": "Transfusion of fresh frozen plasma/Transfusion of platelets/Cesarean delivery",
+        "sharedPresentation": "Stillbirth refers to the demise of a fetus after 20 weeks' gestation and can occur before or during delivery",
+        "pivot": "She weighed 59 kg (130 lb) prior to her pregnancy, The • fundal height is 29 cm, No fetal heart tones are heard on Doppler",
+        "pivotThatSeparates": "She weighed 59 kg (130 lb) prior to her pregnancy, The • fundal height is 29 cm, No fetal heart tones are heard on Doppler",
+        "whyPivotSupportsA": "She weighed 59 kg (130 lb) prior to her pregnancy, The • fundal height is 29 cm, No fetal heart tones are heard on Doppler supports the Preeclampsia/eclampsia branch.",
+        "whatWouldSupportB": "A finding specific to Transfusion of fresh frozen plasma/Transfusion of platelets/Cesarean delivery would move the learner to that schema.",
+        "commonWrongSchema": "Transfusion of fresh frozen plasma/Transfusion of platelets/Cesarean delivery",
+        "conceptASchema": [
+          "Vulvovaginal infections / STI",
+          "Stillbirth refers to the demise of a fetus after 20 weeks' gestation and can occur before or during delivery",
+          "She weighed 59 kg (130 lb) prior to her pregnancy, The • fundal height is 29 cm, No fetal heart tones are heard on Doppler",
+          "Preeclampsia/eclampsia"
+        ],
+        "conceptBSchema": [
+          "Vulvovaginal infections / STI",
+          "Transfusion of fresh frozen plasma/Transfusion of platelets/Cesarean delivery",
+          "A finding specific to Transfusion of fresh frozen plasma/Transfusion of platelets/Cesarean delivery would move the learner to that schema."
+        ],
+        "alternativeWouldNeed": "A finding specific to Transfusion of fresh frozen plasma/Transfusion of platelets/Cesarean delivery would move the learner to that schema.",
+        "boardRule": "She weighed 59 kg (130 lb) prior to her pregnancy, The • fundal height is 29 cm, No fetal heart tones are heard on Doppler is the discriminator for Preeclampsia/eclampsia."
+      },
+      "semanticLinks": [
+        {
+          "sourceText": "She weighed 59 kg (130 lb) prior to her pregnancy, The • fundal height is 29 cm, No fetal heart tones are heard on Doppler",
+          "relationship": "supports",
+          "targetConcept": "Vulvovaginal infections / STI",
+          "targetDiagnosis": "Preeclampsia/eclampsia"
+        }
+      ],
+      "confidence": 0.95,
+      "noveltyScore": 78
+    },
+    {
+      "id": "acquired-ko-2c13ffacf4630900-increasing-catecholamine-mechanism",
+      "subject": "OB/GYN",
+      "system": "PPROM evaluation",
+      "topic": "Increasing catecholamine",
+      "competency": "mechanism",
+      "blueprintCategory": "PPROM evaluation",
+      "pivot": "a tocolytic agent is ineffective, She has used crack cocaine during the pregnancy",
+      "discriminatorPair": {
+        "conceptA": "Increasing catecholamine",
+        "conceptB": "Contraction, as seen in this patient",
+        "sharedPresentation": "Crack cocaine is a potent sympathomimetic because of the inhibition of norepinephrine reuptake into the presynaptic neuron",
+        "pivot": "a tocolytic agent is ineffective, She has used crack cocaine during the pregnancy",
+        "pivotThatSeparates": "a tocolytic agent is ineffective, She has used crack cocaine during the pregnancy",
+        "whyPivotSupportsA": "a tocolytic agent is ineffective, She has used crack cocaine during the pregnancy supports the Increasing catecholamine branch.",
+        "whatWouldSupportB": "A finding specific to Contraction, as seen in this patient would move the learner to that schema.",
+        "commonWrongSchema": "Contraction, as seen in this patient",
+        "conceptASchema": [
+          "PPROM evaluation",
+          "Crack cocaine is a potent sympathomimetic because of the inhibition of norepinephrine reuptake into the presynaptic neuron",
+          "a tocolytic agent is ineffective, She has used crack cocaine during the pregnancy",
+          "Increasing catecholamine"
+        ],
+        "conceptBSchema": [
+          "PPROM evaluation",
+          "Contraction, as seen in this patient",
+          "A finding specific to Contraction, as seen in this patient would move the learner to that schema."
+        ],
+        "alternativeWouldNeed": "A finding specific to Contraction, as seen in this patient would move the learner to that schema.",
+        "boardRule": "a tocolytic agent is ineffective, She has used crack cocaine during the pregnancy is the discriminator for Increasing catecholamine."
+      },
+      "semanticLinks": [
+        {
+          "sourceText": "a tocolytic agent is ineffective, She has used crack cocaine during the pregnancy",
+          "relationship": "supports",
+          "targetConcept": "PPROM evaluation",
+          "targetDiagnosis": "Increasing catecholamine"
+        }
+      ],
+      "confidence": 0.95,
+      "noveltyScore": 78
+    },
+    {
+      "id": "acquired-ko-4dcd1140d936473f-pulmonary-embolism-postpartum-diagnosis",
+      "subject": "OB/GYN",
+      "system": "Pregnancy/postpartum cardiopulmonary disease",
+      "topic": "pulmonary embolism postpartum",
+      "competency": "diagnosis",
+      "blueprintCategory": "Pregnancy/postpartum cardiopulmonary disease",
+      "pivot": "Breath sounds are normal bilaterally, Examination of the extremities shows mild edema, no tenderness, Her hemoglobin concentration is 9",
+      "discriminatorPair": {
+        "conceptA": "Pulmonary embolism postpartum",
+        "conceptB": "Bronchial smooth muscle contractions/Exudates in the alveoli/Fetal squamous cells in the pulmonary veins",
+        "sharedPresentation": "Her pulse is 94/min , respirations are 20/min , and blood pressure is 96/55 mm Hg",
+        "pivot": "Breath sounds are normal bilaterally, Examination of the extremities shows mild edema, no tenderness, Her hemoglobin concentration is 9",
+        "pivotThatSeparates": "Breath sounds are normal bilaterally, Examination of the extremities shows mild edema, no tenderness, Her hemoglobin concentration is 9",
+        "whyPivotSupportsA": "Breath sounds are normal bilaterally, Examination of the extremities shows mild edema, no tenderness, Her hemoglobin concentration is 9 supports the Pulmonary embolism postpartum branch.",
+        "whatWouldSupportB": "A finding specific to Bronchial smooth muscle contractions/Exudates in the alveoli/Fetal squamous cells in the pulmonary veins would move the learner to that schema.",
+        "commonWrongSchema": "Bronchial smooth muscle contractions/Exudates in the alveoli/Fetal squamous cells in the pulmonary veins",
+        "conceptASchema": [
+          "Pregnancy/postpartum cardiopulmonary disease",
+          "Her pulse is 94/min , respirations are 20/min , and blood pressure is 96/55 mm Hg",
+          "Breath sounds are normal bilaterally, Examination of the extremities shows mild edema, no tenderness, Her hemoglobin concentration is 9",
+          "pulmonary embolism postpartum"
+        ],
+        "conceptBSchema": [
+          "Pregnancy/postpartum cardiopulmonary disease",
+          "Bronchial smooth muscle contractions/Exudates in the alveoli/Fetal squamous cells in the pulmonary veins",
+          "A finding specific to Bronchial smooth muscle contractions/Exudates in the alveoli/Fetal squamous cells in the pulmonary veins would move the learner to that schema."
+        ],
+        "alternativeWouldNeed": "A finding specific to Bronchial smooth muscle contractions/Exudates in the alveoli/Fetal squamous cells in the pulmonary veins would move the learner to that schema.",
+        "boardRule": "Breath sounds are normal bilaterally, Examination of the extremities shows mild edema, no tenderness, Her hemoglobin concentration is 9 is the discriminator for Pulmonary embolism postpartum."
+      },
+      "semanticLinks": [
+        {
+          "sourceText": "Breath sounds are normal bilaterally, Examination of the extremities shows mild edema, no tenderness, Her hemoglobin concentration is 9",
+          "relationship": "proves",
+          "targetConcept": "Pregnancy/postpartum cardiopulmonary disease",
+          "targetDiagnosis": "pulmonary embolism postpartum"
+        }
+      ],
+      "confidence": 0.95,
+      "noveltyScore": 78
+    },
+    {
+      "id": "acquired-ko-cb50752b237147d1-preeclampsia-eclampsia-risk_factor_interpretation",
+      "subject": "OB/GYN",
+      "system": "Female Reproductive",
+      "topic": "Preeclampsia/eclampsia",
+      "competency": "risk_factor_interpretation",
+      "blueprintCategory": "Female Reproductive",
+      "pivot": "Pregnancy, labor were complicated by mild preeclampsia treated, an infusion of magnesium sulfate during labor",
+      "discriminatorPair": {
+        "conceptA": "Preeclampsia/eclampsia",
+        "conceptB": "Brachia! plexus injury/Cerebral palsy/Lntracranial hemorrhage",
+        "sharedPresentation": "Assisted vaginal delivery with vacuum devices or forceps is indicated for a prolonged second stage of labor or in the setting of fetal distress",
+        "pivot": "Pregnancy, labor were complicated by mild preeclampsia treated, an infusion of magnesium sulfate during labor",
+        "pivotThatSeparates": "Pregnancy, labor were complicated by mild preeclampsia treated, an infusion of magnesium sulfate during labor",
+        "whyPivotSupportsA": "Pregnancy, labor were complicated by mild preeclampsia treated, an infusion of magnesium sulfate during labor supports the Preeclampsia/eclampsia branch.",
+        "whatWouldSupportB": "A finding specific to Brachia! plexus injury/Cerebral palsy/Lntracranial hemorrhage would move the learner to that schema.",
+        "commonWrongSchema": "Brachia! plexus injury/Cerebral palsy/Lntracranial hemorrhage",
+        "conceptASchema": [
+          "Female Reproductive",
+          "Assisted vaginal delivery with vacuum devices or forceps is indicated for a prolonged second stage of labor or in the setting of fetal distress",
+          "Pregnancy, labor were complicated by mild preeclampsia treated, an infusion of magnesium sulfate during labor",
+          "Preeclampsia/eclampsia"
+        ],
+        "conceptBSchema": [
+          "Female Reproductive",
+          "Brachia! plexus injury/Cerebral palsy/Lntracranial hemorrhage",
+          "A finding specific to Brachia! plexus injury/Cerebral palsy/Lntracranial hemorrhage would move the learner to that schema."
+        ],
+        "alternativeWouldNeed": "A finding specific to Brachia! plexus injury/Cerebral palsy/Lntracranial hemorrhage would move the learner to that schema.",
+        "boardRule": "Pregnancy, labor were complicated by mild preeclampsia treated, an infusion of magnesium sulfate during labor is the discriminator for Preeclampsia/eclampsia."
+      },
+      "semanticLinks": [
+        {
+          "sourceText": "Pregnancy, labor were complicated by mild preeclampsia treated, an infusion of magnesium sulfate during labor",
+          "relationship": "supports",
+          "targetConcept": "Female Reproductive",
+          "targetDiagnosis": "Preeclampsia/eclampsia"
+        }
+      ],
+      "confidence": 0.95,
+      "noveltyScore": 78
+    },
+    {
+      "id": "acquired-ko-8f6e7d89a3fc11e4-observation-only-next_best_step",
+      "subject": "OB/GYN",
+      "system": "Contraception",
+      "topic": "Observation only",
+      "competency": "next_best_step",
+      "blueprintCategory": "Contraception",
+      "pivot": "She has not had vaginal bleeding, pelvic pain, Examination shows no abnormalities except for a uterus consistent in size, a 15-week gestation, Her hematocrit is 41 %",
+      "discriminatorPair": {
+        "conceptA": "Observation only",
+        "conceptB": "Intravenous pyelography/Gonadotropin-releasing hormone agonist therapy/Oral contraceptive therapy",
+        "sharedPresentation": "Leiomyomata uteri are common benign tumors of the smooth muscle",
+        "pivot": "She has not had vaginal bleeding, pelvic pain, Examination shows no abnormalities except for a uterus consistent in size, a 15-week gestation, Her hematocrit is 41 %",
+        "pivotThatSeparates": "She has not had vaginal bleeding, pelvic pain, Examination shows no abnormalities except for a uterus consistent in size, a 15-week gestation, Her hematocrit is 41 %",
+        "whyPivotSupportsA": "She has not had vaginal bleeding, pelvic pain, Examination shows no abnormalities except for a uterus consistent in size, a 15-week gestation, Her hematocrit is 41 % supports the Observation only branch.",
+        "whatWouldSupportB": "A finding specific to Intravenous pyelography/Gonadotropin-releasing hormone agonist therapy/Oral contraceptive therapy would move the learner to that schema.",
+        "commonWrongSchema": "Intravenous pyelography/Gonadotropin-releasing hormone agonist therapy/Oral contraceptive therapy",
+        "conceptASchema": [
+          "Contraception",
+          "Leiomyomata uteri are common benign tumors of the smooth muscle",
+          "She has not had vaginal bleeding, pelvic pain, Examination shows no abnormalities except for a uterus consistent in size, a 15-week gestation, Her hematocrit is 41 %",
+          "Observation only"
+        ],
+        "conceptBSchema": [
+          "Contraception",
+          "Intravenous pyelography/Gonadotropin-releasing hormone agonist therapy/Oral contraceptive therapy",
+          "A finding specific to Intravenous pyelography/Gonadotropin-releasing hormone agonist therapy/Oral contraceptive therapy would move the learner to that schema."
+        ],
+        "alternativeWouldNeed": "A finding specific to Intravenous pyelography/Gonadotropin-releasing hormone agonist therapy/Oral contraceptive therapy would move the learner to that schema.",
+        "boardRule": "She has not had vaginal bleeding, pelvic pain, Examination shows no abnormalities except for a uterus consistent in size, a 15-week gestation, Her hematocrit is 41 % is the discriminator for Observation only."
+      },
+      "semanticLinks": [
+        {
+          "sourceText": "She has not had vaginal bleeding, pelvic pain, Examination shows no abnormalities except for a uterus consistent in size, a 15-week gestation, Her hematocrit is 41 %",
+          "relationship": "supports",
+          "targetConcept": "Contraception",
+          "targetDiagnosis": "Observation only"
+        }
+      ],
+      "confidence": 0.95,
+      "noveltyScore": 78
+    },
+    {
+      "id": "acquired-ko-cb4ea8ee4ebd7d3d-repeat-rapid-i-ilasma-reagin-diagnosis",
+      "subject": "OB/GYN",
+      "system": "Vulvovaginal infections / STI",
+      "topic": "Repeat rapid i:ilasma reagin",
+      "competency": "diagnosis",
+      "blueprintCategory": "Vulvovaginal infections / STI",
+      "pivot": "5-cm nontender ulcer, slightly raised edges, a shallow base on the perineum",
+      "discriminatorPair": {
+        "conceptA": "Repeat rapid i:ilasma reagin",
+        "conceptB": "Repeat HIV antibody test/Repeat testing for Chlamydia trachomatis and Neisseria gonorrhoeae/Viral culture of the ulcer",
+        "sharedPresentation": "The organisms causing painful ulcers can be distinguished clinically based on the ulcer appearance",
+        "pivot": "5-cm nontender ulcer, slightly raised edges, a shallow base on the perineum",
+        "pivotThatSeparates": "5-cm nontender ulcer, slightly raised edges, a shallow base on the perineum",
+        "whyPivotSupportsA": "5-cm nontender ulcer, slightly raised edges, a shallow base on the perineum supports the Repeat rapid i:ilasma reagin branch.",
+        "whatWouldSupportB": "A finding specific to Repeat HIV antibody test/Repeat testing for Chlamydia trachomatis and Neisseria gonorrhoeae/Viral culture of the ulcer would move the learner to that schema.",
+        "commonWrongSchema": "Repeat HIV antibody test/Repeat testing for Chlamydia trachomatis and Neisseria gonorrhoeae/Viral culture of the ulcer",
+        "conceptASchema": [
+          "Vulvovaginal infections / STI",
+          "The organisms causing painful ulcers can be distinguished clinically based on the ulcer appearance",
+          "5-cm nontender ulcer, slightly raised edges, a shallow base on the perineum",
+          "Repeat rapid i:ilasma reagin"
+        ],
+        "conceptBSchema": [
+          "Vulvovaginal infections / STI",
+          "Repeat HIV antibody test/Repeat testing for Chlamydia trachomatis and Neisseria gonorrhoeae/Viral culture of the ulcer",
+          "A finding specific to Repeat HIV antibody test/Repeat testing for Chlamydia trachomatis and Neisseria gonorrhoeae/Viral culture of the ulcer would move the learner to that schema."
+        ],
+        "alternativeWouldNeed": "A finding specific to Repeat HIV antibody test/Repeat testing for Chlamydia trachomatis and Neisseria gonorrhoeae/Viral culture of the ulcer would move the learner to that schema.",
+        "boardRule": "5-cm nontender ulcer, slightly raised edges, a shallow base on the perineum is the discriminator for Repeat rapid i:ilasma reagin."
+      },
+      "semanticLinks": [
+        {
+          "sourceText": "5-cm nontender ulcer, slightly raised edges, a shallow base on the perineum",
+          "relationship": "proves",
+          "targetConcept": "Vulvovaginal infections / STI",
+          "targetDiagnosis": "Repeat rapid i:ilasma reagin"
+        }
+      ],
+      "confidence": 0.95,
+      "noveltyScore": 78
+    },
+    {
+      "id": "acquired-ko-b92fa999a4fc2bf9-undiagnosed-maternal-diabetes-mellitus-risk_factor_interpretation",
+      "subject": "OB/GYN",
+      "system": "Obstetrics / postpartum hemorrhage",
+      "topic": "Undiagnosed maternal diabetes mellitus",
+      "competency": "risk_factor_interpretation",
+      "blueprintCategory": "Obstetrics / postpartum hemorrhage",
+      "pivot": "She weighed 77 kg (169 lb) prior to her pregnancy",
+      "discriminatorPair": {
+        "conceptA": "Undiagnosed maternal diabetes mellitus",
+        "conceptB": "Excessive maternal hydration/Fetal aneuploidy/Fetal myotonic dystrophy",
+        "sharedPresentation": "She is 163 cm (5 ft 4 in) tall",
+        "pivot": "She weighed 77 kg (169 lb) prior to her pregnancy",
+        "pivotThatSeparates": "She weighed 77 kg (169 lb) prior to her pregnancy",
+        "whyPivotSupportsA": "She weighed 77 kg (169 lb) prior to her pregnancy supports the Undiagnosed maternal diabetes mellitus branch.",
+        "whatWouldSupportB": "A finding specific to Excessive maternal hydration/Fetal aneuploidy/Fetal myotonic dystrophy would move the learner to that schema.",
+        "commonWrongSchema": "Excessive maternal hydration/Fetal aneuploidy/Fetal myotonic dystrophy",
+        "conceptASchema": [
+          "Obstetrics / postpartum hemorrhage",
+          "She is 163 cm (5 ft 4 in) tall",
+          "She weighed 77 kg (169 lb) prior to her pregnancy",
+          "Undiagnosed maternal diabetes mellitus"
+        ],
+        "conceptBSchema": [
+          "Obstetrics / postpartum hemorrhage",
+          "Excessive maternal hydration/Fetal aneuploidy/Fetal myotonic dystrophy",
+          "A finding specific to Excessive maternal hydration/Fetal aneuploidy/Fetal myotonic dystrophy would move the learner to that schema."
+        ],
+        "alternativeWouldNeed": "A finding specific to Excessive maternal hydration/Fetal aneuploidy/Fetal myotonic dystrophy would move the learner to that schema.",
+        "boardRule": "She weighed 77 kg (169 lb) prior to her pregnancy is the discriminator for Undiagnosed maternal diabetes mellitus."
+      },
+      "semanticLinks": [
+        {
+          "sourceText": "She weighed 77 kg (169 lb) prior to her pregnancy",
+          "relationship": "supports",
+          "targetConcept": "Obstetrics / postpartum hemorrhage",
+          "targetDiagnosis": "Undiagnosed maternal diabetes mellitus"
+        }
+      ],
+      "confidence": 0.95,
+      "noveltyScore": 78
+    },
+    {
+      "id": "acquired-ko-925dcce62e604638-ectopic-pregnancy-next_best_step",
+      "subject": "OB/GYN",
+      "system": "Early pregnancy bleeding / acute pelvic pain",
+      "topic": "Ectopic pregnancy",
+      "competency": "next_best_step",
+      "blueprintCategory": "Early pregnancy bleeding / acute pelvic pain",
+      "pivot": "Abdominal examination shows tenderness to palpation of the lower quadrants, copious purulent discharge coming from the cervical os, Bimanual examination shows cervical motion",
+      "discriminatorPair": {
+        "conceptA": "Ectopic pregnancy",
+        "conceptB": "Pap smear/genital herpes due to HSV/Human papillomavirus test",
+        "sharedPresentation": "Risk factors for PID and other sexually transmitted infections include adolescence, multiple sexual partners, and not using barrier contraception",
+        "pivot": "Abdominal examination shows tenderness to palpation of the lower quadrants, copious purulent discharge coming from the cervical os, Bimanual examination shows cervical motion",
+        "pivotThatSeparates": "Abdominal examination shows tenderness to palpation of the lower quadrants, copious purulent discharge coming from the cervical os, Bimanual examination shows cervical motion",
+        "whyPivotSupportsA": "Abdominal examination shows tenderness to palpation of the lower quadrants, copious purulent discharge coming from the cervical os, Bimanual examination shows cervical motion supports the Ectopic pregnancy branch.",
+        "whatWouldSupportB": "A finding specific to Pap smear/genital herpes due to HSV/Human papillomavirus test would move the learner to that schema.",
+        "commonWrongSchema": "Pap smear/genital herpes due to HSV/Human papillomavirus test",
+        "conceptASchema": [
+          "Early pregnancy bleeding / acute pelvic pain",
+          "Risk factors for PID and other sexually transmitted infections include adolescence, multiple sexual partners, and not using barrier contraception",
+          "Abdominal examination shows tenderness to palpation of the lower quadrants, copious purulent discharge coming from the cervical os, Bimanual examination shows cervical motion",
+          "Ectopic pregnancy"
+        ],
+        "conceptBSchema": [
+          "Early pregnancy bleeding / acute pelvic pain",
+          "Pap smear/genital herpes due to HSV/Human papillomavirus test",
+          "A finding specific to Pap smear/genital herpes due to HSV/Human papillomavirus test would move the learner to that schema."
+        ],
+        "alternativeWouldNeed": "A finding specific to Pap smear/genital herpes due to HSV/Human papillomavirus test would move the learner to that schema.",
+        "boardRule": "Abdominal examination shows tenderness to palpation of the lower quadrants, copious purulent discharge coming from the cervical os, Bimanual examination shows cervical motion is the discriminator for Ectopic pregnancy."
+      },
+      "semanticLinks": [
+        {
+          "sourceText": "Abdominal examination shows tenderness to palpation of the lower quadrants, copious purulent discharge coming from the cervical os, Bimanual examination shows cervical motion",
+          "relationship": "supports",
+          "targetConcept": "Early pregnancy bleeding / acute pelvic pain",
+          "targetDiagnosis": "Ectopic pregnancy"
+        }
+      ],
+      "confidence": 0.95,
+      "noveltyScore": 36
+    },
+    {
+      "id": "acquired-ko-b2c6a10ae8d3d865-ectopic-pregnancy-diagnosis",
+      "subject": "OB/GYN",
+      "system": "Early pregnancy bleeding / acute pelvic pain",
+      "topic": "Ectopic pregnancy",
+      "competency": "diagnosis",
+      "blueprintCategory": "Early pregnancy bleeding / acute pelvic pain",
+      "pivot": "Ultrasonography shows an 8-cm complex mass in the right adnexa with echogenicity",
+      "discriminatorPair": {
+        "conceptA": "Ectopic pregnancy",
+        "conceptB": "Adnexal mass",
+        "sharedPresentation": "Mature cystic teratomas are benign tumors of the ovary derived from all three germ cell layers, and thus commonly contain mature structures such as teeth, hair, and bone",
+        "pivot": "Ultrasonography shows an 8-cm complex mass in the right adnexa with echogenicity",
+        "pivotThatSeparates": "Ultrasonography shows an 8-cm complex mass in the right adnexa with echogenicity",
+        "whyPivotSupportsA": "Ultrasonography shows an 8-cm complex mass in the right adnexa with echogenicity supports the Ectopic pregnancy branch.",
+        "whatWouldSupportB": "A finding specific to Adnexal mass would move the learner to that schema.",
+        "commonWrongSchema": "Adnexal mass",
+        "conceptASchema": [
+          "Early pregnancy bleeding / acute pelvic pain",
+          "Mature cystic teratomas are benign tumors of the ovary derived from all three germ cell layers, and thus commonly contain mature structures such as teeth, hair, and bone",
+          "Ultrasonography shows an 8-cm complex mass in the right adnexa with echogenicity",
+          "Ectopic pregnancy"
+        ],
+        "conceptBSchema": [
+          "Early pregnancy bleeding / acute pelvic pain",
+          "Adnexal mass",
+          "A finding specific to Adnexal mass would move the learner to that schema."
+        ],
+        "alternativeWouldNeed": "A finding specific to Adnexal mass would move the learner to that schema.",
+        "boardRule": "Ultrasonography shows an 8-cm complex mass in the right adnexa with echogenicity is the discriminator for Ectopic pregnancy."
+      },
+      "semanticLinks": [
+        {
+          "sourceText": "Ultrasonography shows an 8-cm complex mass in the right adnexa with echogenicity",
+          "relationship": "proves",
+          "targetConcept": "Early pregnancy bleeding / acute pelvic pain",
+          "targetDiagnosis": "Ectopic pregnancy"
+        }
+      ],
+      "confidence": 0.95,
+      "noveltyScore": 36
+    },
+    {
+      "id": "acquired-ko-e8ee4aede2d4b385-urinary-retention-risk_factor_interpretation",
+      "subject": "OB/GYN",
+      "system": "Vulvovaginal infections / STI",
+      "topic": "Urinary retention",
+      "competency": "risk_factor_interpretation",
+      "blueprintCategory": "Vulvovaginal infections / STI",
+      "pivot": "undergoing an abdominal hysterectomy, She describes no unusual pain since discharge, a soft symmetric mass that extends 25 cm above the symphysis",
+      "discriminatorPair": {
+        "conceptA": "Urinary retention",
+        "conceptB": "Pelvic hematoma/Prerenal azotemia/Retroperitoneal urinoma",
+        "sharedPresentation": "Postoperative urinary retention is a common complication of surgery",
+        "pivot": "undergoing an abdominal hysterectomy, She describes no unusual pain since discharge, a soft symmetric mass that extends 25 cm above the symphysis",
+        "pivotThatSeparates": "undergoing an abdominal hysterectomy, She describes no unusual pain since discharge, a soft symmetric mass that extends 25 cm above the symphysis",
+        "whyPivotSupportsA": "undergoing an abdominal hysterectomy, She describes no unusual pain since discharge, a soft symmetric mass that extends 25 cm above the symphysis supports the Urinary retention branch.",
+        "whatWouldSupportB": "A finding specific to Pelvic hematoma/Prerenal azotemia/Retroperitoneal urinoma would move the learner to that schema.",
+        "commonWrongSchema": "Pelvic hematoma/Prerenal azotemia/Retroperitoneal urinoma",
+        "conceptASchema": [
+          "Vulvovaginal infections / STI",
+          "Postoperative urinary retention is a common complication of surgery",
+          "undergoing an abdominal hysterectomy, She describes no unusual pain since discharge, a soft symmetric mass that extends 25 cm above the symphysis",
+          "Urinary retention"
+        ],
+        "conceptBSchema": [
+          "Vulvovaginal infections / STI",
+          "Pelvic hematoma/Prerenal azotemia/Retroperitoneal urinoma",
+          "A finding specific to Pelvic hematoma/Prerenal azotemia/Retroperitoneal urinoma would move the learner to that schema."
+        ],
+        "alternativeWouldNeed": "A finding specific to Pelvic hematoma/Prerenal azotemia/Retroperitoneal urinoma would move the learner to that schema.",
+        "boardRule": "undergoing an abdominal hysterectomy, She describes no unusual pain since discharge, a soft symmetric mass that extends 25 cm above the symphysis is the discriminator for Urinary retention."
+      },
+      "semanticLinks": [
+        {
+          "sourceText": "undergoing an abdominal hysterectomy, She describes no unusual pain since discharge, a soft symmetric mass that extends 25 cm above the symphysis",
+          "relationship": "supports",
+          "targetConcept": "Vulvovaginal infections / STI",
+          "targetDiagnosis": "Urinary retention"
+        }
+      ],
+      "confidence": 0.95,
+      "noveltyScore": 78
+    },
+    {
+      "id": "acquired-ko-17c0fe45d375689b-rh-negative-pregnancy-alloimmunization-prophylaxis-next_best_step",
+      "subject": "OB/GYN",
+      "system": "Rh alloimmunization prevention",
+      "topic": "Rh-negative pregnancy alloimmunization prophylaxis",
+      "competency": "next_best_step",
+      "blueprintCategory": "Rh alloimmunization prevention",
+      "pivot": "She is Rh-negative, Examination shows a uterus consistent in size, a 12-week gestation, Amniocentesis is done",
+      "discriminatorPair": {
+        "conceptA": "Rh-negative pregnancy alloimmunization prophylaxis",
+        "conceptB": "Serial measurement of fetal antibody titers/Maternal intravenous administration of corticosteroids now/Serial measurement of maternal antibody titers",
+        "sharedPresentation": "Rh-negative mothers are at a high risk for Rh(alloimmunization when exposed to Rh(antigens from the fetal circulation",
+        "pivot": "She is Rh-negative, Examination shows a uterus consistent in size, a 12-week gestation, Amniocentesis is done",
+        "pivotThatSeparates": "She is Rh-negative, Examination shows a uterus consistent in size, a 12-week gestation, Amniocentesis is done",
+        "whyPivotSupportsA": "She is Rh-negative, Examination shows a uterus consistent in size, a 12-week gestation, Amniocentesis is done supports the Rh-negative pregnancy alloimmunization prophylaxis branch.",
+        "whatWouldSupportB": "A finding specific to Serial measurement of fetal antibody titers/Maternal intravenous administration of corticosteroids now/Serial measurement of maternal antibody titers would move the learner to that schema.",
+        "commonWrongSchema": "Serial measurement of fetal antibody titers/Maternal intravenous administration of corticosteroids now/Serial measurement of maternal antibody titers",
+        "conceptASchema": [
+          "Rh alloimmunization prevention",
+          "Rh-negative mothers are at a high risk for Rh(alloimmunization when exposed to Rh(antigens from the fetal circulation",
+          "She is Rh-negative, Examination shows a uterus consistent in size, a 12-week gestation, Amniocentesis is done",
+          "Rh-negative pregnancy alloimmunization prophylaxis"
+        ],
+        "conceptBSchema": [
+          "Rh alloimmunization prevention",
+          "Serial measurement of fetal antibody titers/Maternal intravenous administration of corticosteroids now/Serial measurement of maternal antibody titers",
+          "A finding specific to Serial measurement of fetal antibody titers/Maternal intravenous administration of corticosteroids now/Serial measurement of maternal antibody titers would move the learner to that schema."
+        ],
+        "alternativeWouldNeed": "A finding specific to Serial measurement of fetal antibody titers/Maternal intravenous administration of corticosteroids now/Serial measurement of maternal antibody titers would move the learner to that schema.",
+        "boardRule": "She is Rh-negative, Examination shows a uterus consistent in size, a 12-week gestation, Amniocentesis is done is the discriminator for Rh-negative pregnancy alloimmunization prophylaxis."
+      },
+      "semanticLinks": [
+        {
+          "sourceText": "She is Rh-negative, Examination shows a uterus consistent in size, a 12-week gestation, Amniocentesis is done",
+          "relationship": "supports",
+          "targetConcept": "Rh alloimmunization prevention",
+          "targetDiagnosis": "Rh-negative pregnancy alloimmunization prophylaxis"
+        }
+      ],
+      "confidence": 0.95,
+      "noveltyScore": 78
+    },
+    {
+      "id": "acquired-ko-e9dbd97cfa421fd0-fascial-dehiscence-after-abdominal-incision-diagnosis",
+      "subject": "OB/GYN",
+      "system": "Female Reproductive",
+      "topic": "fascial dehiscence after abdominal incision",
+      "competency": "diagnosis",
+      "blueprintCategory": "Female Reproductive",
+      "pivot": "Forty-eight hours later, there is profuse serosanguineous drainage from the midline skin incision",
+      "discriminatorPair": {
+        "conceptA": "Fascial dehiscence after abdominal incision",
+        "conceptB": "Purulent fluid, it is less likely a result of a wound infection",
+        "sharedPresentation": "Postoperative wound dehiscence typically",
+        "pivot": "Forty-eight hours later, there is profuse serosanguineous drainage from the midline skin incision",
+        "pivotThatSeparates": "Forty-eight hours later, there is profuse serosanguineous drainage from the midline skin incision",
+        "whyPivotSupportsA": "Forty-eight hours later, there is profuse serosanguineous drainage from the midline skin incision supports the Fascial dehiscence after abdominal incision branch.",
+        "whatWouldSupportB": "A finding specific to Purulent fluid, it is less likely a result of a wound infection would move the learner to that schema.",
+        "commonWrongSchema": "Purulent fluid, it is less likely a result of a wound infection",
+        "conceptASchema": [
+          "Female Reproductive",
+          "Postoperative wound dehiscence typically",
+          "Forty-eight hours later, there is profuse serosanguineous drainage from the midline skin incision",
+          "fascial dehiscence after abdominal incision"
+        ],
+        "conceptBSchema": [
+          "Female Reproductive",
+          "Purulent fluid, it is less likely a result of a wound infection",
+          "A finding specific to Purulent fluid, it is less likely a result of a wound infection would move the learner to that schema."
+        ],
+        "alternativeWouldNeed": "A finding specific to Purulent fluid, it is less likely a result of a wound infection would move the learner to that schema.",
+        "boardRule": "Forty-eight hours later, there is profuse serosanguineous drainage from the midline skin incision is the discriminator for Fascial dehiscence after abdominal incision."
+      },
+      "semanticLinks": [
+        {
+          "sourceText": "Forty-eight hours later, there is profuse serosanguineous drainage from the midline skin incision",
+          "relationship": "proves",
+          "targetConcept": "Female Reproductive",
+          "targetDiagnosis": "fascial dehiscence after abdominal incision"
+        }
+      ],
+      "confidence": 0.95,
+      "noveltyScore": 78
+    },
+    {
+      "id": "acquired-ko-52e978c46bc7cbed-podophyllum-resin-therapy-management",
+      "subject": "OB/GYN",
+      "system": "Vulvovaginal infections / STI",
+      "topic": "Podophyllum resin therapy",
+      "competency": "management",
+      "blueprintCategory": "Vulvovaginal infections / STI",
+      "pivot": "Infection typically begins with the formation of vesicles, which lyse and progress to shallow, painful ulcers with an erythematous border",
+      "discriminatorPair": {
+        "conceptA": "Podophyllum resin therapy",
+        "conceptB": "Acyclovir therapy/Azithromycin therapy/Interferon therapy",
+        "sharedPresentation": "Soft, pink, papillary lesions on the external genitalia are consistent with condyloma acuminata, which are associated with human papillomavirus (HPV)",
+        "pivot": "Infection typically begins with the formation of vesicles, which lyse and progress to shallow, painful ulcers with an erythematous border",
+        "pivotThatSeparates": "Infection typically begins with the formation of vesicles, which lyse and progress to shallow, painful ulcers with an erythematous border",
+        "whyPivotSupportsA": "Infection typically begins with the formation of vesicles, which lyse and progress to shallow, painful ulcers with an erythematous border supports the Podophyllum resin therapy branch.",
+        "whatWouldSupportB": "A finding specific to Acyclovir therapy/Azithromycin therapy/Interferon therapy would move the learner to that schema.",
+        "commonWrongSchema": "Acyclovir therapy/Azithromycin therapy/Interferon therapy",
+        "conceptASchema": [
+          "Vulvovaginal infections / STI",
+          "Soft, pink, papillary lesions on the external genitalia are consistent with condyloma acuminata, which are associated with human papillomavirus (HPV)",
+          "Infection typically begins with the formation of vesicles, which lyse and progress to shallow, painful ulcers with an erythematous border",
+          "Podophyllum resin therapy"
+        ],
+        "conceptBSchema": [
+          "Vulvovaginal infections / STI",
+          "Acyclovir therapy/Azithromycin therapy/Interferon therapy",
+          "A finding specific to Acyclovir therapy/Azithromycin therapy/Interferon therapy would move the learner to that schema."
+        ],
+        "alternativeWouldNeed": "A finding specific to Acyclovir therapy/Azithromycin therapy/Interferon therapy would move the learner to that schema.",
+        "boardRule": "Infection typically begins with the formation of vesicles, which lyse and progress to shallow, painful ulcers with an erythematous border is the discriminator for Podophyllum resin therapy."
+      },
+      "semanticLinks": [
+        {
+          "sourceText": "Infection typically begins with the formation of vesicles, which lyse and progress to shallow, painful ulcers with an erythematous border",
+          "relationship": "supports",
+          "targetConcept": "Vulvovaginal infections / STI",
+          "targetDiagnosis": "Podophyllum resin therapy"
+        }
+      ],
+      "confidence": 0.95,
+      "noveltyScore": 78
+    },
+    {
+      "id": "acquired-ko-645f9ff75384de64-estradiol-risk_factor_interpretation",
+      "subject": "OB/GYN",
+      "system": "Gynecologic oncology",
+      "topic": "Estradiol",
+      "competency": "risk_factor_interpretation",
+      "blueprintCategory": "Gynecologic oncology",
+      "pivot": "patient patient has dysuria, Several urine cultures have been negative",
+      "discriminatorPair": {
+        "conceptA": "Estradiol",
+        "conceptB": "Androstenedione/Progesterone/Prostaglandins",
+        "sharedPresentation": "Treatment is with topical estradiol cream",
+        "pivot": "patient patient has dysuria, Several urine cultures have been negative",
+        "pivotThatSeparates": "patient patient has dysuria, Several urine cultures have been negative",
+        "whyPivotSupportsA": "patient patient has dysuria, Several urine cultures have been negative supports the Estradiol branch.",
+        "whatWouldSupportB": "A finding specific to Androstenedione/Progesterone/Prostaglandins would move the learner to that schema.",
+        "commonWrongSchema": "Androstenedione/Progesterone/Prostaglandins",
+        "conceptASchema": [
+          "Gynecologic oncology",
+          "Treatment is with topical estradiol cream",
+          "patient patient has dysuria, Several urine cultures have been negative",
+          "Estradiol"
+        ],
+        "conceptBSchema": [
+          "Gynecologic oncology",
+          "Androstenedione/Progesterone/Prostaglandins",
+          "A finding specific to Androstenedione/Progesterone/Prostaglandins would move the learner to that schema."
+        ],
+        "alternativeWouldNeed": "A finding specific to Androstenedione/Progesterone/Prostaglandins would move the learner to that schema.",
+        "boardRule": "patient patient has dysuria, Several urine cultures have been negative is the discriminator for Estradiol."
+      },
+      "semanticLinks": [
+        {
+          "sourceText": "patient patient has dysuria, Several urine cultures have been negative",
+          "relationship": "supports",
+          "targetConcept": "Gynecologic oncology",
+          "targetDiagnosis": "Estradiol"
+        }
+      ],
+      "confidence": 0.95,
+      "noveltyScore": 78
+    },
+    {
+      "id": "acquired-ko-1ddf482c308e79f9-pulmonary-embolism-diagnosis",
+      "subject": "OB/GYN",
+      "system": "PPROM evaluation",
+      "topic": "Pulmonary embolism",
+      "competency": "diagnosis",
+      "blueprintCategory": "PPROM evaluation",
+      "pivot": "She is unable to tolerate a bimanual examination because of extreme tenderness",
+      "discriminatorPair": {
+        "conceptA": "Pulmonary embolism",
+        "conceptB": "Right lower quadrant pain",
+        "sharedPresentation": "Treatment is with urgent appendectomy",
+        "pivot": "She is unable to tolerate a bimanual examination because of extreme tenderness",
+        "pivotThatSeparates": "She is unable to tolerate a bimanual examination because of extreme tenderness",
+        "whyPivotSupportsA": "She is unable to tolerate a bimanual examination because of extreme tenderness supports the Pulmonary embolism branch.",
+        "whatWouldSupportB": "A finding specific to Right lower quadrant pain would move the learner to that schema.",
+        "commonWrongSchema": "Right lower quadrant pain",
+        "conceptASchema": [
+          "PPROM evaluation",
+          "Treatment is with urgent appendectomy",
+          "She is unable to tolerate a bimanual examination because of extreme tenderness",
+          "Pulmonary embolism"
+        ],
+        "conceptBSchema": [
+          "PPROM evaluation",
+          "Right lower quadrant pain",
+          "A finding specific to Right lower quadrant pain would move the learner to that schema."
+        ],
+        "alternativeWouldNeed": "A finding specific to Right lower quadrant pain would move the learner to that schema.",
+        "boardRule": "She is unable to tolerate a bimanual examination because of extreme tenderness is the discriminator for Pulmonary embolism."
+      },
+      "semanticLinks": [
+        {
+          "sourceText": "She is unable to tolerate a bimanual examination because of extreme tenderness",
+          "relationship": "proves",
+          "targetConcept": "PPROM evaluation",
+          "targetDiagnosis": "Pulmonary embolism"
+        }
+      ],
+      "confidence": 0.95,
+      "noveltyScore": 36
+    },
+    {
+      "id": "acquired-ko-12bc71fe671cc81e-pulmonary-embolism-risk_factor_interpretation",
+      "subject": "OB/GYN",
+      "system": "Third-trimester bleeding",
+      "topic": "Pulmonary embolism",
+      "competency": "risk_factor_interpretation",
+      "blueprintCategory": "Third-trimester bleeding",
+      "pivot": "Fetal parts may be palpable above the fundus with Leopold maneuvers",
+      "discriminatorPair": {
+        "conceptA": "Pulmonary embolism",
+        "conceptB": "Abruptio placentae/Maternal supine position/Umbilical cord compression",
+        "sharedPresentation": "Uterine rupture is a dangerous obstetric complication where the uterine wall tears",
+        "pivot": "Fetal parts may be palpable above the fundus with Leopold maneuvers",
+        "pivotThatSeparates": "Fetal parts may be palpable above the fundus with Leopold maneuvers",
+        "whyPivotSupportsA": "Fetal parts may be palpable above the fundus with Leopold maneuvers supports the Pulmonary embolism branch.",
+        "whatWouldSupportB": "A finding specific to Abruptio placentae/Maternal supine position/Umbilical cord compression would move the learner to that schema.",
+        "commonWrongSchema": "Abruptio placentae/Maternal supine position/Umbilical cord compression",
+        "conceptASchema": [
+          "Third-trimester bleeding",
+          "Uterine rupture is a dangerous obstetric complication where the uterine wall tears",
+          "Fetal parts may be palpable above the fundus with Leopold maneuvers",
+          "Pulmonary embolism"
+        ],
+        "conceptBSchema": [
+          "Third-trimester bleeding",
+          "Abruptio placentae/Maternal supine position/Umbilical cord compression",
+          "A finding specific to Abruptio placentae/Maternal supine position/Umbilical cord compression would move the learner to that schema."
+        ],
+        "alternativeWouldNeed": "A finding specific to Abruptio placentae/Maternal supine position/Umbilical cord compression would move the learner to that schema.",
+        "boardRule": "Fetal parts may be palpable above the fundus with Leopold maneuvers is the discriminator for Pulmonary embolism."
+      },
+      "semanticLinks": [
+        {
+          "sourceText": "Fetal parts may be palpable above the fundus with Leopold maneuvers",
+          "relationship": "supports",
+          "targetConcept": "Third-trimester bleeding",
+          "targetDiagnosis": "Pulmonary embolism"
+        }
+      ],
+      "confidence": 0.95,
+      "noveltyScore": 58
+    },
+    {
+      "id": "acquired-ko-4fd5a156964969e1-breast-diagnosis",
+      "subject": "OB/GYN",
+      "system": "Vulvovaginal infections / STI",
+      "topic": "Breast",
+      "competency": "diagnosis",
+      "blueprintCategory": "Vulvovaginal infections / STI",
+      "pivot": "In patients with axillary lymphadenopathy, mammography should be the first diagnostic step",
+      "discriminatorPair": {
+        "conceptA": "Breast",
+        "conceptB": "Lung/Lymphatics/Pancreas",
+        "sharedPresentation": "Breast cancer typically consists of ductal or lobular adenocarcinoma",
+        "pivot": "In patients with axillary lymphadenopathy, mammography should be the first diagnostic step",
+        "pivotThatSeparates": "In patients with axillary lymphadenopathy, mammography should be the first diagnostic step",
+        "whyPivotSupportsA": "In patients with axillary lymphadenopathy, mammography should be the first diagnostic step supports the Breast branch.",
+        "whatWouldSupportB": "A finding specific to Lung/Lymphatics/Pancreas would move the learner to that schema.",
+        "commonWrongSchema": "Lung/Lymphatics/Pancreas",
+        "conceptASchema": [
+          "Vulvovaginal infections / STI",
+          "Breast cancer typically consists of ductal or lobular adenocarcinoma",
+          "In patients with axillary lymphadenopathy, mammography should be the first diagnostic step",
+          "Breast"
+        ],
+        "conceptBSchema": [
+          "Vulvovaginal infections / STI",
+          "Lung/Lymphatics/Pancreas",
+          "A finding specific to Lung/Lymphatics/Pancreas would move the learner to that schema."
+        ],
+        "alternativeWouldNeed": "A finding specific to Lung/Lymphatics/Pancreas would move the learner to that schema.",
+        "boardRule": "In patients with axillary lymphadenopathy, mammography should be the first diagnostic step is the discriminator for Breast."
+      },
+      "semanticLinks": [
+        {
+          "sourceText": "In patients with axillary lymphadenopathy, mammography should be the first diagnostic step",
+          "relationship": "proves",
+          "targetConcept": "Vulvovaginal infections / STI",
+          "targetDiagnosis": "Breast"
+        }
+      ],
+      "confidence": 0.95,
+      "noveltyScore": 78
+    },
+    {
+      "id": "acquired-ko-c70df2cc9b534ecb-kell-tyl-ing-of-the-father-s-blood-next_best_step",
+      "subject": "OB/GYN",
+      "system": "Rh alloimmunization prevention",
+      "topic": "Kell tyl'.)ing of the father's blood",
+      "competency": "next_best_step",
+      "blueprintCategory": "Rh alloimmunization prevention",
+      "pivot": "maternal antibodies can cross the placenta, it is important to determine whether this patient's fetus has Kell-positive or Kell-negative RBCs",
+      "discriminatorPair": {
+        "conceptA": "Kell tyl'.)ing of the father's blood",
+        "conceptB": "24-Hour urine collection for measurement of protein and creatinine clearance/Liver function tests/Measurement of bilirubin concentration in amniotic fluid",
+        "sharedPresentation": "Antigens on the fetal RBCs depend on the antigens of each parent's RBCs",
+        "pivot": "maternal antibodies can cross the placenta, it is important to determine whether this patient's fetus has Kell-positive or Kell-negative RBCs",
+        "pivotThatSeparates": "maternal antibodies can cross the placenta, it is important to determine whether this patient's fetus has Kell-positive or Kell-negative RBCs",
+        "whyPivotSupportsA": "maternal antibodies can cross the placenta, it is important to determine whether this patient's fetus has Kell-positive or Kell-negative RBCs supports the Kell tyl'.)ing of the father's blood branch.",
+        "whatWouldSupportB": "A finding specific to 24-Hour urine collection for measurement of protein and creatinine clearance/Liver function tests/Measurement of bilirubin concentration in amniotic fluid would move the learner to that schema.",
+        "commonWrongSchema": "24-Hour urine collection for measurement of protein and creatinine clearance/Liver function tests/Measurement of bilirubin concentration in amniotic fluid",
+        "conceptASchema": [
+          "Rh alloimmunization prevention",
+          "Antigens on the fetal RBCs depend on the antigens of each parent's RBCs",
+          "maternal antibodies can cross the placenta, it is important to determine whether this patient's fetus has Kell-positive or Kell-negative RBCs",
+          "Kell tyl'.)ing of the father's blood"
+        ],
+        "conceptBSchema": [
+          "Rh alloimmunization prevention",
+          "24-Hour urine collection for measurement of protein and creatinine clearance/Liver function tests/Measurement of bilirubin concentration in amniotic fluid",
+          "A finding specific to 24-Hour urine collection for measurement of protein and creatinine clearance/Liver function tests/Measurement of bilirubin concentration in amniotic fluid would move the learner to that schema."
+        ],
+        "alternativeWouldNeed": "A finding specific to 24-Hour urine collection for measurement of protein and creatinine clearance/Liver function tests/Measurement of bilirubin concentration in amniotic fluid would move the learner to that schema.",
+        "boardRule": "maternal antibodies can cross the placenta, it is important to determine whether this patient's fetus has Kell-positive or Kell-negative RBCs is the discriminator for Kell tyl'.)ing of the father's blood."
+      },
+      "semanticLinks": [
+        {
+          "sourceText": "maternal antibodies can cross the placenta, it is important to determine whether this patient's fetus has Kell-positive or Kell-negative RBCs",
+          "relationship": "supports",
+          "targetConcept": "Rh alloimmunization prevention",
+          "targetDiagnosis": "Kell tyl'.)ing of the father's blood"
+        }
+      ],
+      "confidence": 0.95,
+      "noveltyScore": 78
+    },
+    {
+      "id": "acquired-ko-9f50f733001b562c-gonadal-dysgenesis-45-x-turner-syndrome-diagnosis",
+      "subject": "OB/GYN",
+      "system": "Gynecologic oncology",
+      "topic": "Gonadal dysgenesis 45,X (Turner syndrome)",
+      "competency": "diagnosis",
+      "blueprintCategory": "Gynecologic oncology",
+      "pivot": "She is 150 cm (4 ft 11 in) tall, weighs 62 kg (137 lb), BMI is 28 kg/m 2 Breast, pubic hair development is • Tanner stage 3, The cervix is visualized",
+      "discriminatorPair": {
+        "conceptA": "Gonadal dysgenesis 45,X (Turner syndrome)",
+        "conceptB": "Primary amenorrhea",
+        "sharedPresentation": "Turner syndrome (45,XO) is the most common cause of primary amenorrhea, which is because of ovarian dysgenesis",
+        "pivot": "She is 150 cm (4 ft 11 in) tall, weighs 62 kg (137 lb), BMI is 28 kg/m 2 Breast, pubic hair development is • Tanner stage 3, The cervix is visualized",
+        "pivotThatSeparates": "She is 150 cm (4 ft 11 in) tall, weighs 62 kg (137 lb), BMI is 28 kg/m 2 Breast, pubic hair development is • Tanner stage 3, The cervix is visualized",
+        "whyPivotSupportsA": "She is 150 cm (4 ft 11 in) tall, weighs 62 kg (137 lb), BMI is 28 kg/m 2 Breast, pubic hair development is • Tanner stage 3, The cervix is visualized supports the Gonadal dysgenesis 45,X (Turner syndrome) branch.",
+        "whatWouldSupportB": "A finding specific to Primary amenorrhea would move the learner to that schema.",
+        "commonWrongSchema": "Primary amenorrhea",
+        "conceptASchema": [
+          "Gynecologic oncology",
+          "Turner syndrome (45,XO) is the most common cause of primary amenorrhea, which is because of ovarian dysgenesis",
+          "She is 150 cm (4 ft 11 in) tall, weighs 62 kg (137 lb), BMI is 28 kg/m 2 Breast, pubic hair development is • Tanner stage 3, The cervix is visualized",
+          "Gonadal dysgenesis 45,X (Turner syndrome)"
+        ],
+        "conceptBSchema": [
+          "Gynecologic oncology",
+          "Primary amenorrhea",
+          "A finding specific to Primary amenorrhea would move the learner to that schema."
+        ],
+        "alternativeWouldNeed": "A finding specific to Primary amenorrhea would move the learner to that schema.",
+        "boardRule": "She is 150 cm (4 ft 11 in) tall, weighs 62 kg (137 lb), BMI is 28 kg/m 2 Breast, pubic hair development is • Tanner stage 3, The cervix is visualized is the discriminator for Gonadal dysgenesis 45,X (Turner syndrome)."
+      },
+      "semanticLinks": [
+        {
+          "sourceText": "She is 150 cm (4 ft 11 in) tall, weighs 62 kg (137 lb), BMI is 28 kg/m 2 Breast, pubic hair development is • Tanner stage 3, The cervix is visualized",
+          "relationship": "proves",
+          "targetConcept": "Gynecologic oncology",
+          "targetDiagnosis": "Gonadal dysgenesis 45,X (Turner syndrome)"
+        }
+      ],
+      "confidence": 0.95,
+      "noveltyScore": 78
+    },
+    {
+      "id": "acquired-ko-2b98e4cd246cd8bd-hepatitis-screening",
+      "subject": "OB/GYN",
+      "system": "Female Reproductive",
+      "topic": "Hepatitis",
+      "competency": "screening",
+      "blueprintCategory": "Female Reproductive",
+      "pivot": "Her patient daughter developed a low-grade fever, respiratory symptoms, and a rash 24 hours ago",
+      "discriminatorPair": {
+        "conceptA": "Hepatitis",
+        "conceptB": "B) Inactivated poliovirus/Measles/Mumps",
+        "sharedPresentation": "Maternal immunization is important for both maternal and fetal health",
+        "pivot": "Her patient daughter developed a low-grade fever, respiratory symptoms, and a rash 24 hours ago",
+        "pivotThatSeparates": "Her patient daughter developed a low-grade fever, respiratory symptoms, and a rash 24 hours ago",
+        "whyPivotSupportsA": "Her patient daughter developed a low-grade fever, respiratory symptoms, and a rash 24 hours ago supports the Hepatitis branch.",
+        "whatWouldSupportB": "A finding specific to B) Inactivated poliovirus/Measles/Mumps would move the learner to that schema.",
+        "commonWrongSchema": "B) Inactivated poliovirus/Measles/Mumps",
+        "conceptASchema": [
+          "Female Reproductive",
+          "Maternal immunization is important for both maternal and fetal health",
+          "Her patient daughter developed a low-grade fever, respiratory symptoms, and a rash 24 hours ago",
+          "Hepatitis"
+        ],
+        "conceptBSchema": [
+          "Female Reproductive",
+          "B) Inactivated poliovirus/Measles/Mumps",
+          "A finding specific to B) Inactivated poliovirus/Measles/Mumps would move the learner to that schema."
+        ],
+        "alternativeWouldNeed": "A finding specific to B) Inactivated poliovirus/Measles/Mumps would move the learner to that schema.",
+        "boardRule": "Her patient daughter developed a low-grade fever, respiratory symptoms, and a rash 24 hours ago is the discriminator for Hepatitis."
+      },
+      "semanticLinks": [
+        {
+          "sourceText": "Her patient daughter developed a low-grade fever, respiratory symptoms, and a rash 24 hours ago",
+          "relationship": "supports",
+          "targetConcept": "Female Reproductive",
+          "targetDiagnosis": "Hepatitis"
+        }
+      ],
+      "confidence": 0.95,
+      "noveltyScore": 78
+    },
+    {
+      "id": "acquired-ko-538d8c821df13ec1-abnormal-uterine-bleeding-age-45-endometrial-cancer-rule-out-next_best_step",
+      "subject": "OB/GYN",
+      "system": "Gynecologic oncology",
+      "topic": "abnormal uterine bleeding age >45 / endometrial cancer rule-out",
+      "competency": "next_best_step",
+      "blueprintCategory": "Gynecologic oncology",
+      "pivot": "A Pap smear 1 year ago showed no abnormalities, Physical examination today shows no abnormalities, Pelvic examination shows an irregularly shaped uterus consistent in size",
+      "discriminatorPair": {
+        "conceptA": "Abnormal uterine bleeding age >45 / endometrial cancer rule-out",
+        "conceptB": "Measurement of serum follicle-stimulating hormone concentration/MRI of the pelvis/Transfusion of packed red blood cells",
+        "sharedPresentation": "Abnormal uterine bleeding refers to irregular menstrual bleeding that may be abnormal in quality, duration, or timing",
+        "pivot": "A Pap smear 1 year ago showed no abnormalities, Physical examination today shows no abnormalities, Pelvic examination shows an irregularly shaped uterus consistent in size",
+        "pivotThatSeparates": "A Pap smear 1 year ago showed no abnormalities, Physical examination today shows no abnormalities, Pelvic examination shows an irregularly shaped uterus consistent in size",
+        "whyPivotSupportsA": "A Pap smear 1 year ago showed no abnormalities, Physical examination today shows no abnormalities, Pelvic examination shows an irregularly shaped uterus consistent in size supports the Abnormal uterine bleeding age >45 / endometrial cancer rule-out branch.",
+        "whatWouldSupportB": "A finding specific to Measurement of serum follicle-stimulating hormone concentration/MRI of the pelvis/Transfusion of packed red blood cells would move the learner to that schema.",
+        "commonWrongSchema": "Measurement of serum follicle-stimulating hormone concentration/MRI of the pelvis/Transfusion of packed red blood cells",
+        "conceptASchema": [
+          "Gynecologic oncology",
+          "Abnormal uterine bleeding refers to irregular menstrual bleeding that may be abnormal in quality, duration, or timing",
+          "A Pap smear 1 year ago showed no abnormalities, Physical examination today shows no abnormalities, Pelvic examination shows an irregularly shaped uterus consistent in size",
+          "abnormal uterine bleeding age >45 / endometrial cancer rule-out"
+        ],
+        "conceptBSchema": [
+          "Gynecologic oncology",
+          "Measurement of serum follicle-stimulating hormone concentration/MRI of the pelvis/Transfusion of packed red blood cells",
+          "A finding specific to Measurement of serum follicle-stimulating hormone concentration/MRI of the pelvis/Transfusion of packed red blood cells would move the learner to that schema."
+        ],
+        "alternativeWouldNeed": "A finding specific to Measurement of serum follicle-stimulating hormone concentration/MRI of the pelvis/Transfusion of packed red blood cells would move the learner to that schema.",
+        "boardRule": "A Pap smear 1 year ago showed no abnormalities, Physical examination today shows no abnormalities, Pelvic examination shows an irregularly shaped uterus consistent in size is the discriminator for Abnormal uterine bleeding age >45 / endometrial cancer rule-out."
+      },
+      "semanticLinks": [
+        {
+          "sourceText": "A Pap smear 1 year ago showed no abnormalities, Physical examination today shows no abnormalities, Pelvic examination shows an irregularly shaped uterus consistent in size",
+          "relationship": "supports",
+          "targetConcept": "Gynecologic oncology",
+          "targetDiagnosis": "abnormal uterine bleeding age >45 / endometrial cancer rule-out"
+        }
+      ],
+      "confidence": 0.95,
+      "noveltyScore": 78
+    },
+    {
+      "id": "acquired-ko-6905bb347e4f8ece-pregnancy-test-diagnosis",
+      "subject": "OB/GYN",
+      "system": "Contraception",
+      "topic": "Pregnancy test",
+      "competency": "diagnosis",
+      "blueprintCategory": "Contraception",
+      "pivot": "Early symptoms of pregnancy include fatigue, nausea, urinary frequency, and irregular menstruation",
+      "discriminatorPair": {
+        "conceptA": "Pregnancy test",
+        "conceptB": "Complete blood count/Measurement of serum estrogen concentration/Measurement of serum follicle-stimulating hormone and luteinizing hormone concentrations",
+        "sharedPresentation": "Pregnancy should always be considered as a potential etiology of presumed primary amenorrhea and should be excluded before considering other causes",
+        "pivot": "Early symptoms of pregnancy include fatigue, nausea, urinary frequency, and irregular menstruation",
+        "pivotThatSeparates": "Early symptoms of pregnancy include fatigue, nausea, urinary frequency, and irregular menstruation",
+        "whyPivotSupportsA": "Early symptoms of pregnancy include fatigue, nausea, urinary frequency, and irregular menstruation supports the Pregnancy test branch.",
+        "whatWouldSupportB": "A finding specific to Complete blood count/Measurement of serum estrogen concentration/Measurement of serum follicle-stimulating hormone and luteinizing hormone concentrations would move the learner to that schema.",
+        "commonWrongSchema": "Complete blood count/Measurement of serum estrogen concentration/Measurement of serum follicle-stimulating hormone and luteinizing hormone concentrations",
+        "conceptASchema": [
+          "Contraception",
+          "Pregnancy should always be considered as a potential etiology of presumed primary amenorrhea and should be excluded before considering other causes",
+          "Early symptoms of pregnancy include fatigue, nausea, urinary frequency, and irregular menstruation",
+          "Pregnancy test"
+        ],
+        "conceptBSchema": [
+          "Contraception",
+          "Complete blood count/Measurement of serum estrogen concentration/Measurement of serum follicle-stimulating hormone and luteinizing hormone concentrations",
+          "A finding specific to Complete blood count/Measurement of serum estrogen concentration/Measurement of serum follicle-stimulating hormone and luteinizing hormone concentrations would move the learner to that schema."
+        ],
+        "alternativeWouldNeed": "A finding specific to Complete blood count/Measurement of serum estrogen concentration/Measurement of serum follicle-stimulating hormone and luteinizing hormone concentrations would move the learner to that schema.",
+        "boardRule": "Early symptoms of pregnancy include fatigue, nausea, urinary frequency, and irregular menstruation is the discriminator for Pregnancy test."
+      },
+      "semanticLinks": [
+        {
+          "sourceText": "Early symptoms of pregnancy include fatigue, nausea, urinary frequency, and irregular menstruation",
+          "relationship": "proves",
+          "targetConcept": "Contraception",
+          "targetDiagnosis": "Pregnancy test"
+        }
+      ],
+      "confidence": 0.95,
+      "noveltyScore": 78
+    },
+    {
+      "id": "acquired-ko-cb358901a2c1560a-placenta-previa-and-hemorrhagic-shock-risk-complication_recognition",
+      "subject": "OB/GYN",
+      "system": "Third-trimester bleeding",
+      "topic": "placenta previa and hemorrhagic shock risk",
+      "competency": "complication_recognition",
+      "blueprintCategory": "Third-trimester bleeding",
+      "pivot": "Its most common presenting symptom is painless vaginal bleeding during the third trimester",
+      "discriminatorPair": {
+        "conceptA": "Placenta previa and hemorrhagic shock risk",
+        "conceptB": "Amniotic fluid embolism/Disseminated intravascular coagulation/Sepsis",
+        "sharedPresentation": "Placenta previa is an abnormal positioning of placental tissue such that the placenta partially or entirely overlies the internal cervical os",
+        "pivot": "Its most common presenting symptom is painless vaginal bleeding during the third trimester",
+        "pivotThatSeparates": "Its most common presenting symptom is painless vaginal bleeding during the third trimester",
+        "whyPivotSupportsA": "Its most common presenting symptom is painless vaginal bleeding during the third trimester supports the Placenta previa and hemorrhagic shock risk branch.",
+        "whatWouldSupportB": "A finding specific to Amniotic fluid embolism/Disseminated intravascular coagulation/Sepsis would move the learner to that schema.",
+        "commonWrongSchema": "Amniotic fluid embolism/Disseminated intravascular coagulation/Sepsis",
+        "conceptASchema": [
+          "Third-trimester bleeding",
+          "Placenta previa is an abnormal positioning of placental tissue such that the placenta partially or entirely overlies the internal cervical os",
+          "Its most common presenting symptom is painless vaginal bleeding during the third trimester",
+          "placenta previa and hemorrhagic shock risk"
+        ],
+        "conceptBSchema": [
+          "Third-trimester bleeding",
+          "Amniotic fluid embolism/Disseminated intravascular coagulation/Sepsis",
+          "A finding specific to Amniotic fluid embolism/Disseminated intravascular coagulation/Sepsis would move the learner to that schema."
+        ],
+        "alternativeWouldNeed": "A finding specific to Amniotic fluid embolism/Disseminated intravascular coagulation/Sepsis would move the learner to that schema.",
+        "boardRule": "Its most common presenting symptom is painless vaginal bleeding during the third trimester is the discriminator for Placenta previa and hemorrhagic shock risk."
+      },
+      "semanticLinks": [
+        {
+          "sourceText": "Its most common presenting symptom is painless vaginal bleeding during the third trimester",
+          "relationship": "supports",
+          "targetConcept": "Third-trimester bleeding",
+          "targetDiagnosis": "placenta previa and hemorrhagic shock risk"
+        }
+      ],
+      "confidence": 0.95,
+      "noveltyScore": 78
+    },
+    {
+      "id": "acquired-ko-23a1abc7f099068a-ectopic-pregnancy-diagnosis",
+      "subject": "OB/GYN",
+      "system": "Early pregnancy bleeding / acute pelvic pain",
+      "topic": "Ectopic pregnancy",
+      "competency": "diagnosis",
+      "blueprintCategory": "Early pregnancy bleeding / acute pelvic pain",
+      "pivot": "patient nulligravid patient, She also has had moderate dysmenorrhea, Menses occur at regular 28-day intervals",
+      "discriminatorPair": {
+        "conceptA": "Ectopic pregnancy",
+        "conceptB": "Pelvic adhesions",
+        "sharedPresentation": "Many patients experience infertility as a result of inflammation and scarring of the fallopian tubes",
+        "pivot": "patient nulligravid patient, She also has had moderate dysmenorrhea, Menses occur at regular 28-day intervals",
+        "pivotThatSeparates": "patient nulligravid patient, She also has had moderate dysmenorrhea, Menses occur at regular 28-day intervals",
+        "whyPivotSupportsA": "patient nulligravid patient, She also has had moderate dysmenorrhea, Menses occur at regular 28-day intervals supports the Ectopic pregnancy branch.",
+        "whatWouldSupportB": "A finding specific to Pelvic adhesions would move the learner to that schema.",
+        "commonWrongSchema": "Pelvic adhesions",
+        "conceptASchema": [
+          "Early pregnancy bleeding / acute pelvic pain",
+          "Many patients experience infertility as a result of inflammation and scarring of the fallopian tubes",
+          "patient nulligravid patient, She also has had moderate dysmenorrhea, Menses occur at regular 28-day intervals",
+          "Ectopic pregnancy"
+        ],
+        "conceptBSchema": [
+          "Early pregnancy bleeding / acute pelvic pain",
+          "Pelvic adhesions",
+          "A finding specific to Pelvic adhesions would move the learner to that schema."
+        ],
+        "alternativeWouldNeed": "A finding specific to Pelvic adhesions would move the learner to that schema.",
+        "boardRule": "patient nulligravid patient, She also has had moderate dysmenorrhea, Menses occur at regular 28-day intervals is the discriminator for Ectopic pregnancy."
+      },
+      "semanticLinks": [
+        {
+          "sourceText": "patient nulligravid patient, She also has had moderate dysmenorrhea, Menses occur at regular 28-day intervals",
+          "relationship": "proves",
+          "targetConcept": "Early pregnancy bleeding / acute pelvic pain",
+          "targetDiagnosis": "Ectopic pregnancy"
+        }
+      ],
+      "confidence": 0.95,
+      "noveltyScore": 36
+    },
+    {
+      "id": "acquired-ko-fa1af8f25d5d5fc4-race-diagnosis",
+      "subject": "OB/GYN",
+      "system": "Gynecologic oncology",
+      "topic": "Race",
+      "competency": "diagnosis",
+      "blueprintCategory": "Gynecologic oncology",
+      "pivot": "patient nulliparous white patient has the sudden onset of severe pain in the upper back, She has hypertension treated, a ~-adrenergic blocking agent",
+      "discriminatorPair": {
+        "conceptA": "Race",
+        "conceptB": "~-adrenergic blocking agent/Hypertension/Nulliparity",
+        "sharedPresentation": "Osteoporosis is a progressive loss of bone mineral density that occurs with aging and can lead to fragility fractures",
+        "pivot": "patient nulliparous white patient has the sudden onset of severe pain in the upper back, She has hypertension treated, a ~-adrenergic blocking agent",
+        "pivotThatSeparates": "patient nulliparous white patient has the sudden onset of severe pain in the upper back, She has hypertension treated, a ~-adrenergic blocking agent",
+        "whyPivotSupportsA": "patient nulliparous white patient has the sudden onset of severe pain in the upper back, She has hypertension treated, a ~-adrenergic blocking agent supports the Race branch.",
+        "whatWouldSupportB": "A finding specific to ~-adrenergic blocking agent/Hypertension/Nulliparity would move the learner to that schema.",
+        "commonWrongSchema": "~-adrenergic blocking agent/Hypertension/Nulliparity",
+        "conceptASchema": [
+          "Gynecologic oncology",
+          "Osteoporosis is a progressive loss of bone mineral density that occurs with aging and can lead to fragility fractures",
+          "patient nulliparous white patient has the sudden onset of severe pain in the upper back, She has hypertension treated, a ~-adrenergic blocking agent",
+          "Race"
+        ],
+        "conceptBSchema": [
+          "Gynecologic oncology",
+          "~-adrenergic blocking agent/Hypertension/Nulliparity",
+          "A finding specific to ~-adrenergic blocking agent/Hypertension/Nulliparity would move the learner to that schema."
+        ],
+        "alternativeWouldNeed": "A finding specific to ~-adrenergic blocking agent/Hypertension/Nulliparity would move the learner to that schema.",
+        "boardRule": "patient nulliparous white patient has the sudden onset of severe pain in the upper back, She has hypertension treated, a ~-adrenergic blocking agent is the discriminator for Race."
+      },
+      "semanticLinks": [
+        {
+          "sourceText": "patient nulliparous white patient has the sudden onset of severe pain in the upper back, She has hypertension treated, a ~-adrenergic blocking agent",
+          "relationship": "proves",
+          "targetConcept": "Gynecologic oncology",
+          "targetDiagnosis": "Race"
+        }
+      ],
+      "confidence": 0.95,
+      "noveltyScore": 78
+    }
+  ]
+}

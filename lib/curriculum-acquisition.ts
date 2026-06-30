@@ -18,6 +18,7 @@ import type {
 } from "@/lib/subject-seeds/seed-types";
 import { DEFAULT_CASE_VARIANT_TEMPLATES } from "@/lib/subject-seeds/seed-types";
 import type { NbmeArchetype } from "@/lib/local-reasoning-engine";
+import type { MedicalFact } from "@/lib/anking-enrichment";
 
 export type CurriculumSourceType =
   | "pdf"
@@ -70,8 +71,14 @@ export type KnowledgeObject = {
   topic: string;
   blueprintCategory: string;
   estimatedYield: number;
+  canonicalAnswer: string;
+  displayAnswer: string;
   literalAnswer?: string;
   abstractConcept: string;
+  conceptType: AcquiredConceptType;
+  aliases: string[];
+  acceptableAnswerPatterns: string[];
+  unacceptableNearMisses: string[];
   testedDecision: string;
   managementActionClass?: string;
   discriminatorConcepts: string[];
@@ -107,6 +114,7 @@ export type KnowledgeObject = {
   missingFields: string[];
   lowConfidenceWarnings: string[];
   validationSources: string[];
+  supportingFacts?: MedicalFact[];
 };
 
 export type AcquiredShelfSchemaNode = SchemaNode & {
@@ -141,6 +149,19 @@ export type CurriculumAcquisitionReport = {
   }>;
   warnings: string[];
 };
+
+export type AcquiredConceptType =
+  | "diagnosis"
+  | "medication"
+  | "therapeutic_class"
+  | "procedure"
+  | "diagnostic_test"
+  | "screening"
+  | "management_action"
+  | "mechanism"
+  | "complication"
+  | "counseling"
+  | "unknown";
 
 const existingSubjects: RapidRoundsSubject[] = [
   "Internal Medicine",
@@ -448,7 +469,15 @@ export function identifyCorrectAnswer(segmentText: string) {
 function normalizeMedicalTerm(value: string) {
   return value
     .replace(/Ectoi:>ic/gi, "Ectopic")
+    .replace(/prei:>aration/gi, "preparation")
+    .replace(/resi:>iratory/gi, "respiratory")
     .replace(/i:>lace/gi, "place")
+    .replace(/A~lication/gi, "Application")
+    .replace(/BioiJSY|biOIJSY/gi, "Biopsy")
+    .replace(/antiph?osi:?iholipid/gi, "antiphospholipid")
+    .replace(/Pai:i/gi, "Pap")
+    .replace(/Rh o\(Q\)/gi, "Rho(D)")
+    .replace(/\b13(?=-?hCG|-Hemolytic)/gi, "beta")
     .replace(/ti:>al/i, "tipal")
     .replace(/medroxy~?rogesterone/gi, "medroxyprogesterone")
     .replace(/vagina\/is/gi, "vaginalis")
@@ -551,6 +580,14 @@ export function inferSystem(text: string, subject?: CurriculumAcquisitionSubject
 }
 
 function inferObgynSystem(text: string) {
+  if (/congenital hypothyroidism|newborn screening|neonatal endocrine|macroglossia|hoarse cry/i.test(text)) return "Pediatrics/Neonatal endocrine";
+  if (/bartholin|vulvar abscess|bartholin gland abscess/i.test(text)) return "Vulvar/vaginal infections";
+  if (/bacterial vaginosis|candida|chancroid|chlamydial urethritis|genital herpes|vulvovaginal|trichomon|cervicitis|gonorrhea|chlamydia|sti|genital ulcer/i.test(text)) return "Vulvar/vaginal infections / STI";
+  if (/fibrocystic|breast mass|galactocele|breast cancer|breast tenderness|breast disease/i.test(text)) return "Breast disease";
+  if (/labor|latent phase|active phase|cervical dilation|oxytocin|chorioamnionitis|fetal tracing|rupture of membranes/i.test(text)) return "Labor physiology";
+  if (/end-of-life|capacity|family meeting|surrogate|elder abuse|abuse/i.test(text)) return "Ethics / communication";
+  if (/emergency contraception|levonorgestrel|copper iud|contraception/i.test(text)) return "Contraception";
+  if (/endometriosis|dysmenorrhea|leiomyoma|adenomyosis|pelvic organ prolapse|enterocele|cystocele|urinary incontinence|infertility|ovarian failure/i.test(text)) return "Benign gynecology";
   if (/postpartum hemorrhage|uterine atony|succenturiate|retained placental/i.test(text)) return "Obstetrics / postpartum hemorrhage";
   if (/ectopic|early pregnancy|positive pregnancy test|first trimester|adnexal/i.test(text)) return "Early pregnancy bleeding / acute pelvic pain";
   if (/mastitis|breastfeeding|lactation|breast abscess/i.test(text)) return "Breast infection / lactation";
@@ -583,8 +620,14 @@ function extractConceptPhrase(text: string) {
 }
 
 export type ConceptAbstraction = {
+  canonicalAnswer: string;
+  displayAnswer: string;
   literalAnswer?: string;
   abstractConcept: string;
+  conceptType: AcquiredConceptType;
+  aliases: string[];
+  acceptableAnswerPatterns: string[];
+  unacceptableNearMisses: string[];
   testedDecision: string;
   managementActionClass?: string;
   discriminatorConcepts: string[];
@@ -594,13 +637,108 @@ export type ConceptAbstraction = {
 type ConceptAbstractionRule = {
   answer: RegExp;
   context?: RegExp;
+  canonicalAnswer?: string | ((context: string, literalAnswer: string) => string);
+  displayAnswer?: string | ((context: string, literalAnswer: string) => string);
   abstractConcept: string | ((context: string, literalAnswer: string) => string);
+  conceptType?: AcquiredConceptType;
+  aliases?: string[];
+  acceptableAnswerPatterns?: string[];
+  unacceptableNearMisses?: string[];
   testedDecision: string;
   managementActionClass?: string;
   keepExactDrug?: boolean;
 };
 
 const conceptAbstractionRules: ConceptAbstractionRule[] = [
+  {
+    answer: /doxycycline/i,
+    context: /chlamydia|chlamydial|nongonococcal|urethritis|cervicitis|sti|sexually transmitted/i,
+    canonicalAnswer: "doxycycline",
+    displayAnswer: "Doxycycline",
+    abstractConcept: "chlamydial infection treated with doxycycline",
+    conceptType: "medication",
+    aliases: [
+      "doxycycline",
+      "tetracycline antibiotic",
+      "tetracycline-class therapy",
+      "anti-chlamydial therapy",
+      "treatment for chlamydia",
+      "treatment for nongonococcal urethritis"
+    ],
+    acceptableAnswerPatterns: [
+      "\\bdoxycycline\\b",
+      "\\btetracycline(?:-class)?\\s+(?:antibiotic|therapy)\\b",
+      "\\banti-?chlamydial\\s+(?:therapy|treatment)\\b",
+      "\\btreatment\\s+for\\s+(?:chlamydia|chlamydial infection|nongonococcal urethritis)\\b"
+    ],
+    unacceptableNearMisses: ["ceftriaxone", "azithromycin", "broad-spectrum antibiotics", "STI treatment"],
+    testedDecision: "Select doxycycline when the exact first-line anti-chlamydial regimen is the tested decision.",
+    managementActionClass: "anti-chlamydial therapy",
+    keepExactDrug: true
+  },
+  {
+    answer: /routine newborn screening/i,
+    context: /newborn|poor feeding|constipation|hoarse cry|macroglossia|large fontanelles|hypothyroidism/i,
+    abstractConcept: "congenital hypothyroidism detected by newborn screening",
+    testedDecision: "Recognize congenital hypothyroidism and the newborn screen that detects it.",
+    managementActionClass: "diagnostic screening"
+  },
+  {
+    answer: /mixed enteric and skin flora/i,
+    context: /bartholin|posterior labium|abscess|polymicrobial/i,
+    abstractConcept: "Bartholin gland abscess microbiology",
+    testedDecision: "Identify Bartholin gland abscesses as usually polymicrobial with enteric and skin flora.",
+    managementActionClass: "microbiology recognition"
+  },
+  {
+    answer: /wet mount preparation/i,
+    context: /bacterial vaginosis|clue cells|malodorous|fish|thin|watery|vaginal discharge/i,
+    abstractConcept: "bacterial vaginosis confirmation",
+    testedDecision: "Confirm bacterial vaginosis with wet mount clue cells rather than Gardnerella culture.",
+    managementActionClass: "confirmatory testing"
+  },
+  {
+    answer: /observation/i,
+    context: /postpartum|lochia|firm uterus|closed cervix|old blood|afebrile|normal hematocrit/i,
+    abstractConcept: "normal lochia rubra",
+    testedDecision: "Reassure and observe normal lochia when postpartum bleeding is small-volume with a firm uterus and stable findings.",
+    managementActionClass: "reassurance/observation"
+  },
+  {
+    answer: /progesterone supplementation/i,
+    context: /corpus luteum|oophorectomy|7-week|pregnancy|10 weeks/i,
+    abstractConcept: "corpus luteum progesterone support",
+    testedDecision: "Replace progesterone until placental progesterone production is established after early corpus luteum removal.",
+    managementActionClass: "pregnancy hormone support"
+  },
+  {
+    answer: /haemophilus ducreyi/i,
+    context: /tender|nonindurated|genital ulcer|bleeds|chancroid/i,
+    abstractConcept: "chancroid organism",
+    testedDecision: "Identify Haemophilus ducreyi as the cause of chancroid.",
+    managementActionClass: "causal organism recognition"
+  },
+  {
+    answer: /acute respiratory distress syndrome/i,
+    context: /toxic shock|tampon|staphylococcus aureus|hypotension|diffuse rash|fever/i,
+    abstractConcept: "toxic shock syndrome mortality complication",
+    testedDecision: "Recognize ARDS as a major lethal complication of toxic shock syndrome.",
+    managementActionClass: "complication recognition"
+  },
+  {
+    answer: /hypogonadism/i,
+    context: /chemotherapy|hot flashes|vaginal dryness|vaginal atrophy|amenorrhea|infertility/i,
+    abstractConcept: "chemotherapy-induced ovarian failure/hypogonadism",
+    testedDecision: "Identify ovarian follicle loss after chemotherapy as hypogonadism causing amenorrhea and infertility.",
+    managementActionClass: "mechanism/diagnosis"
+  },
+  {
+    answer: /observation and continued monitoring/i,
+    context: /fetal heart|baseline|accelerations|variability|decelerations|rupture of membranes/i,
+    abstractConcept: "reassuring fetal heart tracing in early labor",
+    testedDecision: "Continue observation when the fetal heart tracing is reassuring.",
+    managementActionClass: "fetal tracing management"
+  },
   {
     answer: /dicloxacillin|cephalexin|anti-?staph/i,
     context: /mastitis|breastfeeding|lactation|nipple fissure|breast/i,
@@ -631,10 +769,45 @@ const conceptAbstractionRules: ConceptAbstractionRule[] = [
   },
   {
     answer: /endometrial biopsy|endometrial sampling/i,
-    context: /abnormal uterine bleeding|age (?:older than|over|>|≥)\s*45|45 years|postmenopausal bleeding|endometrial cancer|unopposed estrogen/i,
+    context: /abnormal uterine bleeding|heavy irregular bleeding|age (?:older than|over|>|≥)\s*45|45 years|postmenopausal bleeding|perimenopausal|endometrial cancer|unopposed estrogen/i,
     abstractConcept: "abnormal uterine bleeding age >45 / endometrial cancer rule-out",
     testedDecision: "Perform endometrial sampling when abnormal uterine bleeding raises endometrial cancer risk.",
     managementActionClass: "endometrial cancer exclusion"
+  },
+  {
+    answer: /ovarian torsion/i,
+    context: /sudden|severe|unilateral|pelvic pain|nausea|vomiting|ovarian mass|adnexal/i,
+    abstractConcept: "ovarian torsion with adnexal mass",
+    testedDecision: "Diagnose ovarian torsion when sudden unilateral pelvic pain occurs with nausea/vomiting and an adnexal mass.",
+    managementActionClass: "emergency diagnosis"
+  },
+  {
+    answer: /polyhydramnios/i,
+    context: /fundal height|greater than|dyspnea|gestational diabetes|uterus/i,
+    abstractConcept: "polyhydramnios causing uterine size greater than dates/dyspnea",
+    testedDecision: "Recognize polyhydramnios when fundal height is greater than gestational age with maternal dyspnea.",
+    managementActionClass: "diagnostic recognition"
+  },
+  {
+    answer: /indirect antiglobulin|coombs/i,
+    context: /rh-negative|first prenatal|anti-D|antibody screen|prior pregnancies/i,
+    abstractConcept: "initial Rh-negative prenatal antibody screening",
+    testedDecision: "Use indirect Coombs testing to screen an Rh-negative pregnant patient for anti-D antibodies.",
+    managementActionClass: "prenatal antibody screening"
+  },
+  {
+    answer: /tighter glucose control/i,
+    context: /type 1 diabetes|preconception|hyperglycemia|dka|congenital anomalies/i,
+    abstractConcept: "preconception glycemic control",
+    testedDecision: "Optimize glycemic control before conception in patients with diabetes.",
+    managementActionClass: "preconception counseling"
+  },
+  {
+    answer: /no screening indicated/i,
+    context: /pap smear|mammography|8 months|normal|asymptomatic|screening/i,
+    abstractConcept: "no duplicate cancer screening shortly after normal tests",
+    testedDecision: "Avoid repeating cancer screening too soon after recent normal results.",
+    managementActionClass: "screening interval stewardship"
   },
   {
     answer: /ergonovine|methylergonovine/i,
@@ -691,6 +864,76 @@ const conceptAbstractionRules: ConceptAbstractionRule[] = [
     abstractConcept: "chorioamnionitis causing fetal tachycardia",
     testedDecision: "Identify intra-amniotic infection as the cause of fetal tachycardia with prolonged rupture and maternal infection signs.",
     managementActionClass: "cause of fetal tracing abnormality"
+  },
+  {
+    answer: /prolapse of the fetal umbilical cord/i,
+    context: /footling breech|malpresentation|intact membranes|high station|unengaged/i,
+    abstractConcept: "umbilical cord prolapse risk with footling breech/high station",
+    testedDecision: "Recognize umbilical cord prolapse risk when malpresentation leaves the presenting part unengaged.",
+    managementActionClass: "complication risk recognition"
+  },
+  {
+    answer: /cesarean removal of (?:the )?fetus/i,
+    context: /fetal demise|dic|fibrinogen|fibrin split|thrombocytopenia|prolonged pt|ptt/i,
+    abstractConcept: "intrauterine fetal demise with DIC requires urgent delivery",
+    testedDecision: "Deliver urgently when fetal demise is complicated by DIC.",
+    managementActionClass: "urgent definitive management"
+  },
+  {
+    answer: /puerperal sepsis/i,
+    context: /postpartum|cesarean|fever|hypotension|tachycardia|uterine tenderness/i,
+    abstractConcept: "puerperal sepsis after cesarean delivery",
+    testedDecision: "Diagnose puerperal sepsis when postpartum uterine tenderness is accompanied by shock physiology.",
+    managementActionClass: "acute postpartum diagnosis"
+  },
+  {
+    answer: /uninhibited bladder contractions/i,
+    context: /urgency|unable to reach a bathroom|leakage|diuretic|urge incontinence/i,
+    abstractConcept: "urge incontinence due to detrusor overactivity",
+    testedDecision: "Identify detrusor overactivity as the mechanism of urge incontinence.",
+    managementActionClass: "mechanism identification"
+  },
+  {
+    answer: /antiphospholipid antibody assay/i,
+    context: /recurrent|pregnancy loss|venous thrombosis|oral contraceptives|first-trimester/i,
+    abstractConcept: "antiphospholipid syndrome causing recurrent early pregnancy loss",
+    testedDecision: "Test for antiphospholipid antibodies when recurrent pregnancy loss is paired with thrombosis.",
+    managementActionClass: "targeted diagnostic workup"
+  },
+  {
+    answer: /choriocarcinoma/i,
+    context: /postpartum bleeding|high (?:β|beta)-?hcg|theca lutein|neurologic|metasta/i,
+    abstractConcept: "choriocarcinoma after term pregnancy with metastases",
+    testedDecision: "Diagnose choriocarcinoma when postpartum bleeding is paired with very high beta-hCG and metastatic findings.",
+    managementActionClass: "malignant trophoblastic disease diagnosis"
+  },
+  {
+    answer: /urethral culture for chlamydia/i,
+    context: /persistent dysuria|urgency|no bacteria|wbc|urethral tenderness|sterile pyuria/i,
+    abstractConcept: "chlamydial urethritis with sterile pyuria",
+    testedDecision: "Evaluate persistent dysuria with sterile pyuria for chlamydial urethritis.",
+    managementActionClass: "diagnostic evaluation"
+  },
+  {
+    answer: /primary dysmenorrhea/i,
+    context: /adolescent|cyclic|cramps|nausea|diarrhea|vomiting|normal pelvic exam|regular menses/i,
+    abstractConcept: "primary dysmenorrhea from prostaglandin excess",
+    testedDecision: "Diagnose primary dysmenorrhea when cyclic cramps occur with normal pelvic examination.",
+    managementActionClass: "primary vs secondary dysmenorrhea"
+  },
+  {
+    answer: /fetal ultrasonography/i,
+    context: /fundal height|32 weeks|28 cm|fetal heart tones|growth restriction|size/i,
+    abstractConcept: "fundal height lag requires fetal ultrasonography",
+    testedDecision: "Use fetal ultrasonography to evaluate fundal height lag.",
+    managementActionClass: "diagnostic management"
+  },
+  {
+    answer: /there are no contraindications/i,
+    context: /levonorgestrel|emergency contraception|breastfeeding|migraine|hepatitis|negative pregnancy/i,
+    abstractConcept: "levonorgestrel emergency contraception has no major contraindications here",
+    testedDecision: "Recognize that levonorgestrel emergency contraception is allowed despite breastfeeding, migraine history, or hepatitis history.",
+    managementActionClass: "emergency contraception safety"
   }
 ];
 
@@ -700,9 +943,53 @@ function extractAnswerChoices(segmentText: string) {
 
 function shouldKeepLiteralAnswer(literalAnswer: string | undefined, context: string, classified: Pick<ReturnType<typeof classifyCompetency>, "competency">) {
   if (!literalAnswer) return false;
-  if (/herpes simplex virus|hsv|ectopic pregnancy|chorioamnionitis|placenta previa|succenturiate|dehiscence/i.test(literalAnswer)) return true;
+  if (/herpes simplex virus|hsv|ectopic pregnancy|chorioamnionitis|placenta previa|succenturiate|dehiscence|haemophilus ducreyi/i.test(literalAnswer)) return true;
   if (/specific|exact|causal organism|organism|drug of choice|which antibiotic/i.test(context) && classified.competency !== "management") return true;
   return false;
+}
+
+function resolveRuleValue(
+  value: string | ((context: string, literalAnswer: string) => string) | undefined,
+  context: string,
+  literalAnswer: string | undefined
+) {
+  if (!value) return undefined;
+  return typeof value === "function" ? value(context, literalAnswer ?? "") : value;
+}
+
+function dedupeConceptStrings(values: Array<string | undefined>) {
+  const seen = new Set<string>();
+  const result: string[] = [];
+
+  values.forEach((value) => {
+    const normalizedDisplay = value?.trim().replace(/\s+/g, " ");
+    if (!normalizedDisplay) return;
+    const key = normalizedDisplay.toLowerCase();
+    if (seen.has(key)) return;
+    seen.add(key);
+    result.push(normalizedDisplay);
+  });
+
+  return result;
+}
+
+function inferConceptType(
+  literalAnswer: string | undefined,
+  context: string,
+  abstractConcept: string,
+  classified: Pick<ReturnType<typeof classifyCompetency>, "competency">
+): AcquiredConceptType {
+  const combined = `${literalAnswer ?? ""} ${context} ${abstractConcept}`;
+  if (/doxycycline|azithromycin|ceftriaxone|dicloxacillin|cephalexin|ampicillin|erythromycin|metronidazole|antibiotic|drug|medication/i.test(combined)) return "medication";
+  if (/therapeutic|therapy|treatment|prophylaxis|uterotonic|reperfusion|management/i.test(combined)) return "management_action";
+  if (/biopsy|sampling|cesarean|surgery|excision|removal/i.test(combined)) return "procedure";
+  if (/test|measurement|screen|wet mount|coombs|ultrasound|culture|assay|cytology/i.test(combined)) return "diagnostic_test";
+  if (classified.competency === "screening") return "screening";
+  if (classified.competency === "mechanism") return "mechanism";
+  if (classified.competency === "complication_recognition") return "complication";
+  if (classified.competency === "diagnosis" || classified.competency === "recognition") return "diagnosis";
+  if (/counsel|prognosis|reassur/i.test(combined)) return "counseling";
+  return "unknown";
 }
 
 function inferTestedDecision(abstractConcept: string, literalAnswer: string | undefined, classified: Pick<ReturnType<typeof classifyCompetency>, "competency" | "archetype">) {
@@ -754,6 +1041,9 @@ export function abstractExtractedConcept(
     : keepLiteral && literalAnswer
       ? sentenceCase(literalAnswer)
       : inferTopic(options.authorityText, literalAnswer ?? options.fallbackTopic);
+  const canonicalAnswer = resolveRuleValue(rule?.canonicalAnswer, context, literalAnswer) ?? literalAnswer ?? abstractConcept;
+  const displayAnswer = resolveRuleValue(rule?.displayAnswer, context, literalAnswer) ?? sentenceCase(canonicalAnswer);
+  const conceptType = rule?.conceptType ?? inferConceptType(literalAnswer, context, abstractConcept, options.classified);
   const testedDecision = rule?.testedDecision ?? inferTestedDecision(abstractConcept, literalAnswer, options.classified);
   const managementActionClass = rule?.managementActionClass ?? inferManagementActionClass(literalAnswer, context, options.classified);
   const discriminatorConcepts = Array.from(
@@ -764,10 +1054,23 @@ export function abstractExtractedConcept(
         .filter(isDurableConceptPhrase)
     )
   );
-
-  return {
+  const aliases = dedupeConceptStrings([
+    canonicalAnswer,
+    displayAnswer,
     literalAnswer,
     abstractConcept,
+    ...(rule?.aliases ?? [])
+  ]);
+
+  return {
+    canonicalAnswer,
+    displayAnswer,
+    literalAnswer,
+    abstractConcept,
+    conceptType,
+    aliases,
+    acceptableAnswerPatterns: rule?.acceptableAnswerPatterns ?? [],
+    unacceptableNearMisses: rule?.unacceptableNearMisses ?? [],
     testedDecision,
     managementActionClass,
     discriminatorConcepts,
@@ -776,6 +1079,14 @@ export function abstractExtractedConcept(
 }
 
 export function classifyCompetency(text: string) {
+  if (/screening|predicted these findings|screen|surveillance/i.test(text) && /newborn|future screening|recurrent|pap|mammography|cancer/i.test(text)) {
+    return {
+      archetype: "Screening/prevention" as NbmeArchetype,
+      competency: "screening" as SchemaNodeKind,
+      stage: "follow_up" as ManagementStage,
+      keywords: []
+    };
+  }
   if (/causal organism|causative organism|etiologic agent/i.test(text)) {
     return {
       archetype: "Mechanism/pathophysiology" as NbmeArchetype,
@@ -792,7 +1103,7 @@ export function classifyCompetency(text: string) {
       keywords: []
     };
   }
-  if (/which (?:antibiotic|medication|drug|therapy)|pharmacotherapy|treated with|treat(?:ment)?\?|appropriate (?:antibiotic|medication|therapy|treatment)/i.test(text)) {
+  if (/which (?:antibiotic|medication|drug|therapy)|pharmacotherapy|treated with|treat(?:ment)?\?|appropriate (?:antibiotic|medication|therapy|treatment)|contraindication/i.test(text)) {
     return {
       archetype: "Initial management" as NbmeArchetype,
       competency: "management" as SchemaNodeKind,
@@ -837,6 +1148,12 @@ function extractClinicalPhrases(text: string) {
 
 function normalizeExtractedConcept(value: string) {
   return value
+    .replace(/prei:>aration/gi, "preparation")
+    .replace(/resi:>iratory/gi, "respiratory")
+    .replace(/BioiJSY|biOIJSY/gi, "Biopsy")
+    .replace(/Pai:i/gi, "Pap")
+    .replace(/antiph?osi:?iholipid/gi, "antiphospholipid")
+    .replace(/\b13(?=-?hCG|-Hemolytic)/gi, "beta")
     .replace(/\b(?:a|an|the)\s+\d{1,2}[- ]year[- ]old\b/gi, "patient")
     .replace(/\b\d{1,2}[- ]year[- ]old\b/gi, "patient")
     .replace(/\b(?:man|woman|male|female)\b/gi, "patient")
@@ -848,6 +1165,9 @@ function normalizeExtractedConcept(value: string) {
 }
 
 function isDurableConceptPhrase(phrase: string) {
+  if (/^(?:there are )?no (?:contraindications?|screening indicated|further testing|treatment|intervention)(?:\b|$)/i.test(phrase)) {
+    return true;
+  }
   return (
     phrase.length >= 4 &&
     phrase.length <= 180 &&
@@ -876,6 +1196,9 @@ function transformedClinicalPhrases(text: string) {
 }
 
 export function extractPivot(text: string, correctAnswer?: string) {
+  const stemPivot = extractStemPivot(text, correctAnswer);
+  if (stemPivot) return stemPivot;
+
   const phrases = transformedClinicalPhrases(text);
   const pivotMarkers = [
     /because\s+([^.;\n]+)/i,
@@ -895,6 +1218,86 @@ export function extractPivot(text: string, correctAnswer?: string) {
     .filter((item) => item.score > 0)
     .sort((left, right) => right.score - left.score);
   return scored[0]?.phrase ?? phrases[0] ?? correctAnswer ?? "dominant clinical pivot";
+}
+
+function extractStemPivot(text: string, correctAnswer?: string) {
+  const stem = extractStemText(text);
+  if (!stem) return undefined;
+  const question = extractQuestionPrompt(stem);
+  const withoutQuestion = question ? stem.replace(question, " ") : stem;
+  const stemPhrases = extractClinicalPhrases(withoutQuestion).map(normalizeStemClue);
+  const phrases = [...stemPhrases, ...stemPhrases.flatMap(splitClinicalPhrase)]
+    .map(normalizeStemClue)
+    .filter(isDurableConceptPhrase)
+    .filter((phrase) => !correctAnswer || !phrase.toLowerCase().includes(correctAnswer.toLowerCase()));
+  const scored = phrases
+    .map((phrase, index) => ({ phrase, index, score: stemPivotPhraseScore(phrase) }))
+    .filter((item) => item.score > 0)
+    .sort((left, right) => right.score - left.score || left.index - right.index);
+  const selected = scored
+    .slice(0, 5)
+    .sort((left, right) => left.index - right.index)
+    .map((item) => item.phrase);
+  const compressed = compressPivotCluster(selected);
+  return compressed && isDurableConceptPhrase(compressed) ? compressed : undefined;
+}
+
+function normalizeStemClue(value: string) {
+  return normalizeMedicalTerm(value)
+    .replace(/^(?:\d{1,3}\.\s*)?A\s+\d{1,2}[- ]year[- ]old\s+(?:woman|man|girl|boy|patient)\s*/i, "")
+    .replace(/^(?:\d{1,3}\.\s*)?A\s+(?:newborn|infant|child|patient)\s*/i, "")
+    .replace(/\b(?:comes|presents|is brought|is seen|is evaluated)\s+to\s+(?:the\s+)?(?:physician|hospital|emergency department|clinic)\s+because\s+of\s+/i, "")
+    .replace(/\b(?:comes|presents|is brought|is seen|is evaluated)\s+(?:for|with)\s+/i, "")
+    .replace(/\b(?:which of the following|what is|what should|most appropriate|most likely)\b.*$/i, "")
+    .replace(/\s+/g, " ")
+    .replace(/^[\s:;,.–-]+|[\s:;,.–-]+$/g, "")
+    .trim();
+}
+
+function splitClinicalPhrase(phrase: string) {
+  return phrase
+    .split(/\s+(?:and|with|but|while|although|after|before|because)\s+|,\s+/i)
+    .map((item) => item.trim())
+    .filter(Boolean);
+}
+
+function stemPivotPhraseScore(phrase: string) {
+  let score = pivotPhraseScore(phrase);
+  if (/poor feeding|constipat|hoarse cry|macroglossia|large.*fontanelle|dry skin|hypotonia|umbilical hernia/i.test(phrase)) score += 10;
+  if (/bartholin|abscess|fluctuant|posterior.*lab/i.test(phrase)) score += 10;
+  if (/foul-smelling|malodorous|watery|thin|vulvar irritation|clue cell|fish/i.test(phrase)) score += 10;
+  if (/postpartum|old blood|closed cervix|firm uterus|afebrile|hematocrit/i.test(phrase)) score += 8;
+  if (/corpus luteum|oophorectomy|7-week|10 weeks/i.test(phrase)) score += 10;
+  if (/tender|nonindurated|genital ulcer|bleeds easily/i.test(phrase)) score += 10;
+  if (/tampon|hypotension|diffuse rash|staphylococcus|fever|vomiting|diarrhea/i.test(phrase)) score += 10;
+  if (/chemotherapy|hot flashes|vaginal dryness|vaginal atrophy|amenorrhea|unable to conceive/i.test(phrase)) score += 10;
+  if (/baseline fetal heart|accelerations|variability|decelerations|fetal heart/i.test(phrase)) score += 10;
+  if (/hysterectomy|cin\s*3|clear margins|cervical dysplasia/i.test(phrase)) score += 10;
+  if (/cyclic|breast tenderness|bilateral|cystic|menses/i.test(phrase)) score += 10;
+  if (/heavy irregular bleeding|45|perimenopausal|hot flashes/i.test(phrase)) score += 10;
+  if (/sudden|severe|unilateral|nausea|vomiting|ovarian mass|adnexal/i.test(phrase)) score += 10;
+  if (/fundal height|greater than|dyspnea|gestational diabetes|32 weeks|28 cm/i.test(phrase)) score += 10;
+  if (/rh-negative|anti-D|28 weeks|first prenatal/i.test(phrase)) score += 10;
+  if (/type 1 diabetes|hyperglycemia|preconception|dka/i.test(phrase)) score += 10;
+  if (/recent normal|8 months|pap smear|mammography|asymptomatic/i.test(phrase)) score += 10;
+  if (/footling breech|intact membranes|high station|presenting part|malpresentation/i.test(phrase)) score += 10;
+  if (/fetal demise|fibrinogen|fibrin split|thrombocytopenia|prolonged/i.test(phrase)) score += 10;
+  if (/postpartum|cesarean|fever|hypotension|tachycardia|uterine tenderness/i.test(phrase)) score += 10;
+  if (/urgency|unable to reach|leakage|diuretic|void/i.test(phrase)) score += 10;
+  if (/recurrent.*loss|venous thrombosis|oral contraceptives|first-trimester/i.test(phrase)) score += 10;
+  if (/postpartum bleeding|high.*hcg|theca lutein|neurologic/i.test(phrase)) score += 10;
+  if (/persistent dysuria|no bacteria|wbc|urethral tenderness|sterile pyuria/i.test(phrase)) score += 10;
+  if (/cyclic.*cramps|nausea|diarrhea|vomiting|normal pelvic/i.test(phrase)) score += 10;
+  if (/unprotected intercourse|breast-feeding|migraine|hepatitis|negative pregnancy/i.test(phrase)) score += 10;
+  if (/sexually active|monogamous|weight|height|pulse|respirations|blood pressure|no known|takes no|medications|history of serious illness/i.test(phrase)) score -= 6;
+  return score;
+}
+
+function compressPivotCluster(phrases: string[]) {
+  const normalized = Array.from(new Set(phrases.map((phrase) => phrase.replace(/\s+/g, " ").trim()).filter(Boolean)));
+  if (normalized.length === 0) return undefined;
+  const joined = normalized.join(", ");
+  return joined.length > 220 ? normalized.slice(0, 3).join(", ") : joined;
 }
 
 function pivotPhraseScore(phrase: string) {
@@ -963,12 +1366,16 @@ function estimatedYieldFor(subject: CurriculumAcquisitionSubject, system: string
 }
 
 function confidenceFor(knowledge: Pick<KnowledgeObject, "pivot" | "topic" | "discriminatorPair" | "semanticLinks">, correctAnswer?: string) {
-  let confidence = 0.45;
+  let confidence = 0.35;
   if (correctAnswer) confidence += 0.15;
   if (knowledge.pivot && knowledge.pivot !== "dominant clinical pivot") confidence += 0.16;
   if (knowledge.topic && knowledge.topic !== "Clinical reasoning schema") confidence += 0.1;
   if (knowledge.discriminatorPair.conceptB !== "Nearby competing schema") confidence += 0.07;
   if (knowledge.semanticLinks.length > 0) confidence += 0.07;
+  if (/\b(?:choice|fetal monitoring|pap smear|biopsy|therapy|testing|measurement|follow-up visit|nearby competing schema)\b/i.test(knowledge.discriminatorPair.conceptB)) confidence -= 0.08;
+  if (knowledge.discriminatorPair.conceptB.includes("/")) confidence -= 0.06;
+  if (/choice|would effectively rule out|not disclose|is not necessary|is not indicated/i.test(knowledge.pivot)) confidence -= 0.12;
+  if (knowledge.pivot.length < 8 || knowledge.pivot.length > 220) confidence -= 0.06;
   return Math.min(0.95, Number(confidence.toFixed(2)));
 }
 
@@ -1027,7 +1434,6 @@ export function buildKnowledgeObject(segment: CurriculumQuestionSegment, sourceP
   const pivotText = pivotAuthorityText(segment.rawText);
   const questionPrompt = extractQuestionPrompt(segment.rawText);
   const subject = inferSubject(segment.rawText);
-  const system = inferSystem(authorityText, subject);
   const classified = classifyCompetency(questionPrompt || authorityText || segment.rawText);
   const initialTopic = inferTopic(authorityText, correctAnswer);
   const conceptAbstraction = abstractExtractedConcept(correctAnswer, {
@@ -1038,8 +1444,9 @@ export function buildKnowledgeObject(segment: CurriculumQuestionSegment, sourceP
     classified,
     fallbackTopic: initialTopic
   });
+  const system = inferSystem(`${conceptAbstraction.abstractConcept} ${authorityText}`, subject);
   const topic = conceptAbstraction.abstractConcept;
-  const pivot = extractPivot(pivotText, correctAnswer);
+  const pivot = extractPivot(segment.rawText, correctAnswer);
   const discriminatorPair = extractDiscriminator(
     segment.rawText,
     topic,
@@ -1073,8 +1480,14 @@ export function buildKnowledgeObject(segment: CurriculumQuestionSegment, sourceP
     topic,
     blueprintCategory,
     estimatedYield: estimatedYieldFor(subject, system, classified.competency),
+    canonicalAnswer: conceptAbstraction.canonicalAnswer,
+    displayAnswer: conceptAbstraction.displayAnswer,
     literalAnswer: conceptAbstraction.literalAnswer,
     abstractConcept: conceptAbstraction.abstractConcept,
+    conceptType: conceptAbstraction.conceptType,
+    aliases: conceptAbstraction.aliases,
+    acceptableAnswerPatterns: conceptAbstraction.acceptableAnswerPatterns,
+    unacceptableNearMisses: conceptAbstraction.unacceptableNearMisses,
     testedDecision: conceptAbstraction.testedDecision,
     managementActionClass: conceptAbstraction.managementActionClass,
     discriminatorConcepts: conceptAbstraction.discriminatorConcepts,
@@ -1212,7 +1625,7 @@ export function knowledgeObjectToShelfSchemaNode(knowledge: KnowledgeObject): Ac
       branchPoint: knowledge.pivot,
       ifPresent: knowledge.nextTimeRule,
       ifAbsent: knowledge.discriminatorPair.whatWouldSupportB,
-      correctAction: knowledge.testedConcept
+      correctAction: knowledge.displayAnswer
     },
     managementStage: knowledge.managementStage,
     priorInterventions: knowledge.managementStage === "failure" || knowledge.managementStage === "escalation" ? knowledge.context.slice(0, 1) : [],
@@ -1222,23 +1635,31 @@ export function knowledgeObjectToShelfSchemaNode(knowledge: KnowledgeObject): Ac
           branchPoint: knowledge.complications[0],
           ifPresent: `move to ${knowledge.topic} complication reasoning`,
           ifAbsent: knowledge.nextTimeRule,
-          correctAction: knowledge.testedConcept
+          correctAction: knowledge.displayAnswer
         }
       : undefined,
     complicationBranches: knowledge.complications.map((complication) => ({
       branchPoint: complication,
       ifPresent: `move to ${knowledge.topic} complication reasoning`,
       ifAbsent: knowledge.nextTimeRule,
-      correctAction: knowledge.testedConcept
+      correctAction: knowledge.displayAnswer
     })),
     contraindicationBranches: knowledge.contraindications.map((contraindication) => ({
       branchPoint: contraindication,
       ifPresent: `avoid ${contraindication}`,
       ifAbsent: knowledge.nextTimeRule,
-      correctAction: knowledge.testedConcept
+      correctAction: knowledge.displayAnswer
     })),
     adaptiveBreadthVariants: variants,
-    correctAnswer: knowledge.testedConcept,
+    correctAnswer: knowledge.displayAnswer,
+    canonicalAnswer: knowledge.canonicalAnswer,
+    displayAnswer: knowledge.displayAnswer,
+    literalAnswer: knowledge.literalAnswer,
+    abstractConcept: knowledge.abstractConcept,
+    conceptType: knowledge.conceptType,
+    aliases: knowledge.aliases,
+    acceptableAnswerPatterns: knowledge.acceptableAnswerPatterns,
+    unacceptableNearMisses: knowledge.unacceptableNearMisses,
     incorrectAnswerSchemas: [knowledge.commonTrap],
     answerPrompt: knowledge.questionArchetype,
     commonTraps: [knowledge.commonTrap],

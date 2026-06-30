@@ -2,6 +2,11 @@ import { NextResponse } from "next/server";
 import { getClinicalDecisionSubjectCounts, getNextClinicalDecision } from "@/database/clinical-decisions";
 import { getAdaptiveDecisionRecommendation } from "@/lib/adaptive-decision";
 import { selectAdaptiveGeneratedCase } from "@/lib/adaptive-schema-scheduler";
+import {
+  getFoundationalRapidRoundItems,
+  getFoundationalRapidRoundSubjectCounts,
+  toFoundationalQuestionDto
+} from "@/lib/foundational-rapid-round";
 import { normalizeLearnerId } from "@/lib/learner-id";
 import { getAdaptiveTargetConcept } from "@/lib/learning-trajectory";
 import { prisma } from "@/lib/prisma";
@@ -76,7 +81,32 @@ export async function GET(request: Request) {
       : Promise.resolve(undefined),
     getClinicalDecisionSubjectCounts()
   ]);
-  const responseSubjectCounts = mergeSubjectCounts(subjectCounts, getGeneratedSubjectCounts());
+  const responseSubjectCounts = mergeSubjectCounts(
+    mergeSubjectCounts(subjectCounts, getGeneratedSubjectCounts()),
+    getFoundationalRapidRoundSubjectCounts()
+  );
+
+  if (requestedSessionMode === "rapid_round") {
+    const foundationalItems = getFoundationalRapidRoundItems(requestedSubject);
+    const completedQuestionIds = new Set(
+      completed
+        .flatMap((row) => [row.questionId, row.schemaNodeId])
+        .filter((id): id is string => Boolean(id))
+    );
+    const foundationalItem =
+      foundationalItems.find((item) => !completedQuestionIds.has(item.id)) ?? foundationalItems[0];
+
+    if (foundationalItem) {
+      return NextResponse.json({
+        question: toFoundationalQuestionDto(foundationalItem),
+        subjectCounts: responseSubjectCounts,
+        adaptive: {
+          actionType: "continue_new_decision",
+          explanation: "Rapid Round selected a foundational discriminator for illness-script acquisition."
+        }
+      });
+    }
+  }
 
   const answeredDecisionIds = new Set(
     completed.map((row) => row.clinicalDecisionId).filter((id): id is string => Boolean(id))

@@ -15,7 +15,9 @@
     "db:setup": "prisma generate && prisma db push && node --import tsx prisma/seed.ts",
     "db:studio": "prisma studio",
     "audit:nbme-coverage": "node --import tsx scripts/audit-nbme-coverage.ts",
-    "acquire:curriculum": "node --import tsx scripts/acquire-curriculum.ts"
+    "acquire:curriculum": "node --import tsx scripts/acquire-curriculum.ts",
+    "import:anking": "node --import tsx scripts/import-anking.ts",
+    "enrich:anking": "node --import tsx scripts/enrich-knowledge-with-anking.ts"
   },
   "dependencies": {
     "@prisma/client": "^5.22.0",

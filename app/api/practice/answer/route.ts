@@ -2,6 +2,10 @@ import { NextRequest, NextResponse } from "next/server";
 import { compareAnswerWithAI } from "@/lib/ai-answer-check";
 import { evaluateAnswer } from "@/lib/answer-check";
 import { resolveCurriculumContext } from "@/lib/curriculum-resolution";
+import {
+  evaluateFoundationalRapidRoundAnswer,
+  getFoundationalRapidRoundItem
+} from "@/lib/foundational-rapid-round";
 import { getLearnerState } from "@/lib/learner-state";
 import { normalizeLearnerId } from "@/lib/learner-id";
 import { prisma } from "@/lib/prisma";
@@ -173,6 +177,88 @@ export async function POST(request: NextRequest) {
   );
   const cueLevelUsed = assistanceLevel === "independent" ? undefined : assistanceLevel;
 
+  const foundationalItem = getFoundationalRapidRoundItem(body.questionId);
+  if (foundationalItem) {
+    const { isCorrect, evaluation, teaching } = evaluateFoundationalRapidRoundAnswer(
+      foundationalItem,
+      trimmedAnswer
+    );
+    const answerOutcome: AnswerOutcome = isCorrect ? "CORRECT" : "DECISION_ERROR";
+    const responseTimeMs = Math.max(0, Math.round(body.responseTimeMs ?? 0));
+    const curriculumContext = resolveCurriculumContext({
+      topic: foundationalItem.schemaCluster,
+      correctAnswer: teaching.diagnosis,
+      system: foundationalItem.subject,
+      clinicalPattern: foundationalItem.schemaCluster,
+      decisionType: "Diagnosis",
+      tags: [foundationalItem.schemaCluster, teaching.todaysDiscriminator]
+    });
+
+    await prisma.progress.create({
+      data: {
+        userId: learnerId,
+        answer: trimmedAnswer,
+        isCorrect,
+        expectedAnswer: teaching.diagnosis,
+        answerOutcome,
+        evaluationClassification: evaluation.classification,
+        partialCredit: evaluation.partialCredit,
+        confidence: evaluation.confidence,
+        cognitiveErrorType: isCorrect ? undefined : "Illness Script Confusion",
+        reasoningPattern: isCorrect ? "Pattern Recognition Error" : "Illness Script Confusion",
+        repairType: "FOUNDATIONAL_RAPID_ROUND",
+        schemaNodeId: foundationalItem.id,
+        competency: "recognition",
+        decisionType: "Diagnosis",
+        curriculumNodeId: curriculumContext.primaryNode?.id,
+        shelfTags: serializeList(curriculumContext.shelfTags.length ? curriculumContext.shelfTags : [foundationalItem.subject]),
+        disciplineTags: serializeList(curriculumContext.disciplineTags),
+        responseTimeMs,
+        diagnosis: teaching.diagnosis,
+        management: teaching.discriminator.boardRule,
+        pattern: foundationalItem.schemaCluster
+      }
+    });
+
+    const previousStats = await prisma.userStats.upsert({
+      where: { userId: learnerId },
+      update: {},
+      create: { userId: learnerId }
+    });
+    const questionsAnswered = previousStats.questionsAnswered + 1;
+    const correctAnswers = previousStats.correctAnswers + (isCorrect ? 1 : 0);
+    const currentStreak = isCorrect ? previousStats.currentStreak + 1 : 0;
+    const longestStreak = Math.max(previousStats.longestStreak, currentStreak);
+    const averageResponseTimeMs = Math.round(
+      (previousStats.averageResponseTimeMs * previousStats.questionsAnswered + responseTimeMs) /
+        questionsAnswered
+    );
+
+    await prisma.userStats.update({
+      where: { userId: learnerId },
+      data: {
+        questionsAnswered,
+        correctAnswers,
+        currentStreak,
+        longestStreak,
+        averageResponseTimeMs
+      }
+    });
+
+    return NextResponse.json({
+      isCorrect,
+      answerOutcome,
+      correctAnswer: teaching.diagnosis,
+      evaluation,
+      boardPearl: teaching.discriminator.boardRule,
+      explanation: teaching.todaysDiscriminator,
+      foundationalRapidRound: teaching,
+      levelOfAssistanceRequired: "independent",
+      answeredAfterCue: false,
+      revealUsed: false
+    });
+  }
+
   const decision = await prisma.clinicalDecision.findUnique({
     where: { id: body.questionId }
   });
@@ -324,7 +410,11 @@ export async function POST(request: NextRequest) {
       : evaluateAnswer({
           answer: trimmedAnswer,
           acceptedAnswers,
-          canonicalAnswer: generatedCase.correctAnswer,
+          canonicalAnswer: generatedCase.canonicalAnswer ?? generatedCase.correctAnswer,
+          displayAnswer: generatedCase.displayAnswer,
+          aliases: generatedCase.aliases,
+          acceptableAnswerPatterns: generatedCase.acceptableAnswerPatterns,
+          unacceptableNearMisses: generatedCase.unacceptableNearMisses,
           expectedTask: generatedCase.question.decisionType,
           clinicalConcepts: conceptList(
             generatedCase.topic,

@@ -1,3 +1,5 @@
+import type { MedicalFact } from "@/lib/anking-enrichment";
+
 export type QuestionDto = {
   id: string;
   scriptId?: string;
@@ -8,6 +10,7 @@ export type QuestionDto = {
   variantType?: string;
   difficulty: number;
   stem: string;
+  answerPrompt?: string;
   displayStem?: string;
   decisionType?: DecisionType;
   pattern: string;
@@ -15,6 +18,7 @@ export type QuestionDto = {
   diagnosis: string;
   vignetteFindings?: VignetteFindingAnnotation[];
   clinicalCues?: ClinicalCueSet;
+  foundationalRapidRound?: FoundationalRapidRoundQuestion;
 };
 
 export type LevelOfAssistanceRequired =
@@ -116,9 +120,72 @@ export type AnswerResult = {
   explanation: string;
   evaluation?: AnswerEvaluation;
   tutor?: TutorContent;
+  foundationalRapidRound?: FoundationalRapidRoundAnswerTeaching;
   levelOfAssistanceRequired?: LevelOfAssistanceRequired;
   answeredAfterCue?: boolean;
   revealUsed?: boolean;
+};
+
+export type FoundationalRapidRoundOutcome = "correct" | "incorrect" | "taught";
+
+export type FoundationalQuestionAttemptState = {
+  questionItemId: string;
+  firstSeenAt: string;
+  lastSeenAt: string;
+  exposureCount: number;
+  taughtOnce: boolean;
+  answeredCorrectlyOnce: boolean;
+  needsLearning: boolean;
+  lastAnswer?: string;
+  lastOutcome?: FoundationalRapidRoundOutcome;
+};
+
+export type FoundationalRapidRoundQuestion = {
+  mode: "foundational_rapid_round";
+  schemaName: string;
+  progressLabel: string;
+  taskLabel: string;
+  taughtOnce?: boolean;
+};
+
+export type FoundationalDiscriminatorRow = {
+  feature: string;
+  correctScript: string;
+  competingScript: string;
+};
+
+export type FoundationalDiscriminatorTeaching = {
+  correctScript: string;
+  competingScript: string;
+  todayDiscriminator: string;
+  rows: FoundationalDiscriminatorRow[];
+  boardRule: string;
+};
+
+export type FoundationalRapidRoundTeaching = {
+  definition: string;
+  mechanism: string;
+  recognitionPattern: string[];
+  completeIllnessScript: string[];
+  competingIllnessScript: string[];
+  discriminator: FoundationalDiscriminatorTeaching;
+  nbmeTestingFrame: string;
+};
+
+export type FoundationalRapidRoundAnswerTeaching = {
+  status: "correct" | "incorrect";
+  diagnosis: string;
+  todaysDiscriminator: string;
+  recognitionPattern: string[];
+  competingIllnessScript: string[];
+  discriminator: FoundationalDiscriminatorTeaching;
+  inferredWrongScript?: {
+    name: string;
+    confidence: "high" | "low";
+    whyItMadeSense: string;
+    stopClue: string;
+  };
+  missedPattern?: string;
 };
 
 export type AnswerOutcome =
@@ -267,6 +334,7 @@ export type TutorContent = {
     acceptedAnswers: string[];
     boardPearl: string;
   };
+  supportingFacts?: MedicalFact[];
 };
 
 export type VignetteFindingRole =

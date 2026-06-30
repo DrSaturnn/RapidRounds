@@ -1,0 +1,56 @@
+[
+  {
+    "subject": "OB/GYN",
+    "blueprintCategory": "Benign gynecology",
+    "schemaNodeCount": 1,
+    "knowledgeObjectCount": 1
+  },
+  {
+    "subject": "OB/GYN",
+    "blueprintCategory": "Contraception",
+    "schemaNodeCount": 3,
+    "knowledgeObjectCount": 3
+  },
+  {
+    "subject": "OB/GYN",
+    "blueprintCategory": "Female Reproductive",
+    "schemaNodeCount": 3,
+    "knowledgeObjectCount": 3
+  },
+  {
+    "subject": "OB/GYN",
+    "blueprintCategory": "Gynecologic oncology",
+    "schemaNodeCount": 1,
+    "knowledgeObjectCount": 1
+  },
+  {
+    "subject": "OB/GYN",
+    "blueprintCategory": "Intrapartum infection / fetal monitoring",
+    "schemaNodeCount": 1,
+    "knowledgeObjectCount": 1
+  },
+  {
+    "subject": "OB/GYN",
+    "blueprintCategory": "Labor physiology",
+    "schemaNodeCount": 5,
+    "knowledgeObjectCount": 5
+  },
+  {
+    "subject": "OB/GYN",
+    "blueprintCategory": "Pregnancy/postpartum cardiopulmonary disease",
+    "schemaNodeCount": 1,
+    "knowledgeObjectCount": 1
+  },
+  {
+    "subject": "OB/GYN",
+    "blueprintCategory": "Rh alloimmunization prevention",
+    "schemaNodeCount": 2,
+    "knowledgeObjectCount": 2
+  },
+  {
+    "subject": "OB/GYN",
+    "blueprintCategory": "Vulvar/vaginal infections / STI",
+    "schemaNodeCount": 33,
+    "knowledgeObjectCount": 33
+  }
+]

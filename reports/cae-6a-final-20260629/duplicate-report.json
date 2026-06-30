@@ -1,0 +1,345 @@
+[
+  {
+    "knowledgeObjectId": "ko-da6f8935fef389ff-congenital-hypothyroidism-detected-by-newborn-screening-diagnosis",
+    "matchedSchemaNodeId": "internal-medicine-acs--schema-diagnosis-diagnosis",
+    "duplicateScore": 22,
+    "noveltyScore": 78,
+    "action": "create_new_node"
+  },
+  {
+    "knowledgeObjectId": "ko-35055de7aedb6c71-bartholin-gland-abscess-microbiology-diagnosis",
+    "matchedSchemaNodeId": "internal-medicine-acs--schema-diagnosis-diagnosis",
+    "duplicateScore": 22,
+    "noveltyScore": 78,
+    "action": "create_new_node"
+  },
+  {
+    "knowledgeObjectId": "ko-30c7e19b0c5c1086-bacterial-vaginosis-confirmation-next_best_step",
+    "matchedSchemaNodeId": "internal-medicine-hfpef--schema-next-best-step-next_best_step",
+    "duplicateScore": 22,
+    "noveltyScore": 78,
+    "action": "create_new_node"
+  },
+  {
+    "knowledgeObjectId": "ko-30868677c4f6ed90-normal-lochia-rubra-next_best_step",
+    "matchedSchemaNodeId": "internal-medicine-hfpef--schema-next-best-step-next_best_step",
+    "duplicateScore": 22,
+    "noveltyScore": 78,
+    "action": "create_new_node"
+  },
+  {
+    "knowledgeObjectId": "ko-5e1e40b2c0b41d7c-corpus-luteum-progesterone-support-next_best_step",
+    "matchedSchemaNodeId": "internal-medicine-hfpef--schema-next-best-step-next_best_step",
+    "duplicateScore": 22,
+    "noveltyScore": 78,
+    "action": "create_new_node"
+  },
+  {
+    "knowledgeObjectId": "ko-89f47222a06c9706-chancroid-organism-mechanism",
+    "matchedSchemaNodeId": "internal-medicine-dka-hhs--schema-mechanism-pathophysiology-mechanism",
+    "duplicateScore": 22,
+    "noveltyScore": 78,
+    "action": "create_new_node"
+  },
+  {
+    "knowledgeObjectId": "ko-1dd830d4308f5202-toxic-shock-syndrome-mortality-complication-complication_recognition",
+    "matchedSchemaNodeId": "internal-medicine-acs--schema-complication-complication_recognition",
+    "duplicateScore": 22,
+    "noveltyScore": 78,
+    "action": "create_new_node"
+  },
+  {
+    "knowledgeObjectId": "ko-e76ba7e1c3ba19cd-chemotherapy-induced-ovarian-failure-hypogonadism-risk_factor_interpretation",
+    "matchedSchemaNodeId": "internal-medicine-tia-stroke-medical-evaluation--schema-risk-factor-risk_factor_interpretation",
+    "duplicateScore": 22,
+    "noveltyScore": 78,
+    "action": "create_new_node"
+  },
+  {
+    "knowledgeObjectId": "ko-61b5d5311e8d616c-reassuring-fetal-heart-tracing-in-early-labor-next_best_step",
+    "matchedSchemaNodeId": "internal-medicine-hfpef--schema-next-best-step-next_best_step",
+    "duplicateScore": 22,
+    "noveltyScore": 78,
+    "action": "create_new_node"
+  },
+  {
+    "knowledgeObjectId": "ko-cf00e0679a0c2cc8-post-hysterectomy-cin-3-surveillance-with-annual-vaginal-cuff-cytology-screening",
+    "matchedSchemaNodeId": "internal-medicine-anemia-workup--schema-screening-prevention-screening",
+    "duplicateScore": 22,
+    "noveltyScore": 78,
+    "action": "create_new_node"
+  },
+  {
+    "knowledgeObjectId": "ko-585280e4a44587cc-reexamination-after-menses-diagnosis",
+    "matchedSchemaNodeId": "internal-medicine-acs--schema-diagnosis-diagnosis",
+    "duplicateScore": 22,
+    "noveltyScore": 78,
+    "action": "create_new_node"
+  },
+  {
+    "knowledgeObjectId": "ko-3941a197c3f89e3c-abnormal-uterine-bleeding-age-45-endometrial-cancer-rule-out-diagnosis",
+    "matchedSchemaNodeId": "internal-medicine-acs--schema-diagnosis-diagnosis",
+    "duplicateScore": 22,
+    "noveltyScore": 78,
+    "action": "create_new_node"
+  },
+  {
+    "knowledgeObjectId": "ko-36560c2f58baac97-ovarian-torsion-with-adnexal-mass-diagnosis",
+    "matchedSchemaNodeId": "internal-medicine-acs--schema-diagnosis-diagnosis",
+    "duplicateScore": 22,
+    "noveltyScore": 78,
+    "action": "create_new_node"
+  },
+  {
+    "knowledgeObjectId": "ko-c75f21f56eea53b5-polyhydramnios-causing-uterine-size-greater-than-dates-dyspnea-diagnosis",
+    "matchedSchemaNodeId": "internal-medicine-acs--schema-diagnosis-diagnosis",
+    "duplicateScore": 22,
+    "noveltyScore": 78,
+    "action": "create_new_node"
+  },
+  {
+    "knowledgeObjectId": "ko-78fa0251caa5165f-initial-rh-negative-prenatal-antibody-screening-next_best_step",
+    "matchedSchemaNodeId": "internal-medicine-hfpef--schema-next-best-step-next_best_step",
+    "duplicateScore": 22,
+    "noveltyScore": 78,
+    "action": "create_new_node"
+  },
+  {
+    "knowledgeObjectId": "ko-f322b1f7e65521e2-preconception-glycemic-control-diagnosis",
+    "matchedSchemaNodeId": "internal-medicine-acs--schema-diagnosis-diagnosis",
+    "duplicateScore": 22,
+    "noveltyScore": 78,
+    "action": "create_new_node"
+  },
+  {
+    "knowledgeObjectId": "ko-ed570f828d32f3ef-no-duplicate-cancer-screening-shortly-after-normal-tests-next_best_step",
+    "matchedSchemaNodeId": "internal-medicine-hfpef--schema-next-best-step-next_best_step",
+    "duplicateScore": 22,
+    "noveltyScore": 78,
+    "action": "create_new_node"
+  },
+  {
+    "knowledgeObjectId": "ko-1b7b0eb18cbe1ac0-umbilical-cord-prolapse-risk-with-footling-breech-high-station-complication_recognition",
+    "matchedSchemaNodeId": "internal-medicine-acs--schema-complication-complication_recognition",
+    "duplicateScore": 22,
+    "noveltyScore": 78,
+    "action": "create_new_node"
+  },
+  {
+    "knowledgeObjectId": "ko-17855d86b67a439e-rh-negative-pregnancy-alloimmunization-prophylaxis-next_best_step",
+    "matchedSchemaNodeId": "internal-medicine-hfpef--schema-next-best-step-next_best_step",
+    "duplicateScore": 22,
+    "noveltyScore": 78,
+    "action": "create_new_node"
+  },
+  {
+    "knowledgeObjectId": "ko-d9c0607dc0de4d25-intrauterine-fetal-demise-with-dic-requires-urgent-delivery-next_best_step",
+    "matchedSchemaNodeId": "internal-medicine-hfpef--schema-next-best-step-next_best_step",
+    "duplicateScore": 22,
+    "noveltyScore": 78,
+    "action": "create_new_node"
+  },
+  {
+    "knowledgeObjectId": "ko-1bc6c233413560a6-puerperal-sepsis-after-cesarean-delivery-diagnosis",
+    "matchedSchemaNodeId": "internal-medicine-acs--schema-diagnosis-diagnosis",
+    "duplicateScore": 22,
+    "noveltyScore": 78,
+    "action": "create_new_node"
+  },
+  {
+    "knowledgeObjectId": "ko-de9e92917c19b88d-urge-incontinence-due-to-detrusor-overactivity-diagnosis",
+    "matchedSchemaNodeId": "internal-medicine-acs--schema-diagnosis-diagnosis",
+    "duplicateScore": 22,
+    "noveltyScore": 78,
+    "action": "create_new_node"
+  },
+  {
+    "knowledgeObjectId": "ko-fa5bb3a7268049fd-antiphospholipid-syndrome-causing-recurrent-early-pregnancy-loss-diagnosis",
+    "matchedSchemaNodeId": "internal-medicine-acs--schema-diagnosis-diagnosis",
+    "duplicateScore": 22,
+    "noveltyScore": 78,
+    "action": "create_new_node"
+  },
+  {
+    "knowledgeObjectId": "ko-f65aa4cb27e22ffa-choriocarcinoma-after-term-pregnancy-with-metastases-diagnosis",
+    "matchedSchemaNodeId": "internal-medicine-acs--schema-diagnosis-diagnosis",
+    "duplicateScore": 22,
+    "noveltyScore": 78,
+    "action": "create_new_node"
+  },
+  {
+    "knowledgeObjectId": "ko-79e924d01f6c20f2-chlamydial-urethritis-with-sterile-pyuria-diagnosis",
+    "matchedSchemaNodeId": "internal-medicine-acs--schema-diagnosis-diagnosis",
+    "duplicateScore": 22,
+    "noveltyScore": 78,
+    "action": "create_new_node"
+  },
+  {
+    "knowledgeObjectId": "ko-f8286b57128a1fe3-mixed-aerobes-and-anaerobes-risk_factor_interpretation",
+    "matchedSchemaNodeId": "internal-medicine-tia-stroke-medical-evaluation--schema-risk-factor-risk_factor_interpretation",
+    "duplicateScore": 22,
+    "noveltyScore": 78,
+    "action": "create_new_node"
+  },
+  {
+    "knowledgeObjectId": "ko-db1529fe25145afc-myelomeningocele-diagnosis",
+    "matchedSchemaNodeId": "internal-medicine-acs--schema-diagnosis-diagnosis",
+    "duplicateScore": 22,
+    "noveltyScore": 78,
+    "action": "create_new_node"
+  },
+  {
+    "knowledgeObjectId": "ko-ff4558f8ededb9dd-heart-failure-diagnosis",
+    "matchedSchemaNodeId": "internal-medicine-acs--schema-diagnosis-diagnosis",
+    "duplicateScore": 22,
+    "noveltyScore": 78,
+    "action": "create_new_node"
+  },
+  {
+    "knowledgeObjectId": "ko-5c76ce87d7b45058-testosterone-diagnosis",
+    "matchedSchemaNodeId": "internal-medicine-acs--schema-diagnosis-diagnosis",
+    "duplicateScore": 22,
+    "noveltyScore": 78,
+    "action": "create_new_node"
+  },
+  {
+    "knowledgeObjectId": "ko-b0c91e65b7f083b3-primary-dysmenorrhea-from-prostaglandin-excess-diagnosis",
+    "matchedSchemaNodeId": "internal-medicine-acs--schema-diagnosis-diagnosis",
+    "duplicateScore": 22,
+    "noveltyScore": 78,
+    "action": "create_new_node"
+  },
+  {
+    "knowledgeObjectId": "ko-e2482aadabdcc2ac-pulmonary-embolism-diagnosis",
+    "matchedSchemaNodeId": "internal-medicine-pulmonary-embolism--schema-diagnosis-diagnosis",
+    "duplicateScore": 64,
+    "noveltyScore": 36,
+    "action": "update_existing_node"
+  },
+  {
+    "knowledgeObjectId": "ko-58125bddaf8d5b7c-preeclampsia-eclampsia-management",
+    "matchedSchemaNodeId": "internal-medicine-acs--schema-initial-management-management",
+    "duplicateScore": 22,
+    "noveltyScore": 78,
+    "action": "create_new_node"
+  },
+  {
+    "knowledgeObjectId": "ko-c2ea944e412e62ab-augmentation-of-labor-with-oxy-ocin-next_best_step",
+    "matchedSchemaNodeId": "internal-medicine-hfpef--schema-next-best-step-next_best_step",
+    "duplicateScore": 22,
+    "noveltyScore": 78,
+    "action": "create_new_node"
+  },
+  {
+    "knowledgeObjectId": "ko-28d52a7180a4fe94-application-of-heat-to-the-area-next_best_step",
+    "matchedSchemaNodeId": "internal-medicine-hfpef--schema-next-best-step-next_best_step",
+    "duplicateScore": 22,
+    "noveltyScore": 78,
+    "action": "create_new_node"
+  },
+  {
+    "knowledgeObjectId": "ko-c69c2be4008645b2-biopsy-of-the-mass-next_best_step",
+    "matchedSchemaNodeId": "internal-medicine-hfpef--schema-next-best-step-next_best_step",
+    "duplicateScore": 22,
+    "noveltyScore": 78,
+    "action": "create_new_node"
+  },
+  {
+    "knowledgeObjectId": "ko-febf48e79aa629f8-pulmonary-embolism-next_best_step",
+    "matchedSchemaNodeId": "internal-medicine-pulmonary-embolism--schema-next-best-step-next_best_step",
+    "duplicateScore": 64,
+    "noveltyScore": 36,
+    "action": "update_existing_node"
+  },
+  {
+    "knowledgeObjectId": "ko-92f4467765ab069d-pelvic-radiation-therapy-diagnosis",
+    "matchedSchemaNodeId": "internal-medicine-acs--schema-diagnosis-diagnosis",
+    "duplicateScore": 22,
+    "noveltyScore": 78,
+    "action": "create_new_node"
+  },
+  {
+    "knowledgeObjectId": "ko-27e498dba73b3d1b-enterocele-diagnosis",
+    "matchedSchemaNodeId": "internal-medicine-acs--schema-diagnosis-diagnosis",
+    "duplicateScore": 22,
+    "noveltyScore": 78,
+    "action": "create_new_node"
+  },
+  {
+    "knowledgeObjectId": "ko-3e9cbaa7acee9eaf-fundal-height-lag-requires-fetal-ultrasonography-next_best_step",
+    "matchedSchemaNodeId": "internal-medicine-hfpef--schema-next-best-step-next_best_step",
+    "duplicateScore": 22,
+    "noveltyScore": 78,
+    "action": "create_new_node"
+  },
+  {
+    "knowledgeObjectId": "ko-4c27ed9386aa6b03-progesterone-risk_factor_interpretation",
+    "matchedSchemaNodeId": "internal-medicine-tia-stroke-medical-evaluation--schema-risk-factor-risk_factor_interpretation",
+    "duplicateScore": 22,
+    "noveltyScore": 78,
+    "action": "create_new_node"
+  },
+  {
+    "knowledgeObjectId": "ko-fdf547ce69877f6e-synchronization-of-the-endometrium-diagnosis",
+    "matchedSchemaNodeId": "internal-medicine-acs--schema-diagnosis-diagnosis",
+    "duplicateScore": 22,
+    "noveltyScore": 78,
+    "action": "create_new_node"
+  },
+  {
+    "knowledgeObjectId": "ko-67f4c6bf451efa9c-what-do-you-think-is-hai-ipening-with-your-mottler-diagnosis",
+    "matchedSchemaNodeId": "internal-medicine-acs--schema-diagnosis-diagnosis",
+    "duplicateScore": 22,
+    "noveltyScore": 78,
+    "action": "create_new_node"
+  },
+  {
+    "knowledgeObjectId": "ko-b866f6eb69d96198-sexual-assault-risk_factor_interpretation",
+    "matchedSchemaNodeId": "internal-medicine-tia-stroke-medical-evaluation--schema-risk-factor-risk_factor_interpretation",
+    "duplicateScore": 22,
+    "noveltyScore": 78,
+    "action": "create_new_node"
+  },
+  {
+    "knowledgeObjectId": "ko-e0d3a108e98a0444-infection-with-human-papillomavirus-risk_factor_interpretation",
+    "matchedSchemaNodeId": "internal-medicine-tia-stroke-medical-evaluation--schema-risk-factor-risk_factor_interpretation",
+    "duplicateScore": 22,
+    "noveltyScore": 78,
+    "action": "create_new_node"
+  },
+  {
+    "knowledgeObjectId": "ko-855e8ee8c6944194-injury-to-the-femoral-nerve-diagnosis",
+    "matchedSchemaNodeId": "internal-medicine-acs--schema-diagnosis-diagnosis",
+    "duplicateScore": 22,
+    "noveltyScore": 78,
+    "action": "create_new_node"
+  },
+  {
+    "knowledgeObjectId": "ko-030b2bcbb5137d4e-ectopic-pregnancy-next_best_step",
+    "matchedSchemaNodeId": "ob-gyn-ectopic-pregnancy--schema-next-best-step-next_best_step",
+    "duplicateScore": 64,
+    "noveltyScore": 36,
+    "action": "update_existing_node"
+  },
+  {
+    "knowledgeObjectId": "ko-7771ecb92565b073-ectopic-pregnancy-diagnosis",
+    "matchedSchemaNodeId": "ob-gyn-ectopic-pregnancy--schema-diagnosis-diagnosis",
+    "duplicateScore": 64,
+    "noveltyScore": 36,
+    "action": "update_existing_node"
+  },
+  {
+    "knowledgeObjectId": "ko-49f6086bf789beb2-fetal-platelet-destruction-diagnosis",
+    "matchedSchemaNodeId": "internal-medicine-acs--schema-diagnosis-diagnosis",
+    "duplicateScore": 22,
+    "noveltyScore": 78,
+    "action": "create_new_node"
+  },
+  {
+    "knowledgeObjectId": "ko-67ef6a2724c0b4f3-levonorgestrel-emergency-contraception-has-no-major-contraindications-here-management",
+    "matchedSchemaNodeId": "internal-medicine-acs--schema-initial-management-management",
+    "duplicateScore": 22,
+    "noveltyScore": 78,
+    "action": "create_new_node"
+  }
+]

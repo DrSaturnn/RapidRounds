@@ -125,6 +125,40 @@ describe("Curriculum Acquisition Engine", () => {
     assert.equal(rh.avoidLiteralStorage, true);
   });
 
+  it("stores alias-aware answer identity for acquired concepts", () => {
+    const doxycyclineText = [
+      "Question 1. OB/GYN item. A patient has mucopurulent cervicitis and a positive nucleic acid test for Chlamydia trachomatis.",
+      "Which medication should be given?",
+      "A Ceftriaxone B Azithromycin C Doxycycline D Broad-spectrum antibiotics",
+      "Correct Answer: C.",
+      "Educational Objective: Chlamydial cervicitis and nongonococcal urethritis are treated with doxycycline."
+    ].join(" ");
+
+    const knowledge = buildKnowledgeObject(segmentQuestions(doxycyclineText, "doxycycline", "cms_style_questions")[0]);
+    const schemaNode = knowledgeObjectToShelfSchemaNode(knowledge);
+
+    assert.equal(knowledge.literalAnswer, "Doxycycline");
+    assert.equal(knowledge.canonicalAnswer, "doxycycline");
+    assert.equal(knowledge.displayAnswer, "Doxycycline");
+    assert.equal(knowledge.abstractConcept, "chlamydial infection treated with doxycycline");
+    assert.equal(knowledge.conceptType, "medication");
+    assert.ok(knowledge.aliases.includes("tetracycline antibiotic"));
+    assert.ok(knowledge.aliases.includes("treatment for nongonococcal urethritis"));
+    assert.ok(knowledge.acceptableAnswerPatterns.some((pattern) => /anti-\?chlamydial/.test(pattern)));
+    assert.ok(knowledge.unacceptableNearMisses.includes("azithromycin"));
+    assert.ok(knowledge.unacceptableNearMisses.includes("STI treatment"));
+    assert.equal(schemaNode.correctAnswer, "Doxycycline");
+    assert.equal(schemaNode.canonicalAnswer, "doxycycline");
+    assert.ok(schemaNode.aliases?.includes("anti-chlamydial therapy"));
+    assert.equal(schemaNode.topic, "chlamydial infection treated with doxycycline");
+
+    const [generatedCase] = generateCasesFromSchemaNode(schemaNode, "comprehensive");
+    assert.equal(generatedCase.correctAnswer, "Doxycycline");
+    assert.equal(generatedCase.canonicalAnswer, "doxycycline");
+    assert.ok(generatedCase.aliases?.includes("treatment for chlamydia"));
+    assert.ok(generatedCase.unacceptableNearMisses?.includes("ceftriaxone"));
+  });
+
   it("abstracts procedures to the tested clinical decision when the category matters", () => {
     const amenorrhea = [
       "Question 1. OB/GYN item. A patient with secondary amenorrhea needs initial evaluation.",
@@ -146,6 +180,62 @@ describe("Curriculum Acquisition Engine", () => {
     assert.equal(pregnancyTest.managementActionClass, "initial diagnostic exclusion");
     assert.equal(biopsy.abstractConcept, "abnormal uterine bleeding age >45 / endometrial cancer rule-out");
     assert.equal(biopsy.managementActionClass, "endometrial cancer exclusion");
+  });
+
+  it("normalizes damaged CMS glyphs before answer abstraction", () => {
+    const wetMount = [
+      "Question 1. OB/GYN item. A patient has foul-smelling watery vaginal discharge with vulvar irritation.",
+      "Which test confirms the diagnosis?",
+      "A Culture for Candida albicans B Wet mount prei:>aration C Serologic testing for syphilis",
+      "Correct Answer: B.",
+      "Educational Objective: Bacterial vaginosis presents with thin malodorous discharge and is confirmed by clue cells on wet mount microscopy."
+    ].join(" ");
+    const pap = [
+      "Question 2. OB/GYN item. A patient had hysterectomy and pathology showed CIN 3 with clear margins.",
+      "What future screening is recommended?",
+      "A Pai:i smears annually B No further testing for this condition is necessary",
+      "Correct Answer: A.",
+      "Educational Objective: High-grade CIN on post-hysterectomy pathology warrants annual vaginal cuff Pap smears."
+    ].join(" ");
+
+    const wetMountKnowledge = buildKnowledgeObject(segmentQuestions(wetMount, "glyphs-wet", "cms_style_questions")[0]);
+    const papKnowledge = buildKnowledgeObject(segmentQuestions(pap, "glyphs-pap", "cms_style_questions")[0]);
+
+    assert.equal(wetMountKnowledge.literalAnswer, "Wet mount preparation");
+    assert.equal(wetMountKnowledge.abstractConcept, "bacterial vaginosis confirmation");
+    assert.equal(papKnowledge.literalAnswer, "Pap smears annually");
+    assert.equal(papKnowledge.abstractConcept, "post-hysterectomy CIN 3 surveillance with annual vaginal cuff cytology");
+  });
+
+  it("keeps negative answer-choice text instead of falling back to the letter label", () => {
+    const text = [
+      "Question 1. OB/GYN item. A breastfeeding patient with migraine history and hepatitis B requests levonorgestrel emergency contraception 2 days after unprotected intercourse.",
+      "Which of the following is a contraindication?",
+      "A Breast-feeding B History of hepatitis B C History of migraines D There are no contraindications",
+      "Correct Answer: D.",
+      "Educational Objective: Levonorgestrel emergency contraception has no significant contraindications in this setting."
+    ].join(" ");
+
+    const knowledge = buildKnowledgeObject(segmentQuestions(text, "negative-choice", "cms_style_questions")[0]);
+
+    assert.equal(knowledge.literalAnswer, "There are no contraindications");
+    assert.equal(knowledge.abstractConcept, "levonorgestrel emergency contraception has no major contraindications here");
+  });
+
+  it("extracts stem-first pivot clusters before explanation definitions", () => {
+    const text = [
+      "Question 1. OB/GYN item. A newborn has poor feeding, constipation, hoarse cry, macroglossia, large fontanelles, dry skin, and hypotonia.",
+      "Which screening test would have predicted these findings?",
+      "A Routine newborn screening B Maternal glucose tolerance testing",
+      "Correct Answer: A.",
+      "Educational Objective: Congenital hypothyroidism is detected by routine newborn screening."
+    ].join(" ");
+
+    const knowledge = buildKnowledgeObject(segmentQuestions(text, "pivot-cluster", "cms_style_questions")[0]);
+
+    assert.match(knowledge.pivot, /poor feeding/i);
+    assert.match(knowledge.pivot, /hoarse cry|macroglossia|large fontanelles/i);
+    assert.doesNotMatch(knowledge.pivot, /detected by routine newborn screening/i);
   });
 
   it("converts Knowledge Objects into ShelfSchemaNodes and generated original cases", () => {

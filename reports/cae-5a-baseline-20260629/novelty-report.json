@@ -1,0 +1,252 @@
+[
+  {
+    "knowledgeObjectId": "ko-37e1f941cd5a92e9-succenturiate-placental-lobe-with-retained-placental-tissue-diagnosis",
+    "noveltyScore": 78,
+    "interpretation": "new_reasoning_node"
+  },
+  {
+    "knowledgeObjectId": "ko-864ee53540de3398-genital-herpes-due-to-hsv-mechanism",
+    "noveltyScore": 78,
+    "interpretation": "new_reasoning_node"
+  },
+  {
+    "knowledgeObjectId": "ko-932a800bd2b69e9a-ectopic-pregnancy-diagnosis",
+    "noveltyScore": 36,
+    "interpretation": "improves_existing_node"
+  },
+  {
+    "knowledgeObjectId": "ko-a9e4b410555a04b0-cesarean-delivery-diagnosis",
+    "noveltyScore": 78,
+    "interpretation": "new_reasoning_node"
+  },
+  {
+    "knowledgeObjectId": "ko-842fee31b1b296e7-chronic-anovulation-risk_factor_interpretation",
+    "noveltyScore": 78,
+    "interpretation": "new_reasoning_node"
+  },
+  {
+    "knowledgeObjectId": "ko-b6b61a51c89ef066-different-shape-next_best_step",
+    "noveltyScore": 78,
+    "interpretation": "new_reasoning_node"
+  },
+  {
+    "knowledgeObjectId": "ko-6fd127b27cd2ad18-lactational-mastitis-treated-with-anti-staphylococcal-therapy-management",
+    "noveltyScore": 78,
+    "interpretation": "new_reasoning_node"
+  },
+  {
+    "knowledgeObjectId": "ko-f72f29ed8ff90c4e-pneumonia-next_best_step",
+    "noveltyScore": 36,
+    "interpretation": "improves_existing_node"
+  },
+  {
+    "knowledgeObjectId": "ko-4d4baf6e5a3691f0-prescribe-next_best_step",
+    "noveltyScore": 78,
+    "interpretation": "new_reasoning_node"
+  },
+  {
+    "knowledgeObjectId": "ko-6f15fc8260313084-depot-medroxyprogesterone-management",
+    "noveltyScore": 78,
+    "interpretation": "new_reasoning_node"
+  },
+  {
+    "knowledgeObjectId": "ko-e455ac515682b0e1-pneumonia-management",
+    "noveltyScore": 58,
+    "interpretation": "improves_existing_node"
+  },
+  {
+    "knowledgeObjectId": "ko-ccf1dfcd29666568-ultrasonograejhy-for-dating-next_best_step",
+    "noveltyScore": 78,
+    "interpretation": "new_reasoning_node"
+  },
+  {
+    "knowledgeObjectId": "ko-67b2d9f9ec89c0be-persistent-uterine-atony-after-massage-and-oxytocin-requiring-second-line-uterotonic-escalation-next_best_step",
+    "noveltyScore": 78,
+    "interpretation": "new_reasoning_node"
+  },
+  {
+    "knowledgeObjectId": "ko-b173a00396ddabe1-pulmonary-embolism-diagnosis",
+    "noveltyScore": 36,
+    "interpretation": "improves_existing_node"
+  },
+  {
+    "knowledgeObjectId": "ko-6bcb3dbcc1d0f1f2-fibroadenoma-diagnosis",
+    "noveltyScore": 78,
+    "interpretation": "new_reasoning_node"
+  },
+  {
+    "knowledgeObjectId": "ko-761a86488e4b871d-parvovirus-mechanism",
+    "noveltyScore": 78,
+    "interpretation": "new_reasoning_node"
+  },
+  {
+    "knowledgeObjectId": "ko-e8821dd490bf285b-pali-jable-right-ovary-diagnosis",
+    "noveltyScore": 78,
+    "interpretation": "new_reasoning_node"
+  },
+  {
+    "knowledgeObjectId": "ko-70b0b47a1e83e111-maternal-fever-diagnosis",
+    "noveltyScore": 78,
+    "interpretation": "new_reasoning_node"
+  },
+  {
+    "knowledgeObjectId": "ko-ccb3ae8698022af6-endometrial-ablation-next_best_step",
+    "noveltyScore": 78,
+    "interpretation": "new_reasoning_node"
+  },
+  {
+    "knowledgeObjectId": "ko-79f740034936b223-vaginal-miconazole-management",
+    "noveltyScore": 78,
+    "interpretation": "new_reasoning_node"
+  },
+  {
+    "knowledgeObjectId": "ko-0221f32d2ac71131-sepsis-diagnosis",
+    "noveltyScore": 36,
+    "interpretation": "improves_existing_node"
+  },
+  {
+    "knowledgeObjectId": "ko-296458047249a382-chorioamnionitis-causing-fetal-tachycardia-diagnosis",
+    "noveltyScore": 78,
+    "interpretation": "new_reasoning_node"
+  },
+  {
+    "knowledgeObjectId": "ko-20ffc28bee834f2d-hypotonic-contractions-risk_factor_interpretation",
+    "noveltyScore": 78,
+    "interpretation": "new_reasoning_node"
+  },
+  {
+    "knowledgeObjectId": "ko-ed6b78b1b05607f1-sterile-speculum-examination-for-suspected-pprom-diagnosis",
+    "noveltyScore": 78,
+    "interpretation": "new_reasoning_node"
+  },
+  {
+    "knowledgeObjectId": "ko-5bd8e25ebf913926-insertion-of-next_best_step",
+    "noveltyScore": 78,
+    "interpretation": "new_reasoning_node"
+  },
+  {
+    "knowledgeObjectId": "ko-f4822a2dfd9ea2ea-preeclampsia-eclampsia-next_best_step",
+    "noveltyScore": 78,
+    "interpretation": "new_reasoning_node"
+  },
+  {
+    "knowledgeObjectId": "ko-2c13ffacf4630900-increasing-catecholamine-mechanism",
+    "noveltyScore": 78,
+    "interpretation": "new_reasoning_node"
+  },
+  {
+    "knowledgeObjectId": "ko-4dcd1140d936473f-pulmonary-embolism-postpartum-diagnosis",
+    "noveltyScore": 78,
+    "interpretation": "new_reasoning_node"
+  },
+  {
+    "knowledgeObjectId": "ko-cb50752b237147d1-preeclampsia-eclampsia-risk_factor_interpretation",
+    "noveltyScore": 78,
+    "interpretation": "new_reasoning_node"
+  },
+  {
+    "knowledgeObjectId": "ko-8f6e7d89a3fc11e4-observation-only-next_best_step",
+    "noveltyScore": 78,
+    "interpretation": "new_reasoning_node"
+  },
+  {
+    "knowledgeObjectId": "ko-cb4ea8ee4ebd7d3d-repeat-rapid-i-ilasma-reagin-diagnosis",
+    "noveltyScore": 78,
+    "interpretation": "new_reasoning_node"
+  },
+  {
+    "knowledgeObjectId": "ko-b92fa999a4fc2bf9-undiagnosed-maternal-diabetes-mellitus-risk_factor_interpretation",
+    "noveltyScore": 78,
+    "interpretation": "new_reasoning_node"
+  },
+  {
+    "knowledgeObjectId": "ko-925dcce62e604638-ectopic-pregnancy-next_best_step",
+    "noveltyScore": 36,
+    "interpretation": "improves_existing_node"
+  },
+  {
+    "knowledgeObjectId": "ko-b2c6a10ae8d3d865-ectopic-pregnancy-diagnosis",
+    "noveltyScore": 36,
+    "interpretation": "improves_existing_node"
+  },
+  {
+    "knowledgeObjectId": "ko-e8ee4aede2d4b385-urinary-retention-risk_factor_interpretation",
+    "noveltyScore": 78,
+    "interpretation": "new_reasoning_node"
+  },
+  {
+    "knowledgeObjectId": "ko-17c0fe45d375689b-rh-negative-pregnancy-alloimmunization-prophylaxis-next_best_step",
+    "noveltyScore": 78,
+    "interpretation": "new_reasoning_node"
+  },
+  {
+    "knowledgeObjectId": "ko-e9dbd97cfa421fd0-fascial-dehiscence-after-abdominal-incision-diagnosis",
+    "noveltyScore": 78,
+    "interpretation": "new_reasoning_node"
+  },
+  {
+    "knowledgeObjectId": "ko-52e978c46bc7cbed-podophyllum-resin-therapy-management",
+    "noveltyScore": 78,
+    "interpretation": "new_reasoning_node"
+  },
+  {
+    "knowledgeObjectId": "ko-645f9ff75384de64-estradiol-risk_factor_interpretation",
+    "noveltyScore": 78,
+    "interpretation": "new_reasoning_node"
+  },
+  {
+    "knowledgeObjectId": "ko-1ddf482c308e79f9-pulmonary-embolism-diagnosis",
+    "noveltyScore": 36,
+    "interpretation": "improves_existing_node"
+  },
+  {
+    "knowledgeObjectId": "ko-12bc71fe671cc81e-pulmonary-embolism-risk_factor_interpretation",
+    "noveltyScore": 58,
+    "interpretation": "improves_existing_node"
+  },
+  {
+    "knowledgeObjectId": "ko-4fd5a156964969e1-breast-diagnosis",
+    "noveltyScore": 78,
+    "interpretation": "new_reasoning_node"
+  },
+  {
+    "knowledgeObjectId": "ko-c70df2cc9b534ecb-kell-tyl-ing-of-the-father-s-blood-next_best_step",
+    "noveltyScore": 78,
+    "interpretation": "new_reasoning_node"
+  },
+  {
+    "knowledgeObjectId": "ko-9f50f733001b562c-gonadal-dysgenesis-45-x-turner-syndrome-diagnosis",
+    "noveltyScore": 78,
+    "interpretation": "new_reasoning_node"
+  },
+  {
+    "knowledgeObjectId": "ko-2b98e4cd246cd8bd-hepatitis-screening",
+    "noveltyScore": 78,
+    "interpretation": "new_reasoning_node"
+  },
+  {
+    "knowledgeObjectId": "ko-538d8c821df13ec1-endometrial-bioijsy-next_best_step",
+    "noveltyScore": 78,
+    "interpretation": "new_reasoning_node"
+  },
+  {
+    "knowledgeObjectId": "ko-6905bb347e4f8ece-pregnancy-test-diagnosis",
+    "noveltyScore": 78,
+    "interpretation": "new_reasoning_node"
+  },
+  {
+    "knowledgeObjectId": "ko-cb358901a2c1560a-placenta-previa-and-hemorrhagic-shock-risk-complication_recognition",
+    "noveltyScore": 78,
+    "interpretation": "new_reasoning_node"
+  },
+  {
+    "knowledgeObjectId": "ko-23a1abc7f099068a-ectopic-pregnancy-diagnosis",
+    "noveltyScore": 36,
+    "interpretation": "improves_existing_node"
+  },
+  {
+    "knowledgeObjectId": "ko-fa1af8f25d5d5fc4-race-diagnosis",
+    "noveltyScore": 78,
+    "interpretation": "new_reasoning_node"
+  }
+]

@@ -1,0 +1,77 @@
+{
+  "generatedAt": "2026-06-30T06:00:55.080Z",
+  "totalNotesInspected": 24912,
+  "totalCardsInspected": 30791,
+  "includedNotes": 4796,
+  "includedCards": 5532,
+  "excludedNotes": 20116,
+  "excludedCards": 25259,
+  "exclusionReasons": {
+    "no_step2_signal": 20084,
+    "no_clinical_signal": 3,
+    "step1_only": 19782,
+    "basic_science_only": 12193,
+    "image_only_without_clinical_text": 41
+  },
+  "proposedFilter": {
+    "includeTagPatterns": [
+      "^#AK_Step2_v12(?:::|$)",
+      "^#AK_Step2_v12::!Shelf(?:::|$)",
+      "^#AK_Step2_v12::#CMS(?:::|$)",
+      "^#AK_Step2_v12::#NBME(?:::|$)",
+      "^#AK_Step2_v12::#UWorld(?:::|$)",
+      "^#AK_Step2_v12::#Resources_by_rotation(?:::|$)",
+      "^#AK_Original_Decks::Step_2(?:::|$)",
+      "^#AK_Other::#AK_Original_Decks::Step_2(?:::|$)"
+    ],
+    "includeDeckPatterns": [
+      "^AnKing::Step 2(?:::|$)"
+    ],
+    "requiredClinicalSignals": [
+      "!Shelf",
+      "#CMS",
+      "#NBME",
+      "#UWorld",
+      "#Resources_by_rotation",
+      "Original_decks",
+      "Cheesy_Dorian",
+      "MedicalArk",
+      "Zanki_Step_2",
+      "Clinical",
+      "Internal|Medicine|IM",
+      "Surgery|surg",
+      "ObGyn|OBGYN|OB/GYN",
+      "Peds|Pediatrics",
+      "Psych",
+      "FM|Family",
+      "EM|Emergency",
+      "Neuro|Neurology",
+      "Derm",
+      "Ethics",
+      "Biostats|Biostatistics",
+      "Preventive|USPSTF|screening"
+    ],
+    "excludedTagPatterns": [
+      "^#AK_Step1_v12(?:::|$)",
+      "^#AK_Original_Decks::Step_1(?:::|$)",
+      "^#AK_Other::#AK_Original_Decks::Step_1(?:::|$)",
+      "^AnKing::Step 1(?:::|$)",
+      "^#AK_Step3_v12(?:::|$)",
+      "^#PANCE(?:::|$)",
+      "PreClinical",
+      "Histology",
+      "Embryo|Embryology",
+      "Molecular|Cellular|Cell_Biology",
+      "Biochem|Biochemistry",
+      "Anatomy",
+      "Neuroanatomy",
+      "Physiology"
+    ],
+    "excludeImageOnlyNotesWithoutClinicalText": true
+  },
+  "reconsiderTags": [
+    "#PANCE may be worth a future optional clinical recall import, but is excluded from this Step 2 pass.",
+    "#AK_Step1_v12::#OME::Clinical contains clinical material but remains excluded unless also Step 2 tagged.",
+    "Broad #Subjects tags are intentionally insufficient without Step 2/shelf/CMS/NBME/UWorld/rotation signals."
+  ]
+}

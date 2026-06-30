@@ -79,6 +79,52 @@ describe("answer intelligence", () => {
     assert.match(evaluation.reason, /specific treatment/i);
   });
 
+  it("uses alias-aware answer profiles for exact tested medications", () => {
+    const doxycyclineProfile = {
+      acceptedAnswers: ["doxycycline"],
+      canonicalAnswer: "doxycycline",
+      displayAnswer: "Doxycycline",
+      aliases: [
+        "tetracycline antibiotic",
+        "tetracycline-class therapy",
+        "anti-chlamydial therapy",
+        "treatment for chlamydia",
+        "treatment for nongonococcal urethritis"
+      ],
+      acceptableAnswerPatterns: [
+        "\\bdoxycycline\\b",
+        "\\btetracycline(?:-class)?\\s+(?:antibiotic|therapy)\\b",
+        "\\banti-?chlamydial\\s+(?:therapy|treatment)\\b",
+        "\\btreatment\\s+for\\s+(?:chlamydia|chlamydial infection|nongonococcal urethritis)\\b"
+      ],
+      unacceptableNearMisses: ["ceftriaxone", "azithromycin", "broad-spectrum antibiotics", "STI treatment"],
+      expectedTask: "Management"
+    };
+
+    [
+      "doxycycline",
+      "tetracycline antibiotic",
+      "tetracycline-class therapy",
+      "anti-chlamydial therapy",
+      "treatment for chlamydia",
+      "treatment for nongonococcal urethritis"
+    ].forEach((answer) => {
+      const evaluation = evaluateAnswer({ answer, ...doxycyclineProfile });
+
+      assert.equal(evaluation.isCorrect, true, answer);
+      assert.ok(["EXACT", "EQUIVALENT"].includes(evaluation.classification), answer);
+      assert.equal(evaluation.canonicalAnswer, "doxycycline");
+    });
+
+    ["ceftriaxone", "azithromycin", "broad-spectrum antibiotics", "STI treatment"].forEach((answer) => {
+      const evaluation = evaluateAnswer({ answer, ...doxycyclineProfile });
+
+      assert.equal(evaluation.isCorrect, false, answer);
+      assert.notEqual(evaluation.classification, "EQUIVALENT", answer);
+      assert.equal(evaluation.learnerFacingClassification?.category, "Related but incorrect", answer);
+    });
+  });
+
   it("recognizes a diagnosis when the task asks for management", () => {
     const evaluation = evaluateAnswer({
       answer: "Cord prolapse",

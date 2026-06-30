@@ -1,0 +1,2407 @@
+[
+  {
+    "knowledgeObjectId": "ko-37e1f941cd5a92e9-succenturiate-placental-lobe-with-retained-placental-tissue-diagnosis",
+    "medicalFactId": "anking-1549819684562-d3fc9be1104fc90a",
+    "score": 100,
+    "matchedOn": [
+      "Succenturiate placental lobe",
+      "succenturiate placental lobe with retained placental tissue",
+      "Diagnose succenturiate placental lobe when postpartum hemorrhage follows abnormal placental vessel/membrane findings.",
+      "Prior to the onset of bleeding, the placenta delivered spontaneously with a nontapering vessel extending to the margin of the membranes",
+      "Obstetrics / postpartum hemorrhage"
+    ]
+  },
+  {
+    "knowledgeObjectId": "ko-37e1f941cd5a92e9-succenturiate-placental-lobe-with-retained-placental-tissue-diagnosis",
+    "medicalFactId": "anking-1554029070069-ff9c0b1a4b01617a",
+    "score": 100,
+    "matchedOn": [
+      "Succenturiate placental lobe",
+      "succenturiate placental lobe with retained placental tissue",
+      "Diagnose succenturiate placental lobe when postpartum hemorrhage follows abnormal placental vessel/membrane findings.",
+      "Prior to the onset of bleeding, the placenta delivered spontaneously with a nontapering vessel extending to the margin of the membranes",
+      "Obstetrics / postpartum hemorrhage"
+    ]
+  },
+  {
+    "knowledgeObjectId": "ko-37e1f941cd5a92e9-succenturiate-placental-lobe-with-retained-placental-tissue-diagnosis",
+    "medicalFactId": "anking-1554052517077-69570cddd1b7bd64",
+    "score": 100,
+    "matchedOn": [
+      "Succenturiate placental lobe",
+      "succenturiate placental lobe with retained placental tissue",
+      "Diagnose succenturiate placental lobe when postpartum hemorrhage follows abnormal placental vessel/membrane findings.",
+      "Prior to the onset of bleeding, the placenta delivered spontaneously with a nontapering vessel extending to the margin of the membranes",
+      "Obstetrics / postpartum hemorrhage"
+    ]
+  },
+  {
+    "knowledgeObjectId": "ko-864ee53540de3398-genital-herpes-due-to-hsv-mechanism",
+    "medicalFactId": "anking-1554029070069-ff9c0b1a4b01617a",
+    "score": 100,
+    "matchedOn": [
+      "Herpes simplex virus",
+      "genital herpes due to HSV",
+      "Identify HSV as the cause of painful grouped genital vesicles or shallow ulcers.",
+      "Infection typically begins with the formation of vesicles, which lyse and progress to shallow, painful ulcers with an erythematous border",
+      "Vulvovaginal infections / STI"
+    ]
+  },
+  {
+    "knowledgeObjectId": "ko-864ee53540de3398-genital-herpes-due-to-hsv-mechanism",
+    "medicalFactId": "anking-1549819684562-d3fc9be1104fc90a",
+    "score": 60,
+    "matchedOn": [
+      "Identify HSV as the cause of painful grouped genital vesicles or shallow ulcers.",
+      "Infection typically begins with the formation of vesicles, which lyse and progress to shallow, painful ulcers with an erythematous border",
+      "Vulvovaginal infections / STI"
+    ]
+  },
+  {
+    "knowledgeObjectId": "ko-864ee53540de3398-genital-herpes-due-to-hsv-mechanism",
+    "medicalFactId": "anking-1554052517077-69570cddd1b7bd64",
+    "score": 60,
+    "matchedOn": [
+      "Identify HSV as the cause of painful grouped genital vesicles or shallow ulcers.",
+      "Infection typically begins with the formation of vesicles, which lyse and progress to shallow, painful ulcers with an erythematous border",
+      "Vulvovaginal infections / STI"
+    ]
+  },
+  {
+    "knowledgeObjectId": "ko-864ee53540de3398-genital-herpes-due-to-hsv-mechanism",
+    "medicalFactId": "anking-1523626108542-b9a46ffb98d3325d",
+    "score": 53,
+    "matchedOn": [
+      "Herpes simplex virus"
+    ]
+  },
+  {
+    "knowledgeObjectId": "ko-864ee53540de3398-genital-herpes-due-to-hsv-mechanism",
+    "medicalFactId": "anking-1552517702876-701de04e3507b949",
+    "score": 48,
+    "matchedOn": [
+      "Infection typically begins with the formation of vesicles, which lyse and progress to shallow, painful ulcers with an erythematous border",
+      "Vulvovaginal infections / STI"
+    ]
+  },
+  {
+    "knowledgeObjectId": "ko-864ee53540de3398-genital-herpes-due-to-hsv-mechanism",
+    "medicalFactId": "anking-1555457832643-ebbecf62652968a7",
+    "score": 48,
+    "matchedOn": [
+      "Infection typically begins with the formation of vesicles, which lyse and progress to shallow, painful ulcers with an erythematous border",
+      "Vulvovaginal infections / STI"
+    ]
+  },
+  {
+    "knowledgeObjectId": "ko-932a800bd2b69e9a-ectopic-pregnancy-diagnosis",
+    "medicalFactId": "anking-1549819684562-d3fc9be1104fc90a",
+    "score": 80,
+    "matchedOn": [
+      "Ectopic pregnancy",
+      "Diagnose Ectopic pregnancy.",
+      "There is cervical motion tenderness with a firm cervix and a closed cervical os",
+      "Early pregnancy bleeding / acute pelvic pain"
+    ]
+  },
+  {
+    "knowledgeObjectId": "ko-932a800bd2b69e9a-ectopic-pregnancy-diagnosis",
+    "medicalFactId": "anking-1554029070069-ff9c0b1a4b01617a",
+    "score": 80,
+    "matchedOn": [
+      "Ectopic pregnancy",
+      "Diagnose Ectopic pregnancy.",
+      "There is cervical motion tenderness with a firm cervix and a closed cervical os",
+      "Early pregnancy bleeding / acute pelvic pain"
+    ]
+  },
+  {
+    "knowledgeObjectId": "ko-932a800bd2b69e9a-ectopic-pregnancy-diagnosis",
+    "medicalFactId": "anking-1554052517077-69570cddd1b7bd64",
+    "score": 80,
+    "matchedOn": [
+      "Ectopic pregnancy",
+      "Diagnose Ectopic pregnancy.",
+      "There is cervical motion tenderness with a firm cervix and a closed cervical os",
+      "Early pregnancy bleeding / acute pelvic pain"
+    ]
+  },
+  {
+    "knowledgeObjectId": "ko-932a800bd2b69e9a-ectopic-pregnancy-diagnosis",
+    "medicalFactId": "anking-1434929988016-6d0cc6823f0fc048",
+    "score": 48,
+    "matchedOn": [
+      "Ectopic pregnancy"
+    ]
+  },
+  {
+    "knowledgeObjectId": "ko-932a800bd2b69e9a-ectopic-pregnancy-diagnosis",
+    "medicalFactId": "anking-1533478263120-6e05678936a12bb0",
+    "score": 48,
+    "matchedOn": [
+      "Ectopic pregnancy"
+    ]
+  },
+  {
+    "knowledgeObjectId": "ko-932a800bd2b69e9a-ectopic-pregnancy-diagnosis",
+    "medicalFactId": "anking-1547916021345-b42986d922f4a641",
+    "score": 48,
+    "matchedOn": [
+      "Ectopic pregnancy"
+    ]
+  },
+  {
+    "knowledgeObjectId": "ko-932a800bd2b69e9a-ectopic-pregnancy-diagnosis",
+    "medicalFactId": "anking-1556749991333-413a518634c1359f",
+    "score": 48,
+    "matchedOn": [
+      "Ectopic pregnancy"
+    ]
+  },
+  {
+    "knowledgeObjectId": "ko-a9e4b410555a04b0-cesarean-delivery-diagnosis",
+    "medicalFactId": "anking-1547242138350-e53a0b09d9e5fdf7",
+    "score": 88,
+    "matchedOn": [
+      "Cesarean delivery"
+    ]
+  },
+  {
+    "knowledgeObjectId": "ko-a9e4b410555a04b0-cesarean-delivery-diagnosis",
+    "medicalFactId": "anking-1549819684562-d3fc9be1104fc90a",
+    "score": 80,
+    "matchedOn": [
+      "Cesarean delivery",
+      "Diagnose Cesarean delivery.",
+      "Examination shows a uterus consistent in size with an 8-week gestation",
+      "Female Reproductive"
+    ]
+  },
+  {
+    "knowledgeObjectId": "ko-a9e4b410555a04b0-cesarean-delivery-diagnosis",
+    "medicalFactId": "anking-1554029070069-ff9c0b1a4b01617a",
+    "score": 80,
+    "matchedOn": [
+      "Cesarean delivery",
+      "Diagnose Cesarean delivery.",
+      "Examination shows a uterus consistent in size with an 8-week gestation",
+      "Female Reproductive"
+    ]
+  },
+  {
+    "knowledgeObjectId": "ko-a9e4b410555a04b0-cesarean-delivery-diagnosis",
+    "medicalFactId": "anking-1554052517077-69570cddd1b7bd64",
+    "score": 80,
+    "matchedOn": [
+      "Cesarean delivery",
+      "Diagnose Cesarean delivery.",
+      "Examination shows a uterus consistent in size with an 8-week gestation",
+      "Female Reproductive"
+    ]
+  },
+  {
+    "knowledgeObjectId": "ko-a9e4b410555a04b0-cesarean-delivery-diagnosis",
+    "medicalFactId": "anking-1547242138365-29e60a6a6c82a31a",
+    "score": 68,
+    "matchedOn": [
+      "Cesarean delivery"
+    ]
+  },
+  {
+    "knowledgeObjectId": "ko-a9e4b410555a04b0-cesarean-delivery-diagnosis",
+    "medicalFactId": "anking-1550019187764-15a1d7be8a4d2b6f",
+    "score": 65,
+    "matchedOn": [
+      "Cesarean delivery",
+      "Diagnose Cesarean delivery."
+    ]
+  },
+  {
+    "knowledgeObjectId": "ko-a9e4b410555a04b0-cesarean-delivery-diagnosis",
+    "medicalFactId": "anking-1547916074837-bf564e24d93f5cc2",
+    "score": 48,
+    "matchedOn": [
+      "Cesarean delivery",
+      "Diagnose Cesarean delivery."
+    ]
+  },
+  {
+    "knowledgeObjectId": "ko-a9e4b410555a04b0-cesarean-delivery-diagnosis",
+    "medicalFactId": "anking-1495756477829-75bdb6b02fdb23a6",
+    "score": 40,
+    "matchedOn": [
+      "Cesarean delivery",
+      "Diagnose Cesarean delivery."
+    ]
+  },
+  {
+    "knowledgeObjectId": "ko-842fee31b1b296e7-chronic-anovulation-risk_factor_interpretation",
+    "medicalFactId": "anking-1549819684562-d3fc9be1104fc90a",
+    "score": 80,
+    "matchedOn": [
+      "Chronic anovulation",
+      "Apply the Chronic anovulation reasoning schema.",
+      "Pelvic examination shows a small amount of blood at the cervical os",
+      "Gynecologic oncology"
+    ]
+  },
+  {
+    "knowledgeObjectId": "ko-842fee31b1b296e7-chronic-anovulation-risk_factor_interpretation",
+    "medicalFactId": "anking-1554052517077-69570cddd1b7bd64",
+    "score": 80,
+    "matchedOn": [
+      "Chronic anovulation",
+      "Apply the Chronic anovulation reasoning schema.",
+      "Pelvic examination shows a small amount of blood at the cervical os",
+      "Gynecologic oncology"
+    ]
+  },
+  {
+    "knowledgeObjectId": "ko-842fee31b1b296e7-chronic-anovulation-risk_factor_interpretation",
+    "medicalFactId": "anking-1554029070069-ff9c0b1a4b01617a",
+    "score": 60,
+    "matchedOn": [
+      "Apply the Chronic anovulation reasoning schema.",
+      "Pelvic examination shows a small amount of blood at the cervical os",
+      "Gynecologic oncology"
+    ]
+  },
+  {
+    "knowledgeObjectId": "ko-b6b61a51c89ef066-different-shape-next_best_step",
+    "medicalFactId": "anking-1554029070069-ff9c0b1a4b01617a",
+    "score": 80,
+    "matchedOn": [
+      "Different shape",
+      "Choose the correct clinical action for Different shape.",
+      "They most commonly present with vaginal bleeding, pelvic pain, and miscarriage or infertility that can sometimes be asymptomatic",
+      "Contraception"
+    ]
+  },
+  {
+    "knowledgeObjectId": "ko-b6b61a51c89ef066-different-shape-next_best_step",
+    "medicalFactId": "anking-1577678687320-2580e060519389a9",
+    "score": 68,
+    "matchedOn": [
+      "Contraception"
+    ]
+  },
+  {
+    "knowledgeObjectId": "ko-b6b61a51c89ef066-different-shape-next_best_step",
+    "medicalFactId": "anking-1549819684562-d3fc9be1104fc90a",
+    "score": 60,
+    "matchedOn": [
+      "Choose the correct clinical action for Different shape.",
+      "They most commonly present with vaginal bleeding, pelvic pain, and miscarriage or infertility that can sometimes be asymptomatic",
+      "Contraception"
+    ]
+  },
+  {
+    "knowledgeObjectId": "ko-b6b61a51c89ef066-different-shape-next_best_step",
+    "medicalFactId": "anking-1554052517077-69570cddd1b7bd64",
+    "score": 60,
+    "matchedOn": [
+      "Choose the correct clinical action for Different shape.",
+      "They most commonly present with vaginal bleeding, pelvic pain, and miscarriage or infertility that can sometimes be asymptomatic",
+      "Contraception"
+    ]
+  },
+  {
+    "knowledgeObjectId": "ko-6fd127b27cd2ad18-lactational-mastitis-treated-with-anti-staphylococcal-therapy-management",
+    "medicalFactId": "anking-1549819684562-d3fc9be1104fc90a",
+    "score": 80,
+    "matchedOn": [
+      "Dicloxacillin",
+      "lactational mastitis treated with anti-staphylococcal therapy",
+      "Select anti-staphylococcal antibiotic therapy for lactational mastitis.",
+      "Breast infection / lactation"
+    ]
+  },
+  {
+    "knowledgeObjectId": "ko-6fd127b27cd2ad18-lactational-mastitis-treated-with-anti-staphylococcal-therapy-management",
+    "medicalFactId": "anking-1554029070069-ff9c0b1a4b01617a",
+    "score": 80,
+    "matchedOn": [
+      "lactational mastitis treated with anti-staphylococcal therapy",
+      "Select anti-staphylococcal antibiotic therapy for lactational mastitis.",
+      "Examination of the breast shows an erythematous, hard, tender upper outer quadrant",
+      "Breast infection / lactation"
+    ]
+  },
+  {
+    "knowledgeObjectId": "ko-6fd127b27cd2ad18-lactational-mastitis-treated-with-anti-staphylococcal-therapy-management",
+    "medicalFactId": "anking-1554052517077-69570cddd1b7bd64",
+    "score": 80,
+    "matchedOn": [
+      "Dicloxacillin",
+      "lactational mastitis treated with anti-staphylococcal therapy",
+      "Select anti-staphylococcal antibiotic therapy for lactational mastitis.",
+      "Breast infection / lactation"
+    ]
+  },
+  {
+    "knowledgeObjectId": "ko-f72f29ed8ff90c4e-pneumonia-next_best_step",
+    "medicalFactId": "anking-1554029070069-ff9c0b1a4b01617a",
+    "score": 100,
+    "matchedOn": [
+      "Testing of the wife first; if negative, no further testing is indicated",
+      "Pneumonia",
+      "Choose the correct clinical action for Pneumonia.",
+      "He has no known relatives with Tay-Sachs disease",
+      "Vulvovaginal infections / STI"
+    ]
+  },
+  {
+    "knowledgeObjectId": "ko-f72f29ed8ff90c4e-pneumonia-next_best_step",
+    "medicalFactId": "anking-1554042682411-9611c5988e987ec9",
+    "score": 88,
+    "matchedOn": [
+      "Pneumonia"
+    ]
+  },
+  {
+    "knowledgeObjectId": "ko-f72f29ed8ff90c4e-pneumonia-next_best_step",
+    "medicalFactId": "anking-1549819684562-d3fc9be1104fc90a",
+    "score": 80,
+    "matchedOn": [
+      "Testing of the wife first; if negative, no further testing is indicated",
+      "Choose the correct clinical action for Pneumonia.",
+      "He has no known relatives with Tay-Sachs disease",
+      "Vulvovaginal infections / STI"
+    ]
+  },
+  {
+    "knowledgeObjectId": "ko-f72f29ed8ff90c4e-pneumonia-next_best_step",
+    "medicalFactId": "anking-1554052517077-69570cddd1b7bd64",
+    "score": 80,
+    "matchedOn": [
+      "Testing of the wife first; if negative, no further testing is indicated",
+      "Choose the correct clinical action for Pneumonia.",
+      "He has no known relatives with Tay-Sachs disease",
+      "Vulvovaginal infections / STI"
+    ]
+  },
+  {
+    "knowledgeObjectId": "ko-f72f29ed8ff90c4e-pneumonia-next_best_step",
+    "medicalFactId": "anking-1504045737742-43400abb6ed923b3",
+    "score": 60,
+    "matchedOn": [
+      "Pneumonia"
+    ]
+  },
+  {
+    "knowledgeObjectId": "ko-f72f29ed8ff90c4e-pneumonia-next_best_step",
+    "medicalFactId": "anking-1539215518509-3c1d5f8da24ee036",
+    "score": 60,
+    "matchedOn": [
+      "Pneumonia"
+    ]
+  },
+  {
+    "knowledgeObjectId": "ko-f72f29ed8ff90c4e-pneumonia-next_best_step",
+    "medicalFactId": "anking-1556705844090-e76add8006b5fc16",
+    "score": 60,
+    "matchedOn": [
+      "Pneumonia"
+    ]
+  },
+  {
+    "knowledgeObjectId": "ko-f72f29ed8ff90c4e-pneumonia-next_best_step",
+    "medicalFactId": "anking-1569457354070-232483151caea7cc",
+    "score": 60,
+    "matchedOn": [
+      "Pneumonia"
+    ]
+  },
+  {
+    "knowledgeObjectId": "ko-4d4baf6e5a3691f0-prescribe-next_best_step",
+    "medicalFactId": "anking-1549819684562-d3fc9be1104fc90a",
+    "score": 80,
+    "matchedOn": [
+      "Prescribe",
+      "Choose the correct clinical action for Prescribe.",
+      "A variety of contraceptive methods are appropriate, including oral or injectable hormonal contraceptives or intrauterine or subdermal implant devices",
+      "Vulvovaginal infections / STI"
+    ]
+  },
+  {
+    "knowledgeObjectId": "ko-4d4baf6e5a3691f0-prescribe-next_best_step",
+    "medicalFactId": "anking-1554029070069-ff9c0b1a4b01617a",
+    "score": 80,
+    "matchedOn": [
+      "Prescribe",
+      "Choose the correct clinical action for Prescribe.",
+      "A variety of contraceptive methods are appropriate, including oral or injectable hormonal contraceptives or intrauterine or subdermal implant devices",
+      "Vulvovaginal infections / STI"
+    ]
+  },
+  {
+    "knowledgeObjectId": "ko-4d4baf6e5a3691f0-prescribe-next_best_step",
+    "medicalFactId": "anking-1554052517077-69570cddd1b7bd64",
+    "score": 80,
+    "matchedOn": [
+      "Prescribe",
+      "Choose the correct clinical action for Prescribe.",
+      "A variety of contraceptive methods are appropriate, including oral or injectable hormonal contraceptives or intrauterine or subdermal implant devices",
+      "Vulvovaginal infections / STI"
+    ]
+  },
+  {
+    "knowledgeObjectId": "ko-4d4baf6e5a3691f0-prescribe-next_best_step",
+    "medicalFactId": "anking-1504826046653-e4059042b04f1aba",
+    "score": 40,
+    "matchedOn": [
+      "Prescribe"
+    ]
+  },
+  {
+    "knowledgeObjectId": "ko-4d4baf6e5a3691f0-prescribe-next_best_step",
+    "medicalFactId": "anking-1543504860449-be4fa31b89877266",
+    "score": 40,
+    "matchedOn": [
+      "Prescribe"
+    ]
+  },
+  {
+    "knowledgeObjectId": "ko-4d4baf6e5a3691f0-prescribe-next_best_step",
+    "medicalFactId": "anking-1579661924474-399a7c3d335cd9f4",
+    "score": 40,
+    "matchedOn": [
+      "Prescribe"
+    ]
+  },
+  {
+    "knowledgeObjectId": "ko-6f15fc8260313084-depot-medroxyprogesterone-management",
+    "medicalFactId": "anking-1554029070069-ff9c0b1a4b01617a",
+    "score": 80,
+    "matchedOn": [
+      "Depot medroxyprogesterone",
+      "Choose the correct clinical action for Depot medroxyprogesterone.",
+      "She does not want to become pregnant now",
+      "Vulvovaginal infections / STI"
+    ]
+  },
+  {
+    "knowledgeObjectId": "ko-6f15fc8260313084-depot-medroxyprogesterone-management",
+    "medicalFactId": "anking-1549819684562-d3fc9be1104fc90a",
+    "score": 60,
+    "matchedOn": [
+      "Choose the correct clinical action for Depot medroxyprogesterone.",
+      "She does not want to become pregnant now",
+      "Vulvovaginal infections / STI"
+    ]
+  },
+  {
+    "knowledgeObjectId": "ko-6f15fc8260313084-depot-medroxyprogesterone-management",
+    "medicalFactId": "anking-1554052517077-69570cddd1b7bd64",
+    "score": 60,
+    "matchedOn": [
+      "Choose the correct clinical action for Depot medroxyprogesterone.",
+      "She does not want to become pregnant now",
+      "Vulvovaginal infections / STI"
+    ]
+  },
+  {
+    "knowledgeObjectId": "ko-6f15fc8260313084-depot-medroxyprogesterone-management",
+    "medicalFactId": "anking-1637500882948-e2d49e8b758775ae",
+    "score": 48,
+    "matchedOn": [
+      "Depot medroxyprogesterone",
+      "Choose the correct clinical action for Depot medroxyprogesterone."
+    ]
+  },
+  {
+    "knowledgeObjectId": "ko-6f15fc8260313084-depot-medroxyprogesterone-management",
+    "medicalFactId": "anking-1523124529579-0ad84f78a9787e53",
+    "score": 40,
+    "matchedOn": [
+      "Depot medroxyprogesterone",
+      "Choose the correct clinical action for Depot medroxyprogesterone."
+    ]
+  },
+  {
+    "knowledgeObjectId": "ko-e455ac515682b0e1-pneumonia-management",
+    "medicalFactId": "anking-1554029070069-ff9c0b1a4b01617a",
+    "score": 100,
+    "matchedOn": [
+      "Influenza virus",
+      "Pneumonia",
+      "Choose the correct clinical action for Pneumonia.",
+      "The influenza vaccine is available in inactivated, recombinant, and live-attenuated forms",
+      "Female Reproductive"
+    ]
+  },
+  {
+    "knowledgeObjectId": "ko-e455ac515682b0e1-pneumonia-management",
+    "medicalFactId": "anking-1554042682411-9611c5988e987ec9",
+    "score": 88,
+    "matchedOn": [
+      "Pneumonia"
+    ]
+  },
+  {
+    "knowledgeObjectId": "ko-e455ac515682b0e1-pneumonia-management",
+    "medicalFactId": "anking-1504045737742-43400abb6ed923b3",
+    "score": 60,
+    "matchedOn": [
+      "Pneumonia"
+    ]
+  },
+  {
+    "knowledgeObjectId": "ko-e455ac515682b0e1-pneumonia-management",
+    "medicalFactId": "anking-1539215518509-3c1d5f8da24ee036",
+    "score": 60,
+    "matchedOn": [
+      "Pneumonia"
+    ]
+  },
+  {
+    "knowledgeObjectId": "ko-e455ac515682b0e1-pneumonia-management",
+    "medicalFactId": "anking-1549819684562-d3fc9be1104fc90a",
+    "score": 60,
+    "matchedOn": [
+      "Choose the correct clinical action for Pneumonia.",
+      "The influenza vaccine is available in inactivated, recombinant, and live-attenuated forms",
+      "Female Reproductive"
+    ]
+  },
+  {
+    "knowledgeObjectId": "ko-e455ac515682b0e1-pneumonia-management",
+    "medicalFactId": "anking-1554052517077-69570cddd1b7bd64",
+    "score": 60,
+    "matchedOn": [
+      "Choose the correct clinical action for Pneumonia.",
+      "The influenza vaccine is available in inactivated, recombinant, and live-attenuated forms",
+      "Female Reproductive"
+    ]
+  },
+  {
+    "knowledgeObjectId": "ko-e455ac515682b0e1-pneumonia-management",
+    "medicalFactId": "anking-1556705844090-e76add8006b5fc16",
+    "score": 60,
+    "matchedOn": [
+      "Pneumonia"
+    ]
+  },
+  {
+    "knowledgeObjectId": "ko-e455ac515682b0e1-pneumonia-management",
+    "medicalFactId": "anking-1569457354070-232483151caea7cc",
+    "score": 60,
+    "matchedOn": [
+      "Pneumonia"
+    ]
+  },
+  {
+    "knowledgeObjectId": "ko-ccf1dfcd29666568-ultrasonograejhy-for-dating-next_best_step",
+    "medicalFactId": "anking-1554029070069-ff9c0b1a4b01617a",
+    "score": 80,
+    "matchedOn": [
+      "UltrasonograEJhy for dating",
+      "Choose the correct clinical action for UltrasonograEJhy for dating.",
+      "Fetal heart tones are 160/min",
+      "Early pregnancy bleeding / acute pelvic pain"
+    ]
+  },
+  {
+    "knowledgeObjectId": "ko-ccf1dfcd29666568-ultrasonograejhy-for-dating-next_best_step",
+    "medicalFactId": "anking-1549819684562-d3fc9be1104fc90a",
+    "score": 40,
+    "matchedOn": [
+      "Choose the correct clinical action for UltrasonograEJhy for dating.",
+      "Early pregnancy bleeding / acute pelvic pain"
+    ]
+  },
+  {
+    "knowledgeObjectId": "ko-ccf1dfcd29666568-ultrasonograejhy-for-dating-next_best_step",
+    "medicalFactId": "anking-1554052517077-69570cddd1b7bd64",
+    "score": 40,
+    "matchedOn": [
+      "Choose the correct clinical action for UltrasonograEJhy for dating.",
+      "Early pregnancy bleeding / acute pelvic pain"
+    ]
+  },
+  {
+    "knowledgeObjectId": "ko-67b2d9f9ec89c0be-persistent-uterine-atony-after-massage-and-oxytocin-requiring-second-line-uterotonic-escalation-next_best_step",
+    "medicalFactId": "anking-1554029070069-ff9c0b1a4b01617a",
+    "score": 100,
+    "matchedOn": [
+      "Ergonovine therapy",
+      "persistent uterine atony after massage and oxytocin requiring second-line uterotonic escalation",
+      "Escalate to a second-line uterotonic when atony persists after massage and oxytocin.",
+      "Despite receiving oxytocin therapy in the recovery room , she has excessive vaginal bleeding and a boggy uterus",
+      "Obstetrics / postpartum hemorrhage"
+    ]
+  },
+  {
+    "knowledgeObjectId": "ko-67b2d9f9ec89c0be-persistent-uterine-atony-after-massage-and-oxytocin-requiring-second-line-uterotonic-escalation-next_best_step",
+    "medicalFactId": "anking-1549819684562-d3fc9be1104fc90a",
+    "score": 80,
+    "matchedOn": [
+      "persistent uterine atony after massage and oxytocin requiring second-line uterotonic escalation",
+      "Escalate to a second-line uterotonic when atony persists after massage and oxytocin.",
+      "Despite receiving oxytocin therapy in the recovery room , she has excessive vaginal bleeding and a boggy uterus",
+      "Obstetrics / postpartum hemorrhage"
+    ]
+  },
+  {
+    "knowledgeObjectId": "ko-67b2d9f9ec89c0be-persistent-uterine-atony-after-massage-and-oxytocin-requiring-second-line-uterotonic-escalation-next_best_step",
+    "medicalFactId": "anking-1554052517077-69570cddd1b7bd64",
+    "score": 80,
+    "matchedOn": [
+      "persistent uterine atony after massage and oxytocin requiring second-line uterotonic escalation",
+      "Escalate to a second-line uterotonic when atony persists after massage and oxytocin.",
+      "Despite receiving oxytocin therapy in the recovery room , she has excessive vaginal bleeding and a boggy uterus",
+      "Obstetrics / postpartum hemorrhage"
+    ]
+  },
+  {
+    "knowledgeObjectId": "ko-67b2d9f9ec89c0be-persistent-uterine-atony-after-massage-and-oxytocin-requiring-second-line-uterotonic-escalation-next_best_step",
+    "medicalFactId": "anking-1520010114958-d8915508823a317e",
+    "score": 60,
+    "matchedOn": [
+      "persistent uterine atony after massage and oxytocin requiring second-line uterotonic escalation",
+      "Escalate to a second-line uterotonic when atony persists after massage and oxytocin.",
+      "Despite receiving oxytocin therapy in the recovery room , she has excessive vaginal bleeding and a boggy uterus"
+    ]
+  },
+  {
+    "knowledgeObjectId": "ko-b173a00396ddabe1-pulmonary-embolism-diagnosis",
+    "medicalFactId": "anking-1554029070069-ff9c0b1a4b01617a",
+    "score": 100,
+    "matchedOn": [
+      "Pyelonephritis",
+      "Pulmonary embolism",
+      "Diagnose Pulmonary embolism.",
+      "Bacteria are generally seen on microscopy, with Gram-negative rods being the most common pathogen",
+      "Female Reproductive"
+    ]
+  },
+  {
+    "knowledgeObjectId": "ko-b173a00396ddabe1-pulmonary-embolism-diagnosis",
+    "medicalFactId": "anking-1557664094123-efd00777f700f2bd",
+    "score": 68,
+    "matchedOn": [
+      "Pyelonephritis"
+    ]
+  },
+  {
+    "knowledgeObjectId": "ko-b173a00396ddabe1-pulmonary-embolism-diagnosis",
+    "medicalFactId": "anking-1511029834678-e7b82c96a5ab5b80",
+    "score": 60,
+    "matchedOn": [
+      "Pulmonary embolism"
+    ]
+  },
+  {
+    "knowledgeObjectId": "ko-b173a00396ddabe1-pulmonary-embolism-diagnosis",
+    "medicalFactId": "anking-1496624114736-87b20dbfccd99b22",
+    "score": 48,
+    "matchedOn": [
+      "Pyelonephritis"
+    ]
+  },
+  {
+    "knowledgeObjectId": "ko-b173a00396ddabe1-pulmonary-embolism-diagnosis",
+    "medicalFactId": "anking-1557184081866-fe3f69fca74e8211",
+    "score": 48,
+    "matchedOn": [
+      "Pyelonephritis"
+    ]
+  },
+  {
+    "knowledgeObjectId": "ko-b173a00396ddabe1-pulmonary-embolism-diagnosis",
+    "medicalFactId": "anking-1557844491367-cb613727a0fe5597",
+    "score": 48,
+    "matchedOn": [
+      "Pulmonary embolism"
+    ]
+  },
+  {
+    "knowledgeObjectId": "ko-b173a00396ddabe1-pulmonary-embolism-diagnosis",
+    "medicalFactId": "anking-1579463599500-25421f0c84e7de63",
+    "score": 48,
+    "matchedOn": [
+      "Pulmonary embolism"
+    ]
+  },
+  {
+    "knowledgeObjectId": "ko-b173a00396ddabe1-pulmonary-embolism-diagnosis",
+    "medicalFactId": "anking-1496186786076-2b8549609af0ad3b",
+    "score": 40,
+    "matchedOn": [
+      "Pulmonary embolism"
+    ]
+  },
+  {
+    "knowledgeObjectId": "ko-6bcb3dbcc1d0f1f2-fibroadenoma-diagnosis",
+    "medicalFactId": "anking-1554029070069-ff9c0b1a4b01617a",
+    "score": 80,
+    "matchedOn": [
+      "Fibroadenoma",
+      "Diagnose Fibroadenoma.",
+      "They present in women between the ages of 25 and 40 as a painless, mobile breast lump",
+      "Vulvovaginal infections / STI"
+    ]
+  },
+  {
+    "knowledgeObjectId": "ko-761a86488e4b871d-parvovirus-mechanism",
+    "medicalFactId": "anking-1549819684562-d3fc9be1104fc90a",
+    "score": 60,
+    "matchedOn": [
+      "Identify the mechanism or causal explanation for Parvovirus.",
+      "Fetal anemia may present as fetal tachycardia, high-output heart failure, hydrops fetal is, and death",
+      "Intrapartum infection / fetal monitoring"
+    ]
+  },
+  {
+    "knowledgeObjectId": "ko-761a86488e4b871d-parvovirus-mechanism",
+    "medicalFactId": "anking-1554029070069-ff9c0b1a4b01617a",
+    "score": 60,
+    "matchedOn": [
+      "Identify the mechanism or causal explanation for Parvovirus.",
+      "Fetal anemia may present as fetal tachycardia, high-output heart failure, hydrops fetal is, and death",
+      "Intrapartum infection / fetal monitoring"
+    ]
+  },
+  {
+    "knowledgeObjectId": "ko-761a86488e4b871d-parvovirus-mechanism",
+    "medicalFactId": "anking-1554052517077-69570cddd1b7bd64",
+    "score": 60,
+    "matchedOn": [
+      "Identify the mechanism or causal explanation for Parvovirus.",
+      "Fetal anemia may present as fetal tachycardia, high-output heart failure, hydrops fetal is, and death",
+      "Intrapartum infection / fetal monitoring"
+    ]
+  },
+  {
+    "knowledgeObjectId": "ko-761a86488e4b871d-parvovirus-mechanism",
+    "medicalFactId": "anking-1537487072061-97517612a1d0de76",
+    "score": 40,
+    "matchedOn": [
+      "Parvovirus"
+    ]
+  },
+  {
+    "knowledgeObjectId": "ko-761a86488e4b871d-parvovirus-mechanism",
+    "medicalFactId": "anking-1537487832684-56e4a7857b906113",
+    "score": 40,
+    "matchedOn": [
+      "Parvovirus"
+    ]
+  },
+  {
+    "knowledgeObjectId": "ko-e8821dd490bf285b-pali-jable-right-ovary-diagnosis",
+    "medicalFactId": "anking-1554029070069-ff9c0b1a4b01617a",
+    "score": 80,
+    "matchedOn": [
+      "Pali:Jable right ovary",
+      "Diagnose Pali:Jable right ovary.",
+      "In postmenopausal women, 30% of ovarian masses are malignant",
+      "Gynecologic oncology"
+    ]
+  },
+  {
+    "knowledgeObjectId": "ko-e8821dd490bf285b-pali-jable-right-ovary-diagnosis",
+    "medicalFactId": "anking-1495500294426-402ba908ab2f9da3",
+    "score": 40,
+    "matchedOn": [
+      "Pali:Jable right ovary",
+      "Diagnose Pali:Jable right ovary."
+    ]
+  },
+  {
+    "knowledgeObjectId": "ko-70b0b47a1e83e111-maternal-fever-diagnosis",
+    "medicalFactId": "anking-1554029070069-ff9c0b1a4b01617a",
+    "score": 80,
+    "matchedOn": [
+      "Maternal fever",
+      "Diagnose Maternal fever.",
+      "Other causes of fetal tachycardia include hypoxia, fetal anemia, intra-amniotic infection, and maternal medications",
+      "Intrapartum infection / fetal monitoring"
+    ]
+  },
+  {
+    "knowledgeObjectId": "ko-70b0b47a1e83e111-maternal-fever-diagnosis",
+    "medicalFactId": "anking-1552517702876-701de04e3507b949",
+    "score": 48,
+    "matchedOn": [
+      "Other causes of fetal tachycardia include hypoxia, fetal anemia, intra-amniotic infection, and maternal medications",
+      "Intrapartum infection / fetal monitoring"
+    ]
+  },
+  {
+    "knowledgeObjectId": "ko-70b0b47a1e83e111-maternal-fever-diagnosis",
+    "medicalFactId": "anking-1555457832643-ebbecf62652968a7",
+    "score": 48,
+    "matchedOn": [
+      "Other causes of fetal tachycardia include hypoxia, fetal anemia, intra-amniotic infection, and maternal medications",
+      "Intrapartum infection / fetal monitoring"
+    ]
+  },
+  {
+    "knowledgeObjectId": "ko-70b0b47a1e83e111-maternal-fever-diagnosis",
+    "medicalFactId": "anking-1549819684562-d3fc9be1104fc90a",
+    "score": 40,
+    "matchedOn": [
+      "Other causes of fetal tachycardia include hypoxia, fetal anemia, intra-amniotic infection, and maternal medications",
+      "Intrapartum infection / fetal monitoring"
+    ]
+  },
+  {
+    "knowledgeObjectId": "ko-70b0b47a1e83e111-maternal-fever-diagnosis",
+    "medicalFactId": "anking-1554052517077-69570cddd1b7bd64",
+    "score": 40,
+    "matchedOn": [
+      "Other causes of fetal tachycardia include hypoxia, fetal anemia, intra-amniotic infection, and maternal medications",
+      "Intrapartum infection / fetal monitoring"
+    ]
+  },
+  {
+    "knowledgeObjectId": "ko-ccb3ae8698022af6-endometrial-ablation-next_best_step",
+    "medicalFactId": "anking-1554029070069-ff9c0b1a4b01617a",
+    "score": 80,
+    "matchedOn": [
+      "Endometrial ablation",
+      "Choose the correct clinical action for Endometrial ablation.",
+      "The pain begins 2 days before the onset of menses and lasts for 4 days",
+      "Vulvovaginal infections / STI"
+    ]
+  },
+  {
+    "knowledgeObjectId": "ko-ccb3ae8698022af6-endometrial-ablation-next_best_step",
+    "medicalFactId": "anking-1549819684562-d3fc9be1104fc90a",
+    "score": 40,
+    "matchedOn": [
+      "Choose the correct clinical action for Endometrial ablation.",
+      "Vulvovaginal infections / STI"
+    ]
+  },
+  {
+    "knowledgeObjectId": "ko-ccb3ae8698022af6-endometrial-ablation-next_best_step",
+    "medicalFactId": "anking-1554052517077-69570cddd1b7bd64",
+    "score": 40,
+    "matchedOn": [
+      "Choose the correct clinical action for Endometrial ablation.",
+      "Vulvovaginal infections / STI"
+    ]
+  },
+  {
+    "knowledgeObjectId": "ko-79f740034936b223-vaginal-miconazole-management",
+    "medicalFactId": "anking-1549819684562-d3fc9be1104fc90a",
+    "score": 80,
+    "matchedOn": [
+      "Vaginal miconazole",
+      "Choose the correct clinical action for Vaginal miconazole.",
+      "She has had no vaginal bleeding or discharge",
+      "Vulvovaginal infections / STI"
+    ]
+  },
+  {
+    "knowledgeObjectId": "ko-79f740034936b223-vaginal-miconazole-management",
+    "medicalFactId": "anking-1554029070069-ff9c0b1a4b01617a",
+    "score": 80,
+    "matchedOn": [
+      "Vaginal miconazole",
+      "Choose the correct clinical action for Vaginal miconazole.",
+      "She has had no vaginal bleeding or discharge",
+      "Vulvovaginal infections / STI"
+    ]
+  },
+  {
+    "knowledgeObjectId": "ko-79f740034936b223-vaginal-miconazole-management",
+    "medicalFactId": "anking-1554052517077-69570cddd1b7bd64",
+    "score": 80,
+    "matchedOn": [
+      "Vaginal miconazole",
+      "Choose the correct clinical action for Vaginal miconazole.",
+      "She has had no vaginal bleeding or discharge",
+      "Vulvovaginal infections / STI"
+    ]
+  },
+  {
+    "knowledgeObjectId": "ko-0221f32d2ac71131-sepsis-diagnosis",
+    "medicalFactId": "anking-1554029070069-ff9c0b1a4b01617a",
+    "score": 80,
+    "matchedOn": [
+      "Sepsis",
+      "Diagnose Sepsis.",
+      "Massive obstetric hemorrhage requiring blood transfusion in this patient increases the risk for postpartum pituitary necrosis (Sheehan syndrome)",
+      "Obstetrics / postpartum hemorrhage"
+    ]
+  },
+  {
+    "knowledgeObjectId": "ko-0221f32d2ac71131-sepsis-diagnosis",
+    "medicalFactId": "anking-1539182660880-d88f977fee7c1f6d",
+    "score": 40,
+    "matchedOn": [
+      "Sepsis"
+    ]
+  },
+  {
+    "knowledgeObjectId": "ko-0221f32d2ac71131-sepsis-diagnosis",
+    "medicalFactId": "anking-1549819684562-d3fc9be1104fc90a",
+    "score": 40,
+    "matchedOn": [
+      "Massive obstetric hemorrhage requiring blood transfusion in this patient increases the risk for postpartum pituitary necrosis (Sheehan syndrome)",
+      "Obstetrics / postpartum hemorrhage"
+    ]
+  },
+  {
+    "knowledgeObjectId": "ko-0221f32d2ac71131-sepsis-diagnosis",
+    "medicalFactId": "anking-1554052517077-69570cddd1b7bd64",
+    "score": 40,
+    "matchedOn": [
+      "Massive obstetric hemorrhage requiring blood transfusion in this patient increases the risk for postpartum pituitary necrosis (Sheehan syndrome)",
+      "Obstetrics / postpartum hemorrhage"
+    ]
+  },
+  {
+    "knowledgeObjectId": "ko-0221f32d2ac71131-sepsis-diagnosis",
+    "medicalFactId": "anking-1586023000019-b2dccebc59bbed62",
+    "score": 40,
+    "matchedOn": [
+      "Sepsis"
+    ]
+  },
+  {
+    "knowledgeObjectId": "ko-296458047249a382-chorioamnionitis-causing-fetal-tachycardia-diagnosis",
+    "medicalFactId": "anking-1549819684562-d3fc9be1104fc90a",
+    "score": 80,
+    "matchedOn": [
+      "Chorioamnionitis",
+      "chorioamnionitis causing fetal tachycardia",
+      "Identify intra-amniotic infection as the cause of fetal tachycardia with prolonged rupture and maternal infection signs.",
+      "Intrapartum infection / fetal monitoring"
+    ]
+  },
+  {
+    "knowledgeObjectId": "ko-296458047249a382-chorioamnionitis-causing-fetal-tachycardia-diagnosis",
+    "medicalFactId": "anking-1554029070069-ff9c0b1a4b01617a",
+    "score": 80,
+    "matchedOn": [
+      "chorioamnionitis causing fetal tachycardia",
+      "Identify intra-amniotic infection as the cause of fetal tachycardia with prolonged rupture and maternal infection signs.",
+      "She had spontaneous rupture of membranes 32 hours ago",
+      "Intrapartum infection / fetal monitoring"
+    ]
+  },
+  {
+    "knowledgeObjectId": "ko-296458047249a382-chorioamnionitis-causing-fetal-tachycardia-diagnosis",
+    "medicalFactId": "anking-1554052517077-69570cddd1b7bd64",
+    "score": 80,
+    "matchedOn": [
+      "Chorioamnionitis",
+      "chorioamnionitis causing fetal tachycardia",
+      "Identify intra-amniotic infection as the cause of fetal tachycardia with prolonged rupture and maternal infection signs.",
+      "Intrapartum infection / fetal monitoring"
+    ]
+  },
+  {
+    "knowledgeObjectId": "ko-296458047249a382-chorioamnionitis-causing-fetal-tachycardia-diagnosis",
+    "medicalFactId": "anking-1544986612376-75712e9c9fcab848",
+    "score": 65,
+    "matchedOn": [
+      "Chorioamnionitis",
+      "chorioamnionitis causing fetal tachycardia"
+    ]
+  },
+  {
+    "knowledgeObjectId": "ko-296458047249a382-chorioamnionitis-causing-fetal-tachycardia-diagnosis",
+    "medicalFactId": "anking-1552517702876-701de04e3507b949",
+    "score": 48,
+    "matchedOn": [
+      "Identify intra-amniotic infection as the cause of fetal tachycardia with prolonged rupture and maternal infection signs.",
+      "Intrapartum infection / fetal monitoring"
+    ]
+  },
+  {
+    "knowledgeObjectId": "ko-296458047249a382-chorioamnionitis-causing-fetal-tachycardia-diagnosis",
+    "medicalFactId": "anking-1555457832643-ebbecf62652968a7",
+    "score": 48,
+    "matchedOn": [
+      "Identify intra-amniotic infection as the cause of fetal tachycardia with prolonged rupture and maternal infection signs.",
+      "Intrapartum infection / fetal monitoring"
+    ]
+  },
+  {
+    "knowledgeObjectId": "ko-296458047249a382-chorioamnionitis-causing-fetal-tachycardia-diagnosis",
+    "medicalFactId": "anking-1519750150631-94bb93bb25339613",
+    "score": 40,
+    "matchedOn": [
+      "Chorioamnionitis"
+    ]
+  },
+  {
+    "knowledgeObjectId": "ko-296458047249a382-chorioamnionitis-causing-fetal-tachycardia-diagnosis",
+    "medicalFactId": "anking-1578028655642-c3380ce1fe2cb74a",
+    "score": 40,
+    "matchedOn": [
+      "Chorioamnionitis"
+    ]
+  },
+  {
+    "knowledgeObjectId": "ko-20ffc28bee834f2d-hypotonic-contractions-risk_factor_interpretation",
+    "medicalFactId": "anking-1549819684562-d3fc9be1104fc90a",
+    "score": 80,
+    "matchedOn": [
+      "Hypotonic contractions",
+      "Apply the Hypotonic contractions reasoning schema.",
+      "Contractions occur every 5 minutes, last 30 seconds, and are 30 mm Hg in pressure",
+      "Vulvovaginal infections / STI"
+    ]
+  },
+  {
+    "knowledgeObjectId": "ko-20ffc28bee834f2d-hypotonic-contractions-risk_factor_interpretation",
+    "medicalFactId": "anking-1554052517077-69570cddd1b7bd64",
+    "score": 80,
+    "matchedOn": [
+      "Hypotonic contractions",
+      "Apply the Hypotonic contractions reasoning schema.",
+      "Contractions occur every 5 minutes, last 30 seconds, and are 30 mm Hg in pressure",
+      "Vulvovaginal infections / STI"
+    ]
+  },
+  {
+    "knowledgeObjectId": "ko-20ffc28bee834f2d-hypotonic-contractions-risk_factor_interpretation",
+    "medicalFactId": "anking-1554029070069-ff9c0b1a4b01617a",
+    "score": 60,
+    "matchedOn": [
+      "Apply the Hypotonic contractions reasoning schema.",
+      "Contractions occur every 5 minutes, last 30 seconds, and are 30 mm Hg in pressure",
+      "Vulvovaginal infections / STI"
+    ]
+  },
+  {
+    "knowledgeObjectId": "ko-20ffc28bee834f2d-hypotonic-contractions-risk_factor_interpretation",
+    "medicalFactId": "anking-1540659406862-10eedf54df0b26d3",
+    "score": 40,
+    "matchedOn": [
+      "Hypotonic contractions",
+      "Apply the Hypotonic contractions reasoning schema."
+    ]
+  },
+  {
+    "knowledgeObjectId": "ko-ed6b78b1b05607f1-sterile-speculum-examination-for-suspected-pprom-diagnosis",
+    "medicalFactId": "anking-1554029070069-ff9c0b1a4b01617a",
+    "score": 100,
+    "matchedOn": [
+      "Sterile speculum examination of the vagina",
+      "sterile speculum examination for suspected PPROM",
+      "Use sterile speculum examination to evaluate suspected preterm rupture of membranes.",
+      "she has had fluid leaking from her vagina for 2 days",
+      "PPROM evaluation"
+    ]
+  },
+  {
+    "knowledgeObjectId": "ko-ed6b78b1b05607f1-sterile-speculum-examination-for-suspected-pprom-diagnosis",
+    "medicalFactId": "anking-1549819684562-d3fc9be1104fc90a",
+    "score": 60,
+    "matchedOn": [
+      "Sterile speculum examination of the vagina",
+      "sterile speculum examination for suspected PPROM",
+      "Use sterile speculum examination to evaluate suspected preterm rupture of membranes."
+    ]
+  },
+  {
+    "knowledgeObjectId": "ko-ed6b78b1b05607f1-sterile-speculum-examination-for-suspected-pprom-diagnosis",
+    "medicalFactId": "anking-1554052517077-69570cddd1b7bd64",
+    "score": 60,
+    "matchedOn": [
+      "Sterile speculum examination of the vagina",
+      "sterile speculum examination for suspected PPROM",
+      "Use sterile speculum examination to evaluate suspected preterm rupture of membranes."
+    ]
+  },
+  {
+    "knowledgeObjectId": "ko-5bd8e25ebf913926-insertion-of-next_best_step",
+    "medicalFactId": "anking-1554029070069-ff9c0b1a4b01617a",
+    "score": 80,
+    "matchedOn": [
+      "Insertion of",
+      "Choose the correct clinical action for Insertion of.",
+      "Examination shows partial prolapse of the uterine cervix through the introitus",
+      "Vulvovaginal infections / STI"
+    ]
+  },
+  {
+    "knowledgeObjectId": "ko-5bd8e25ebf913926-insertion-of-next_best_step",
+    "medicalFactId": "anking-1549819684562-d3fc9be1104fc90a",
+    "score": 60,
+    "matchedOn": [
+      "Choose the correct clinical action for Insertion of.",
+      "Examination shows partial prolapse of the uterine cervix through the introitus",
+      "Vulvovaginal infections / STI"
+    ]
+  },
+  {
+    "knowledgeObjectId": "ko-5bd8e25ebf913926-insertion-of-next_best_step",
+    "medicalFactId": "anking-1554052517077-69570cddd1b7bd64",
+    "score": 60,
+    "matchedOn": [
+      "Choose the correct clinical action for Insertion of.",
+      "Examination shows partial prolapse of the uterine cervix through the introitus",
+      "Vulvovaginal infections / STI"
+    ]
+  },
+  {
+    "knowledgeObjectId": "ko-f4822a2dfd9ea2ea-preeclampsia-eclampsia-next_best_step",
+    "medicalFactId": "anking-1549819684562-d3fc9be1104fc90a",
+    "score": 100,
+    "matchedOn": [
+      "Induction of labor",
+      "Preeclampsia/eclampsia",
+      "Choose the correct clinical action for Preeclampsia/eclampsia.",
+      "Labor typically begins 1 to 2 weeks after fetal demise",
+      "Vulvovaginal infections / STI"
+    ]
+  },
+  {
+    "knowledgeObjectId": "ko-f4822a2dfd9ea2ea-preeclampsia-eclampsia-next_best_step",
+    "medicalFactId": "anking-1554052517077-69570cddd1b7bd64",
+    "score": 100,
+    "matchedOn": [
+      "Induction of labor",
+      "Preeclampsia/eclampsia",
+      "Choose the correct clinical action for Preeclampsia/eclampsia.",
+      "Labor typically begins 1 to 2 weeks after fetal demise",
+      "Vulvovaginal infections / STI"
+    ]
+  },
+  {
+    "knowledgeObjectId": "ko-f4822a2dfd9ea2ea-preeclampsia-eclampsia-next_best_step",
+    "medicalFactId": "anking-1554029070069-ff9c0b1a4b01617a",
+    "score": 80,
+    "matchedOn": [
+      "Preeclampsia/eclampsia",
+      "Choose the correct clinical action for Preeclampsia/eclampsia.",
+      "Labor typically begins 1 to 2 weeks after fetal demise",
+      "Vulvovaginal infections / STI"
+    ]
+  },
+  {
+    "knowledgeObjectId": "ko-2c13ffacf4630900-increasing-catecholamine-mechanism",
+    "medicalFactId": "anking-1554029070069-ff9c0b1a4b01617a",
+    "score": 80,
+    "matchedOn": [
+      "Increasing catecholamine",
+      "Identify the mechanism or causal explanation for Increasing catecholamine.",
+      "She has used crack cocaine during the pregnancy",
+      "PPROM evaluation"
+    ]
+  },
+  {
+    "knowledgeObjectId": "ko-2c13ffacf4630900-increasing-catecholamine-mechanism",
+    "medicalFactId": "anking-1549819684562-d3fc9be1104fc90a",
+    "score": 60,
+    "matchedOn": [
+      "Increasing catecholamine",
+      "Identify the mechanism or causal explanation for Increasing catecholamine.",
+      "She has used crack cocaine during the pregnancy"
+    ]
+  },
+  {
+    "knowledgeObjectId": "ko-2c13ffacf4630900-increasing-catecholamine-mechanism",
+    "medicalFactId": "anking-1554052517077-69570cddd1b7bd64",
+    "score": 60,
+    "matchedOn": [
+      "Increasing catecholamine",
+      "Identify the mechanism or causal explanation for Increasing catecholamine.",
+      "She has used crack cocaine during the pregnancy"
+    ]
+  },
+  {
+    "knowledgeObjectId": "ko-4dcd1140d936473f-pulmonary-embolism-postpartum-diagnosis",
+    "medicalFactId": "anking-1554029070069-ff9c0b1a4b01617a",
+    "score": 100,
+    "matchedOn": [
+      "Thrombus within the pulmonary arteries",
+      "pulmonary embolism postpartum",
+      "Recognize postpartum pulmonary embolism as thrombus causing pleuritic dyspnea and hypoxemia.",
+      "Small pulmonary emboli may present only as pain or subjective shortness of breath and may be asymptomatic with normal vital signs",
+      "Pregnancy/postpartum cardiopulmonary disease"
+    ]
+  },
+  {
+    "knowledgeObjectId": "ko-4dcd1140d936473f-pulmonary-embolism-postpartum-diagnosis",
+    "medicalFactId": "anking-1549819684562-d3fc9be1104fc90a",
+    "score": 60,
+    "matchedOn": [
+      "Recognize postpartum pulmonary embolism as thrombus causing pleuritic dyspnea and hypoxemia.",
+      "Small pulmonary emboli may present only as pain or subjective shortness of breath and may be asymptomatic with normal vital signs",
+      "Pregnancy/postpartum cardiopulmonary disease"
+    ]
+  },
+  {
+    "knowledgeObjectId": "ko-4dcd1140d936473f-pulmonary-embolism-postpartum-diagnosis",
+    "medicalFactId": "anking-1554052517077-69570cddd1b7bd64",
+    "score": 60,
+    "matchedOn": [
+      "Recognize postpartum pulmonary embolism as thrombus causing pleuritic dyspnea and hypoxemia.",
+      "Small pulmonary emboli may present only as pain or subjective shortness of breath and may be asymptomatic with normal vital signs",
+      "Pregnancy/postpartum cardiopulmonary disease"
+    ]
+  },
+  {
+    "knowledgeObjectId": "ko-cb50752b237147d1-preeclampsia-eclampsia-risk_factor_interpretation",
+    "medicalFactId": "anking-1549819684562-d3fc9be1104fc90a",
+    "score": 100,
+    "matchedOn": [
+      "Facial nerve injury",
+      "Preeclampsia/eclampsia",
+      "Apply the Preeclampsia/eclampsia reasoning schema.",
+      "Successful assisted vaginal delivery requires a dilated and effaced cervix with ruptured membranes and an engaged occiput",
+      "Female Reproductive"
+    ]
+  },
+  {
+    "knowledgeObjectId": "ko-cb50752b237147d1-preeclampsia-eclampsia-risk_factor_interpretation",
+    "medicalFactId": "anking-1554029070069-ff9c0b1a4b01617a",
+    "score": 100,
+    "matchedOn": [
+      "Facial nerve injury",
+      "Preeclampsia/eclampsia",
+      "Apply the Preeclampsia/eclampsia reasoning schema.",
+      "Successful assisted vaginal delivery requires a dilated and effaced cervix with ruptured membranes and an engaged occiput",
+      "Female Reproductive"
+    ]
+  },
+  {
+    "knowledgeObjectId": "ko-cb50752b237147d1-preeclampsia-eclampsia-risk_factor_interpretation",
+    "medicalFactId": "anking-1554052517077-69570cddd1b7bd64",
+    "score": 100,
+    "matchedOn": [
+      "Facial nerve injury",
+      "Preeclampsia/eclampsia",
+      "Apply the Preeclampsia/eclampsia reasoning schema.",
+      "Successful assisted vaginal delivery requires a dilated and effaced cervix with ruptured membranes and an engaged occiput",
+      "Female Reproductive"
+    ]
+  },
+  {
+    "knowledgeObjectId": "ko-8f6e7d89a3fc11e4-observation-only-next_best_step",
+    "medicalFactId": "anking-1554029070069-ff9c0b1a4b01617a",
+    "score": 80,
+    "matchedOn": [
+      "Observation only",
+      "Choose the correct clinical action for Observation only.",
+      "She has not had vaginal bleeding , pelvic pain , or loss of urine",
+      "Contraception"
+    ]
+  },
+  {
+    "knowledgeObjectId": "ko-8f6e7d89a3fc11e4-observation-only-next_best_step",
+    "medicalFactId": "anking-1578684276753-d533e721a0d5a712",
+    "score": 73,
+    "matchedOn": [
+      "Observation only",
+      "Choose the correct clinical action for Observation only."
+    ]
+  },
+  {
+    "knowledgeObjectId": "ko-8f6e7d89a3fc11e4-observation-only-next_best_step",
+    "medicalFactId": "anking-1577678687320-2580e060519389a9",
+    "score": 68,
+    "matchedOn": [
+      "Contraception"
+    ]
+  },
+  {
+    "knowledgeObjectId": "ko-8f6e7d89a3fc11e4-observation-only-next_best_step",
+    "medicalFactId": "anking-1549819684562-d3fc9be1104fc90a",
+    "score": 60,
+    "matchedOn": [
+      "Choose the correct clinical action for Observation only.",
+      "She has not had vaginal bleeding , pelvic pain , or loss of urine",
+      "Contraception"
+    ]
+  },
+  {
+    "knowledgeObjectId": "ko-8f6e7d89a3fc11e4-observation-only-next_best_step",
+    "medicalFactId": "anking-1554052517077-69570cddd1b7bd64",
+    "score": 60,
+    "matchedOn": [
+      "Choose the correct clinical action for Observation only.",
+      "She has not had vaginal bleeding , pelvic pain , or loss of urine",
+      "Contraception"
+    ]
+  },
+  {
+    "knowledgeObjectId": "ko-cb4ea8ee4ebd7d3d-repeat-rapid-i-ilasma-reagin-diagnosis",
+    "medicalFactId": "anking-1554029070069-ff9c0b1a4b01617a",
+    "score": 80,
+    "matchedOn": [
+      "Repeat rapid i:ilasma reagin",
+      "Diagnose Repeat rapid i:ilasma reagin.",
+      "5-cm nontender ulcer with slightly raised edges and a shallow base on the perineum",
+      "Vulvovaginal infections / STI"
+    ]
+  },
+  {
+    "knowledgeObjectId": "ko-cb4ea8ee4ebd7d3d-repeat-rapid-i-ilasma-reagin-diagnosis",
+    "medicalFactId": "anking-1549819684562-d3fc9be1104fc90a",
+    "score": 40,
+    "matchedOn": [
+      "5-cm nontender ulcer with slightly raised edges and a shallow base on the perineum",
+      "Vulvovaginal infections / STI"
+    ]
+  },
+  {
+    "knowledgeObjectId": "ko-cb4ea8ee4ebd7d3d-repeat-rapid-i-ilasma-reagin-diagnosis",
+    "medicalFactId": "anking-1554052517077-69570cddd1b7bd64",
+    "score": 40,
+    "matchedOn": [
+      "5-cm nontender ulcer with slightly raised edges and a shallow base on the perineum",
+      "Vulvovaginal infections / STI"
+    ]
+  },
+  {
+    "knowledgeObjectId": "ko-b92fa999a4fc2bf9-undiagnosed-maternal-diabetes-mellitus-risk_factor_interpretation",
+    "medicalFactId": "anking-1554029070069-ff9c0b1a4b01617a",
+    "score": 80,
+    "matchedOn": [
+      "Undiagnosed maternal diabetes mellitus",
+      "Apply the Undiagnosed maternal diabetes mellitus reasoning schema.",
+      "She weighed 77 kg (169 lb) prior to her pregnancy",
+      "Obstetrics / postpartum hemorrhage"
+    ]
+  },
+  {
+    "knowledgeObjectId": "ko-b92fa999a4fc2bf9-undiagnosed-maternal-diabetes-mellitus-risk_factor_interpretation",
+    "medicalFactId": "anking-1549819684562-d3fc9be1104fc90a",
+    "score": 60,
+    "matchedOn": [
+      "Apply the Undiagnosed maternal diabetes mellitus reasoning schema.",
+      "She weighed 77 kg (169 lb) prior to her pregnancy",
+      "Obstetrics / postpartum hemorrhage"
+    ]
+  },
+  {
+    "knowledgeObjectId": "ko-b92fa999a4fc2bf9-undiagnosed-maternal-diabetes-mellitus-risk_factor_interpretation",
+    "medicalFactId": "anking-1554052517077-69570cddd1b7bd64",
+    "score": 60,
+    "matchedOn": [
+      "Apply the Undiagnosed maternal diabetes mellitus reasoning schema.",
+      "She weighed 77 kg (169 lb) prior to her pregnancy",
+      "Obstetrics / postpartum hemorrhage"
+    ]
+  },
+  {
+    "knowledgeObjectId": "ko-b92fa999a4fc2bf9-undiagnosed-maternal-diabetes-mellitus-risk_factor_interpretation",
+    "medicalFactId": "anking-1496499546113-3050ab737f4f4227",
+    "score": 40,
+    "matchedOn": [
+      "Undiagnosed maternal diabetes mellitus",
+      "Apply the Undiagnosed maternal diabetes mellitus reasoning schema."
+    ]
+  },
+  {
+    "knowledgeObjectId": "ko-b92fa999a4fc2bf9-undiagnosed-maternal-diabetes-mellitus-risk_factor_interpretation",
+    "medicalFactId": "anking-1502572570110-5ed525fa914315b4",
+    "score": 40,
+    "matchedOn": [
+      "Undiagnosed maternal diabetes mellitus",
+      "Apply the Undiagnosed maternal diabetes mellitus reasoning schema."
+    ]
+  },
+  {
+    "knowledgeObjectId": "ko-b92fa999a4fc2bf9-undiagnosed-maternal-diabetes-mellitus-risk_factor_interpretation",
+    "medicalFactId": "anking-1535323341478-912f7cc21b45ab42",
+    "score": 40,
+    "matchedOn": [
+      "Undiagnosed maternal diabetes mellitus",
+      "Apply the Undiagnosed maternal diabetes mellitus reasoning schema."
+    ]
+  },
+  {
+    "knowledgeObjectId": "ko-925dcce62e604638-ectopic-pregnancy-next_best_step",
+    "medicalFactId": "anking-1554029070069-ff9c0b1a4b01617a",
+    "score": 100,
+    "matchedOn": [
+      "HIV antibody test",
+      "Ectopic pregnancy",
+      "Choose the correct clinical action for Ectopic pregnancy.",
+      "Abdominal examination shows tenderness to palpation of the lower quadrants with no guarding or rebound",
+      "Early pregnancy bleeding / acute pelvic pain"
+    ]
+  },
+  {
+    "knowledgeObjectId": "ko-925dcce62e604638-ectopic-pregnancy-next_best_step",
+    "medicalFactId": "anking-1549819684562-d3fc9be1104fc90a",
+    "score": 60,
+    "matchedOn": [
+      "Ectopic pregnancy",
+      "Choose the correct clinical action for Ectopic pregnancy.",
+      "Early pregnancy bleeding / acute pelvic pain"
+    ]
+  },
+  {
+    "knowledgeObjectId": "ko-925dcce62e604638-ectopic-pregnancy-next_best_step",
+    "medicalFactId": "anking-1554052517077-69570cddd1b7bd64",
+    "score": 60,
+    "matchedOn": [
+      "Ectopic pregnancy",
+      "Choose the correct clinical action for Ectopic pregnancy.",
+      "Early pregnancy bleeding / acute pelvic pain"
+    ]
+  },
+  {
+    "knowledgeObjectId": "ko-925dcce62e604638-ectopic-pregnancy-next_best_step",
+    "medicalFactId": "anking-1434929988016-6d0cc6823f0fc048",
+    "score": 48,
+    "matchedOn": [
+      "Ectopic pregnancy"
+    ]
+  },
+  {
+    "knowledgeObjectId": "ko-925dcce62e604638-ectopic-pregnancy-next_best_step",
+    "medicalFactId": "anking-1533478263120-6e05678936a12bb0",
+    "score": 48,
+    "matchedOn": [
+      "Ectopic pregnancy"
+    ]
+  },
+  {
+    "knowledgeObjectId": "ko-925dcce62e604638-ectopic-pregnancy-next_best_step",
+    "medicalFactId": "anking-1547916021345-b42986d922f4a641",
+    "score": 48,
+    "matchedOn": [
+      "Ectopic pregnancy"
+    ]
+  },
+  {
+    "knowledgeObjectId": "ko-925dcce62e604638-ectopic-pregnancy-next_best_step",
+    "medicalFactId": "anking-1556749991333-413a518634c1359f",
+    "score": 48,
+    "matchedOn": [
+      "Ectopic pregnancy"
+    ]
+  },
+  {
+    "knowledgeObjectId": "ko-b2c6a10ae8d3d865-ectopic-pregnancy-diagnosis",
+    "medicalFactId": "anking-1554029070069-ff9c0b1a4b01617a",
+    "score": 100,
+    "matchedOn": [
+      "Mature teratoma",
+      "Ectopic pregnancy",
+      "Diagnose Ectopic pregnancy.",
+      "Ultrasonography shows an 8-cm complex mass in the right adnexa with echogenicity",
+      "Early pregnancy bleeding / acute pelvic pain"
+    ]
+  },
+  {
+    "knowledgeObjectId": "ko-b2c6a10ae8d3d865-ectopic-pregnancy-diagnosis",
+    "medicalFactId": "anking-1549819684562-d3fc9be1104fc90a",
+    "score": 80,
+    "matchedOn": [
+      "Ectopic pregnancy",
+      "Diagnose Ectopic pregnancy.",
+      "Ultrasonography shows an 8-cm complex mass in the right adnexa with echogenicity",
+      "Early pregnancy bleeding / acute pelvic pain"
+    ]
+  },
+  {
+    "knowledgeObjectId": "ko-b2c6a10ae8d3d865-ectopic-pregnancy-diagnosis",
+    "medicalFactId": "anking-1554052517077-69570cddd1b7bd64",
+    "score": 80,
+    "matchedOn": [
+      "Ectopic pregnancy",
+      "Diagnose Ectopic pregnancy.",
+      "Ultrasonography shows an 8-cm complex mass in the right adnexa with echogenicity",
+      "Early pregnancy bleeding / acute pelvic pain"
+    ]
+  },
+  {
+    "knowledgeObjectId": "ko-b2c6a10ae8d3d865-ectopic-pregnancy-diagnosis",
+    "medicalFactId": "anking-1434929988016-6d0cc6823f0fc048",
+    "score": 48,
+    "matchedOn": [
+      "Ectopic pregnancy"
+    ]
+  },
+  {
+    "knowledgeObjectId": "ko-b2c6a10ae8d3d865-ectopic-pregnancy-diagnosis",
+    "medicalFactId": "anking-1533478263120-6e05678936a12bb0",
+    "score": 48,
+    "matchedOn": [
+      "Ectopic pregnancy"
+    ]
+  },
+  {
+    "knowledgeObjectId": "ko-b2c6a10ae8d3d865-ectopic-pregnancy-diagnosis",
+    "medicalFactId": "anking-1547916021345-b42986d922f4a641",
+    "score": 48,
+    "matchedOn": [
+      "Ectopic pregnancy"
+    ]
+  },
+  {
+    "knowledgeObjectId": "ko-b2c6a10ae8d3d865-ectopic-pregnancy-diagnosis",
+    "medicalFactId": "anking-1556749991333-413a518634c1359f",
+    "score": 48,
+    "matchedOn": [
+      "Ectopic pregnancy"
+    ]
+  },
+  {
+    "knowledgeObjectId": "ko-e8ee4aede2d4b385-urinary-retention-risk_factor_interpretation",
+    "medicalFactId": "anking-1554029070069-ff9c0b1a4b01617a",
+    "score": 80,
+    "matchedOn": [
+      "Urinary retention",
+      "Apply the Urinary retention reasoning schema.",
+      "she has not voided since discharge 36 hours ago",
+      "Vulvovaginal infections / STI"
+    ]
+  },
+  {
+    "knowledgeObjectId": "ko-e8ee4aede2d4b385-urinary-retention-risk_factor_interpretation",
+    "medicalFactId": "anking-1549819684562-d3fc9be1104fc90a",
+    "score": 60,
+    "matchedOn": [
+      "Apply the Urinary retention reasoning schema.",
+      "she has not voided since discharge 36 hours ago",
+      "Vulvovaginal infections / STI"
+    ]
+  },
+  {
+    "knowledgeObjectId": "ko-e8ee4aede2d4b385-urinary-retention-risk_factor_interpretation",
+    "medicalFactId": "anking-1554052517077-69570cddd1b7bd64",
+    "score": 60,
+    "matchedOn": [
+      "Apply the Urinary retention reasoning schema.",
+      "she has not voided since discharge 36 hours ago",
+      "Vulvovaginal infections / STI"
+    ]
+  },
+  {
+    "knowledgeObjectId": "ko-e8ee4aede2d4b385-urinary-retention-risk_factor_interpretation",
+    "medicalFactId": "anking-1557229292963-c00b2d760c2b2440",
+    "score": 48,
+    "matchedOn": [
+      "Urinary retention"
+    ]
+  },
+  {
+    "knowledgeObjectId": "ko-e8ee4aede2d4b385-urinary-retention-risk_factor_interpretation",
+    "medicalFactId": "anking-1531512675436-f67940123f0d4f47",
+    "score": 40,
+    "matchedOn": [
+      "Urinary retention"
+    ]
+  },
+  {
+    "knowledgeObjectId": "ko-e8ee4aede2d4b385-urinary-retention-risk_factor_interpretation",
+    "medicalFactId": "anking-1532612240934-19bee4a0d585ca8d",
+    "score": 40,
+    "matchedOn": [
+      "Urinary retention"
+    ]
+  },
+  {
+    "knowledgeObjectId": "ko-e8ee4aede2d4b385-urinary-retention-risk_factor_interpretation",
+    "medicalFactId": "anking-1548978989845-b91d2d6979cc389f",
+    "score": 40,
+    "matchedOn": [
+      "Urinary retention"
+    ]
+  },
+  {
+    "knowledgeObjectId": "ko-e8ee4aede2d4b385-urinary-retention-risk_factor_interpretation",
+    "medicalFactId": "anking-1553556510972-a1c82ab22f1a1ce5",
+    "score": 40,
+    "matchedOn": [
+      "Urinary retention"
+    ]
+  },
+  {
+    "knowledgeObjectId": "ko-17c0fe45d375689b-rh-negative-pregnancy-alloimmunization-prophylaxis-next_best_step",
+    "medicalFactId": "anking-1554029070069-ff9c0b1a4b01617a",
+    "score": 100,
+    "matchedOn": [
+      "Maternal intramuscular administration of Rh o(Q) immune globulin now",
+      "Rh-negative pregnancy alloimmunization prophylaxis",
+      "Give Rh(D) immune globulin when an unsensitized Rh-negative pregnancy has bleeding or fetomaternal hemorrhage risk.",
+      "Examination shows a uterus consistent in size with a 12-week gestation",
+      "Rh alloimmunization prevention"
+    ]
+  },
+  {
+    "knowledgeObjectId": "ko-17c0fe45d375689b-rh-negative-pregnancy-alloimmunization-prophylaxis-next_best_step",
+    "medicalFactId": "anking-1549819684562-d3fc9be1104fc90a",
+    "score": 80,
+    "matchedOn": [
+      "Maternal intramuscular administration of Rh o(Q) immune globulin now",
+      "Rh-negative pregnancy alloimmunization prophylaxis",
+      "Give Rh(D) immune globulin when an unsensitized Rh-negative pregnancy has bleeding or fetomaternal hemorrhage risk.",
+      "Examination shows a uterus consistent in size with a 12-week gestation"
+    ]
+  },
+  {
+    "knowledgeObjectId": "ko-17c0fe45d375689b-rh-negative-pregnancy-alloimmunization-prophylaxis-next_best_step",
+    "medicalFactId": "anking-1554052517077-69570cddd1b7bd64",
+    "score": 80,
+    "matchedOn": [
+      "Maternal intramuscular administration of Rh o(Q) immune globulin now",
+      "Rh-negative pregnancy alloimmunization prophylaxis",
+      "Give Rh(D) immune globulin when an unsensitized Rh-negative pregnancy has bleeding or fetomaternal hemorrhage risk.",
+      "Examination shows a uterus consistent in size with a 12-week gestation"
+    ]
+  },
+  {
+    "knowledgeObjectId": "ko-17c0fe45d375689b-rh-negative-pregnancy-alloimmunization-prophylaxis-next_best_step",
+    "medicalFactId": "anking-1519753941837-6a2695b528653fb7",
+    "score": 60,
+    "matchedOn": [
+      "Maternal intramuscular administration of Rh o(Q) immune globulin now",
+      "Give Rh(D) immune globulin when an unsensitized Rh-negative pregnancy has bleeding or fetomaternal hemorrhage risk."
+    ]
+  },
+  {
+    "knowledgeObjectId": "ko-17c0fe45d375689b-rh-negative-pregnancy-alloimmunization-prophylaxis-next_best_step",
+    "medicalFactId": "anking-1502492809047-38f7f7fd833f8e8e",
+    "score": 48,
+    "matchedOn": [
+      "Maternal intramuscular administration of Rh o(Q) immune globulin now",
+      "Give Rh(D) immune globulin when an unsensitized Rh-negative pregnancy has bleeding or fetomaternal hemorrhage risk."
+    ]
+  },
+  {
+    "knowledgeObjectId": "ko-17c0fe45d375689b-rh-negative-pregnancy-alloimmunization-prophylaxis-next_best_step",
+    "medicalFactId": "anking-1503535981495-a089107dfd1e9526",
+    "score": 48,
+    "matchedOn": [
+      "Maternal intramuscular administration of Rh o(Q) immune globulin now",
+      "Give Rh(D) immune globulin when an unsensitized Rh-negative pregnancy has bleeding or fetomaternal hemorrhage risk."
+    ]
+  },
+  {
+    "knowledgeObjectId": "ko-17c0fe45d375689b-rh-negative-pregnancy-alloimmunization-prophylaxis-next_best_step",
+    "medicalFactId": "anking-1505562757603-8b7199306e632a25",
+    "score": 48,
+    "matchedOn": [
+      "Maternal intramuscular administration of Rh o(Q) immune globulin now",
+      "Give Rh(D) immune globulin when an unsensitized Rh-negative pregnancy has bleeding or fetomaternal hemorrhage risk."
+    ]
+  },
+  {
+    "knowledgeObjectId": "ko-17c0fe45d375689b-rh-negative-pregnancy-alloimmunization-prophylaxis-next_best_step",
+    "medicalFactId": "anking-1516464512584-0cd4b0d552356978",
+    "score": 48,
+    "matchedOn": [
+      "Maternal intramuscular administration of Rh o(Q) immune globulin now",
+      "Give Rh(D) immune globulin when an unsensitized Rh-negative pregnancy has bleeding or fetomaternal hemorrhage risk."
+    ]
+  },
+  {
+    "knowledgeObjectId": "ko-e9dbd97cfa421fd0-fascial-dehiscence-after-abdominal-incision-diagnosis",
+    "medicalFactId": "anking-1549819684562-d3fc9be1104fc90a",
+    "score": 100,
+    "matchedOn": [
+      "Dehiscence",
+      "fascial dehiscence after abdominal incision",
+      "Diagnose fascial dehiscence when profuse serosanguineous drainage follows abdominal surgery.",
+      "Forty-eight hours later, there is profuse serosanguineous drainage from the midline skin incision",
+      "Female Reproductive"
+    ]
+  },
+  {
+    "knowledgeObjectId": "ko-e9dbd97cfa421fd0-fascial-dehiscence-after-abdominal-incision-diagnosis",
+    "medicalFactId": "anking-1554029070069-ff9c0b1a4b01617a",
+    "score": 100,
+    "matchedOn": [
+      "Dehiscence",
+      "fascial dehiscence after abdominal incision",
+      "Diagnose fascial dehiscence when profuse serosanguineous drainage follows abdominal surgery.",
+      "Forty-eight hours later, there is profuse serosanguineous drainage from the midline skin incision",
+      "Female Reproductive"
+    ]
+  },
+  {
+    "knowledgeObjectId": "ko-e9dbd97cfa421fd0-fascial-dehiscence-after-abdominal-incision-diagnosis",
+    "medicalFactId": "anking-1554052517077-69570cddd1b7bd64",
+    "score": 100,
+    "matchedOn": [
+      "Dehiscence",
+      "fascial dehiscence after abdominal incision",
+      "Diagnose fascial dehiscence when profuse serosanguineous drainage follows abdominal surgery.",
+      "Forty-eight hours later, there is profuse serosanguineous drainage from the midline skin incision",
+      "Female Reproductive"
+    ]
+  },
+  {
+    "knowledgeObjectId": "ko-e9dbd97cfa421fd0-fascial-dehiscence-after-abdominal-incision-diagnosis",
+    "medicalFactId": "anking-1556661503662-b721a3cf8ff380a6",
+    "score": 48,
+    "matchedOn": [
+      "Dehiscence"
+    ]
+  },
+  {
+    "knowledgeObjectId": "ko-e9dbd97cfa421fd0-fascial-dehiscence-after-abdominal-incision-diagnosis",
+    "medicalFactId": "anking-1557080902446-185222619e67b023",
+    "score": 48,
+    "matchedOn": [
+      "Dehiscence"
+    ]
+  },
+  {
+    "knowledgeObjectId": "ko-e9dbd97cfa421fd0-fascial-dehiscence-after-abdominal-incision-diagnosis",
+    "medicalFactId": "anking-1556926037570-ca338f2b88cf0a29",
+    "score": 40,
+    "matchedOn": [
+      "Dehiscence"
+    ]
+  },
+  {
+    "knowledgeObjectId": "ko-52e978c46bc7cbed-podophyllum-resin-therapy-management",
+    "medicalFactId": "anking-1554029070069-ff9c0b1a4b01617a",
+    "score": 80,
+    "matchedOn": [
+      "Podophyllum resin therapy",
+      "Choose the correct clinical action for Podophyllum resin therapy.",
+      "Examination shows multiple 5- to 10-mm soft pink papillary lesions with areas of pigmentation on the labia minora and posterior fourchette",
+      "Vulvovaginal infections / STI"
+    ]
+  },
+  {
+    "knowledgeObjectId": "ko-52e978c46bc7cbed-podophyllum-resin-therapy-management",
+    "medicalFactId": "anking-1549819684562-d3fc9be1104fc90a",
+    "score": 60,
+    "matchedOn": [
+      "Choose the correct clinical action for Podophyllum resin therapy.",
+      "Examination shows multiple 5- to 10-mm soft pink papillary lesions with areas of pigmentation on the labia minora and posterior fourchette",
+      "Vulvovaginal infections / STI"
+    ]
+  },
+  {
+    "knowledgeObjectId": "ko-52e978c46bc7cbed-podophyllum-resin-therapy-management",
+    "medicalFactId": "anking-1554052517077-69570cddd1b7bd64",
+    "score": 60,
+    "matchedOn": [
+      "Choose the correct clinical action for Podophyllum resin therapy.",
+      "Examination shows multiple 5- to 10-mm soft pink papillary lesions with areas of pigmentation on the labia minora and posterior fourchette",
+      "Vulvovaginal infections / STI"
+    ]
+  },
+  {
+    "knowledgeObjectId": "ko-645f9ff75384de64-estradiol-risk_factor_interpretation",
+    "medicalFactId": "anking-1554029070069-ff9c0b1a4b01617a",
+    "score": 80,
+    "matchedOn": [
+      "Estradiol",
+      "Apply the Estradiol reasoning schema.",
+      "patient patient has dysuria , nocturia, and frequent urination",
+      "Gynecologic oncology"
+    ]
+  },
+  {
+    "knowledgeObjectId": "ko-645f9ff75384de64-estradiol-risk_factor_interpretation",
+    "medicalFactId": "anking-1549819684562-d3fc9be1104fc90a",
+    "score": 60,
+    "matchedOn": [
+      "Apply the Estradiol reasoning schema.",
+      "patient patient has dysuria , nocturia, and frequent urination",
+      "Gynecologic oncology"
+    ]
+  },
+  {
+    "knowledgeObjectId": "ko-645f9ff75384de64-estradiol-risk_factor_interpretation",
+    "medicalFactId": "anking-1554052517077-69570cddd1b7bd64",
+    "score": 60,
+    "matchedOn": [
+      "Apply the Estradiol reasoning schema.",
+      "patient patient has dysuria , nocturia, and frequent urination",
+      "Gynecologic oncology"
+    ]
+  },
+  {
+    "knowledgeObjectId": "ko-1ddf482c308e79f9-pulmonary-embolism-diagnosis",
+    "medicalFactId": "anking-1554029070069-ff9c0b1a4b01617a",
+    "score": 100,
+    "matchedOn": [
+      "A~endicitis",
+      "Pulmonary embolism",
+      "Diagnose Pulmonary embolism.",
+      "She is unable to tolerate a bimanual examination because of extreme tenderness",
+      "PPROM evaluation"
+    ]
+  },
+  {
+    "knowledgeObjectId": "ko-1ddf482c308e79f9-pulmonary-embolism-diagnosis",
+    "medicalFactId": "anking-1511029834678-e7b82c96a5ab5b80",
+    "score": 60,
+    "matchedOn": [
+      "Pulmonary embolism"
+    ]
+  },
+  {
+    "knowledgeObjectId": "ko-1ddf482c308e79f9-pulmonary-embolism-diagnosis",
+    "medicalFactId": "anking-1557844491367-cb613727a0fe5597",
+    "score": 48,
+    "matchedOn": [
+      "Pulmonary embolism"
+    ]
+  },
+  {
+    "knowledgeObjectId": "ko-1ddf482c308e79f9-pulmonary-embolism-diagnosis",
+    "medicalFactId": "anking-1579463599500-25421f0c84e7de63",
+    "score": 48,
+    "matchedOn": [
+      "Pulmonary embolism"
+    ]
+  },
+  {
+    "knowledgeObjectId": "ko-1ddf482c308e79f9-pulmonary-embolism-diagnosis",
+    "medicalFactId": "anking-1496186786076-2b8549609af0ad3b",
+    "score": 40,
+    "matchedOn": [
+      "Pulmonary embolism"
+    ]
+  },
+  {
+    "knowledgeObjectId": "ko-1ddf482c308e79f9-pulmonary-embolism-diagnosis",
+    "medicalFactId": "anking-1503361190233-4eaf2813555d4f0d",
+    "score": 40,
+    "matchedOn": [
+      "Pulmonary embolism"
+    ]
+  },
+  {
+    "knowledgeObjectId": "ko-1ddf482c308e79f9-pulmonary-embolism-diagnosis",
+    "medicalFactId": "anking-1511029806519-7610148a1d27f51a",
+    "score": 40,
+    "matchedOn": [
+      "Pulmonary embolism"
+    ]
+  },
+  {
+    "knowledgeObjectId": "ko-1ddf482c308e79f9-pulmonary-embolism-diagnosis",
+    "medicalFactId": "anking-1532735702949-fd61904a05c82eb7",
+    "score": 40,
+    "matchedOn": [
+      "Pulmonary embolism"
+    ]
+  },
+  {
+    "knowledgeObjectId": "ko-12bc71fe671cc81e-pulmonary-embolism-risk_factor_interpretation",
+    "medicalFactId": "anking-1554029070069-ff9c0b1a4b01617a",
+    "score": 100,
+    "matchedOn": [
+      "Uterine rupture",
+      "Pulmonary embolism",
+      "Apply the Pulmonary embolism reasoning schema.",
+      "Fetal parts may be palpable above the fundus with Leopold maneuvers",
+      "Third-trimester bleeding"
+    ]
+  },
+  {
+    "knowledgeObjectId": "ko-12bc71fe671cc81e-pulmonary-embolism-risk_factor_interpretation",
+    "medicalFactId": "anking-1511029834678-e7b82c96a5ab5b80",
+    "score": 60,
+    "matchedOn": [
+      "Pulmonary embolism"
+    ]
+  },
+  {
+    "knowledgeObjectId": "ko-12bc71fe671cc81e-pulmonary-embolism-risk_factor_interpretation",
+    "medicalFactId": "anking-1519835623424-835e9f4275e30222",
+    "score": 48,
+    "matchedOn": [
+      "Uterine rupture"
+    ]
+  },
+  {
+    "knowledgeObjectId": "ko-12bc71fe671cc81e-pulmonary-embolism-risk_factor_interpretation",
+    "medicalFactId": "anking-1537894818320-89c673914f899e1e",
+    "score": 48,
+    "matchedOn": [
+      "Uterine rupture",
+      "Third-trimester bleeding"
+    ]
+  },
+  {
+    "knowledgeObjectId": "ko-12bc71fe671cc81e-pulmonary-embolism-risk_factor_interpretation",
+    "medicalFactId": "anking-1547242138350-e53a0b09d9e5fdf7",
+    "score": 48,
+    "matchedOn": [
+      "Uterine rupture"
+    ]
+  },
+  {
+    "knowledgeObjectId": "ko-12bc71fe671cc81e-pulmonary-embolism-risk_factor_interpretation",
+    "medicalFactId": "anking-1547242138365-29e60a6a6c82a31a",
+    "score": 48,
+    "matchedOn": [
+      "Uterine rupture"
+    ]
+  },
+  {
+    "knowledgeObjectId": "ko-12bc71fe671cc81e-pulmonary-embolism-risk_factor_interpretation",
+    "medicalFactId": "anking-1557844491367-cb613727a0fe5597",
+    "score": 48,
+    "matchedOn": [
+      "Pulmonary embolism"
+    ]
+  },
+  {
+    "knowledgeObjectId": "ko-12bc71fe671cc81e-pulmonary-embolism-risk_factor_interpretation",
+    "medicalFactId": "anking-1579463599500-25421f0c84e7de63",
+    "score": 48,
+    "matchedOn": [
+      "Pulmonary embolism"
+    ]
+  },
+  {
+    "knowledgeObjectId": "ko-4fd5a156964969e1-breast-diagnosis",
+    "medicalFactId": "anking-1556663596776-1ebc462b61d389e8",
+    "score": 100,
+    "matchedOn": [
+      "Breast"
+    ]
+  },
+  {
+    "knowledgeObjectId": "ko-4fd5a156964969e1-breast-diagnosis",
+    "medicalFactId": "anking-1554029070069-ff9c0b1a4b01617a",
+    "score": 80,
+    "matchedOn": [
+      "Breast",
+      "Diagnose Breast.",
+      "In patients with axillary lymphadenopathy, mammography should be the first diagnostic step",
+      "Vulvovaginal infections / STI"
+    ]
+  },
+  {
+    "knowledgeObjectId": "ko-4fd5a156964969e1-breast-diagnosis",
+    "medicalFactId": "anking-1520199228518-038f7f97313f1eca",
+    "score": 68,
+    "matchedOn": [
+      "Breast"
+    ]
+  },
+  {
+    "knowledgeObjectId": "ko-4fd5a156964969e1-breast-diagnosis",
+    "medicalFactId": "anking-1520205956176-67f7779d7c612425",
+    "score": 68,
+    "matchedOn": [
+      "Breast"
+    ]
+  },
+  {
+    "knowledgeObjectId": "ko-4fd5a156964969e1-breast-diagnosis",
+    "medicalFactId": "anking-1536092085805-2af91b29a3dd9e7d",
+    "score": 68,
+    "matchedOn": [
+      "Breast"
+    ]
+  },
+  {
+    "knowledgeObjectId": "ko-4fd5a156964969e1-breast-diagnosis",
+    "medicalFactId": "anking-1547916088727-fdad3fa7159b5146",
+    "score": 68,
+    "matchedOn": [
+      "Breast"
+    ]
+  },
+  {
+    "knowledgeObjectId": "ko-4fd5a156964969e1-breast-diagnosis",
+    "medicalFactId": "anking-1553876955171-c46344b4a76c94f7",
+    "score": 68,
+    "matchedOn": [
+      "Breast"
+    ]
+  },
+  {
+    "knowledgeObjectId": "ko-4fd5a156964969e1-breast-diagnosis",
+    "medicalFactId": "anking-1557670335329-da8de0dd9e4b4482",
+    "score": 60,
+    "matchedOn": [
+      "Breast"
+    ]
+  },
+  {
+    "knowledgeObjectId": "ko-c70df2cc9b534ecb-kell-tyl-ing-of-the-father-s-blood-next_best_step",
+    "medicalFactId": "anking-1554029070069-ff9c0b1a4b01617a",
+    "score": 80,
+    "matchedOn": [
+      "Kell tyl'.)ing of the father's blood",
+      "Choose the correct clinical action for Kell tyl'.)ing of the father's blood.",
+      "maternal antibodies can cross the placenta, it is important to determine whether this patient's fetus has Kell-positive or Kell-negative RBCs",
+      "Rh alloimmunization prevention"
+    ]
+  },
+  {
+    "knowledgeObjectId": "ko-c70df2cc9b534ecb-kell-tyl-ing-of-the-father-s-blood-next_best_step",
+    "medicalFactId": "anking-1549819684562-d3fc9be1104fc90a",
+    "score": 40,
+    "matchedOn": [
+      "Choose the correct clinical action for Kell tyl'.)ing of the father's blood.",
+      "maternal antibodies can cross the placenta, it is important to determine whether this patient's fetus has Kell-positive or Kell-negative RBCs"
+    ]
+  },
+  {
+    "knowledgeObjectId": "ko-c70df2cc9b534ecb-kell-tyl-ing-of-the-father-s-blood-next_best_step",
+    "medicalFactId": "anking-1554052517077-69570cddd1b7bd64",
+    "score": 40,
+    "matchedOn": [
+      "Choose the correct clinical action for Kell tyl'.)ing of the father's blood.",
+      "maternal antibodies can cross the placenta, it is important to determine whether this patient's fetus has Kell-positive or Kell-negative RBCs"
+    ]
+  },
+  {
+    "knowledgeObjectId": "ko-9f50f733001b562c-gonadal-dysgenesis-45-x-turner-syndrome-diagnosis",
+    "medicalFactId": "anking-1554029070069-ff9c0b1a4b01617a",
+    "score": 80,
+    "matchedOn": [
+      "Gonadal dysgenesis 45,X (Turner syndrome)",
+      "Diagnose Gonadal dysgenesis 45,X (Turner syndrome).",
+      "she has never had a menstrual period",
+      "Gynecologic oncology"
+    ]
+  },
+  {
+    "knowledgeObjectId": "ko-9f50f733001b562c-gonadal-dysgenesis-45-x-turner-syndrome-diagnosis",
+    "medicalFactId": "anking-1516923912632-967df955e5df029a",
+    "score": 48,
+    "matchedOn": [
+      "Gonadal dysgenesis 45,X (Turner syndrome)",
+      "Diagnose Gonadal dysgenesis 45,X (Turner syndrome)."
+    ]
+  },
+  {
+    "knowledgeObjectId": "ko-2b98e4cd246cd8bd-hepatitis-screening",
+    "medicalFactId": "anking-1554029070069-ff9c0b1a4b01617a",
+    "score": 80,
+    "matchedOn": [
+      "Hepatitis",
+      "Choose the correct clinical action for Hepatitis.",
+      "Her patient daughter developed a low-grade fever, respiratory symptoms, and a rash 24 hours ago",
+      "Female Reproductive"
+    ]
+  },
+  {
+    "knowledgeObjectId": "ko-2b98e4cd246cd8bd-hepatitis-screening",
+    "medicalFactId": "anking-1504814887461-56a5340956af3b89",
+    "score": 60,
+    "matchedOn": [
+      "Hepatitis"
+    ]
+  },
+  {
+    "knowledgeObjectId": "ko-2b98e4cd246cd8bd-hepatitis-screening",
+    "medicalFactId": "anking-1509027275845-e73b4c55cf908361",
+    "score": 48,
+    "matchedOn": [
+      "Hepatitis"
+    ]
+  },
+  {
+    "knowledgeObjectId": "ko-2b98e4cd246cd8bd-hepatitis-screening",
+    "medicalFactId": "anking-1578876449840-7a48142d0315a6a9",
+    "score": 48,
+    "matchedOn": [
+      "Hepatitis"
+    ]
+  },
+  {
+    "knowledgeObjectId": "ko-2b98e4cd246cd8bd-hepatitis-screening",
+    "medicalFactId": "anking-1580515228533-4b748459c4280c3f",
+    "score": 48,
+    "matchedOn": [
+      "Hepatitis"
+    ]
+  },
+  {
+    "knowledgeObjectId": "ko-2b98e4cd246cd8bd-hepatitis-screening",
+    "medicalFactId": "anking-1504049150283-072dffab0fe4769e",
+    "score": 40,
+    "matchedOn": [
+      "Hepatitis"
+    ]
+  },
+  {
+    "knowledgeObjectId": "ko-2b98e4cd246cd8bd-hepatitis-screening",
+    "medicalFactId": "anking-1511125822028-616fb6f29b257a00",
+    "score": 40,
+    "matchedOn": [
+      "Hepatitis"
+    ]
+  },
+  {
+    "knowledgeObjectId": "ko-2b98e4cd246cd8bd-hepatitis-screening",
+    "medicalFactId": "anking-1511126214501-d03cc354d0c15d4d",
+    "score": 40,
+    "matchedOn": [
+      "Hepatitis"
+    ]
+  },
+  {
+    "knowledgeObjectId": "ko-538d8c821df13ec1-endometrial-bioijsy-next_best_step",
+    "medicalFactId": "anking-1554029070069-ff9c0b1a4b01617a",
+    "score": 80,
+    "matchedOn": [
+      "Endometrial biOIJSY",
+      "Choose the correct clinical action for Endometrial biOIJSY.",
+      "Pelvic examination shows an irregularly shaped uterus consistent in size with a 12-week gestation",
+      "Gynecologic oncology"
+    ]
+  },
+  {
+    "knowledgeObjectId": "ko-538d8c821df13ec1-endometrial-bioijsy-next_best_step",
+    "medicalFactId": "anking-1549819684562-d3fc9be1104fc90a",
+    "score": 60,
+    "matchedOn": [
+      "Choose the correct clinical action for Endometrial biOIJSY.",
+      "Pelvic examination shows an irregularly shaped uterus consistent in size with a 12-week gestation",
+      "Gynecologic oncology"
+    ]
+  },
+  {
+    "knowledgeObjectId": "ko-538d8c821df13ec1-endometrial-bioijsy-next_best_step",
+    "medicalFactId": "anking-1554052517077-69570cddd1b7bd64",
+    "score": 60,
+    "matchedOn": [
+      "Choose the correct clinical action for Endometrial biOIJSY.",
+      "Pelvic examination shows an irregularly shaped uterus consistent in size with a 12-week gestation",
+      "Gynecologic oncology"
+    ]
+  },
+  {
+    "knowledgeObjectId": "ko-6905bb347e4f8ece-pregnancy-test-diagnosis",
+    "medicalFactId": "anking-1549819684562-d3fc9be1104fc90a",
+    "score": 80,
+    "matchedOn": [
+      "Pregnancy test",
+      "Diagnose Pregnancy test.",
+      "Early symptoms of pregnancy include fatigue, nausea, urinary frequency, and irregular menstruation",
+      "Contraception"
+    ]
+  },
+  {
+    "knowledgeObjectId": "ko-6905bb347e4f8ece-pregnancy-test-diagnosis",
+    "medicalFactId": "anking-1554029070069-ff9c0b1a4b01617a",
+    "score": 80,
+    "matchedOn": [
+      "Pregnancy test",
+      "Diagnose Pregnancy test.",
+      "Early symptoms of pregnancy include fatigue, nausea, urinary frequency, and irregular menstruation",
+      "Contraception"
+    ]
+  },
+  {
+    "knowledgeObjectId": "ko-6905bb347e4f8ece-pregnancy-test-diagnosis",
+    "medicalFactId": "anking-1554052517077-69570cddd1b7bd64",
+    "score": 80,
+    "matchedOn": [
+      "Pregnancy test",
+      "Diagnose Pregnancy test.",
+      "Early symptoms of pregnancy include fatigue, nausea, urinary frequency, and irregular menstruation",
+      "Contraception"
+    ]
+  },
+  {
+    "knowledgeObjectId": "ko-6905bb347e4f8ece-pregnancy-test-diagnosis",
+    "medicalFactId": "anking-1577678687320-2580e060519389a9",
+    "score": 68,
+    "matchedOn": [
+      "Contraception"
+    ]
+  },
+  {
+    "knowledgeObjectId": "ko-cb358901a2c1560a-placenta-previa-and-hemorrhagic-shock-risk-complication_recognition",
+    "medicalFactId": "anking-1554029070069-ff9c0b1a4b01617a",
+    "score": 100,
+    "matchedOn": [
+      "Hemorrhagic shock",
+      "placenta previa and hemorrhagic shock risk",
+      "Recognize hemorrhagic shock as the major risk of placenta previa with heavy painless bleeding.",
+      "Its most common presenting symptom is painless vaginal bleeding during the third trimester",
+      "Third-trimester bleeding"
+    ]
+  },
+  {
+    "knowledgeObjectId": "ko-cb358901a2c1560a-placenta-previa-and-hemorrhagic-shock-risk-complication_recognition",
+    "medicalFactId": "anking-1549819684562-d3fc9be1104fc90a",
+    "score": 80,
+    "matchedOn": [
+      "Hemorrhagic shock",
+      "placenta previa and hemorrhagic shock risk",
+      "Recognize hemorrhagic shock as the major risk of placenta previa with heavy painless bleeding.",
+      "Its most common presenting symptom is painless vaginal bleeding during the third trimester"
+    ]
+  },
+  {
+    "knowledgeObjectId": "ko-cb358901a2c1560a-placenta-previa-and-hemorrhagic-shock-risk-complication_recognition",
+    "medicalFactId": "anking-1554052517077-69570cddd1b7bd64",
+    "score": 80,
+    "matchedOn": [
+      "Hemorrhagic shock",
+      "placenta previa and hemorrhagic shock risk",
+      "Recognize hemorrhagic shock as the major risk of placenta previa with heavy painless bleeding.",
+      "Its most common presenting symptom is painless vaginal bleeding during the third trimester"
+    ]
+  },
+  {
+    "knowledgeObjectId": "ko-cb358901a2c1560a-placenta-previa-and-hemorrhagic-shock-risk-complication_recognition",
+    "medicalFactId": "anking-1535891104802-01d6b8a7d4da9bb3",
+    "score": 60,
+    "matchedOn": [
+      "Hemorrhagic shock",
+      "placenta previa and hemorrhagic shock risk",
+      "Recognize hemorrhagic shock as the major risk of placenta previa with heavy painless bleeding."
+    ]
+  },
+  {
+    "knowledgeObjectId": "ko-cb358901a2c1560a-placenta-previa-and-hemorrhagic-shock-risk-complication_recognition",
+    "medicalFactId": "anking-1530742503975-814af8a65d4ad727",
+    "score": 40,
+    "matchedOn": [
+      "Hemorrhagic shock"
+    ]
+  },
+  {
+    "knowledgeObjectId": "ko-23a1abc7f099068a-ectopic-pregnancy-diagnosis",
+    "medicalFactId": "anking-1554029070069-ff9c0b1a4b01617a",
+    "score": 100,
+    "matchedOn": [
+      "Endometriosis",
+      "Ectopic pregnancy",
+      "Diagnose Ectopic pregnancy.",
+      "she has been unable to conceive for 18 months",
+      "Early pregnancy bleeding / acute pelvic pain"
+    ]
+  },
+  {
+    "knowledgeObjectId": "ko-23a1abc7f099068a-ectopic-pregnancy-diagnosis",
+    "medicalFactId": "anking-1549819684562-d3fc9be1104fc90a",
+    "score": 80,
+    "matchedOn": [
+      "Ectopic pregnancy",
+      "Diagnose Ectopic pregnancy.",
+      "she has been unable to conceive for 18 months",
+      "Early pregnancy bleeding / acute pelvic pain"
+    ]
+  },
+  {
+    "knowledgeObjectId": "ko-23a1abc7f099068a-ectopic-pregnancy-diagnosis",
+    "medicalFactId": "anking-1554052517077-69570cddd1b7bd64",
+    "score": 80,
+    "matchedOn": [
+      "Ectopic pregnancy",
+      "Diagnose Ectopic pregnancy.",
+      "she has been unable to conceive for 18 months",
+      "Early pregnancy bleeding / acute pelvic pain"
+    ]
+  },
+  {
+    "knowledgeObjectId": "ko-23a1abc7f099068a-ectopic-pregnancy-diagnosis",
+    "medicalFactId": "anking-1434929988016-6d0cc6823f0fc048",
+    "score": 48,
+    "matchedOn": [
+      "Ectopic pregnancy"
+    ]
+  },
+  {
+    "knowledgeObjectId": "ko-23a1abc7f099068a-ectopic-pregnancy-diagnosis",
+    "medicalFactId": "anking-1533478263120-6e05678936a12bb0",
+    "score": 48,
+    "matchedOn": [
+      "Ectopic pregnancy"
+    ]
+  },
+  {
+    "knowledgeObjectId": "ko-23a1abc7f099068a-ectopic-pregnancy-diagnosis",
+    "medicalFactId": "anking-1547916021345-b42986d922f4a641",
+    "score": 48,
+    "matchedOn": [
+      "Ectopic pregnancy"
+    ]
+  },
+  {
+    "knowledgeObjectId": "ko-23a1abc7f099068a-ectopic-pregnancy-diagnosis",
+    "medicalFactId": "anking-1556749991333-413a518634c1359f",
+    "score": 48,
+    "matchedOn": [
+      "Ectopic pregnancy"
+    ]
+  },
+  {
+    "knowledgeObjectId": "ko-23a1abc7f099068a-ectopic-pregnancy-diagnosis",
+    "medicalFactId": "anking-1577566538683-e98d2acab1654968",
+    "score": 48,
+    "matchedOn": [
+      "Endometriosis"
+    ]
+  },
+  {
+    "knowledgeObjectId": "ko-fa1af8f25d5d5fc4-race-diagnosis",
+    "medicalFactId": "anking-1549819684562-d3fc9be1104fc90a",
+    "score": 80,
+    "matchedOn": [
+      "Race",
+      "Diagnose Race.",
+      "patient nulliparous white patient has the sudden onset of severe pain in the upper back after sitting down",
+      "Gynecologic oncology"
+    ]
+  },
+  {
+    "knowledgeObjectId": "ko-fa1af8f25d5d5fc4-race-diagnosis",
+    "medicalFactId": "anking-1554029070069-ff9c0b1a4b01617a",
+    "score": 80,
+    "matchedOn": [
+      "Race",
+      "Diagnose Race.",
+      "patient nulliparous white patient has the sudden onset of severe pain in the upper back after sitting down",
+      "Gynecologic oncology"
+    ]
+  },
+  {
+    "knowledgeObjectId": "ko-fa1af8f25d5d5fc4-race-diagnosis",
+    "medicalFactId": "anking-1554052517077-69570cddd1b7bd64",
+    "score": 80,
+    "matchedOn": [
+      "Race",
+      "Diagnose Race.",
+      "patient nulliparous white patient has the sudden onset of severe pain in the upper back after sitting down",
+      "Gynecologic oncology"
+    ]
+  },
+  {
+    "knowledgeObjectId": "ko-fa1af8f25d5d5fc4-race-diagnosis",
+    "medicalFactId": "anking-1577678687320-2580e060519389a9",
+    "score": 68,
+    "matchedOn": [
+      "Race"
+    ]
+  },
+  {
+    "knowledgeObjectId": "ko-fa1af8f25d5d5fc4-race-diagnosis",
+    "medicalFactId": "anking-1578709935777-70bd9d0bfac540ed",
+    "score": 48,
+    "matchedOn": [
+      "Race"
+    ]
+  },
+  {
+    "knowledgeObjectId": "ko-fa1af8f25d5d5fc4-race-diagnosis",
+    "medicalFactId": "anking-1517169861293-d5a5d2e70f8a99ab",
+    "score": 40,
+    "matchedOn": [
+      "Race"
+    ]
+  },
+  {
+    "knowledgeObjectId": "ko-fa1af8f25d5d5fc4-race-diagnosis",
+    "medicalFactId": "anking-1520298602330-29e1563bd0287dfa",
+    "score": 40,
+    "matchedOn": [
+      "Race"
+    ]
+  },
+  {
+    "knowledgeObjectId": "ko-fa1af8f25d5d5fc4-race-diagnosis",
+    "medicalFactId": "anking-1550601737124-d8d06e7c2e52efa9",
+    "score": 40,
+    "matchedOn": [
+      "Race"
+    ]
+  }
+]

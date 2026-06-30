@@ -188,7 +188,9 @@ describe("design system", () => {
     assert.doesNotMatch(practicePanel, /setActiveTool\(.*settings/);
 
     assert.match(practicePanel, /AsterCompanion/);
-    assert.match(practicePanel, /Case-aware chat is coming soon/);
+    assert.match(practicePanel, /Today&apos;s Expedition/);
+    assert.match(practicePanel, /AsterRouteMap/);
+    assert.match(practicePanel, /Pomodoro controls/);
     assert.match(practicePanel, /onClick=\{toggleAster\}/);
     assert.doesNotMatch(practicePanel, /onClick=\{showTeaching\}\\s*>\\s*✧ Aster/);
 

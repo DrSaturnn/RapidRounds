@@ -1,17 +1,33 @@
 "use client";
 
-import { CSSProperties, FormEvent, KeyboardEvent, ReactNode, RefObject, forwardRef, useEffect, useMemo, useRef, useState } from "react";
+import { CSSProperties, FormEvent, KeyboardEvent, ReactNode, RefObject, forwardRef, useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { Button } from "@/components/Button";
 import { EmptyState } from "@/components/EmptyState";
 import { MoleskinePracticeRenderer } from "@/components/moleskine/MoleskinePracticeRenderer";
 import { QuestionMeta } from "@/components/QuestionMeta";
 import { TutorMode } from "@/components/TutorMode";
+import {
+  applyAsterEvent,
+  createAsterCompanionState,
+  formatPomodoroTime,
+  getAsterLevelProgress,
+  tickAsterPomodoro
+} from "@/lib/aster-companion";
 import { buildClinicalNotebookViewModel } from "@/lib/clinical-notebook-view-model";
+import {
+  buildFoundationalTeaching,
+  getFoundationalRapidRoundItem,
+  getFoundationalTeachMeMode,
+  markFoundationalAnswered,
+  markFoundationalSeen,
+  markFoundationalTaught
+} from "@/lib/foundational-rapid-round";
 import { usePracticeSession } from "@/hooks/usePracticeSession";
 import type { QuestionBreadth, StudySessionMode } from "@/hooks/usePracticeSession";
 import { getClinicalPromptText, getDecisionQuestionText } from "@/lib/decision-question-text";
 import { SUBJECTS } from "@/lib/subject-seeds";
-import type { VignetteFindingAnnotation } from "@/types/practice";
+import type { AsterCompanionState, AsterEvent } from "@/lib/aster-companion";
+import type { FoundationalQuestionAttemptState, FoundationalRapidRoundAnswerTeaching, FoundationalRapidRoundTeaching, VignetteFindingAnnotation } from "@/types/practice";
 
 type PracticeTool = "notes" | null;
 type PracticeSkin = "modern-academic" | "warm-notebook" | "dark-clinical" | "editorial";
@@ -20,6 +36,8 @@ type SettingsAnchor = "top" | "rail" | null;
 const requiredSubjects = SUBJECTS;
 
 const SKIN_STORAGE_KEY = "rapidrounds.practiceSkin.v2";
+const FOUNDATIONAL_ATTEMPT_STORAGE_PREFIX = "rapidrounds.foundationAttempt.v1";
+const ASTER_STORAGE_KEY = "rapidrounds.asterCompanion.v1";
 const practiceSkins: Array<{ value: PracticeSkin; label: string; description: string }> = [
   {
     value: "modern-academic",
@@ -187,7 +205,21 @@ export function PracticePanel() {
   const [isAsterOpen, setIsAsterOpen] = useState(false);
   const [notes, setNotes] = useState("");
   const [skin, setSkin] = useState<PracticeSkin>("modern-academic");
+  const [foundationalAttempt, setFoundationalAttempt] = useState<FoundationalQuestionAttemptState | null>(null);
+  const [foundationalTeachingOpen, setFoundationalTeachingOpen] = useState(false);
+  const [foundationalReminder, setFoundationalReminder] = useState<string | null>(null);
+  const [asterState, setAsterState] = useState<AsterCompanionState | null>(null);
+  const [asterEventKey, setAsterEventKey] = useState<string | null>(null);
+  const lastAsterAnswerEventRef = useRef<string | null>(null);
   const toolIcons = getToolIcons(skin);
+  const foundationalItem = question?.foundationalRapidRound
+    ? getFoundationalRapidRoundItem(question.id)
+    : undefined;
+  const isFoundationalRapidRound = Boolean(
+    activeStudyMode === "rapid_round" &&
+      question?.foundationalRapidRound?.mode === "foundational_rapid_round" &&
+      foundationalItem
+  );
 
   const keyboardHint = useMemo(() => {
     if (mode === "tutor") {
@@ -253,6 +285,30 @@ export function PracticePanel() {
   }, [notes, question]);
 
   useEffect(() => {
+    if (!question?.foundationalRapidRound) {
+      setFoundationalAttempt(null);
+      setFoundationalTeachingOpen(false);
+      setFoundationalReminder(null);
+      return;
+    }
+
+    const storageKey = `${FOUNDATIONAL_ATTEMPT_STORAGE_PREFIX}.${question.id}`;
+    let previousState: FoundationalQuestionAttemptState | undefined;
+    try {
+      const saved = window.localStorage.getItem(storageKey);
+      previousState = saved ? (JSON.parse(saved) as FoundationalQuestionAttemptState) : undefined;
+    } catch {
+      previousState = undefined;
+    }
+
+    const nextState = markFoundationalSeen(previousState, question.id);
+    window.localStorage.setItem(storageKey, JSON.stringify(nextState));
+    setFoundationalAttempt(nextState);
+    setFoundationalTeachingOpen(false);
+    setFoundationalReminder(null);
+  }, [question?.id, question?.foundationalRapidRound]);
+
+  useEffect(() => {
     const savedSkin = window.localStorage.getItem(SKIN_STORAGE_KEY);
     if (isPracticeSkin(savedSkin)) {
       setSkin(savedSkin);
@@ -264,12 +320,128 @@ export function PracticePanel() {
   }, [skin]);
 
   useEffect(() => {
+    if (!isFoundationalRapidRound || !question?.foundationalRapidRound) {
+      return;
+    }
+
+    let savedState: AsterCompanionState | null = null;
+    try {
+      const rawState = window.localStorage.getItem(ASTER_STORAGE_KEY);
+      savedState = rawState ? (JSON.parse(rawState) as AsterCompanionState) : null;
+    } catch {
+      savedState = null;
+    }
+
+    if (
+      savedState &&
+      savedState.session.mode === "rapid_round" &&
+      savedState.session.shelf === activeSubject &&
+      savedState.session.schemaCluster === question.foundationalRapidRound.schemaName
+    ) {
+      setAsterState(savedState);
+      return;
+    }
+
+    const nextState = createAsterCompanionState({
+      mode: "rapid_round",
+      shelf: activeSubject,
+      schemaCluster: question.foundationalRapidRound.schemaName
+    });
+    window.localStorage.setItem(ASTER_STORAGE_KEY, JSON.stringify(nextState));
+    setAsterState(nextState);
+  }, [activeSubject, isFoundationalRapidRound, question?.foundationalRapidRound]);
+
+  useEffect(() => {
+    if (!asterState) {
+      return;
+    }
+
+    window.localStorage.setItem(ASTER_STORAGE_KEY, JSON.stringify(asterState));
+  }, [asterState]);
+
+  useEffect(() => {
+    if (!isFoundationalRapidRound) {
+      return;
+    }
+
+    const interval = window.setInterval(() => {
+      setAsterState((current) => current ? tickAsterPomodoro(current) : current);
+    }, 1000);
+
+    return () => {
+      window.clearInterval(interval);
+    };
+  }, [isFoundationalRapidRound]);
+
+  useEffect(() => {
     if (showEndSessionConfirm) {
       window.requestAnimationFrame(() => {
         stayButtonRef.current?.focus();
       });
     }
   }, [showEndSessionConfirm]);
+
+  const dispatchAsterEvent = useCallback((event: AsterEvent, key?: string) => {
+    setAsterState((current) => {
+      if (!current) {
+        return current;
+      }
+      return applyAsterEvent(current, event);
+    });
+    setAsterEventKey(key ?? `${event.type}-${Date.now()}`);
+  }, []);
+
+  const handleFoundationalTeachMe = useCallback(() => {
+    if (!question?.foundationalRapidRound || !foundationalItem || result) {
+      return;
+    }
+
+    const teachMode = getFoundationalTeachMeMode(foundationalAttempt ?? undefined);
+    if (teachMode === "retrieval_reminder") {
+      setFoundationalReminder("Teach Me is already unlocked for this script. Try retrieving the discriminator first.");
+      window.requestAnimationFrame(() => {
+        answerInputRef.current?.focus();
+      });
+      return;
+    }
+
+    const baseState = foundationalAttempt ?? markFoundationalSeen(undefined, question.id);
+    const nextState = markFoundationalTaught(baseState);
+    window.localStorage.setItem(`${FOUNDATIONAL_ATTEMPT_STORAGE_PREFIX}.${question.id}`, JSON.stringify(nextState));
+    setFoundationalAttempt(nextState);
+    setFoundationalTeachingOpen(true);
+    setFoundationalReminder(null);
+    dispatchAsterEvent({ type: "teach_me_used" }, `${question.id}-teach-me`);
+  }, [dispatchAsterEvent, foundationalAttempt, foundationalItem, question?.foundationalRapidRound, question?.id, result]);
+
+  useEffect(() => {
+    if (!question?.foundationalRapidRound || !result?.foundationalRapidRound || !foundationalAttempt) {
+      return;
+    }
+
+    const expectedOutcome = result.isCorrect ? "correct" : "incorrect";
+    if (foundationalAttempt.lastOutcome === expectedOutcome && foundationalAttempt.lastAnswer === answer) {
+      return;
+    }
+
+    const nextState = markFoundationalAnswered(foundationalAttempt, answer, result.isCorrect);
+    window.localStorage.setItem(`${FOUNDATIONAL_ATTEMPT_STORAGE_PREFIX}.${question.id}`, JSON.stringify(nextState));
+    setFoundationalAttempt(nextState);
+  }, [answer, foundationalAttempt, question?.foundationalRapidRound, question?.id, result?.foundationalRapidRound, result?.isCorrect]);
+
+  useEffect(() => {
+    if (!isFoundationalRapidRound || !question?.id || !result?.foundationalRapidRound) {
+      return;
+    }
+
+    const nextEventKey = `${question.id}-${result.isCorrect ? "correct" : "incorrect"}-${answer}`;
+    if (lastAsterAnswerEventRef.current === nextEventKey) {
+      return;
+    }
+
+    lastAsterAnswerEventRef.current = nextEventKey;
+    dispatchAsterEvent({ type: result.isCorrect ? "correct_answer" : "incorrect_answer" }, nextEventKey);
+  }, [answer, dispatchAsterEvent, isFoundationalRapidRound, question?.id, result?.foundationalRapidRound, result?.isCorrect]);
 
   useEffect(() => {
     const isEditableTarget = (target: EventTarget | null) => {
@@ -320,7 +492,14 @@ export function PracticePanel() {
 
       const isEnter = event.key === "Enter";
       const isNextKey = event.key.toLowerCase() === "n";
+      const isTeachKey = event.key.toLowerCase() === "t";
       const editableTarget = isEditableTarget(event.target);
+
+      if (isFoundationalRapidRound && !result && isTeachKey && !editableTarget) {
+        event.preventDefault();
+        handleFoundationalTeachMe();
+        return;
+      }
 
       if (mode === "tutor") {
         if (
@@ -377,6 +556,7 @@ export function PracticePanel() {
     isAsterOpen,
     isLoading,
     isSubmitting,
+    isFoundationalRapidRound,
     loadQuestion,
     mode,
     reinforcementAnswer,
@@ -386,7 +566,8 @@ export function PracticePanel() {
     showEndSessionConfirm,
     submitAnswer,
     submitReinforcementAnswer,
-    tutor
+    tutor,
+    handleFoundationalTeachMe
   ]);
 
   useEffect(() => {
@@ -809,7 +990,7 @@ export function PracticePanel() {
         ref={asterButtonRef}
         type="button"
         className="rr-aster-button"
-        aria-label="Ask Aster to explain this decision"
+        aria-label="Open Aster companion"
         aria-expanded={isAsterOpen}
         aria-controls="aster-companion"
         onClick={toggleAster}
@@ -861,6 +1042,136 @@ export function PracticePanel() {
       </button>
     </nav>
   );
+
+  const renderAsterOverlay = () => (
+    <>
+      {!isAsterOpen && isFoundationalRapidRound && asterState ? (
+        <AsterFloatingAvatar
+          animationState={asterState.session.animationState}
+          onClick={toggleAster}
+        />
+      ) : null}
+      {isAsterOpen ? (
+        <AsterCompanion
+          ref={asterPanelRef}
+          currentCaseTitle={asterCaseTitle}
+          state={asterState}
+          isRapidRoundActive={isFoundationalRapidRound}
+          eventKey={asterEventKey}
+          onClose={() => setIsAsterOpen(false)}
+          onPomodoroPause={() => dispatchAsterEvent({ type: "pomodoro_paused" }, "pomodoro-paused")}
+          onPomodoroFocus={() => dispatchAsterEvent({ type: "pomodoro_started" }, "pomodoro-started")}
+          onBreakStart={() => dispatchAsterEvent({ type: "break_started" }, "break-started")}
+        />
+      ) : null}
+    </>
+  );
+
+  if (isFoundationalRapidRound && foundationalItem && question?.foundationalRapidRound) {
+    const foundationalTeaching = buildFoundationalTeaching(foundationalItem);
+    const foundationalAnswerTeaching = result?.foundationalRapidRound;
+    const teachMeMode = getFoundationalTeachMeMode(foundationalAttempt ?? undefined);
+    const isEducationalMode = foundationalTeachingOpen && !result;
+    const showFoundationalResult = Boolean(foundationalAnswerTeaching);
+
+    return (
+      <div className="practice-focus rr-practice-shell rr-foundational-shell min-h-screen" data-theme={skin}>
+        <header className="rr-product-nav">
+          <div className="rr-product-brand">
+            <span className="rr-brand-mark" aria-hidden="true">✳</span>
+            <span>RapidRounds</span>
+            <span className="rr-brand-subtitle">with Aster</span>
+          </div>
+          <div className="rr-product-context" aria-label="Current training context">
+            <div className="rr-subject-anchor" ref={subjectSelectorRef}>
+              <button
+                type="button"
+                className="rr-subject-pill"
+                aria-label="Choose shelf"
+                aria-expanded={isSubjectSelectorOpen}
+                onClick={toggleSubjectSelector}
+              >
+                {activeSubject}
+                <span aria-hidden="true">⌄</span>
+              </button>
+              {isSubjectSelectorOpen ? renderSubjectSelector() : null}
+            </div>
+            <span className="rr-context-divider" aria-hidden="true" />
+            {renderStudyModeControl()}
+          </div>
+          <div className="rr-product-progress" aria-label={`Rapid Round ${question.foundationalRapidRound.progressLabel}`}>
+            <span className="rr-progress-count">Rapid Round {question.foundationalRapidRound.progressLabel}</span>
+          </div>
+          {renderTopSessionActions()}
+        </header>
+
+        <main className="rr-foundational-main">
+          <section className="rr-card rr-card-paper rr-foundational-challenge" aria-label="Foundational Rapid Round">
+            <div className="rr-foundational-header">
+              <div>
+                <p className="rr-section-header">Schema</p>
+                <h1>{question.foundationalRapidRound.schemaName}</h1>
+              </div>
+              <span className="rr-badge rr-badge-learning">{question.foundationalRapidRound.taskLabel}</span>
+            </div>
+
+            {!showFoundationalResult && !isEducationalMode ? (
+              <>
+                <div className="rr-foundational-prompt">
+                  <p>{question.stem}</p>
+                  <p>{question.answerPrompt ?? decisionQuestion}</p>
+                </div>
+                <form onSubmit={onSubmit} className="rr-foundational-answer">
+                  <label className="sr-only" htmlFor="foundational-answer">Answer</label>
+                  <input
+                    ref={answerInputRef}
+                    id="foundational-answer"
+                    value={answer}
+                    onChange={(event) => setAnswer(event.target.value)}
+                    onKeyDown={onAnswerKeyDown}
+                    placeholder="Type your answer"
+                    name={`rr-foundational-${question.id}`}
+                    autoComplete="off"
+                    autoCorrect="off"
+                    autoCapitalize="off"
+                    spellCheck={false}
+                    className="rr-input"
+                    autoFocus
+                  />
+                  <Button type="submit" disabled={isSubmitting}>
+                    {isSubmitting ? "Checking" : "Submit"}
+                  </Button>
+                </form>
+                <div className="rr-foundational-tools">
+                  <button type="button" className="rr-tool-button" onClick={handleFoundationalTeachMe}>
+                    <span aria-hidden="true">{toolIcons.teach}</span>
+                    {teachMeMode === "retrieval_reminder" ? "Teach Me ✓" : "Teach Me"}
+                  </button>
+                  <span className="rr-meta">T opens Teach Me</span>
+                </div>
+                {clinicalCuePrompt ? <p className="rr-clinical-cue-prompt" role="status">{clinicalCuePrompt}</p> : null}
+                {foundationalReminder ? <p className="rr-foundational-reminder" role="status">{foundationalReminder}</p> : null}
+                {error ? <p className="text-sm text-rr-muted">{error}</p> : null}
+              </>
+            ) : null}
+
+            {isEducationalMode ? (
+              <FoundationalTeachingMode teaching={foundationalTeaching} onNext={() => void loadQuestion()} />
+            ) : null}
+
+            {foundationalAnswerTeaching ? (
+              <FoundationalAnswerMode
+                teaching={foundationalAnswerTeaching}
+                learnerAnswer={answer}
+                onNext={() => void loadQuestion()}
+              />
+            ) : null}
+          </section>
+        </main>
+        {renderAsterOverlay()}
+      </div>
+    );
+  }
 
   if (skin === "warm-notebook") {
     return (
@@ -940,13 +1251,7 @@ export function PracticePanel() {
         }
         overlays={
           <>
-            {isAsterOpen ? (
-              <AsterCompanion
-                ref={asterPanelRef}
-                currentCaseTitle={asterCaseTitle}
-                onClose={() => setIsAsterOpen(false)}
-              />
-            ) : null}
+            {renderAsterOverlay()}
             {showEndSessionConfirm ? (
               <EndSessionDialog
                 stayButtonRef={stayButtonRef}
@@ -1159,13 +1464,7 @@ export function PracticePanel() {
         ) : null}
         </main>
       </div>
-      {isAsterOpen ? (
-        <AsterCompanion
-          ref={asterPanelRef}
-          currentCaseTitle={asterCaseTitle}
-          onClose={() => setIsAsterOpen(false)}
-        />
-      ) : null}
+      {renderAsterOverlay()}
       {showEndSessionConfirm ? (
         <div
           className="rr-overlay fixed inset-0 z-50 flex items-center justify-center px-5 motion-safe:animate-[fadeIn_180ms_var(--rr-ease-standard)]"
@@ -1202,6 +1501,153 @@ export function PracticePanel() {
       ) : null}
       {renderMobilePracticeActions()}
     </div>
+  );
+}
+
+function FoundationalTeachingMode({
+  teaching,
+  onNext
+}: {
+  teaching: FoundationalRapidRoundTeaching;
+  onNext: () => void;
+}) {
+  return (
+    <div className="rr-foundational-teaching" aria-label="Teach Me">
+      <div className="rr-foundational-status rr-foundational-status-learning">
+        <span>Teach Me</span>
+        <strong>Build the recognition pattern first.</strong>
+      </div>
+      <FoundationalTeachingBlock title="Definition" body={teaching.definition} />
+      <FoundationalTeachingBlock title="Mechanism" body={teaching.mechanism} />
+      <FoundationalListBlock title="Recognition Pattern" items={teaching.recognitionPattern} highlight={teaching.discriminator.todayDiscriminator} />
+      <FoundationalListBlock title="Complete illness script" items={teaching.completeIllnessScript} />
+      <FoundationalListBlock title="Competing illness script" items={teaching.competingIllnessScript} />
+      <FoundationalDiscriminatorTable discriminator={teaching.discriminator} />
+      <FoundationalTeachingBlock title="NBME testing frame" body={teaching.nbmeTestingFrame} />
+      <Button type="button" onClick={onNext}>
+        Next Question
+      </Button>
+    </div>
+  );
+}
+
+function FoundationalAnswerMode({
+  teaching,
+  learnerAnswer,
+  onNext
+}: {
+  teaching: FoundationalRapidRoundAnswerTeaching;
+  learnerAnswer: string;
+  onNext: () => void;
+}) {
+  const answeredCorrectly = teaching.status === "correct";
+
+  return (
+    <div className="rr-foundational-teaching" aria-label="Rapid Round answer teaching">
+      <div className={`rr-foundational-status ${answeredCorrectly ? "rr-foundational-status-correct" : "rr-foundational-status-incorrect"}`}>
+        <span>{answeredCorrectly ? "✓ Correct" : "Incorrect"}</span>
+        <strong>{answeredCorrectly ? teaching.diagnosis : learnerAnswer}</strong>
+      </div>
+      {!answeredCorrectly && teaching.inferredWrongScript ? (
+        <section className="rr-foundational-panel">
+          <p className="rr-section-header">You activated</p>
+          <h2>{teaching.inferredWrongScript.name}</h2>
+          <p>{teaching.inferredWrongScript.whyItMadeSense}</p>
+          <p><strong>Stop clue:</strong> {teaching.inferredWrongScript.stopClue}</p>
+        </section>
+      ) : null}
+      {!answeredCorrectly && teaching.missedPattern ? (
+        <section className="rr-foundational-panel">
+          <p className="rr-section-header">Missed pattern</p>
+          <h2>{teaching.missedPattern}</h2>
+        </section>
+      ) : null}
+      <section className="rr-foundational-pivot" aria-label="Today's discriminator">
+        <span>Today&apos;s discriminator</span>
+        <strong>{teaching.todaysDiscriminator}</strong>
+      </section>
+      <FoundationalListBlock title="Recognition Pattern" items={teaching.recognitionPattern} highlight={teaching.todaysDiscriminator} />
+      <FoundationalListBlock title="Competing illness script" items={teaching.competingIllnessScript} />
+      <FoundationalDiscriminatorTable discriminator={teaching.discriminator} />
+      <Button type="button" onClick={onNext}>
+        Next Question
+      </Button>
+    </div>
+  );
+}
+
+function FoundationalTeachingBlock({ title, body }: { title: string; body: string }) {
+  return (
+    <section className="rr-foundational-panel">
+      <p className="rr-section-header">{title}</p>
+      <p>{body}</p>
+    </section>
+  );
+}
+
+function FoundationalListBlock({
+  title,
+  items,
+  highlight
+}: {
+  title: string;
+  items: string[];
+  highlight?: string;
+}) {
+  const normalizedHighlight = highlight?.toLowerCase();
+
+  return (
+    <section className="rr-foundational-panel">
+      <p className="rr-section-header">{title}</p>
+      <ul className="rr-foundational-list">
+        {items.map((item) => (
+          <li
+            key={item}
+            className={normalizedHighlight && item.toLowerCase().includes(normalizedHighlight) ? "rr-foundational-highlight" : undefined}
+          >
+            {item}
+          </li>
+        ))}
+      </ul>
+    </section>
+  );
+}
+
+function FoundationalDiscriminatorTable({
+  discriminator
+}: {
+  discriminator: FoundationalRapidRoundTeaching["discriminator"];
+}) {
+  return (
+    <section className="rr-foundational-panel">
+      <div className="rr-schema-discriminator-heading">
+        <div>
+          <p className="rr-section-header">Discriminator table</p>
+          <h2>{discriminator.correctScript} vs {discriminator.competingScript}</h2>
+        </div>
+      </div>
+      <div className="rr-foundational-table-wrap">
+        <table className="rr-table rr-schema-discriminator-table">
+          <thead>
+            <tr>
+              <th>Feature</th>
+              <th>{discriminator.correctScript}</th>
+              <th>{discriminator.competingScript}</th>
+            </tr>
+          </thead>
+          <tbody>
+            {discriminator.rows.map((row) => (
+              <tr key={row.feature}>
+                <td>{row.feature}</td>
+                <td>{row.correctScript}</td>
+                <td>{row.competingScript}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+      <p className="rr-schema-board-rule"><span>Board rule</span>{discriminator.boardRule}</p>
+    </section>
   );
 }
 
@@ -1327,9 +1773,30 @@ const AsterCompanion = forwardRef<
   HTMLDivElement,
   {
     currentCaseTitle: string;
+    state: AsterCompanionState | null;
+    isRapidRoundActive: boolean;
+    eventKey: string | null;
     onClose: () => void;
+    onPomodoroPause: () => void;
+    onPomodoroFocus: () => void;
+    onBreakStart: () => void;
   }
->(function AsterCompanion({ currentCaseTitle, onClose }, ref) {
+>(function AsterCompanion({
+  currentCaseTitle,
+  state,
+  isRapidRoundActive,
+  eventKey,
+  onClose,
+  onPomodoroPause,
+  onPomodoroFocus,
+  onBreakStart
+}, ref) {
+  const progress = state ? getAsterLevelProgress(state.profile) : null;
+  const session = state?.session;
+  const progressValue = progress ? Math.round((progress.xpIntoLevel / progress.xpForNextLevel) * 100) : 0;
+  const timerMode = session?.pomodoroState.mode ?? "focus";
+  const timerLabel = timerMode === "break" ? "Break" : timerMode === "paused" ? "Paused" : "Focus";
+
   return (
     <aside
       ref={ref}
@@ -1338,33 +1805,161 @@ const AsterCompanion = forwardRef<
       aria-label="Aster companion"
       role="dialog"
     >
-      <div className="flex items-start justify-between gap-4">
+      <div className="rr-aster-panel-header">
         <div>
           <p className="rr-section-header">Aster</p>
-          <h2 className="mt-1 text-lg font-semibold text-rr-foreground">Ask about this case.</h2>
+          <h2>Today&apos;s Expedition</h2>
         </div>
         <button type="button" className="rr-icon-button" aria-label="Close Aster" onClick={onClose}>
           ×
         </button>
       </div>
-      <p className="mt-4 text-sm leading-6 text-rr-muted">
-        Aster will eventually answer questions about the current case, your reasoning, and the explanation.
-        Case-aware chat is coming soon.
-      </p>
-      <div className="rr-panel-collapsed mt-4">
-        <p className="rr-meta">Current case</p>
-        <p className="mt-1 text-sm font-semibold leading-6 text-rr-foreground">{currentCaseTitle}</p>
+      <div className="rr-aster-hero">
+        <AsterAvatar animationState={session?.animationState ?? "idle"} eventKey={eventKey} />
+        <div>
+          <p>{session?.lastMessage ?? "Aster is ready for Rapid Round."}</p>
+          <span>{isRapidRoundActive ? currentCaseTitle : "Open Rapid Round to start an expedition."}</span>
+        </div>
       </div>
-      {/* Future Aster should receive current case, learner answer, correct answer, explanation, decision boundary, and learner state. */}
-      <input
-        className="rr-text-input mt-4"
-        disabled
-        placeholder="Case-aware chat coming soon"
-        aria-label="Aster chat coming soon"
-      />
+      {session ? (
+        <>
+          <div className="rr-aster-map-card">
+            <div className="rr-aster-stat-row">
+              <span>Progress</span>
+              <strong>{session.questionsCompleted} / {session.questionTarget}</strong>
+            </div>
+            <AsterRouteMap
+              completed={session.questionsCompleted}
+              target={session.questionTarget}
+              outcome={session.routeOutcome}
+              animationState={session.animationState}
+              eventKey={eventKey}
+            />
+          </div>
+          <div className="rr-aster-timer-xp">
+            <div>
+              <span>{timerLabel}</span>
+              <strong>{formatPomodoroTime(session.pomodoroState.remainingSeconds)}</strong>
+              <small>{timerMode === "break" ? "5 minute reset" : "25 minute block"}</small>
+            </div>
+            <div>
+              <span>XP this session</span>
+              <strong>+{session.xpEarned}</strong>
+              <small>retrieval counts</small>
+            </div>
+          </div>
+          <div className="rr-aster-controls" aria-label="Pomodoro controls">
+            {timerMode === "paused" ? (
+              <button type="button" onClick={onPomodoroFocus}>Resume</button>
+            ) : (
+              <button type="button" onClick={onPomodoroPause}>Pause</button>
+            )}
+            <button type="button" onClick={onBreakStart}>Start Break</button>
+          </div>
+          {progress ? (
+            <div className="rr-aster-level">
+              <div className="rr-aster-stat-row">
+                <span>Level {progress.level}</span>
+                <strong>{progress.xpIntoLevel} / {progress.xpForNextLevel} XP</strong>
+              </div>
+              <div className="rr-aster-level-track" aria-hidden="true">
+                <span style={{ width: `${progressValue}%` }} />
+              </div>
+            </div>
+          ) : null}
+        </>
+      ) : (
+        <div className="rr-panel-collapsed mt-4">
+          <p className="rr-meta">Rapid Round companion</p>
+          <p className="mt-1 text-sm font-semibold leading-6 text-rr-foreground">
+            Aster tracks route progress after you start foundational Rapid Round.
+          </p>
+        </div>
+      )}
     </aside>
   );
 });
+
+function AsterFloatingAvatar({
+  animationState,
+  onClick
+}: {
+  animationState: AsterCompanionState["session"]["animationState"];
+  onClick: () => void;
+}) {
+  return (
+    <button type="button" className="rr-aster-float" onClick={onClick} aria-label="Open Aster companion">
+      <AsterAvatar animationState={animationState} />
+    </button>
+  );
+}
+
+function AsterAvatar({
+  animationState,
+  eventKey
+}: {
+  animationState: AsterCompanionState["session"]["animationState"];
+  eventKey?: string | null;
+}) {
+  return (
+    <span className={`rr-aster-avatar rr-aster-avatar-${animationState}`} key={eventKey ?? animationState} aria-hidden="true">
+      <span className="rr-aster-head">
+        <span className="rr-aster-face">
+          <span />
+          <span />
+        </span>
+      </span>
+      <span className="rr-aster-body">
+        <span className="rr-aster-core" />
+      </span>
+      <span className="rr-aster-shadow" />
+    </span>
+  );
+}
+
+function AsterRouteMap({
+  completed,
+  target,
+  outcome,
+  animationState,
+  eventKey
+}: {
+  completed: number;
+  target: number;
+  outcome: AsterCompanionState["session"]["routeOutcome"];
+  animationState: AsterCompanionState["session"]["animationState"];
+  eventKey: string | null;
+}) {
+  const nodes = Array.from({ length: target }, (_, index) => index + 1);
+  const visibleNodes = nodes.slice(0, Math.min(target, 20));
+
+  return (
+    <div className={`rr-aster-route rr-aster-route-${outcome}`}>
+      {visibleNodes.map((node) => {
+        const isCompleted = node <= completed;
+        const isCurrent = node === Math.min(completed + 1, target);
+        const isGoal = node === target;
+        return (
+          <span
+            key={node}
+            className={[
+              "rr-aster-route-node",
+              isCompleted ? "rr-aster-route-node-complete" : "",
+              isCurrent ? "rr-aster-route-node-current" : "",
+              isGoal ? "rr-aster-route-node-goal" : ""
+            ].join(" ")}
+            aria-label={`Route node ${node}${isCompleted ? " completed" : ""}`}
+          >
+            {isCurrent ? <AsterAvatar animationState={animationState} eventKey={eventKey} /> : null}
+            {isGoal ? <span aria-hidden="true">★</span> : null}
+          </span>
+        );
+      })}
+      {outcome === "shortcut" ? <em className="rr-aster-route-branch">shortcut</em> : null}
+      {outcome === "review_route" ? <em className="rr-aster-route-branch">review route</em> : null}
+    </div>
+  );
+}
 
 function getFindingRoleLabel(role: VignetteFindingAnnotation["role"]) {
   switch (role) {

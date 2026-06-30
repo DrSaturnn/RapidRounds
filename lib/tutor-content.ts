@@ -27,6 +27,7 @@ import type {
   DecisionRepair,
   TutorContent
 } from "@/types/practice";
+import type { MedicalFact } from "@/lib/anking-enrichment";
 
 type TutorDecision = {
   specialty: string;
@@ -45,6 +46,7 @@ type TutorDecision = {
   pattern?: string;
   management?: string;
   diagnosis?: string;
+  supportingFacts?: MedicalFact[];
 };
 
 const comparisonMap: Record<
@@ -1006,6 +1008,7 @@ export function buildTutorContent(
     comparison,
     schemaDiscriminator,
     postAnswerTeaching,
-    reinforcement: buildReinforcement(decision, acceptedAnswers, repair)
+    reinforcement: buildReinforcement(decision, acceptedAnswers, repair),
+    supportingFacts: decision.supportingFacts
   };
 }

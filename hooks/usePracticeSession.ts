@@ -376,7 +376,11 @@ export function usePracticeSession() {
 
     const trimmedAnswer = answer.trim();
     if (!trimmedAnswer) {
-      setClinicalCuePrompt("Enter an answer, or use a clinical cue.");
+      if (activeStudyMode === "rapid_round") {
+        setClinicalCuePrompt("Enter an answer, or use Teach Me.");
+      } else {
+        setClinicalCuePrompt("Enter an answer, or use a clinical cue.");
+      }
       setError(null);
       return;
     }
@@ -417,7 +421,7 @@ export function usePracticeSession() {
       setMode("rapid");
     }
     setIsSubmitting(false);
-  }, [answer, clinicalCueLevel, question]);
+  }, [activeStudyMode, answer, clinicalCueLevel, question]);
 
   const requestClinicalCue = useCallback(() => {
     if (!question || result || mode === "tutor") {

@@ -1,0 +1,62 @@
+[
+  {
+    "subject": "OB/GYN",
+    "blueprintCategory": "Breast infection / lactation",
+    "schemaNodeCount": 2,
+    "knowledgeObjectCount": 2
+  },
+  {
+    "subject": "OB/GYN",
+    "blueprintCategory": "Early pregnancy bleeding / acute pelvic pain",
+    "schemaNodeCount": 10,
+    "knowledgeObjectCount": 10
+  },
+  {
+    "subject": "OB/GYN",
+    "blueprintCategory": "Female Reproductive",
+    "schemaNodeCount": 4,
+    "knowledgeObjectCount": 4
+  },
+  {
+    "subject": "OB/GYN",
+    "blueprintCategory": "Gynecologic oncology",
+    "schemaNodeCount": 3,
+    "knowledgeObjectCount": 3
+  },
+  {
+    "subject": "OB/GYN",
+    "blueprintCategory": "Intrapartum infection / fetal monitoring",
+    "schemaNodeCount": 3,
+    "knowledgeObjectCount": 3
+  },
+  {
+    "subject": "OB/GYN",
+    "blueprintCategory": "Obstetrics / postpartum hemorrhage",
+    "schemaNodeCount": 2,
+    "knowledgeObjectCount": 2
+  },
+  {
+    "subject": "OB/GYN",
+    "blueprintCategory": "PPROM evaluation",
+    "schemaNodeCount": 2,
+    "knowledgeObjectCount": 2
+  },
+  {
+    "subject": "OB/GYN",
+    "blueprintCategory": "Rh alloimmunization prevention",
+    "schemaNodeCount": 5,
+    "knowledgeObjectCount": 5
+  },
+  {
+    "subject": "OB/GYN",
+    "blueprintCategory": "Third-trimester bleeding",
+    "schemaNodeCount": 1,
+    "knowledgeObjectCount": 1
+  },
+  {
+    "subject": "OB/GYN",
+    "blueprintCategory": "Vulvovaginal infections / STI",
+    "schemaNodeCount": 17,
+    "knowledgeObjectCount": 17
+  }
+]
