@@ -1,9 +1,13 @@
-# Aster Prompt Template
+# Aster Model Render Brief
 
-Use this prompt when generating future Aster production assets:
+Do not use this file to generate independent character art.
+
+Use this language only as a descriptive render brief for the single approved
+rigged Blender model after it exists. The model must be calibrated against
+`canonical/neutral.png` before any derivative render is approved.
 
 ```text
-Create Aster, RapidRounds' calm expedition companion. Aster is a small premium
+Render Aster, RapidRounds' calm expedition companion. Aster is a small premium
 humanoid robot with slightly frog-like proportions, a rounded warm white ceramic
 shell, subtle ceramic seams, a deep glossy black visor, warm amber LED oval
 eyes, champagne metallic side accents, rounded limbs, small rounded feet, and a

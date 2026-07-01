@@ -97,7 +97,7 @@ export function createDefaultLearnerProfile(userId: string, now = new Date()): L
     createdAt: timestamp,
     updatedAt: timestamp,
     activeShelf: "OB/GYN",
-    activeMode: "adaptive",
+    activeMode: "rapid_round",
     totalQuestionsCompleted: 0,
     totalCorrect: 0,
     currentStreak: 0,

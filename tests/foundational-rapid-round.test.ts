@@ -93,4 +93,17 @@ describe("foundational Rapid Round mode", () => {
     assert.doesNotMatch(renderBranch, /requestClinicalCue/);
     assert.doesNotMatch(renderBranch, /Clinical Cue/);
   });
+
+  it("uses a desktop patient and reasoning workspace instead of one vertical document", () => {
+    const panel = readFileSync("components/PracticePanel.tsx", "utf8");
+    const css = readFileSync("app/globals.css", "utf8");
+    const renderBranch = panel.match(/if \(isFoundationalRapidRound && foundationalItem[\s\S]*?if \(skin === "warm-notebook"\)/)?.[0] ?? "";
+
+    assert.match(renderBranch, /rr-patient-workspace/);
+    assert.match(renderBranch, /rr-reasoning-workspace/);
+    assert.match(renderBranch, /rr-foundational-learner-answer/);
+    assert.match(css, /@media \(min-width: 1024px\)[\s\S]*\.rr-foundational-shell[\s\S]*height: 100dvh/);
+    assert.match(css, /\.rr-patient-workspace,\s*\n\s*\.rr-reasoning-workspace[\s\S]*overflow-y: auto/);
+    assert.match(css, /@media \(max-width: 1023px\)[\s\S]*\.rr-reasoning-workspace-empty[\s\S]*display: none/);
+  });
 });

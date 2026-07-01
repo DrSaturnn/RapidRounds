@@ -6,22 +6,23 @@ Aster is RapidRounds' expedition companion. He represents learner progress,
 curiosity, persistence, and calm support. He is not a chatbot, mascot, helper
 widget, or decorative character.
 
-## Locked Production Asset
+## Locked Canonical Character
 
-`production/neutral.png` is Aster v1.0 and the single source of truth for the
+`canonical/neutral.png` is Aster v1.0 and the single source of truth for the
 character.
 
-Runtime code renders the public copy at:
+Runtime code renders approved app-facing exports from:
 
 ```text
-public/aster/production/neutral.png
+public/aster/runtime/neutral.png
 ```
 
 Do not use documentation sheets, crops, CSS reconstructions, or generated
 variations as runtime assets.
 
-Future production assets must follow `production/PIPELINE.md` and be recorded
-in `production/asset_manifest.json`.
+Future poses, expressions, icons, sprites, and animations must be rendered from
+a single rigged Blender model calibrated against `canonical/neutral.png`. They
+must be recorded in `runtime/asset_manifest.json` before use in the app.
 
 ## Runtime Components
 
@@ -36,7 +37,7 @@ Do not create independent Aster renderings elsewhere.
 ## Quality Gate
 
 Before shipping an Aster change, compare the runtime component against
-`production/neutral.png` for:
+`canonical/neutral.png` for:
 
 - rounded white ceramic shell
 - deep glossy black visor

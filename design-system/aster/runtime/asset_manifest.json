@@ -1,0 +1,52 @@
+{
+  "character": "Aster",
+  "version": "1.0",
+  "identitySource": "../canonical/neutral.png",
+  "runtimeExports": {
+    "neutral": {
+      "designSystemPath": "design-system/aster/runtime/neutral.png",
+      "publicPath": "/aster/runtime/neutral.png",
+      "approved": true,
+      "derivedFrom": "design-system/aster/canonical/neutral.png"
+    }
+  },
+  "futureModelSource": {
+    "type": "single rigged Blender model",
+    "required": true,
+    "identityMustMatch": "design-system/aster/canonical/neutral.png"
+  },
+  "forbiddenRuntimeSources": [
+    "CSS robot reconstruction",
+    "documentation sheet crops",
+    "independent generated variants",
+    "unapproved sprite sheets",
+    "feature-specific Aster drawings"
+  ],
+  "pendingDerivativeSets": {
+    "orthographic": [
+      "Front.png",
+      "ThreeQuarterFront.png",
+      "Side.png",
+      "ThreeQuarterBack.png",
+      "Back.png",
+      "Top.png"
+    ],
+    "expressions": [
+      "idle.png",
+      "thinking.png",
+      "curious.png",
+      "focused.png",
+      "happy.png",
+      "celebrating.png",
+      "sleepy.png",
+      "reading-map.png",
+      "teaching.png",
+      "exploring.png"
+    ],
+    "sprites": [
+      "16x16",
+      "24x24",
+      "32x32"
+    ]
+  }
+}

@@ -13,6 +13,16 @@ describe("zero-friction training flow", () => {
     assert.doesNotMatch(homePage, /getDashboardStats/);
   });
 
+  it("starts new learners in OB/GYN Rapid Round by default", () => {
+    const practiceSession = readFileSync("hooks/usePracticeSession.ts", "utf8");
+    const progressStore = readFileSync("lib/learner-progress-store.ts", "utf8");
+
+    assert.match(practiceSession, /const DEFAULT_SUBJECT = "OB\/GYN"/);
+    assert.match(practiceSession, /const DEFAULT_STUDY_MODE = "rapid_round"/);
+    assert.match(progressStore, /activeShelf: "OB\/GYN"/);
+    assert.match(progressStore, /activeMode: "rapid_round"/);
+  });
+
   it("keeps analytics secondary as Progress navigation and removes dashboard navigation", () => {
     const layout = readFileSync("app/layout.tsx", "utf8");
 

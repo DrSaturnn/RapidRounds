@@ -12,7 +12,7 @@ const SUBJECT_STORAGE_KEY = "rapidrounds.activeSubject.v1";
 const STUDY_MODE_STORAGE_KEY = "rapidrounds.studyMode.v1";
 const QUESTION_BREADTH_STORAGE_KEY = "rapidrounds.questionBreadth.v1";
 const DEFAULT_SUBJECT = "OB/GYN";
-const DEFAULT_STUDY_MODE = "adaptive";
+const DEFAULT_STUDY_MODE = "rapid_round";
 const DEFAULT_QUESTION_BREADTH = "primary";
 
 export type StudySessionMode = "adaptive" | "new_concepts" | "weak_areas" | "review" | "rapid_round";

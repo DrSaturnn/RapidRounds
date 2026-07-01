@@ -1,19 +1,21 @@
 # Do Not Deviate
 
-`design-system/aster/production/neutral.png` is Aster v1.0.
+`design-system/aster/canonical/neutral.png` is Aster v1.0.
 
 The runtime character MUST be the approved Aster character. Do not redraw,
 reinterpret, simplify, regenerate, or redesign him. Use
-`public/aster/production/neutral.png` or future approved production derivatives
+`public/aster/runtime/neutral.png` or future approved runtime derivatives
 as the source of truth.
 
 Never:
 
-- replace the approved production asset with an independently drawn mascot
+- replace the approved canonical asset with an independently drawn mascot
 - treat CSS geometry as the canonical Aster
 - crop runtime assets from documentation sheets
 - use documentation sheets as sprite atlases
 - use unapproved AI-generated runtime variations
+- treat Aster as a collection of unrelated images
+- create future poses outside the single approved rigged-model pipeline
 - enlarge the eyes beyond the canonical proportions
 - shrink the visor
 - change the helmet silhouette

@@ -1174,6 +1174,7 @@ export function PracticePanel() {
     const teachMeMode = getFoundationalTeachMeMode(foundationalAttempt ?? undefined);
     const isEducationalMode = foundationalTeachingOpen && !result;
     const showFoundationalResult = Boolean(foundationalAnswerTeaching);
+    const hasFoundationalReasoning = isEducationalMode || showFoundationalResult;
 
     return (
       <div className="practice-focus rr-practice-shell rr-foundational-shell min-h-screen" data-theme={skin}>
@@ -1207,56 +1208,71 @@ export function PracticePanel() {
         </header>
 
         <main className="rr-foundational-main">
-          <section className="rr-card rr-card-paper rr-foundational-challenge" aria-label="Foundational Rapid Round">
-            <div className="rr-foundational-header">
-              <div>
-                <p className="rr-section-header">Schema</p>
-                <h1>{question.foundationalRapidRound.schemaName}</h1>
+          <section className="rr-foundational-panel-shell rr-patient-workspace" aria-label="Patient workspace">
+            <div className="rr-card rr-card-paper rr-foundational-challenge rr-foundational-patient-card">
+              <div className="rr-foundational-header">
+                <div>
+                  <p className="rr-section-header">Schema</p>
+                  <h1>{question.foundationalRapidRound.schemaName}</h1>
+                </div>
+                <span className="rr-badge rr-badge-learning">{question.foundationalRapidRound.taskLabel}</span>
               </div>
-              <span className="rr-badge rr-badge-learning">{question.foundationalRapidRound.taskLabel}</span>
-            </div>
 
-            {!showFoundationalResult && !isEducationalMode ? (
-              <>
+              <div className="rr-foundational-patient-task">
                 <div className="rr-foundational-prompt">
                   <p>{question.stem}</p>
                   <p>{question.answerPrompt ?? decisionQuestion}</p>
                 </div>
-                <form onSubmit={onSubmit} className="rr-foundational-answer">
-                  <label className="sr-only" htmlFor="foundational-answer">Answer</label>
-                  <input
-                    ref={answerInputRef}
-                    id="foundational-answer"
-                    value={answer}
-                    onChange={(event) => setAnswer(event.target.value)}
-                    onKeyDown={onAnswerKeyDown}
-                    placeholder="Type your answer"
-                    name={`rr-foundational-${question.id}`}
-                    autoComplete="off"
-                    autoCorrect="off"
-                    autoCapitalize="off"
-                    spellCheck={false}
-                    className="rr-input"
-                    autoFocus
-                  />
-                  <Button type="submit" disabled={isSubmitting}>
-                    {isSubmitting ? "Checking" : "Submit"}
-                  </Button>
-                </form>
-                <div className="rr-foundational-tools">
-                  <button type="button" className="rr-tool-button" onClick={handleFoundationalTeachMe}>
-                    <span aria-hidden="true">{toolIcons.teach}</span>
-                    {teachMeMode === "retrieval_reminder" ? "Teach Me ✓" : "Teach Me"}
-                  </button>
-                  <span className="rr-meta">T opens Teach Me</span>
-                </div>
-                {clinicalCuePrompt ? <p className="rr-clinical-cue-prompt" role="status">{clinicalCuePrompt}</p> : null}
-                {foundationalReminder ? <p className="rr-foundational-reminder" role="status">{foundationalReminder}</p> : null}
-                {error ? <p className="text-sm text-rr-muted">{error}</p> : null}
-              </>
-            ) : null}
 
-            {isEducationalMode ? (
+                {!showFoundationalResult ? (
+                  <>
+                    <form onSubmit={onSubmit} className="rr-foundational-answer">
+                      <label className="sr-only" htmlFor="foundational-answer">Answer</label>
+                      <input
+                        ref={answerInputRef}
+                        id="foundational-answer"
+                        value={answer}
+                        onChange={(event) => setAnswer(event.target.value)}
+                        onKeyDown={onAnswerKeyDown}
+                        placeholder="Type your answer"
+                        name={`rr-foundational-${question.id}`}
+                        autoComplete="off"
+                        autoCorrect="off"
+                        autoCapitalize="off"
+                        spellCheck={false}
+                        className="rr-input"
+                        autoFocus
+                      />
+                      <Button type="submit" disabled={isSubmitting}>
+                        {isSubmitting ? "Checking" : "Submit"}
+                      </Button>
+                    </form>
+                    <div className="rr-foundational-tools">
+                      <button type="button" className="rr-tool-button" onClick={handleFoundationalTeachMe}>
+                        <span aria-hidden="true">{toolIcons.teach}</span>
+                        {teachMeMode === "retrieval_reminder" ? "Teach Me ✓" : "Teach Me"}
+                      </button>
+                      <span className="rr-meta">T opens Teach Me</span>
+                    </div>
+                    {clinicalCuePrompt ? <p className="rr-clinical-cue-prompt" role="status">{clinicalCuePrompt}</p> : null}
+                    {foundationalReminder ? <p className="rr-foundational-reminder" role="status">{foundationalReminder}</p> : null}
+                    {error ? <p className="text-sm text-rr-muted">{error}</p> : null}
+                  </>
+                ) : (
+                  <div className="rr-foundational-learner-answer" aria-label="Learner answer">
+                    <span>Your answer</span>
+                    <strong>{answer}</strong>
+                  </div>
+                )}
+              </div>
+            </div>
+          </section>
+
+          <section
+            className={`rr-card rr-card-paper rr-reasoning-workspace${hasFoundationalReasoning ? "" : " rr-reasoning-workspace-empty"}`}
+            aria-label="Clinical reasoning workspace"
+          >
+            {isEducationalMode && !showFoundationalResult ? (
               <FoundationalTeachingMode teaching={foundationalTeaching} onNext={() => void loadQuestion()} />
             ) : null}
 
@@ -1380,7 +1396,7 @@ export function PracticePanel() {
   }
 
   return (
-    <div className="practice-focus rr-practice-shell rr-moleskine-root min-h-screen" data-theme={skin}>
+    <div className="practice-focus rr-practice-shell rr-standard-workspace-root rr-moleskine-root min-h-screen" data-theme={skin}>
       <header className="rr-product-nav rr-moleskine-topbar">
         <div className="rr-product-brand">
           <span className="rr-brand-mark" aria-hidden="true">✳</span>
@@ -1456,113 +1472,120 @@ export function PracticePanel() {
           </div>
         </aside>
 
-        <main className={`rr-practice-main rr-moleskine-main-spread ${mode === "tutor" ? "rr-practice-main-wide" : ""}`}>
-          <div className="rr-moleskine-page-goal mb-5 flex flex-wrap items-center justify-between gap-3">
-            <QuestionMeta question={question} />
-            <p className="rr-meta">{learningGoal}</p>
-          </div>
-          <section className={`rr-card rr-question-card rr-vignette-card rr-card-paper rr-moleskine-left-page space-y-5 px-5 py-5 motion-safe:animate-[fadeIn_180ms_var(--rr-ease-standard)] sm:px-7 ${isExplanationState ? "rr-question-card-compact" : "sm:py-7"}`}>
-            <div className="space-y-4">
-              <div className="flex flex-wrap items-center gap-2">
-                <span className="rr-badge rr-badge-learning">{isExplanationState ? "Explanation" : "Question"}</span>
-                <span className="rr-meta">Think through the vignette first.</span>
+        <main className={`rr-practice-main rr-clinical-workspace-main rr-moleskine-main-spread ${mode === "tutor" ? "rr-practice-main-wide" : ""}`}>
+          <div className="rr-clinical-workspace-grid">
+            <section className="rr-patient-workspace rr-clinical-patient-pane" aria-label="Patient workspace">
+              <div className="rr-moleskine-page-goal mb-5 flex flex-wrap items-center justify-between gap-3">
+                <QuestionMeta question={question} />
+                <p className="rr-meta">{learningGoal}</p>
               </div>
-              <AnnotatedClinicalPrompt prompt={clinicalPrompt} findings={visibleVignetteFindings} />
-              <p className="rr-decision-question">
-                {decisionQuestion}
-              </p>
-            </div>
-
-            <form onSubmit={onSubmit} className="rr-answer-dock space-y-4">
-              <label className="sr-only" htmlFor="answer">
-                Answer
-              </label>
-              <div className="grid gap-3 sm:grid-cols-[1fr_auto]">
-                <input
-                  ref={answerInputRef}
-                  id="answer"
-                  value={answer}
-                  onChange={(event) => setAnswer(event.target.value)}
-                  onKeyDown={onAnswerKeyDown}
-                  disabled={Boolean(result) || mode === "tutor"}
-                  placeholder="Type your answer"
-                  name={`rr-answer-${question.id.slice(-6)}`}
-                  autoComplete="off"
-                  autoCorrect="off"
-                  autoCapitalize="off"
-                  spellCheck={false}
-                  className="rr-input"
-                  autoFocus
-                />
-                {!result ? (
-                  <Button
-                    type="submit"
-                    disabled={isSubmitting || mode === "tutor"}
-                  >
-                    {isSubmitting ? "Checking" : "Submit"}
-                  </Button>
-                ) : null}
-              </div>
-              {renderClinicalCuePanel()}
-              <div className="flex min-h-11 flex-wrap items-center gap-3 pt-1">
-                {mode === "rapid" && result?.isCorrect ? (
-                  <Button type="button" onClick={() => void loadQuestion()}>
-                    Next
-                  </Button>
-                ) : null}
-                {mode === "rapid" && result?.isCorrect ? (
-                  <div className="rr-correct-inline max-w-xl text-sm leading-6 motion-safe:animate-[fadeIn_180ms_var(--rr-ease-standard)]">
-                    <span className="font-semibold text-rr-correct">Correct.</span>
-                    <span className="ml-3 text-rr-muted">{result.boardPearl}</span>
+              <section className={`rr-card rr-question-card rr-vignette-card rr-card-paper rr-moleskine-left-page space-y-5 px-5 py-5 motion-safe:animate-[fadeIn_180ms_var(--rr-ease-standard)] sm:px-7 ${isExplanationState ? "rr-question-card-compact" : "sm:py-7"}`}>
+                <div className="space-y-4">
+                  <div className="flex flex-wrap items-center gap-2">
+                    <span className="rr-badge rr-badge-learning">{isExplanationState ? "Explanation" : "Question"}</span>
+                    <span className="rr-meta">Think through the vignette first.</span>
                   </div>
-                ) : null}
-                {mode === "rapid" && result && !result.isCorrect ? (
-                  <p className="text-sm font-medium text-rr-repair">Not quite. Let&apos;s refine this decision.</p>
-                ) : null}
-                {error ? <p className="text-sm text-rr-muted">{error}</p> : null}
-              </div>
-              <p className="text-xs text-rr-muted" aria-live="polite">
-                {keyboardHint}
-              </p>
-            </form>
-          </section>
+                  <AnnotatedClinicalPrompt prompt={clinicalPrompt} findings={visibleVignetteFindings} />
+                  <p className="rr-decision-question">
+                    {decisionQuestion}
+                  </p>
+                </div>
 
-        {activeTool === "notes" ? (
-          <section className="rr-tool-panel rr-panel rr-moleskine-page-section mt-5 motion-safe:animate-[fadeIn_180ms_var(--rr-ease-standard)]">
-            <p className="rr-section-header">Notes for this case</p>
-            <textarea
-              className="rr-notes-input"
-              value={notes}
-              onChange={(event) => setNotes(event.target.value)}
-              placeholder="Capture the clue or heuristic you want to remember."
-            />
-            <p className="rr-meta">Saved on this device for the current case.</p>
-          </section>
-        ) : null}
+                {result ? (
+                  <div className="rr-foundational-learner-answer" aria-label="Learner answer">
+                    <span>Your answer</span>
+                    <strong>{answer}</strong>
+                  </div>
+                ) : (
+                  <form onSubmit={onSubmit} className="rr-answer-dock space-y-4">
+                    <label className="sr-only" htmlFor="answer">
+                      Answer
+                    </label>
+                    <div className="grid gap-3 sm:grid-cols-[1fr_auto]">
+                      <input
+                        ref={answerInputRef}
+                        id="answer"
+                        value={answer}
+                        onChange={(event) => setAnswer(event.target.value)}
+                        onKeyDown={onAnswerKeyDown}
+                        disabled={mode === "tutor"}
+                        placeholder="Type your answer"
+                        name={`rr-answer-${question.id.slice(-6)}`}
+                        autoComplete="off"
+                        autoCorrect="off"
+                        autoCapitalize="off"
+                        spellCheck={false}
+                        className="rr-input"
+                        autoFocus
+                      />
+                      <Button
+                        type="submit"
+                        disabled={isSubmitting || mode === "tutor"}
+                      >
+                        {isSubmitting ? "Checking" : "Submit"}
+                      </Button>
+                    </div>
+                    {renderClinicalCuePanel()}
+                    <div className="flex min-h-11 flex-wrap items-center gap-3 pt-1">
+                      {error ? <p className="text-sm text-rr-muted">{error}</p> : null}
+                    </div>
+                    <p className="text-xs text-rr-muted" aria-live="polite">
+                      {keyboardHint}
+                    </p>
+                  </form>
+                )}
+              </section>
 
-        {isExplanationState && tutor ? (
-          <div className="rr-moleskine-learning-layer mt-7 motion-safe:animate-[whiteboardOpen_220ms_var(--rr-ease-standard)] sm:mt-8">
-            <TutorMode
-              tutor={tutor}
-              reinforcementAnswer={reinforcementAnswer}
-              reinforcementResult={reinforcementResult}
-              setReinforcementAnswer={setReinforcementAnswer}
-              submitReinforcementAnswer={submitReinforcementAnswer}
-              loadQuestion={(targetConcept?: string) => void loadQuestion(targetConcept)}
-            />
+              {activeTool === "notes" ? (
+                <section className="rr-tool-panel rr-panel rr-moleskine-page-section mt-5 motion-safe:animate-[fadeIn_180ms_var(--rr-ease-standard)]">
+                  <p className="rr-section-header">Notes for this case</p>
+                  <textarea
+                    className="rr-notes-input"
+                    value={notes}
+                    onChange={(event) => setNotes(event.target.value)}
+                    placeholder="Capture the clue or heuristic you want to remember."
+                  />
+                  <p className="rr-meta">Saved on this device for the current case.</p>
+                </section>
+              ) : null}
+            </section>
+
+            <section
+              className={`rr-reasoning-workspace rr-clinical-reasoning-pane${(isExplanationState && tutor) || result?.isCorrect ? "" : " rr-reasoning-workspace-empty"}`}
+              aria-label="Clinical reasoning workspace"
+            >
+              {mode === "rapid" && result?.isCorrect ? (
+                <div className="rr-correct-inline text-sm leading-6 motion-safe:animate-[fadeIn_180ms_var(--rr-ease-standard)]">
+                  <span className="font-semibold text-rr-correct">Correct.</span>
+                  <span className="ml-3 text-rr-muted">{result.boardPearl}</span>
+                </div>
+              ) : null}
+
+              {isExplanationState && tutor ? (
+                <div className="rr-moleskine-learning-layer motion-safe:animate-[whiteboardOpen_220ms_var(--rr-ease-standard)]">
+                  <TutorMode
+                    tutor={tutor}
+                    reinforcementAnswer={reinforcementAnswer}
+                    reinforcementResult={reinforcementResult}
+                    setReinforcementAnswer={setReinforcementAnswer}
+                    submitReinforcementAnswer={submitReinforcementAnswer}
+                    loadQuestion={(targetConcept?: string) => void loadQuestion(targetConcept)}
+                  />
+                </div>
+              ) : null}
+
+              {isExplanationState || result?.isCorrect ? (
+                <nav className="rr-bottom-nav rr-panel rr-moleskine-footer-strip mt-5" aria-label="Practice navigation">
+                  <button type="button" className="rr-bottom-action" onClick={() => setActiveTool("notes")}>
+                    □ Add to Notes
+                  </button>
+                  <Button type="button" onClick={() => void loadQuestion()}>
+                    Next Case →
+                  </Button>
+                </nav>
+              ) : null}
+            </section>
           </div>
-        ) : null}
-
-        {isExplanationState ? (
-        <nav className="rr-bottom-nav rr-panel rr-moleskine-footer-strip mt-5" aria-label="Practice navigation">
-          <button type="button" className="rr-bottom-action" onClick={() => setActiveTool("notes")}>
-            □ Add to Notes
-          </button>
-          <Button type="button" onClick={() => void loadQuestion()}>
-            Next Case →
-          </Button>
-        </nav>
-        ) : null}
         </main>
       </div>
       {renderAsterOverlay()}

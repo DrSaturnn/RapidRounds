@@ -2469,7 +2469,7 @@ body:has(.practice-focus) .app-main {
     animation: none;
   }
 
-  .rr-aster-production-image {
+  .rr-aster-runtime-image {
     display: block;
     width: 100%;
     height: 100%;
@@ -2819,6 +2819,73 @@ body:has(.practice-focus) .app-main {
 
   .rr-practice-main-wide {
     max-width: 78rem;
+  }
+
+  .rr-clinical-workspace-grid {
+    display: grid;
+    gap: 1.25rem;
+  }
+
+  .rr-clinical-patient-pane,
+  .rr-clinical-reasoning-pane {
+    min-width: 0;
+  }
+
+  @media (min-width: 1024px) {
+    .rr-standard-workspace-root {
+      display: flex;
+      height: 100dvh;
+      min-height: 100dvh;
+      overflow: hidden;
+      flex-direction: column;
+    }
+
+    .rr-standard-workspace-root .rr-product-nav {
+      flex: 0 0 auto;
+    }
+
+    .rr-standard-workspace-root .rr-notebook-shell {
+      display: grid;
+      flex: 1 1 auto;
+      grid-template-columns: 8rem minmax(0, 1fr);
+      width: min(100%, 1760px);
+      max-width: 1760px;
+      min-height: 0;
+      overflow: hidden;
+      padding: clamp(1rem, 2vw, 2rem);
+    }
+
+    .rr-standard-workspace-root .rr-tool-rail,
+    .rr-standard-workspace-root .rr-practice-main,
+    .rr-standard-workspace-root .rr-clinical-workspace-grid,
+    .rr-standard-workspace-root .rr-clinical-patient-pane,
+    .rr-standard-workspace-root .rr-clinical-reasoning-pane {
+      min-height: 0;
+    }
+
+    .rr-standard-workspace-root .rr-practice-main {
+      max-width: none;
+      overflow: hidden;
+    }
+
+    .rr-standard-workspace-root .rr-clinical-workspace-grid {
+      height: 100%;
+      grid-template-columns: minmax(0, 1.35fr) minmax(24rem, 1fr);
+      gap: clamp(1rem, 2vw, 1.75rem);
+      overflow: hidden;
+    }
+
+    .rr-standard-workspace-root .rr-clinical-patient-pane,
+    .rr-standard-workspace-root .rr-clinical-reasoning-pane {
+      overflow-y: auto;
+      overscroll-behavior: contain;
+      scrollbar-gutter: stable;
+    }
+
+    .rr-standard-workspace-root .rr-clinical-reasoning-pane {
+      display: grid;
+      align-content: start;
+    }
   }
 
   .rr-answer-dock {
@@ -3273,16 +3340,77 @@ body:has(.practice-focus) .app-main {
       padding-bottom: calc(5.5rem + env(safe-area-inset-bottom));
     }
 
+    .rr-product-nav {
+      grid-template-columns: minmax(0, 1fr) auto;
+      align-items: center;
+      gap: 0.45rem 0.65rem;
+      min-height: 0;
+      padding: 0.75rem 0.875rem 0.7rem;
+    }
+
+    .rr-product-brand {
+      min-width: 0;
+      gap: 0.45rem;
+      font-size: 1.15rem;
+      line-height: 1.25rem;
+    }
+
+    .rr-brand-mark {
+      font-size: 1.85rem;
+    }
+
+    .rr-brand-subtitle {
+      display: inline;
+      font-size: 0.85rem;
+      line-height: 1rem;
+    }
+
+    .rr-product-context {
+      grid-column: 1 / -1;
+      flex-wrap: nowrap;
+      gap: 0.55rem;
+      overflow-x: auto;
+      padding-bottom: 0.05rem;
+      scrollbar-width: none;
+    }
+
+    .rr-product-context::-webkit-scrollbar {
+      display: none;
+    }
+
+    .rr-subject-pill,
+    .rr-study-mode-pill {
+      min-height: 2.45rem;
+      padding-left: 0.85rem;
+      padding-right: 0.85rem;
+      white-space: nowrap;
+    }
+
+    .rr-product-progress {
+      grid-column: 1 / -1;
+      gap: 0.5rem;
+      font-size: 0.95rem;
+      line-height: 1.2rem;
+    }
+
     .rr-product-actions {
+      grid-column: 2;
+      grid-row: 1;
       justify-content: flex-end;
+      gap: 0.5rem;
     }
 
     .rr-header-action,
     .rr-aster-button,
     .rr-menu-button {
-      min-width: 2.75rem;
-      padding-left: 0.75rem;
-      padding-right: 0.75rem;
+      min-height: 2.35rem;
+      min-width: 2.35rem;
+      padding-left: 0.6rem;
+      padding-right: 0.6rem;
+    }
+
+    .rr-menu-button {
+      font-size: 1.2rem;
     }
 
     .rr-action-label {
@@ -5652,6 +5780,21 @@ body:has(.practice-focus) .app-main {
   padding: clamp(1.25rem, 3vw, 2rem);
 }
 
+.rr-foundational-panel-shell,
+.rr-reasoning-workspace {
+  min-width: 0;
+}
+
+.rr-foundational-patient-card,
+.rr-reasoning-workspace {
+  align-content: start;
+}
+
+.rr-foundational-patient-task {
+  display: grid;
+  gap: 1.3rem;
+}
+
 .rr-foundational-header {
   display: flex;
   align-items: flex-start;
@@ -5702,6 +5845,29 @@ body:has(.practice-focus) .app-main {
   color: var(--rr-muted);
   font-size: 0.92rem;
   font-weight: 650;
+}
+
+.rr-foundational-learner-answer {
+  display: grid;
+  gap: 0.35rem;
+  border: 1px solid var(--rr-border);
+  border-radius: var(--rr-radius-md);
+  background: var(--rr-surface-elevated);
+  box-shadow: var(--rr-shadow-sm), var(--rr-card-edge);
+  padding: 1rem;
+}
+
+.rr-foundational-learner-answer span {
+  color: var(--rr-muted);
+  font-size: 0.78rem;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.rr-foundational-learner-answer strong {
+  color: var(--rr-text);
+  font-size: 1.1rem;
 }
 
 .rr-foundational-teaching {
@@ -5805,6 +5971,7 @@ body:has(.practice-focus) .app-main {
 
 [data-theme="warm-notebook"] .rr-foundational-challenge,
 [data-theme="warm-notebook"] .rr-foundational-panel,
+[data-theme="warm-notebook"] .rr-foundational-learner-answer,
 [data-theme="warm-notebook"] .rr-foundational-status,
 [data-theme="warm-notebook"] .rr-foundational-pivot {
   border-color: rgba(120, 80, 40, 0.16);
@@ -5814,6 +5981,50 @@ body:has(.practice-focus) .app-main {
 [data-theme="warm-notebook"] .rr-foundational-header h1,
 [data-theme="warm-notebook"] .rr-foundational-prompt {
   font-family: Source Serif 4, Charter, Georgia, ui-serif, serif;
+}
+
+@media (min-width: 1024px) {
+  .rr-foundational-shell {
+    display: flex;
+    height: 100dvh;
+    min-height: 100dvh;
+    overflow: hidden;
+    flex-direction: column;
+  }
+
+  .rr-foundational-shell .rr-product-nav {
+    flex: 0 0 auto;
+  }
+
+  .rr-foundational-main {
+    display: grid;
+    flex: 1 1 auto;
+    grid-template-columns: minmax(0, 1.35fr) minmax(24rem, 1fr);
+    gap: clamp(1rem, 2vw, 1.75rem);
+    width: min(100%, 1760px);
+    min-height: 0;
+    overflow: hidden;
+    padding: clamp(1rem, 2vw, 2rem);
+  }
+
+  .rr-patient-workspace,
+  .rr-reasoning-workspace {
+    min-height: 0;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    scrollbar-gutter: stable;
+  }
+
+  .rr-foundational-patient-card,
+  .rr-reasoning-workspace {
+    min-height: 100%;
+  }
+}
+
+@media (max-width: 1023px) {
+  .rr-reasoning-workspace-empty {
+    display: none;
+  }
 }
 
 @media (max-width: 720px) {

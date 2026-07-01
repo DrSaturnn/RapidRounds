@@ -16,6 +16,19 @@ describe("continuous educational workspace", () => {
     assert.ok(practicePanel.indexOf("rr-question-card-compact") < practicePanel.lastIndexOf("<TutorMode"));
   });
 
+  it("uses patient and clinical reasoning panes for the standard desktop practice layout", () => {
+    const practicePanel = readFileSync("components/PracticePanel.tsx", "utf8");
+    const styles = readFileSync("app/globals.css", "utf8");
+
+    assert.match(practicePanel, /rr-standard-workspace-root/);
+    assert.match(practicePanel, /rr-clinical-workspace-main/);
+    assert.match(practicePanel, /rr-patient-workspace rr-clinical-patient-pane/);
+    assert.match(practicePanel, /rr-reasoning-workspace rr-clinical-reasoning-pane/);
+    assert.match(styles, /\.rr-standard-workspace-root[\s\S]*height: 100dvh/);
+    assert.match(styles, /\.rr-standard-workspace-root \.rr-clinical-workspace-grid[\s\S]*grid-template-columns: minmax\(0, 1\.35fr\) minmax\(24rem, 1fr\)/);
+    assert.match(styles, /\.rr-standard-workspace-root \.rr-clinical-patient-pane,\s*\n\s*\.rr-standard-workspace-root \.rr-clinical-reasoning-pane[\s\S]*overflow-y: auto/);
+  });
+
   it("lays out repair, pattern teaching, and next challenge as one continuous workspace", () => {
     const tutorMode = readFileSync("components/TutorMode.tsx", "utf8");
     const styles = readFileSync("app/globals.css", "utf8");

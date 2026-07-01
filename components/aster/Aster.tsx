@@ -1,6 +1,6 @@
 "use client";
 
-import { getAsterProductionAsset } from "@/components/aster/AsterAssets";
+import { getAsterRuntimeAsset } from "@/components/aster/AsterAssets";
 import type { AsterExpression } from "@/components/aster/AsterExpressions";
 
 export type AsterAvatarSize = "tiny" | "small" | "medium";
@@ -19,7 +19,7 @@ export function AsterAvatar({
   showShadow?: boolean;
   eventKey?: string | null;
 }) {
-  const asset = getAsterProductionAsset(mood);
+  const asset = getAsterRuntimeAsset(mood);
 
   return (
     <span
@@ -34,7 +34,7 @@ export function AsterAvatar({
       aria-hidden="true"
     >
       <img
-        className="rr-aster-production-image"
+        className="rr-aster-runtime-image"
         src={asset.src}
         alt=""
         draggable={false}

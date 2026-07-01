@@ -1,21 +1,21 @@
 import type { AsterExpression } from "@/components/aster/AsterExpressions";
 
-export type AsterProductionAsset = {
+export type AsterRuntimeAsset = {
   src: string;
   alt: string;
   approved: boolean;
 };
 
-export const ASTER_V1_NEUTRAL_ASSET = "/aster/production/neutral.png";
+export const ASTER_V1_NEUTRAL_ASSET = "/aster/runtime/neutral.png";
 export const ASTER_UNAPPROVED_EXPRESSION_FALLBACK = "neutral";
 
-const pendingExpressionAsset: AsterProductionAsset = {
+const pendingExpressionAsset: AsterRuntimeAsset = {
   src: ASTER_V1_NEUTRAL_ASSET,
   alt: "Aster",
   approved: false,
 };
 
-export const ASTER_PRODUCTION_ASSETS: Record<AsterExpression, AsterProductionAsset> = {
+export const ASTER_RUNTIME_ASSETS: Record<AsterExpression, AsterRuntimeAsset> = {
   neutral: {
     src: ASTER_V1_NEUTRAL_ASSET,
     alt: "Aster neutral",
@@ -33,6 +33,6 @@ export const ASTER_PRODUCTION_ASSETS: Record<AsterExpression, AsterProductionAss
   resting: pendingExpressionAsset,
 };
 
-export function getAsterProductionAsset(mood: AsterExpression): AsterProductionAsset {
-  return ASTER_PRODUCTION_ASSETS[mood] ?? ASTER_PRODUCTION_ASSETS.neutral;
+export function getAsterRuntimeAsset(mood: AsterExpression): AsterRuntimeAsset {
+  return ASTER_RUNTIME_ASSETS[mood] ?? ASTER_RUNTIME_ASSETS.neutral;
 }

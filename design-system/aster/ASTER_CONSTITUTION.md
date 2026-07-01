@@ -35,22 +35,26 @@ Aster MUST feel:
 - minimal
 - supportive
 
-## Production Asset Authority
+## Canonical Character Authority
 
-The approved file `design-system/aster/production/neutral.png` is Aster v1.0.
+The approved file `design-system/aster/canonical/neutral.png` is Aster v1.0.
 It is the single source of truth for the character. It is not inspiration,
 concept art, a mood board, or an example.
 
-Runtime Aster components MUST render `public/aster/production/neutral.png` or
-future approved production derivatives listed in
-`design-system/aster/production/asset_manifest.json`.
+Runtime Aster components MUST render `public/aster/runtime/neutral.png` or
+future approved runtime derivatives listed in
+`design-system/aster/runtime/asset_manifest.json`.
+
+All future poses, expressions, icons, sprites, and animations MUST be rendered
+from one rigged Blender model calibrated against the canonical image. Aster is a
+single character identity, not a set of unrelated generated images.
 
 The runtime MUST NOT reconstruct Aster with CSS, crop him from documentation
 sheets, use documentation sheets as sprite atlases, or use AI-generated runtime
 variations.
 
-If a rendered Aster does not look like the same character in `neutral.png`, the
-implementation is wrong.
+If a rendered Aster does not look like the same character in
+`canonical/neutral.png`, the implementation is wrong.
 
 ## Canonical Visual Identity
 
