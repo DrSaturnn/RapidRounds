@@ -1,6 +1,6 @@
 "use client";
 
-import { AsterAvatar, moodFromAsterAnimation } from "@/components/AsterAvatar";
+import { AsterAvatar, moodFromAsterAnimation } from "@/components/aster/Aster";
 import type { AsterCompanionState } from "@/lib/aster-companion";
 
 const MAP_NODE_POSITIONS = [

@@ -116,7 +116,8 @@ describe("Aster companion for foundational Rapid Round", () => {
   });
 
   test("uses a reusable Aster avatar with mood, size, and shadow variants", () => {
-    const source = readFileSync("components/AsterAvatar.tsx", "utf8");
+    const source = readFileSync("components/aster/Aster.tsx", "utf8");
+    const adapter = readFileSync("components/AsterAvatar.tsx", "utf8");
     const css = readFileSync("app/globals.css", "utf8");
 
     assert.match(source, /export function AsterAvatar/);
@@ -125,9 +126,13 @@ describe("Aster companion for foundational Rapid Round", () => {
     assert.match(source, /showShadow = true/);
     assert.match(source, /rr-aster-eye/);
     assert.match(source, /rr-aster-core/);
+    assert.match(source, /rr-aster-panel/);
+    assert.match(source, /rr-aster-visor-gloss/);
     assert.doesNotMatch(source, /mouth/i);
+    assert.match(adapter, /components\/aster\/Aster/);
     assert.match(css, /\.rr-aster-mood-thinking/);
     assert.match(css, /\.rr-aster-mood-celebrating/);
+    assert.match(css, /\.rr-aster-mood-curious/);
     assert.match(css, /prefers-reduced-motion: reduce/);
   });
 
@@ -147,5 +152,18 @@ describe("Aster companion for foundational Rapid Round", () => {
     assert.doesNotMatch(practicePanel, /AsterRouteMap/);
     assert.match(css, /\.rr-aster-overworld/);
     assert.match(css, /\.rr-aster-map-avatar/);
+  });
+
+  test("keeps Aster governed by canonical design-system assets and rules", () => {
+    const constitution = readFileSync("design-system/aster/ASTER_CONSTITUTION.md", "utf8");
+    const doNotDeviate = readFileSync("design-system/aster/DO_NOT_DEVIATE.md", "utf8");
+    const runtimeReadme = readFileSync("components/aster/README.md", "utf8");
+    const source = readFileSync("components/PracticePanel.tsx", "utf8");
+
+    assert.match(constitution, /glossy black visor/i);
+    assert.match(constitution, /chest crystal/i);
+    assert.match(doNotDeviate, /Do Not Deviate/i);
+    assert.match(runtimeReadme, /Do not create independent Aster implementations/i);
+    assert.match(source, /components\/aster\/Aster/);
   });
 });

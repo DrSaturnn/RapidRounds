@@ -1,0 +1,868 @@
+{
+  "generatedAt": "2026-07-01T03:59:29.625Z",
+  "benchmarkCaseCount": 25,
+  "summary": {
+    "clinicalPattern": 100,
+    "schemaActivation": 100,
+    "competingSchemaNormalization": 100,
+    "pivotClue": 100,
+    "discriminator": 100,
+    "divergenceClassification": 100,
+    "repairOperation": 100,
+    "commitRule": 100,
+    "overall": 100,
+    "failedCaseCount": 0
+  },
+  "results": [
+    {
+      "id": "obgyn-primary-amenorrhea-mrkh-vs-ais",
+      "shelf": "OB/GYN",
+      "clinical_pattern": "primary amenorrhea with absent uterus",
+      "correct_schema": "mayer_rokitansky_kuster_hauser_syndrome",
+      "plausible_wrong_schema": "androgen_insensitivity_syndrome",
+      "passes": {
+        "clinicalPattern": true,
+        "schemaActivation": true,
+        "competingSchemaNormalization": true,
+        "pivotClue": true,
+        "discriminator": true,
+        "divergenceClassification": true,
+        "repairOperation": true,
+        "commitRule": true
+      },
+      "score": 100,
+      "failures": [],
+      "generated": {
+        "clinical_pattern": "primary amenorrhea with absent uterus",
+        "canonical_schema_id": "mayer_rokitansky_kuster_hauser_syndrome",
+        "competing_schema_ids": [
+          "androgen_insensitivity_syndrome"
+        ],
+        "pivot_clues": [
+          "46,XX with normal pubic hair"
+        ],
+        "discriminator": "46,XX with normal pubic hair supports mayer rokitansky kuster hauser syndrome. Androgen insensitivity has a 46,XY karyotype, testes, scant pubic or axillary hair, and absent uterus.",
+        "divergence_type": "Failure to prune competing diagnosis",
+        "repair_operation": "First normalize the syndrome to primary amenorrhea with absent uterus, then compare mayer rokitansky kuster hauser syndrome, androgen insensitivity syndrome using the pivot: 46,XX with normal pubic hair.",
+        "commit_rule": "Absent uterus plus 46,XX and normal pubic hair should commit to Müllerian agenesis."
+      },
+      "attending_evaluation": "Models a reasoning divergence: pattern, pivot, competing schema, repair, and commit rule are all present."
+    },
+    {
+      "id": "obgyn-secondary-amenorrhea-pregnancy-first",
+      "shelf": "OB/GYN",
+      "clinical_pattern": "secondary amenorrhea",
+      "correct_schema": "pregnancy",
+      "plausible_wrong_schema": "polycystic_ovary_syndrome",
+      "passes": {
+        "clinicalPattern": true,
+        "schemaActivation": true,
+        "competingSchemaNormalization": true,
+        "pivotClue": true,
+        "discriminator": true,
+        "divergenceClassification": true,
+        "repairOperation": true,
+        "commitRule": true
+      },
+      "score": 100,
+      "failures": [],
+      "generated": {
+        "clinical_pattern": "secondary amenorrhea",
+        "canonical_schema_id": "pregnancy",
+        "competing_schema_ids": [
+          "polycystic_ovary_syndrome"
+        ],
+        "pivot_clues": [
+          "reproductive-age patient with missed menses"
+        ],
+        "discriminator": "reproductive-age patient with missed menses separates it; the alternative would need Pregnancy must be excluded first in secondary amenorrhea before endocrine causes such as PCOS are pursued..",
+        "divergence_type": "Pattern recognized but commitment delayed",
+        "repair_operation": "First normalize the syndrome to Shares overlap with pregnancy., then compare pregnancy, polycystic ovary syndrome using the pivot: reproductive-age patient with missed menses.",
+        "commit_rule": "Secondary amenorrhea in a reproductive-age patient commits first to pregnancy testing."
+      },
+      "attending_evaluation": "Models a reasoning divergence: pattern, pivot, competing schema, repair, and commit rule are all present."
+    },
+    {
+      "id": "obgyn-acute-pelvic-pain-ectopic",
+      "shelf": "OB/GYN",
+      "clinical_pattern": "first-trimester pelvic pain and bleeding",
+      "correct_schema": "ectopic_pregnancy",
+      "plausible_wrong_schema": "spontaneous_abortion",
+      "passes": {
+        "clinicalPattern": true,
+        "schemaActivation": true,
+        "competingSchemaNormalization": true,
+        "pivotClue": true,
+        "discriminator": true,
+        "divergenceClassification": true,
+        "repairOperation": true,
+        "commitRule": true
+      },
+      "score": 100,
+      "failures": [],
+      "generated": {
+        "clinical_pattern": "first-trimester pelvic pain and bleeding",
+        "canonical_schema_id": "ectopic_pregnancy",
+        "competing_schema_ids": [
+          "spontaneous_abortion"
+        ],
+        "pivot_clues": [
+          "positive pregnancy test with no intrauterine pregnancy on ultrasound"
+        ],
+        "discriminator": "positive pregnancy test with no intrauterine pregnancy on ultrasound separates it; the alternative would need No intrauterine pregnancy with pain and bleeding should activate ectopic pregnancy; spontaneous abortion needs intrauterine pregnancy or products of conception..",
+        "divergence_type": "Missed pivot clue",
+        "repair_operation": "First normalize the syndrome to Shares overlap with ectopic pregnancy., then compare ectopic pregnancy, spontaneous abortion using the pivot: positive pregnancy test with no intrauterine pregnancy on ultrasound.",
+        "commit_rule": "Pregnancy of unknown location plus pain or adnexal findings should commit to ectopic evaluation."
+      },
+      "attending_evaluation": "Models a reasoning divergence: pattern, pivot, competing schema, repair, and commit rule are all present."
+    },
+    {
+      "id": "obgyn-chronic-pelvic-pain-endometriosis",
+      "shelf": "OB/GYN",
+      "clinical_pattern": "chronic cyclic pelvic pain",
+      "correct_schema": "endometriosis",
+      "plausible_wrong_schema": "pelvic_inflammatory_disease",
+      "passes": {
+        "clinicalPattern": true,
+        "schemaActivation": true,
+        "competingSchemaNormalization": true,
+        "pivotClue": true,
+        "discriminator": true,
+        "divergenceClassification": true,
+        "repairOperation": true,
+        "commitRule": true
+      },
+      "score": 100,
+      "failures": [],
+      "generated": {
+        "clinical_pattern": "chronic cyclic pelvic pain",
+        "canonical_schema_id": "endometriosis",
+        "competing_schema_ids": [
+          "pelvic_inflammatory_disease"
+        ],
+        "pivot_clues": [
+          "pain is cyclic and associated with menses"
+        ],
+        "discriminator": "pain is cyclic and associated with menses separates it; the alternative would need Cyclic pain tied to menses supports endometriosis; PID needs infectious signs such as fever, discharge, or cervical motion tenderness..",
+        "divergence_type": "Misweighted discriminator",
+        "repair_operation": "First normalize the syndrome to Shares overlap with endometriosis., then compare endometriosis, pelvic inflammatory disease using the pivot: pain is cyclic and associated with menses.",
+        "commit_rule": "Chronic pelvic pain that tracks with menses should commit to endometriosis unless infection clues are present."
+      },
+      "attending_evaluation": "Models a reasoning divergence: pattern, pivot, competing schema, repair, and commit rule are all present."
+    },
+    {
+      "id": "obgyn-adnexal-mass-torsion",
+      "shelf": "OB/GYN",
+      "clinical_pattern": "acute unilateral pelvic pain with adnexal mass",
+      "correct_schema": "ovarian_torsion",
+      "plausible_wrong_schema": "ruptured_ovarian_cyst",
+      "passes": {
+        "clinicalPattern": true,
+        "schemaActivation": true,
+        "competingSchemaNormalization": true,
+        "pivotClue": true,
+        "discriminator": true,
+        "divergenceClassification": true,
+        "repairOperation": true,
+        "commitRule": true
+      },
+      "score": 100,
+      "failures": [],
+      "generated": {
+        "clinical_pattern": "acute unilateral pelvic pain with adnexal mass",
+        "canonical_schema_id": "ovarian_torsion",
+        "competing_schema_ids": [
+          "ruptured_ovarian_cyst"
+        ],
+        "pivot_clues": [
+          "sudden severe unilateral pain with nausea and adnexal mass"
+        ],
+        "discriminator": "sudden severe unilateral pain with nausea and adnexal mass separates it; the alternative would need Sudden severe pain with nausea and adnexal enlargement supports torsion; cyst rupture is usually transient pain with free fluid..",
+        "divergence_type": "Failure to prune competing diagnosis",
+        "repair_operation": "First normalize the syndrome to Shares overlap with ovarian torsion., then compare ovarian torsion, ruptured ovarian cyst using the pivot: sudden severe unilateral pain with nausea and adnexal mass.",
+        "commit_rule": "Acute severe unilateral pain plus adnexal mass should commit to torsion and urgent evaluation."
+      },
+      "attending_evaluation": "Models a reasoning divergence: pattern, pivot, competing schema, repair, and commit rule are all present."
+    },
+    {
+      "id": "obgyn-vaginal-discharge-bv",
+      "shelf": "OB/GYN",
+      "clinical_pattern": "vaginal discharge",
+      "correct_schema": "bacterial_vaginosis",
+      "plausible_wrong_schema": "vulvovaginal_candidiasis",
+      "passes": {
+        "clinicalPattern": true,
+        "schemaActivation": true,
+        "competingSchemaNormalization": true,
+        "pivotClue": true,
+        "discriminator": true,
+        "divergenceClassification": true,
+        "repairOperation": true,
+        "commitRule": true
+      },
+      "score": 100,
+      "failures": [],
+      "generated": {
+        "clinical_pattern": "vaginal discharge",
+        "canonical_schema_id": "bacterial_vaginosis",
+        "competing_schema_ids": [
+          "vulvovaginal_candidiasis"
+        ],
+        "pivot_clues": [
+          "clue cells with fishy odor"
+        ],
+        "discriminator": "clue cells with fishy odor supports bacterial vaginosis. Candidiasis is usually pruritic with thick cottage-cheese discharge, normal pH, and budding yeast or pseudohyphae.",
+        "divergence_type": "Missed pivot clue",
+        "repair_operation": "First normalize the syndrome to vaginal discharge, then compare bacterial vaginosis, vulvovaginal candidiasis using the pivot: clue cells with fishy odor.",
+        "commit_rule": "Fishy discharge plus clue cells should commit to BV."
+      },
+      "attending_evaluation": "Models a reasoning divergence: pattern, pivot, competing schema, repair, and commit rule are all present."
+    },
+    {
+      "id": "obgyn-postpartum-breast-mastitis",
+      "shelf": "OB/GYN",
+      "clinical_pattern": "postpartum breast pain and fever",
+      "correct_schema": "lactational_mastitis",
+      "plausible_wrong_schema": "breast_engorgement",
+      "passes": {
+        "clinicalPattern": true,
+        "schemaActivation": true,
+        "competingSchemaNormalization": true,
+        "pivotClue": true,
+        "discriminator": true,
+        "divergenceClassification": true,
+        "repairOperation": true,
+        "commitRule": true
+      },
+      "score": 100,
+      "failures": [],
+      "generated": {
+        "clinical_pattern": "postpartum breast pain and fever",
+        "canonical_schema_id": "lactational_mastitis",
+        "competing_schema_ids": [
+          "breast_engorgement"
+        ],
+        "pivot_clues": [
+          "fever with wedge-shaped erythematous tender breast area"
+        ],
+        "discriminator": "fever with wedge-shaped erythematous tender breast area separates it; the alternative would need Fever and focal erythema support mastitis; engorgement causes bilateral fullness without focal infection..",
+        "divergence_type": "Misweighted discriminator",
+        "repair_operation": "First normalize the syndrome to Shares overlap with lactational mastitis., then compare lactational mastitis, breast engorgement using the pivot: fever with wedge-shaped erythematous tender breast area.",
+        "commit_rule": "Breastfeeding plus fever and focal erythema should commit to mastitis."
+      },
+      "attending_evaluation": "Models a reasoning divergence: pattern, pivot, competing schema, repair, and commit rule are all present."
+    },
+    {
+      "id": "obgyn-third-trimester-bleeding-previa",
+      "shelf": "OB/GYN",
+      "clinical_pattern": "third-trimester bleeding",
+      "correct_schema": "placenta_previa",
+      "plausible_wrong_schema": "placental_abruption",
+      "passes": {
+        "clinicalPattern": true,
+        "schemaActivation": true,
+        "competingSchemaNormalization": true,
+        "pivotClue": true,
+        "discriminator": true,
+        "divergenceClassification": true,
+        "repairOperation": true,
+        "commitRule": true
+      },
+      "score": 100,
+      "failures": [],
+      "generated": {
+        "clinical_pattern": "third-trimester bleeding",
+        "canonical_schema_id": "placenta_previa",
+        "competing_schema_ids": [
+          "placental_abruption"
+        ],
+        "pivot_clues": [
+          "painless bleeding with no abdominal pain"
+        ],
+        "discriminator": "painless bleeding with no abdominal pain separates it; the alternative would need Painless bleeding supports previa; abruption should have pain, uterine tenderness, contractions, or fetal distress..",
+        "divergence_type": "Missed pivot clue",
+        "repair_operation": "First normalize the syndrome to Shares overlap with placenta previa., then compare placenta previa, placental abruption using the pivot: painless bleeding with no abdominal pain.",
+        "commit_rule": "Third-trimester painless bleeding should commit to placenta previa until proven otherwise."
+      },
+      "attending_evaluation": "Models a reasoning divergence: pattern, pivot, competing schema, repair, and commit rule are all present."
+    },
+    {
+      "id": "obgyn-first-trimester-bleeding-rhogam",
+      "shelf": "OB/GYN",
+      "clinical_pattern": "first-trimester bleeding in Rh-negative pregnancy",
+      "correct_schema": "rh_negative_pregnancy_alloimmunization_prophylaxis",
+      "plausible_wrong_schema": "observation_only",
+      "passes": {
+        "clinicalPattern": true,
+        "schemaActivation": true,
+        "competingSchemaNormalization": true,
+        "pivotClue": true,
+        "discriminator": true,
+        "divergenceClassification": true,
+        "repairOperation": true,
+        "commitRule": true
+      },
+      "score": 100,
+      "failures": [],
+      "generated": {
+        "clinical_pattern": "first-trimester bleeding in Rh-negative pregnancy",
+        "canonical_schema_id": "rh_negative_pregnancy_alloimmunization_prophylaxis",
+        "competing_schema_ids": [
+          "observation_only"
+        ],
+        "pivot_clues": [
+          "Rh-negative pregnancy with bleeding"
+        ],
+        "discriminator": "Rh-negative pregnancy with bleeding separates it; the alternative would need Rh-negative bleeding requires Rho(D) immune globulin prophylaxis; observation alone misses alloimmunization prevention..",
+        "divergence_type": "Pattern recognized but commitment delayed",
+        "repair_operation": "First normalize the syndrome to Shares overlap with rh negative pregnancy alloimmunization prophylaxis., then compare rh negative pregnancy alloimmunization prophylaxis, observation only using the pivot: Rh-negative pregnancy with bleeding.",
+        "commit_rule": "Any unsensitized Rh-negative pregnancy bleeding should commit to Rho(D) immune globulin."
+      },
+      "attending_evaluation": "Models a reasoning divergence: pattern, pivot, competing schema, repair, and commit rule are all present."
+    },
+    {
+      "id": "obgyn-hypertension-pregnancy-eclampsia",
+      "shelf": "OB/GYN",
+      "clinical_pattern": "hypertension after 20 weeks with seizure",
+      "correct_schema": "eclampsia",
+      "plausible_wrong_schema": "epilepsy",
+      "passes": {
+        "clinicalPattern": true,
+        "schemaActivation": true,
+        "competingSchemaNormalization": true,
+        "pivotClue": true,
+        "discriminator": true,
+        "divergenceClassification": true,
+        "repairOperation": true,
+        "commitRule": true
+      },
+      "score": 100,
+      "failures": [],
+      "generated": {
+        "clinical_pattern": "hypertension after 20 weeks with seizure",
+        "canonical_schema_id": "eclampsia",
+        "competing_schema_ids": [
+          "epilepsy"
+        ],
+        "pivot_clues": [
+          "generalized seizure in a hypertensive pregnant patient"
+        ],
+        "discriminator": "generalized seizure in a hypertensive pregnant patient separates it; the alternative would need Seizure with hypertension after 20 weeks activates eclampsia; epilepsy would need a primary seizure disorder context..",
+        "divergence_type": "Incorrect illness script activation",
+        "repair_operation": "First normalize the syndrome to Shares overlap with eclampsia., then compare eclampsia, epilepsy using the pivot: generalized seizure in a hypertensive pregnant patient.",
+        "commit_rule": "Pregnancy hypertension plus seizure commits to eclampsia and magnesium sulfate."
+      },
+      "attending_evaluation": "Models a reasoning divergence: pattern, pivot, competing schema, repair, and commit rule are all present."
+    },
+    {
+      "id": "obgyn-postpartum-hemorrhage-atony",
+      "shelf": "OB/GYN",
+      "clinical_pattern": "postpartum hemorrhage",
+      "correct_schema": "uterine_atony",
+      "plausible_wrong_schema": "retained_placenta",
+      "passes": {
+        "clinicalPattern": true,
+        "schemaActivation": true,
+        "competingSchemaNormalization": true,
+        "pivotClue": true,
+        "discriminator": true,
+        "divergenceClassification": true,
+        "repairOperation": true,
+        "commitRule": true
+      },
+      "score": 100,
+      "failures": [],
+      "generated": {
+        "clinical_pattern": "postpartum hemorrhage",
+        "canonical_schema_id": "uterine_atony",
+        "competing_schema_ids": [
+          "retained_placenta"
+        ],
+        "pivot_clues": [
+          "boggy enlarged uterus"
+        ],
+        "discriminator": "boggy enlarged uterus separates it; the alternative would need Boggy uterus supports uterine atony; retained placenta requires incomplete placental delivery or tissue retention..",
+        "divergence_type": "Missed pivot clue",
+        "repair_operation": "First normalize the syndrome to Shares overlap with uterine atony., then compare uterine atony, retained placenta using the pivot: boggy enlarged uterus.",
+        "commit_rule": "Postpartum hemorrhage plus boggy uterus commits to uterine atony management."
+      },
+      "attending_evaluation": "Models a reasoning divergence: pattern, pivot, competing schema, repair, and commit rule are all present."
+    },
+    {
+      "id": "im-chest-pain-stemi",
+      "shelf": "Internal Medicine",
+      "clinical_pattern": "acute chest pain",
+      "correct_schema": "st_elevation_myocardial_infarction",
+      "plausible_wrong_schema": "unstable_angina",
+      "passes": {
+        "clinicalPattern": true,
+        "schemaActivation": true,
+        "competingSchemaNormalization": true,
+        "pivotClue": true,
+        "discriminator": true,
+        "divergenceClassification": true,
+        "repairOperation": true,
+        "commitRule": true
+      },
+      "score": 100,
+      "failures": [],
+      "generated": {
+        "clinical_pattern": "acute chest pain",
+        "canonical_schema_id": "st_elevation_myocardial_infarction",
+        "competing_schema_ids": [
+          "unstable_angina"
+        ],
+        "pivot_clues": [
+          "ST-segment elevations in contiguous leads"
+        ],
+        "discriminator": "ST-segment elevations in contiguous leads separates it; the alternative would need ST elevations activate STEMI and urgent reperfusion; unstable angina lacks biomarker elevation or ST-elevation criteria..",
+        "divergence_type": "Missed pivot clue",
+        "repair_operation": "First normalize the syndrome to Shares overlap with st elevation myocardial infarction., then compare st elevation myocardial infarction, unstable angina using the pivot: ST-segment elevations in contiguous leads.",
+        "commit_rule": "Contiguous ST elevations with ischemic symptoms should commit to STEMI reperfusion."
+      },
+      "attending_evaluation": "Models a reasoning divergence: pattern, pivot, competing schema, repair, and commit rule are all present."
+    },
+    {
+      "id": "im-dyspnea-hf-vs-copd",
+      "shelf": "Internal Medicine",
+      "clinical_pattern": "acute dyspnea",
+      "correct_schema": "acute_decompensated_heart_failure",
+      "plausible_wrong_schema": "copd_exacerbation",
+      "passes": {
+        "clinicalPattern": true,
+        "schemaActivation": true,
+        "competingSchemaNormalization": true,
+        "pivotClue": true,
+        "discriminator": true,
+        "divergenceClassification": true,
+        "repairOperation": true,
+        "commitRule": true
+      },
+      "score": 100,
+      "failures": [],
+      "generated": {
+        "clinical_pattern": "acute dyspnea",
+        "canonical_schema_id": "acute_decompensated_heart_failure",
+        "competing_schema_ids": [
+          "copd_exacerbation"
+        ],
+        "pivot_clues": [
+          "orthopnea with JVD and pulmonary edema"
+        ],
+        "discriminator": "orthopnea with JVD and pulmonary edema separates it; the alternative would need Volume overload signs support heart failure; COPD needs wheezing, hyperinflation, and obstructive history without pulmonary edema..",
+        "divergence_type": "Promoted low-information clue",
+        "repair_operation": "First normalize the syndrome to Shares overlap with acute decompensated heart failure., then compare acute decompensated heart failure, copd exacerbation using the pivot: orthopnea with JVD and pulmonary edema.",
+        "commit_rule": "Dyspnea plus volume overload signs should commit to acute decompensated heart failure."
+      },
+      "attending_evaluation": "Models a reasoning divergence: pattern, pivot, competing schema, repair, and commit rule are all present."
+    },
+    {
+      "id": "im-syncope-aortic-stenosis",
+      "shelf": "Internal Medicine",
+      "clinical_pattern": "exertional syncope",
+      "correct_schema": "aortic_stenosis",
+      "plausible_wrong_schema": "vasovagal_syncope",
+      "passes": {
+        "clinicalPattern": true,
+        "schemaActivation": true,
+        "competingSchemaNormalization": true,
+        "pivotClue": true,
+        "discriminator": true,
+        "divergenceClassification": true,
+        "repairOperation": true,
+        "commitRule": true
+      },
+      "score": 100,
+      "failures": [],
+      "generated": {
+        "clinical_pattern": "exertional syncope",
+        "canonical_schema_id": "aortic_stenosis",
+        "competing_schema_ids": [
+          "vasovagal_syncope"
+        ],
+        "pivot_clues": [
+          "exertional syncope with systolic murmur radiating to carotids"
+        ],
+        "discriminator": "exertional syncope with systolic murmur radiating to carotids separates it; the alternative would need Exertional syncope with carotid-radiating systolic murmur supports aortic stenosis; vasovagal syncope needs prodrome and benign triggers..",
+        "divergence_type": "Failure to prune competing diagnosis",
+        "repair_operation": "First normalize the syndrome to Shares overlap with aortic stenosis., then compare aortic stenosis, vasovagal syncope using the pivot: exertional syncope with systolic murmur radiating to carotids.",
+        "commit_rule": "Exertional syncope plus classic systolic murmur should commit to aortic stenosis."
+      },
+      "attending_evaluation": "Models a reasoning divergence: pattern, pivot, competing schema, repair, and commit rule are all present."
+    },
+    {
+      "id": "im-aki-prerenal",
+      "shelf": "Internal Medicine",
+      "clinical_pattern": "acute kidney injury",
+      "correct_schema": "prerenal_azotemia",
+      "plausible_wrong_schema": "acute_tubular_necrosis",
+      "passes": {
+        "clinicalPattern": true,
+        "schemaActivation": true,
+        "competingSchemaNormalization": true,
+        "pivotClue": true,
+        "discriminator": true,
+        "divergenceClassification": true,
+        "repairOperation": true,
+        "commitRule": true
+      },
+      "score": 100,
+      "failures": [],
+      "generated": {
+        "clinical_pattern": "acute kidney injury",
+        "canonical_schema_id": "prerenal_azotemia",
+        "competing_schema_ids": [
+          "acute_tubular_necrosis"
+        ],
+        "pivot_clues": [
+          "low urine sodium with high BUN-to-creatinine ratio"
+        ],
+        "discriminator": "low urine sodium with high BUN-to-creatinine ratio separates it; the alternative would need Low urine sodium and high BUN:Cr support prerenal azotemia; ATN has muddy brown casts and higher urine sodium..",
+        "divergence_type": "Misweighted discriminator",
+        "repair_operation": "First normalize the syndrome to Shares overlap with prerenal azotemia., then compare prerenal azotemia, acute tubular necrosis using the pivot: low urine sodium with high BUN-to-creatinine ratio.",
+        "commit_rule": "AKI plus low urine sodium and high BUN:Cr should commit to prerenal physiology."
+      },
+      "attending_evaluation": "Models a reasoning divergence: pattern, pivot, competing schema, repair, and commit rule are all present."
+    },
+    {
+      "id": "im-electrolyte-hyperkalemia-ecg",
+      "shelf": "Internal Medicine",
+      "clinical_pattern": "electrolyte disorder with ECG change",
+      "correct_schema": "hyperkalemia_cardiac_membrane_stabilization",
+      "plausible_wrong_schema": "insulin_glucose_shift",
+      "passes": {
+        "clinicalPattern": true,
+        "schemaActivation": true,
+        "competingSchemaNormalization": true,
+        "pivotClue": true,
+        "discriminator": true,
+        "divergenceClassification": true,
+        "repairOperation": true,
+        "commitRule": true
+      },
+      "score": 100,
+      "failures": [],
+      "generated": {
+        "clinical_pattern": "electrolyte disorder with ECG change",
+        "canonical_schema_id": "hyperkalemia_cardiac_membrane_stabilization",
+        "competing_schema_ids": [
+          "insulin_glucose_shift"
+        ],
+        "pivot_clues": [
+          "hyperkalemia with ECG changes"
+        ],
+        "discriminator": "hyperkalemia with ECG changes separates it; the alternative would need ECG changes require calcium first for membrane stabilization; insulin shifts potassium after stabilization..",
+        "divergence_type": "Premature schema activation",
+        "repair_operation": "First normalize the syndrome to Shares overlap with hyperkalemia cardiac membrane stabilization., then compare hyperkalemia cardiac membrane stabilization, insulin glucose shift using the pivot: hyperkalemia with ECG changes.",
+        "commit_rule": "Hyperkalemia plus ECG changes commits first to IV calcium."
+      },
+      "attending_evaluation": "Models a reasoning divergence: pattern, pivot, competing schema, repair, and commit rule are all present."
+    },
+    {
+      "id": "im-thyroid-storm",
+      "shelf": "Internal Medicine",
+      "clinical_pattern": "fever and altered mental status with thyrotoxicosis",
+      "correct_schema": "thyroid_storm",
+      "plausible_wrong_schema": "sepsis",
+      "passes": {
+        "clinicalPattern": true,
+        "schemaActivation": true,
+        "competingSchemaNormalization": true,
+        "pivotClue": true,
+        "discriminator": true,
+        "divergenceClassification": true,
+        "repairOperation": true,
+        "commitRule": true
+      },
+      "score": 100,
+      "failures": [],
+      "generated": {
+        "clinical_pattern": "fever and altered mental status with thyrotoxicosis",
+        "canonical_schema_id": "thyroid_storm",
+        "competing_schema_ids": [
+          "sepsis"
+        ],
+        "pivot_clues": [
+          "fever and delirium with signs of thyrotoxicosis"
+        ],
+        "discriminator": "fever and delirium with signs of thyrotoxicosis separates it; the alternative would need Thyrotoxic signs with fever and delirium support thyroid storm; sepsis needs infectious source and lacks hyperthyroid features..",
+        "divergence_type": "Promoted low-information clue",
+        "repair_operation": "First normalize the syndrome to Shares overlap with thyroid storm., then compare thyroid storm, sepsis using the pivot: fever and delirium with signs of thyrotoxicosis.",
+        "commit_rule": "Fever plus altered mental status plus thyrotoxicosis commits to thyroid storm treatment."
+      },
+      "attending_evaluation": "Models a reasoning divergence: pattern, pivot, competing schema, repair, and commit rule are all present."
+    },
+    {
+      "id": "im-shock-septic",
+      "shelf": "Internal Medicine",
+      "clinical_pattern": "shock",
+      "correct_schema": "septic_shock",
+      "plausible_wrong_schema": "cardiogenic_shock",
+      "passes": {
+        "clinicalPattern": true,
+        "schemaActivation": true,
+        "competingSchemaNormalization": true,
+        "pivotClue": true,
+        "discriminator": true,
+        "divergenceClassification": true,
+        "repairOperation": true,
+        "commitRule": true
+      },
+      "score": 100,
+      "failures": [],
+      "generated": {
+        "clinical_pattern": "shock",
+        "canonical_schema_id": "septic_shock",
+        "competing_schema_ids": [
+          "cardiogenic_shock"
+        ],
+        "pivot_clues": [
+          "hypotension with infection and warm vasodilated extremities"
+        ],
+        "discriminator": "hypotension with infection and warm vasodilated extremities separates it; the alternative would need Warm vasodilatory shock with infection supports septic shock; cardiogenic shock has cold clammy extremities and pump failure signs..",
+        "divergence_type": "Failure to prune competing diagnosis",
+        "repair_operation": "First normalize the syndrome to Shares overlap with septic shock., then compare septic shock, cardiogenic shock using the pivot: hypotension with infection and warm vasodilated extremities.",
+        "commit_rule": "Infection plus warm hypotensive shock should commit to septic shock resuscitation."
+      },
+      "attending_evaluation": "Models a reasoning divergence: pattern, pivot, competing schema, repair, and commit rule are all present."
+    },
+    {
+      "id": "im-fever-endocarditis",
+      "shelf": "Internal Medicine",
+      "clinical_pattern": "persistent fever with murmur",
+      "correct_schema": "infective_endocarditis",
+      "plausible_wrong_schema": "rheumatic_fever",
+      "passes": {
+        "clinicalPattern": true,
+        "schemaActivation": true,
+        "competingSchemaNormalization": true,
+        "pivotClue": true,
+        "discriminator": true,
+        "divergenceClassification": true,
+        "repairOperation": true,
+        "commitRule": true
+      },
+      "score": 100,
+      "failures": [],
+      "generated": {
+        "clinical_pattern": "persistent fever with murmur",
+        "canonical_schema_id": "infective_endocarditis",
+        "competing_schema_ids": [
+          "rheumatic_fever"
+        ],
+        "pivot_clues": [
+          "persistent bacteremia with new murmur"
+        ],
+        "discriminator": "persistent bacteremia with new murmur separates it; the alternative would need Persistent bacteremia with new murmur supports endocarditis; rheumatic fever follows strep pharyngitis and migratory arthritis..",
+        "divergence_type": "Missed pivot clue",
+        "repair_operation": "First normalize the syndrome to Shares overlap with infective endocarditis., then compare infective endocarditis, rheumatic fever using the pivot: persistent bacteremia with new murmur.",
+        "commit_rule": "Fever plus persistent bacteremia and new murmur should commit to infective endocarditis."
+      },
+      "attending_evaluation": "Models a reasoning divergence: pattern, pivot, competing schema, repair, and commit rule are all present."
+    },
+    {
+      "id": "surgery-acute-abdomen-appendicitis",
+      "shelf": "Surgery",
+      "clinical_pattern": "acute abdomen",
+      "correct_schema": "appendicitis",
+      "plausible_wrong_schema": "gastroenteritis",
+      "passes": {
+        "clinicalPattern": true,
+        "schemaActivation": true,
+        "competingSchemaNormalization": true,
+        "pivotClue": true,
+        "discriminator": true,
+        "divergenceClassification": true,
+        "repairOperation": true,
+        "commitRule": true
+      },
+      "score": 100,
+      "failures": [],
+      "generated": {
+        "clinical_pattern": "acute abdomen",
+        "canonical_schema_id": "appendicitis",
+        "competing_schema_ids": [
+          "gastroenteritis"
+        ],
+        "pivot_clues": [
+          "periumbilical pain migrating to right lower quadrant"
+        ],
+        "discriminator": "periumbilical pain migrating to right lower quadrant separates it; the alternative would need Migratory focal RLQ pain supports appendicitis; gastroenteritis is diffuse crampy pain with diarrhea..",
+        "divergence_type": "Missed pivot clue",
+        "repair_operation": "First normalize the syndrome to Shares overlap with appendicitis., then compare appendicitis, gastroenteritis using the pivot: periumbilical pain migrating to right lower quadrant.",
+        "commit_rule": "Migratory RLQ pain should commit to appendicitis evaluation."
+      },
+      "attending_evaluation": "Models a reasoning divergence: pattern, pivot, competing schema, repair, and commit rule are all present."
+    },
+    {
+      "id": "surgery-bowel-obstruction-sbo",
+      "shelf": "Surgery",
+      "clinical_pattern": "bowel obstruction",
+      "correct_schema": "small_bowel_obstruction",
+      "plausible_wrong_schema": "ileus",
+      "passes": {
+        "clinicalPattern": true,
+        "schemaActivation": true,
+        "competingSchemaNormalization": true,
+        "pivotClue": true,
+        "discriminator": true,
+        "divergenceClassification": true,
+        "repairOperation": true,
+        "commitRule": true
+      },
+      "score": 100,
+      "failures": [],
+      "generated": {
+        "clinical_pattern": "bowel obstruction",
+        "canonical_schema_id": "small_bowel_obstruction",
+        "competing_schema_ids": [
+          "ileus"
+        ],
+        "pivot_clues": [
+          "colicky pain with prior abdominal surgery and air-fluid levels"
+        ],
+        "discriminator": "colicky pain with prior abdominal surgery and air-fluid levels separates it; the alternative would need Colicky pain and transition/air-fluid levels support mechanical SBO; ileus is diffuse bowel hypomotility without a transition point..",
+        "divergence_type": "Failure to prune competing diagnosis",
+        "repair_operation": "First normalize the syndrome to Shares overlap with small bowel obstruction., then compare small bowel obstruction, ileus using the pivot: colicky pain with prior abdominal surgery and air-fluid levels.",
+        "commit_rule": "Prior surgery plus colicky pain and air-fluid levels should commit to SBO."
+      },
+      "attending_evaluation": "Models a reasoning divergence: pattern, pivot, competing schema, repair, and commit rule are all present."
+    },
+    {
+      "id": "surgery-upper-gi-bleed-variceal",
+      "shelf": "Surgery",
+      "clinical_pattern": "upper GI bleed",
+      "correct_schema": "esophageal_variceal_bleeding",
+      "plausible_wrong_schema": "peptic_ulcer_bleeding",
+      "passes": {
+        "clinicalPattern": true,
+        "schemaActivation": true,
+        "competingSchemaNormalization": true,
+        "pivotClue": true,
+        "discriminator": true,
+        "divergenceClassification": true,
+        "repairOperation": true,
+        "commitRule": true
+      },
+      "score": 100,
+      "failures": [],
+      "generated": {
+        "clinical_pattern": "upper GI bleed",
+        "canonical_schema_id": "esophageal_variceal_bleeding",
+        "competing_schema_ids": [
+          "peptic_ulcer_bleeding"
+        ],
+        "pivot_clues": [
+          "hematemesis in a patient with cirrhosis"
+        ],
+        "discriminator": "hematemesis in a patient with cirrhosis separates it; the alternative would need Cirrhosis and portal hypertension support variceal bleed; peptic ulcer bleed needs ulcer risk factors without portal hypertension clues..",
+        "divergence_type": "Promoted low-information clue",
+        "repair_operation": "First normalize the syndrome to Shares overlap with esophageal variceal bleeding., then compare esophageal variceal bleeding, peptic ulcer bleeding using the pivot: hematemesis in a patient with cirrhosis.",
+        "commit_rule": "Upper GI bleed plus cirrhosis should commit to variceal bleeding coverage."
+      },
+      "attending_evaluation": "Models a reasoning divergence: pattern, pivot, competing schema, repair, and commit rule are all present."
+    },
+    {
+      "id": "surgery-lower-gi-bleed-diverticular",
+      "shelf": "Surgery",
+      "clinical_pattern": "lower GI bleed",
+      "correct_schema": "diverticular_bleeding",
+      "plausible_wrong_schema": "ischemic_colitis",
+      "passes": {
+        "clinicalPattern": true,
+        "schemaActivation": true,
+        "competingSchemaNormalization": true,
+        "pivotClue": true,
+        "discriminator": true,
+        "divergenceClassification": true,
+        "repairOperation": true,
+        "commitRule": true
+      },
+      "score": 100,
+      "failures": [],
+      "generated": {
+        "clinical_pattern": "lower GI bleed",
+        "canonical_schema_id": "diverticular_bleeding",
+        "competing_schema_ids": [
+          "ischemic_colitis"
+        ],
+        "pivot_clues": [
+          "painless large-volume hematochezia"
+        ],
+        "discriminator": "painless large-volume hematochezia separates it; the alternative would need Painless large-volume bleeding supports diverticular bleed; ischemic colitis has crampy abdominal pain and bloody diarrhea..",
+        "divergence_type": "Missed pivot clue",
+        "repair_operation": "First normalize the syndrome to Shares overlap with diverticular bleeding., then compare diverticular bleeding, ischemic colitis using the pivot: painless large-volume hematochezia.",
+        "commit_rule": "Painless hematochezia in an older adult should commit to diverticular bleeding until proven otherwise."
+      },
+      "attending_evaluation": "Models a reasoning divergence: pattern, pivot, competing schema, repair, and commit rule are all present."
+    },
+    {
+      "id": "surgery-trauma-tension-pneumothorax",
+      "shelf": "Surgery",
+      "clinical_pattern": "trauma with shock and respiratory distress",
+      "correct_schema": "tension_pneumothorax",
+      "plausible_wrong_schema": "hemothorax",
+      "passes": {
+        "clinicalPattern": true,
+        "schemaActivation": true,
+        "competingSchemaNormalization": true,
+        "pivotClue": true,
+        "discriminator": true,
+        "divergenceClassification": true,
+        "repairOperation": true,
+        "commitRule": true
+      },
+      "score": 100,
+      "failures": [],
+      "generated": {
+        "clinical_pattern": "trauma with shock and respiratory distress",
+        "canonical_schema_id": "tension_pneumothorax",
+        "competing_schema_ids": [
+          "hemothorax"
+        ],
+        "pivot_clues": [
+          "tracheal deviation with absent breath sounds and hypotension"
+        ],
+        "discriminator": "tracheal deviation with absent breath sounds and hypotension separates it; the alternative would need Tracheal deviation and obstructive physiology support tension pneumothorax; hemothorax has dullness to percussion and blood loss physiology..",
+        "divergence_type": "Misweighted discriminator",
+        "repair_operation": "First normalize the syndrome to Shares overlap with tension pneumothorax., then compare tension pneumothorax, hemothorax using the pivot: tracheal deviation with absent breath sounds and hypotension.",
+        "commit_rule": "Trauma plus hypotension, absent breath sounds, and tracheal deviation commits to immediate needle decompression."
+      },
+      "attending_evaluation": "Models a reasoning divergence: pattern, pivot, competing schema, repair, and commit rule are all present."
+    },
+    {
+      "id": "im-adrenal-insufficiency-crisis",
+      "shelf": "Internal Medicine",
+      "clinical_pattern": "shock with electrolyte abnormalities",
+      "correct_schema": "adrenal_crisis",
+      "plausible_wrong_schema": "septic_shock",
+      "passes": {
+        "clinicalPattern": true,
+        "schemaActivation": true,
+        "competingSchemaNormalization": true,
+        "pivotClue": true,
+        "discriminator": true,
+        "divergenceClassification": true,
+        "repairOperation": true,
+        "commitRule": true
+      },
+      "score": 100,
+      "failures": [],
+      "generated": {
+        "clinical_pattern": "shock with electrolyte abnormalities",
+        "canonical_schema_id": "adrenal_crisis",
+        "competing_schema_ids": [
+          "septic_shock"
+        ],
+        "pivot_clues": [
+          "hypotension with hyponatremia and hyperkalemia"
+        ],
+        "discriminator": "hypotension with hyponatremia and hyperkalemia separates it; the alternative would need Hyponatremia plus hyperkalemia in shock supports adrenal crisis; septic shock needs infectious source and distributive physiology..",
+        "divergence_type": "Incorrect illness script activation",
+        "repair_operation": "First normalize the syndrome to Shares overlap with adrenal crisis., then compare adrenal crisis, septic shock using the pivot: hypotension with hyponatremia and hyperkalemia.",
+        "commit_rule": "Shock plus hyponatremia and hyperkalemia should commit to adrenal crisis treatment."
+      },
+      "attending_evaluation": "Models a reasoning divergence: pattern, pivot, competing schema, repair, and commit rule are all present."
+    }
+  ]
+}

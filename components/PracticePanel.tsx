@@ -3,7 +3,7 @@
 import { CSSProperties, FormEvent, KeyboardEvent, ReactNode, RefObject, forwardRef, useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { Button } from "@/components/Button";
 import { EmptyState } from "@/components/EmptyState";
-import { AsterAvatar, moodFromAsterAnimation } from "@/components/AsterAvatar";
+import { AsterAvatar, moodFromAsterAnimation } from "@/components/aster/Aster";
 import { AsterOverworldMap } from "@/components/AsterOverworldMap";
 import { MoleskinePracticeRenderer } from "@/components/moleskine/MoleskinePracticeRenderer";
 import { QuestionMeta } from "@/components/QuestionMeta";
