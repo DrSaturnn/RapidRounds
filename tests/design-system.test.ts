@@ -189,7 +189,7 @@ describe("design system", () => {
 
     assert.match(practicePanel, /AsterCompanion/);
     assert.match(practicePanel, /Today&apos;s Expedition/);
-    assert.match(practicePanel, /AsterRouteMap/);
+    assert.match(practicePanel, /AsterOverworldMap/);
     assert.match(practicePanel, /Pomodoro controls/);
     assert.match(practicePanel, /onClick=\{toggleAster\}/);
     assert.doesNotMatch(practicePanel, /onClick=\{showTeaching\}\\s*>\\s*✧ Aster/);

@@ -89,22 +89,22 @@ describe("persistent learner state", () => {
     assert.doesNotMatch(stats, /userStats\.upsert/);
   });
 
-  it("creates and sends a stable anonymous learner id from browser storage", () => {
+  it("creates and sends a stable local learner id from browser storage", () => {
     const session = readFileSync("hooks/usePracticeSession.ts", "utf8");
 
     assert.match(session, /rapidrounds\.anonymousLearnerId\.v1/);
     assert.match(session, /getOrCreateAnonymousLearnerId/);
-    assert.match(session, /crypto\.randomUUID/);
+    assert.match(session, /LOCAL_DEMO_USER_ID/);
     assert.match(session, /normalizeLearnerId\(existing\)/);
     assert.match(session, /params\.set\("learnerId", currentLearnerId\)/);
     assert.match(session, /learnerId: learnerId\.current \|\| getOrCreateAnonymousLearnerId\(\)/);
   });
 
-  it("reuses the stored anonymous learner id across simulated reloads and deployments", () => {
+  it("reuses the stable local learner id across simulated reloads and deployments", () => {
     const session = readFileSync("hooks/usePracticeSession.ts", "utf8");
 
     assert.match(session, /const existing = window\.localStorage\.getItem\(LEARNER_ID_STORAGE_KEY\)/);
-    assert.match(session, /if \(existingLearnerId\) \{\s*return existingLearnerId;\s*\}/);
+    assert.match(session, /if \(existingLearnerId === LOCAL_DEMO_USER_ID\) \{\s*return existingLearnerId;\s*\}/);
     assert.doesNotMatch(session, /localStorage\.removeItem\(LEARNER_ID_STORAGE_KEY\)/);
     assert.doesNotMatch(session, /rapidrounds\.anonymousLearnerId\.v2/);
   });
@@ -120,8 +120,9 @@ describe("persistent learner state", () => {
     assert.doesNotMatch(nextRoute, /userId: "default"/);
   });
 
-  it("accepts only anonymous learner identifiers", () => {
+  it("accepts anonymous learner identifiers and the local demo user", () => {
     assert.equal(normalizeLearnerId("anon_12345678"), "anon_12345678");
+    assert.equal(normalizeLearnerId("local-demo-user"), "local-demo-user");
     assert.equal(normalizeLearnerId(" default "), undefined);
     assert.equal(normalizeLearnerId("user_12345678"), undefined);
     assert.equal(normalizeLearnerId(undefined), undefined);

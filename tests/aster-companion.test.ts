@@ -114,4 +114,38 @@ describe("Aster companion for foundational Rapid Round", () => {
     assert.match(source, /aria-label="Close Aster"/);
     assert.match(source, /role="dialog"/);
   });
+
+  test("uses a reusable Aster avatar with mood, size, and shadow variants", () => {
+    const source = readFileSync("components/AsterAvatar.tsx", "utf8");
+    const css = readFileSync("app/globals.css", "utf8");
+
+    assert.match(source, /export function AsterAvatar/);
+    assert.match(source, /size = "small"/);
+    assert.match(source, /mood = "neutral"/);
+    assert.match(source, /showShadow = true/);
+    assert.match(source, /rr-aster-eye/);
+    assert.match(source, /rr-aster-core/);
+    assert.doesNotMatch(source, /mouth/i);
+    assert.match(css, /\.rr-aster-mood-thinking/);
+    assert.match(css, /\.rr-aster-mood-celebrating/);
+    assert.match(css, /prefers-reduced-motion: reduce/);
+  });
+
+  test("renders an overworld map instead of a linear progress bar", () => {
+    const source = readFileSync("components/AsterOverworldMap.tsx", "utf8");
+    const practicePanel = readFileSync("components/PracticePanel.tsx", "utf8");
+    const css = readFileSync("app/globals.css", "utf8");
+
+    assert.match(source, /export function AsterOverworldMap/);
+    assert.match(source, /MAP_NODE_POSITIONS/);
+    assert.match(source, /rr-aster-map-path/);
+    assert.match(source, /rr-aster-map-node/);
+    assert.match(source, /AsterAvatar/);
+    assert.match(source, /rr-aster-map-shortcut/);
+    assert.match(source, /rr-aster-map-review/);
+    assert.match(practicePanel, /AsterOverworldMap/);
+    assert.doesNotMatch(practicePanel, /AsterRouteMap/);
+    assert.match(css, /\.rr-aster-overworld/);
+    assert.match(css, /\.rr-aster-map-avatar/);
+  });
 });

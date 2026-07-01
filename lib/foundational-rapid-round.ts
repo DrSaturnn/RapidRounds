@@ -39,6 +39,8 @@ type FoundationalQuestionItem = {
   ankingDerivedFactRefs: string[];
 };
 
+const LOCAL_FOUNDATIONAL_USER_ID = "local-demo-user";
+
 const obgynPrimaryAmenorrhea: FoundationalQuestionItem = {
   id: "frr-obgyn-primary-amenorrhea-mrkh-vs-ais",
   subject: "OB/GYN",
@@ -285,9 +287,14 @@ export function evaluateFoundationalRapidRoundAnswer(item: FoundationalQuestionI
   return { isCorrect, evaluation, teaching };
 }
 
-export function createInitialFoundationalAttemptState(questionItemId: string, now = new Date()): FoundationalQuestionAttemptState {
+export function createInitialFoundationalAttemptState(
+  questionItemId: string,
+  now = new Date(),
+  userId = LOCAL_FOUNDATIONAL_USER_ID
+): FoundationalQuestionAttemptState {
   const timestamp = now.toISOString();
   return {
+    userId,
     questionItemId,
     firstSeenAt: timestamp,
     lastSeenAt: timestamp,
@@ -301,14 +308,16 @@ export function createInitialFoundationalAttemptState(questionItemId: string, no
 export function markFoundationalSeen(
   state: FoundationalQuestionAttemptState | undefined,
   questionItemId: string,
-  now = new Date()
+  now = new Date(),
+  userId = LOCAL_FOUNDATIONAL_USER_ID
 ): FoundationalQuestionAttemptState {
   if (!state || state.questionItemId !== questionItemId) {
-    return createInitialFoundationalAttemptState(questionItemId, now);
+    return createInitialFoundationalAttemptState(questionItemId, now, userId);
   }
 
   return {
     ...state,
+    userId: state.userId ?? userId,
     lastSeenAt: now.toISOString(),
     exposureCount: state.exposureCount + 1
   };
@@ -323,6 +332,7 @@ export function markFoundationalTaught(
     lastSeenAt: now.toISOString(),
     taughtOnce: true,
     needsLearning: true,
+    dueAt: new Date(now.getTime() + 24 * 60 * 60 * 1000).toISOString(),
     lastOutcome: "taught"
   };
 }
@@ -338,6 +348,7 @@ export function markFoundationalAnswered(
     lastSeenAt: now.toISOString(),
     answeredCorrectlyOnce: state.answeredCorrectlyOnce || isCorrect,
     needsLearning: state.needsLearning || !isCorrect,
+    dueAt: new Date(now.getTime() + (isCorrect ? 72 : 24) * 60 * 60 * 1000).toISOString(),
     lastAnswer: answer,
     lastOutcome: isCorrect ? "correct" : "incorrect"
   };

@@ -3,6 +3,8 @@
 import { CSSProperties, FormEvent, KeyboardEvent, ReactNode, RefObject, forwardRef, useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { Button } from "@/components/Button";
 import { EmptyState } from "@/components/EmptyState";
+import { AsterAvatar, moodFromAsterAnimation } from "@/components/AsterAvatar";
+import { AsterOverworldMap } from "@/components/AsterOverworldMap";
 import { MoleskinePracticeRenderer } from "@/components/moleskine/MoleskinePracticeRenderer";
 import { QuestionMeta } from "@/components/QuestionMeta";
 import { TutorMode } from "@/components/TutorMode";
@@ -25,6 +27,7 @@ import {
 import { usePracticeSession } from "@/hooks/usePracticeSession";
 import type { QuestionBreadth, StudySessionMode } from "@/hooks/usePracticeSession";
 import { getClinicalPromptText, getDecisionQuestionText } from "@/lib/decision-question-text";
+import { LOCAL_DEMO_USER_ID, getLearnerProgressStore } from "@/lib/learner-progress-store";
 import { SUBJECTS } from "@/lib/subject-seeds";
 import type { AsterCompanionState, AsterEvent } from "@/lib/aster-companion";
 import type { FoundationalQuestionAttemptState, FoundationalRapidRoundAnswerTeaching, FoundationalRapidRoundTeaching, VignetteFindingAnnotation } from "@/types/practice";
@@ -36,8 +39,6 @@ type SettingsAnchor = "top" | "rail" | null;
 const requiredSubjects = SUBJECTS;
 
 const SKIN_STORAGE_KEY = "rapidrounds.practiceSkin.v2";
-const FOUNDATIONAL_ATTEMPT_STORAGE_PREFIX = "rapidrounds.foundationAttempt.v1";
-const ASTER_STORAGE_KEY = "rapidrounds.asterCompanion.v1";
 const practiceSkins: Array<{ value: PracticeSkin; label: string; description: string }> = [
   {
     value: "modern-academic",
@@ -195,6 +196,7 @@ export function PracticePanel() {
   const asterPanelRef = useRef<HTMLDivElement>(null);
   const topSettingsRef = useRef<HTMLDivElement>(null);
   const railSettingsRef = useRef<HTMLDivElement>(null);
+  const progressImportInputRef = useRef<HTMLInputElement>(null);
   const subjectSelectorRef = useRef<HTMLDivElement>(null);
   const studyModeSelectorRef = useRef<HTMLDivElement>(null);
   const [showEndSessionConfirm, setShowEndSessionConfirm] = useState(false);
@@ -292,20 +294,30 @@ export function PracticePanel() {
       return;
     }
 
-    const storageKey = `${FOUNDATIONAL_ATTEMPT_STORAGE_PREFIX}.${question.id}`;
-    let previousState: FoundationalQuestionAttemptState | undefined;
-    try {
-      const saved = window.localStorage.getItem(storageKey);
-      previousState = saved ? (JSON.parse(saved) as FoundationalQuestionAttemptState) : undefined;
-    } catch {
-      previousState = undefined;
-    }
-
-    const nextState = markFoundationalSeen(previousState, question.id);
-    window.localStorage.setItem(storageKey, JSON.stringify(nextState));
-    setFoundationalAttempt(nextState);
+    let isMounted = true;
+    void getLearnerProgressStore()
+      .getQuestionState(LOCAL_DEMO_USER_ID, question.id)
+      .then((previousState) => {
+        const nextState = markFoundationalSeen(previousState ?? undefined, question.id, new Date(), LOCAL_DEMO_USER_ID);
+        return getLearnerProgressStore()
+          .updateQuestionState(LOCAL_DEMO_USER_ID, question.id, nextState)
+          .then(() => nextState);
+      })
+      .then((nextState) => {
+        if (isMounted) {
+          setFoundationalAttempt(nextState);
+        }
+      })
+      .catch(() => {
+        if (isMounted) {
+          setFoundationalAttempt(markFoundationalSeen(undefined, question.id, new Date(), LOCAL_DEMO_USER_ID));
+        }
+      });
     setFoundationalTeachingOpen(false);
     setFoundationalReminder(null);
+    return () => {
+      isMounted = false;
+    };
   }, [question?.id, question?.foundationalRapidRound]);
 
   useEffect(() => {
@@ -324,31 +336,55 @@ export function PracticePanel() {
       return;
     }
 
-    let savedState: AsterCompanionState | null = null;
-    try {
-      const rawState = window.localStorage.getItem(ASTER_STORAGE_KEY);
-      savedState = rawState ? (JSON.parse(rawState) as AsterCompanionState) : null;
-    } catch {
-      savedState = null;
-    }
+    let isMounted = true;
+    const store = getLearnerProgressStore();
+    void store.exportProgress(LOCAL_DEMO_USER_ID)
+      .then(async (progress) => {
+        const savedSession = progress.asterSessions
+          .filter((session) =>
+            session.mode === "rapid_round" &&
+            session.shelf === activeSubject &&
+            session.schemaCluster === question.foundationalRapidRound?.schemaName &&
+            !session.completedAt
+          )
+          .sort((left, right) => right.startedAt.localeCompare(left.startedAt))[0];
 
-    if (
-      savedState &&
-      savedState.session.mode === "rapid_round" &&
-      savedState.session.shelf === activeSubject &&
-      savedState.session.schemaCluster === question.foundationalRapidRound.schemaName
-    ) {
-      setAsterState(savedState);
-      return;
-    }
+        if (savedSession) {
+          return {
+            profile: progress.asterProfile ?? await store.updateAsterProfile(LOCAL_DEMO_USER_ID, {}),
+            session: savedSession
+          };
+        }
 
-    const nextState = createAsterCompanionState({
-      mode: "rapid_round",
-      shelf: activeSubject,
-      schemaCluster: question.foundationalRapidRound.schemaName
-    });
-    window.localStorage.setItem(ASTER_STORAGE_KEY, JSON.stringify(nextState));
-    setAsterState(nextState);
+        const nextState = createAsterCompanionState({
+          userId: LOCAL_DEMO_USER_ID,
+          mode: "rapid_round",
+          shelf: activeSubject,
+          schemaCluster: question.foundationalRapidRound?.schemaName ?? "Rapid Round"
+        });
+        await store.updateAsterProfile(LOCAL_DEMO_USER_ID, nextState.profile);
+        await store.createAsterSession(LOCAL_DEMO_USER_ID, nextState.session);
+        return nextState;
+      })
+      .then((nextState) => {
+        if (isMounted) {
+          setAsterState(nextState);
+        }
+      })
+      .catch(() => {
+        if (isMounted) {
+          setAsterState(createAsterCompanionState({
+            userId: LOCAL_DEMO_USER_ID,
+            mode: "rapid_round",
+            shelf: activeSubject,
+            schemaCluster: question.foundationalRapidRound?.schemaName ?? "Rapid Round"
+          }));
+        }
+      });
+
+    return () => {
+      isMounted = false;
+    };
   }, [activeSubject, isFoundationalRapidRound, question?.foundationalRapidRound]);
 
   useEffect(() => {
@@ -356,7 +392,10 @@ export function PracticePanel() {
       return;
     }
 
-    window.localStorage.setItem(ASTER_STORAGE_KEY, JSON.stringify(asterState));
+    const store = getLearnerProgressStore();
+    void store.updateAsterProfile(LOCAL_DEMO_USER_ID, asterState.profile)
+      .then(() => store.updateAsterSession(LOCAL_DEMO_USER_ID, asterState.session.sessionId, asterState.session))
+      .catch(() => undefined);
   }, [asterState]);
 
   useEffect(() => {
@@ -386,7 +425,21 @@ export function PracticePanel() {
       if (!current) {
         return current;
       }
-      return applyAsterEvent(current, event);
+      const next = applyAsterEvent(current, event);
+      const xpDelta = next.profile.totalXp - current.profile.totalXp;
+      if (xpDelta > 0) {
+        void getLearnerProgressStore().recordXpEvent(LOCAL_DEMO_USER_ID, {
+          eventId: `${next.session.sessionId}-${event.type}-${Date.now()}`,
+          sessionId: next.session.sessionId,
+          amount: xpDelta,
+          reason: event.type,
+          createdAt: event.timestamp ?? new Date().toISOString()
+        }).catch(() => undefined);
+      }
+      void getLearnerProgressStore().updateAsterProfile(LOCAL_DEMO_USER_ID, next.profile)
+        .then(() => getLearnerProgressStore().updateAsterSession(LOCAL_DEMO_USER_ID, next.session.sessionId, next.session))
+        .catch(() => undefined);
+      return next;
     });
     setAsterEventKey(key ?? `${event.type}-${Date.now()}`);
   }, []);
@@ -405,9 +458,9 @@ export function PracticePanel() {
       return;
     }
 
-    const baseState = foundationalAttempt ?? markFoundationalSeen(undefined, question.id);
+    const baseState = foundationalAttempt ?? markFoundationalSeen(undefined, question.id, new Date(), LOCAL_DEMO_USER_ID);
     const nextState = markFoundationalTaught(baseState);
-    window.localStorage.setItem(`${FOUNDATIONAL_ATTEMPT_STORAGE_PREFIX}.${question.id}`, JSON.stringify(nextState));
+    void getLearnerProgressStore().updateQuestionState(LOCAL_DEMO_USER_ID, question.id, nextState);
     setFoundationalAttempt(nextState);
     setFoundationalTeachingOpen(true);
     setFoundationalReminder(null);
@@ -425,7 +478,7 @@ export function PracticePanel() {
     }
 
     const nextState = markFoundationalAnswered(foundationalAttempt, answer, result.isCorrect);
-    window.localStorage.setItem(`${FOUNDATIONAL_ATTEMPT_STORAGE_PREFIX}.${question.id}`, JSON.stringify(nextState));
+    void getLearnerProgressStore().updateQuestionState(LOCAL_DEMO_USER_ID, question.id, nextState);
     setFoundationalAttempt(nextState);
   }, [answer, foundationalAttempt, question?.foundationalRapidRound, question?.id, result?.foundationalRapidRound, result?.isCorrect]);
 
@@ -805,6 +858,31 @@ export function PracticePanel() {
     setSettingsAnchor(null);
   };
 
+  const exportProgress = () => {
+    void getLearnerProgressStore().exportProgress(LOCAL_DEMO_USER_ID)
+      .then((progress) => {
+        const blob = new Blob([JSON.stringify(progress, null, 2)], { type: "application/json" });
+        const url = URL.createObjectURL(blob);
+        const anchor = document.createElement("a");
+        anchor.href = url;
+        anchor.download = `rapidrounds-progress-${LOCAL_DEMO_USER_ID}.json`;
+        anchor.click();
+        URL.revokeObjectURL(url);
+      })
+      .catch(() => undefined);
+  };
+
+  const importProgress = (file: File | undefined) => {
+    if (!file) return;
+    void file.text()
+      .then((text) => getLearnerProgressStore().importProgress(LOCAL_DEMO_USER_ID, text))
+      .then(() => {
+        setSettingsAnchor(null);
+        window.location.reload();
+      })
+      .catch(() => undefined);
+  };
+
   const toggleAster = () => {
     setActiveTool(null);
     setSettingsAnchor(null);
@@ -970,6 +1048,29 @@ export function PracticePanel() {
             <small>{option.description}</small>
           </button>
         ))}
+      </div>
+      <div className="rr-settings-divider" />
+      <div>
+        <p className="rr-section-header">Progress backup</p>
+        <p className="rr-meta mt-1">Export or restore local progress for this device.</p>
+      </div>
+      <div className="mt-3 flex flex-wrap gap-2">
+        <button type="button" className="rr-session-link" onClick={exportProgress}>
+          Export progress
+        </button>
+        <button type="button" className="rr-session-link" onClick={() => progressImportInputRef.current?.click()}>
+          Import progress
+        </button>
+        <input
+          ref={progressImportInputRef}
+          type="file"
+          accept="application/json"
+          className="hidden"
+          onChange={(event) => {
+            importProgress(event.target.files?.[0]);
+            event.target.value = "";
+          }}
+        />
       </div>
       <button
         type="button"
@@ -1815,7 +1916,13 @@ const AsterCompanion = forwardRef<
         </button>
       </div>
       <div className="rr-aster-hero">
-        <AsterAvatar animationState={session?.animationState ?? "idle"} eventKey={eventKey} />
+        <AsterAvatar
+          size="medium"
+          mood={moodFromAsterAnimation(session?.animationState)}
+          animated
+          showShadow
+          eventKey={eventKey}
+        />
         <div>
           <p>{session?.lastMessage ?? "Aster is ready for Rapid Round."}</p>
           <span>{isRapidRoundActive ? currentCaseTitle : "Open Rapid Round to start an expedition."}</span>
@@ -1828,7 +1935,7 @@ const AsterCompanion = forwardRef<
               <span>Progress</span>
               <strong>{session.questionsCompleted} / {session.questionTarget}</strong>
             </div>
-            <AsterRouteMap
+            <AsterOverworldMap
               completed={session.questionsCompleted}
               target={session.questionTarget}
               outcome={session.routeOutcome}
@@ -1889,75 +1996,8 @@ function AsterFloatingAvatar({
 }) {
   return (
     <button type="button" className="rr-aster-float" onClick={onClick} aria-label="Open Aster companion">
-      <AsterAvatar animationState={animationState} />
+      <AsterAvatar size="small" mood={moodFromAsterAnimation(animationState)} animated showShadow />
     </button>
-  );
-}
-
-function AsterAvatar({
-  animationState,
-  eventKey
-}: {
-  animationState: AsterCompanionState["session"]["animationState"];
-  eventKey?: string | null;
-}) {
-  return (
-    <span className={`rr-aster-avatar rr-aster-avatar-${animationState}`} key={eventKey ?? animationState} aria-hidden="true">
-      <span className="rr-aster-head">
-        <span className="rr-aster-face">
-          <span />
-          <span />
-        </span>
-      </span>
-      <span className="rr-aster-body">
-        <span className="rr-aster-core" />
-      </span>
-      <span className="rr-aster-shadow" />
-    </span>
-  );
-}
-
-function AsterRouteMap({
-  completed,
-  target,
-  outcome,
-  animationState,
-  eventKey
-}: {
-  completed: number;
-  target: number;
-  outcome: AsterCompanionState["session"]["routeOutcome"];
-  animationState: AsterCompanionState["session"]["animationState"];
-  eventKey: string | null;
-}) {
-  const nodes = Array.from({ length: target }, (_, index) => index + 1);
-  const visibleNodes = nodes.slice(0, Math.min(target, 20));
-
-  return (
-    <div className={`rr-aster-route rr-aster-route-${outcome}`}>
-      {visibleNodes.map((node) => {
-        const isCompleted = node <= completed;
-        const isCurrent = node === Math.min(completed + 1, target);
-        const isGoal = node === target;
-        return (
-          <span
-            key={node}
-            className={[
-              "rr-aster-route-node",
-              isCompleted ? "rr-aster-route-node-complete" : "",
-              isCurrent ? "rr-aster-route-node-current" : "",
-              isGoal ? "rr-aster-route-node-goal" : ""
-            ].join(" ")}
-            aria-label={`Route node ${node}${isCompleted ? " completed" : ""}`}
-          >
-            {isCurrent ? <AsterAvatar animationState={animationState} eventKey={eventKey} /> : null}
-            {isGoal ? <span aria-hidden="true">★</span> : null}
-          </span>
-        );
-      })}
-      {outcome === "shortcut" ? <em className="rr-aster-route-branch">shortcut</em> : null}
-      {outcome === "review_route" ? <em className="rr-aster-route-branch">review route</em> : null}
-    </div>
   );
 }
 

@@ -3,6 +3,7 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { compareAnswer } from "@/lib/answer-check";
 import { normalizeLearnerId } from "@/lib/learner-id";
+import { LOCAL_DEMO_USER_ID, getLearnerProgressStore } from "@/lib/learner-progress-store";
 import type { AnswerResult, LevelOfAssistanceRequired, PracticeMode, QuestionDto, TutorContent } from "@/types/practice";
 
 const SESSION_STORAGE_KEY = "rapidrounds.practiceSession.v1";
@@ -194,11 +195,7 @@ function writePersistedSession(session: PersistedPracticeSession) {
 }
 
 function createAnonymousLearnerId() {
-  const randomId = typeof crypto !== "undefined" && "randomUUID" in crypto
-    ? crypto.randomUUID()
-    : `${Date.now()}-${Math.random().toString(36).slice(2)}`;
-
-  return `anon_${randomId}`;
+  return LOCAL_DEMO_USER_ID;
 }
 
 function getOrCreateAnonymousLearnerId() {
@@ -208,7 +205,7 @@ function getOrCreateAnonymousLearnerId() {
 
   const existing = window.localStorage.getItem(LEARNER_ID_STORAGE_KEY);
   const existingLearnerId = normalizeLearnerId(existing);
-  if (existingLearnerId) {
+  if (existingLearnerId === LOCAL_DEMO_USER_ID) {
     return existingLearnerId;
   }
 
@@ -326,6 +323,11 @@ export function usePracticeSession() {
       activeSubjectRef.current = data.question.specialty;
       setActiveSubject(data.question.specialty);
       window.localStorage.setItem(SUBJECT_STORAGE_KEY, data.question.specialty);
+      void getLearnerProgressStore().updateProfile(currentLearnerId, {
+        activeShelf: data.question.specialty,
+        activeMode: requestedStudyMode,
+        preferences: { questionBreadth: requestedQuestionBreadth }
+      });
       setSessionDecisionCount((count) => count + 1);
     }
     startedAt.current = Date.now();
@@ -413,6 +415,21 @@ export function usePracticeSession() {
     const data = (await response.json()) as AnswerResult;
     setResult(data);
     setAnsweredQuestionIds((ids) => unique([...ids, question.id]));
+    void getLearnerProgressStore().getProfile(learnerId.current || getOrCreateAnonymousLearnerId())
+      .then((profile) => {
+        const isCorrect = data.isCorrect;
+        const currentStreak = isCorrect ? (profile?.currentStreak ?? 0) + 1 : 0;
+        return getLearnerProgressStore().updateProfile(learnerId.current || getOrCreateAnonymousLearnerId(), {
+          totalQuestionsCompleted: (profile?.totalQuestionsCompleted ?? 0) + 1,
+          totalCorrect: (profile?.totalCorrect ?? 0) + (isCorrect ? 1 : 0),
+          currentStreak,
+          longestStreak: Math.max(profile?.longestStreak ?? 0, currentStreak),
+          activeShelf: activeSubjectRef.current,
+          activeMode: activeStudyModeRef.current,
+          preferences: { questionBreadth: questionBreadthRef.current }
+        });
+      })
+      .catch(() => undefined);
     if (data.tutor && !data.isCorrect) {
       setTutor(data.tutor);
       setMode("tutor");
@@ -470,6 +487,17 @@ export function usePracticeSession() {
     const data = (await response.json()) as AnswerResult;
     setResult(data);
     setAnsweredQuestionIds((ids) => unique([...ids, question.id]));
+    void getLearnerProgressStore().getProfile(learnerId.current || getOrCreateAnonymousLearnerId())
+      .then((profile) => getLearnerProgressStore().updateProfile(learnerId.current || getOrCreateAnonymousLearnerId(), {
+        totalQuestionsCompleted: profile?.totalQuestionsCompleted ?? 0,
+        totalCorrect: profile?.totalCorrect ?? 0,
+        currentStreak: 0,
+        longestStreak: profile?.longestStreak ?? 0,
+        activeShelf: activeSubjectRef.current,
+        activeMode: activeStudyModeRef.current,
+        preferences: { questionBreadth: questionBreadthRef.current }
+      }))
+      .catch(() => undefined);
     if (data.tutor) {
       setTutor(data.tutor);
       setMode("tutor");
@@ -528,6 +556,11 @@ export function usePracticeSession() {
     if (typeof window !== "undefined") {
       window.localStorage.setItem(SUBJECT_STORAGE_KEY, subject);
     }
+    void getLearnerProgressStore().updateProfile(learnerId.current || getOrCreateAnonymousLearnerId(), {
+      activeShelf: subject,
+      activeMode: activeStudyModeRef.current,
+      preferences: { questionBreadth: questionBreadthRef.current }
+    });
     void loadQuestion(undefined, subject, activeStudyModeRef.current, questionBreadthRef.current);
   }, [loadQuestion]);
 
@@ -541,6 +574,11 @@ export function usePracticeSession() {
     if (typeof window !== "undefined") {
       window.localStorage.setItem(STUDY_MODE_STORAGE_KEY, studyMode);
     }
+    void getLearnerProgressStore().updateProfile(learnerId.current || getOrCreateAnonymousLearnerId(), {
+      activeShelf: activeSubjectRef.current,
+      activeMode: studyMode,
+      preferences: { questionBreadth: questionBreadthRef.current }
+    });
     void loadQuestion(undefined, activeSubjectRef.current, studyMode, questionBreadthRef.current);
   }, [loadQuestion]);
 
@@ -554,16 +592,27 @@ export function usePracticeSession() {
     if (typeof window !== "undefined") {
       window.localStorage.setItem(QUESTION_BREADTH_STORAGE_KEY, breadth);
     }
+    void getLearnerProgressStore().updateProfile(learnerId.current || getOrCreateAnonymousLearnerId(), {
+      activeShelf: activeSubjectRef.current,
+      activeMode: activeStudyModeRef.current,
+      preferences: { questionBreadth: breadth }
+    });
     void loadQuestion(undefined, activeSubjectRef.current, activeStudyModeRef.current, breadth);
   }, [loadQuestion]);
 
   useEffect(() => {
+    let isMounted = true;
+
+    const hydrate = async () => {
     learnerId.current = getOrCreateAnonymousLearnerId();
-    const savedSubject = window.localStorage.getItem(SUBJECT_STORAGE_KEY) || DEFAULT_SUBJECT;
-    const savedStudyMode = window.localStorage.getItem(STUDY_MODE_STORAGE_KEY);
-    const savedQuestionBreadth = window.localStorage.getItem(QUESTION_BREADTH_STORAGE_KEY);
+    const store = getLearnerProgressStore();
+    const profile = await store.updateProfile(learnerId.current, {});
+    const savedSubject = profile.activeShelf || window.localStorage.getItem(SUBJECT_STORAGE_KEY) || DEFAULT_SUBJECT;
+    const savedStudyMode = profile.activeMode || window.localStorage.getItem(STUDY_MODE_STORAGE_KEY);
+    const savedQuestionBreadth = profile.preferences.questionBreadth || window.localStorage.getItem(QUESTION_BREADTH_STORAGE_KEY);
     const restoredStudyMode = isStudySessionMode(savedStudyMode) ? savedStudyMode : DEFAULT_STUDY_MODE;
     const restoredQuestionBreadth = isQuestionBreadth(savedQuestionBreadth) ? savedQuestionBreadth : DEFAULT_QUESTION_BREADTH;
+    if (!isMounted) return;
     activeSubjectRef.current = savedSubject;
     activeStudyModeRef.current = restoredStudyMode;
     questionBreadthRef.current = restoredQuestionBreadth;
@@ -610,6 +659,17 @@ export function usePracticeSession() {
     }
 
     void loadQuestion();
+    };
+
+    void hydrate().catch(() => {
+      if (!isMounted) return;
+      learnerId.current = getOrCreateAnonymousLearnerId();
+      void loadQuestion();
+    });
+
+    return () => {
+      isMounted = false;
+    };
   }, [loadQuestion]);
 
   useEffect(() => {

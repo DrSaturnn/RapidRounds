@@ -129,6 +129,7 @@ export type AnswerResult = {
 export type FoundationalRapidRoundOutcome = "correct" | "incorrect" | "taught";
 
 export type FoundationalQuestionAttemptState = {
+  userId: string;
   questionItemId: string;
   firstSeenAt: string;
   lastSeenAt: string;
@@ -136,6 +137,7 @@ export type FoundationalQuestionAttemptState = {
   taughtOnce: boolean;
   answeredCorrectlyOnce: boolean;
   needsLearning: boolean;
+  dueAt?: string;
   lastAnswer?: string;
   lastOutcome?: FoundationalRapidRoundOutcome;
 };

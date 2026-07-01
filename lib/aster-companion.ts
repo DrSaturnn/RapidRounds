@@ -19,6 +19,7 @@ export type AsterPomodoroState = {
 };
 
 export type AsterProfile = {
+  userId: string;
   level: number;
   totalXp: number;
   prestigeLevel: number;
@@ -29,6 +30,7 @@ export type AsterProfile = {
 };
 
 export type AsterSession = {
+  userId: string;
   sessionId: string;
   mode: string;
   shelf: string;
@@ -67,9 +69,11 @@ export type AsterEvent =
 export const ASTER_SESSION_TARGET = 20;
 export const ASTER_FOCUS_SECONDS = 25 * 60;
 export const ASTER_BREAK_SECONDS = 5 * 60;
+export const DEFAULT_ASTER_USER_ID = "local-demo-user";
 
-export function createAsterProfile(): AsterProfile {
+export function createAsterProfile(userId = DEFAULT_ASTER_USER_ID): AsterProfile {
   return {
+    userId,
     level: 1,
     totalXp: 0,
     prestigeLevel: 0,
@@ -101,6 +105,7 @@ export function getAsterLevelProgress(profile: AsterProfile) {
 }
 
 export function createAsterSession(input: {
+  userId?: string;
   mode: string;
   shelf: string;
   schemaCluster: string;
@@ -108,7 +113,9 @@ export function createAsterSession(input: {
   questionTarget?: number;
 }): AsterSession {
   const now = input.now ?? new Date();
+  const userId = input.userId ?? DEFAULT_ASTER_USER_ID;
   return {
+    userId,
     sessionId: `aster-${input.shelf.toLowerCase().replace(/[^a-z0-9]+/g, "-")}-${now.getTime()}`,
     mode: input.mode,
     shelf: input.shelf,
@@ -136,15 +143,17 @@ export function createAsterSession(input: {
 }
 
 export function createAsterCompanionState(input: {
+  userId?: string;
   mode: string;
   shelf: string;
   schemaCluster: string;
   now?: Date;
   questionTarget?: number;
 }): AsterCompanionState {
+  const userId = input.userId ?? DEFAULT_ASTER_USER_ID;
   return {
-    profile: createAsterProfile(),
-    session: createAsterSession(input)
+    profile: createAsterProfile(userId),
+    session: createAsterSession({ ...input, userId })
   };
 }
 
