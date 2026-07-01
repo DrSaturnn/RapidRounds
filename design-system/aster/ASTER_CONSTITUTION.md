@@ -35,6 +35,19 @@ Aster MUST feel:
 - minimal
 - supportive
 
+## Production Asset Authority
+
+The approved Aster sheet at `public/aster/canonical-aster-sheet.png` is the
+production character asset. It is not inspiration, concept art, or a mood board.
+
+Runtime Aster components MUST render from this approved asset or from
+approved derivative crops/sprites of this asset. Hand-drawn CSS/vector fallbacks
+MAY exist only as emergency loading fallbacks and MUST NOT become the primary
+visual implementation.
+
+If a rendered Aster does not look like the same character in the approved sheet,
+the implementation is wrong.
+
 ## Canonical Visual Identity
 
 Aster MUST preserve:
@@ -50,6 +63,16 @@ Aster MUST preserve:
 - glowing amber chest crystal
 - rounded limbs, hands, and feet
 - soft hover shadow
+
+Fidelity priority:
+
+1. silhouette
+2. proportions
+3. visor
+4. eyes
+5. chest crystal
+6. ceramic segmentation
+7. metallic accents
 
 ## Expressions
 

@@ -117,6 +117,7 @@ describe("Aster companion for foundational Rapid Round", () => {
 
   test("uses a reusable Aster avatar with mood, size, and shadow variants", () => {
     const source = readFileSync("components/aster/Aster.tsx", "utf8");
+    const assets = readFileSync("components/aster/AsterAssets.ts", "utf8");
     const adapter = readFileSync("components/AsterAvatar.tsx", "utf8");
     const css = readFileSync("app/globals.css", "utf8");
 
@@ -124,12 +125,15 @@ describe("Aster companion for foundational Rapid Round", () => {
     assert.match(source, /size = "small"/);
     assert.match(source, /mood = "neutral"/);
     assert.match(source, /showShadow = true/);
-    assert.match(source, /rr-aster-eye/);
-    assert.match(source, /rr-aster-core/);
-    assert.match(source, /rr-aster-panel/);
-    assert.match(source, /rr-aster-visor-gloss/);
+    assert.match(source, /ASTER_EXPRESSION_REGIONS/);
+    assert.match(source, /rr-aster-canonical-sprite/);
+    assert.match(assets, /canonical-aster-sheet\.png/);
+    assert.match(assets, /neutral: \{ x:/);
+    assert.match(assets, /reading_map: \{ x:/);
     assert.doesNotMatch(source, /mouth/i);
     assert.match(adapter, /components\/aster\/Aster/);
+    assert.match(css, /--rr-aster-sheet/);
+    assert.match(css, /\.rr-aster-canonical-sprite/);
     assert.match(css, /\.rr-aster-mood-thinking/);
     assert.match(css, /\.rr-aster-mood-celebrating/);
     assert.match(css, /\.rr-aster-mood-curious/);
@@ -158,12 +162,17 @@ describe("Aster companion for foundational Rapid Round", () => {
     const constitution = readFileSync("design-system/aster/ASTER_CONSTITUTION.md", "utf8");
     const doNotDeviate = readFileSync("design-system/aster/DO_NOT_DEVIATE.md", "utf8");
     const runtimeReadme = readFileSync("components/aster/README.md", "utf8");
+    const assetSheet = readFileSync("public/aster/canonical-aster-sheet.png");
     const source = readFileSync("components/PracticePanel.tsx", "utf8");
 
+    assert.ok(assetSheet.byteLength > 100_000);
+    assert.match(constitution, /production character asset/i);
     assert.match(constitution, /glossy black visor/i);
     assert.match(constitution, /chest crystal/i);
+    assert.match(doNotDeviate, /approved production asset/i);
     assert.match(doNotDeviate, /Do Not Deviate/i);
     assert.match(runtimeReadme, /Do not create independent Aster implementations/i);
+    assert.match(runtimeReadme, /canonical-aster-sheet\.png/);
     assert.match(source, /components\/aster\/Aster/);
   });
 });

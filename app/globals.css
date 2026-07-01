@@ -2843,6 +2843,43 @@ body:has(.practice-focus) .app-main {
     transform: translateY(calc(0.14rem * var(--rr-aster-scale)));
   }
 
+  .rr-aster-avatar {
+    --rr-aster-avatar-width: 4.75rem;
+    display: inline-block;
+    width: var(--rr-aster-avatar-width);
+    height: auto;
+    aspect-ratio: var(--rr-aster-aspect);
+    background-image: var(--rr-aster-sheet);
+    background-repeat: no-repeat;
+    background-size: var(--rr-aster-sheet-size);
+    background-position: var(--rr-aster-sheet-position);
+    filter:
+      drop-shadow(0 0.7rem 0.75rem rgb(47 35 22 / 0.16))
+      drop-shadow(0 0.08rem 0.08rem rgb(255 255 255 / 0.5));
+  }
+
+  .rr-aster-canonical-sprite {
+    display: block;
+    width: 100%;
+    height: 100%;
+  }
+
+  .rr-aster-avatar-tiny {
+    --rr-aster-avatar-width: 1.7rem;
+  }
+
+  .rr-aster-avatar-small {
+    --rr-aster-avatar-width: 4.75rem;
+  }
+
+  .rr-aster-avatar-medium {
+    --rr-aster-avatar-width: 8.25rem;
+  }
+
+  .rr-aster-avatar:not(.rr-aster-avatar-shadowed) {
+    filter: none;
+  }
+
   .rr-aster-float {
     @apply fixed bottom-24 right-4 z-40 hidden rounded-full border border-rr-border bg-rr-elevated p-1.5 shadow-[var(--rr-shadow-lg)] transition-transform hover:scale-105 sm:inline-grid;
   }

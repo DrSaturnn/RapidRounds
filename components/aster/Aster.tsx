@@ -1,5 +1,9 @@
 "use client";
 
+import {
+  ASTER_EXPRESSION_REGIONS,
+  getAsterRegionStyle
+} from "@/components/aster/AsterAssets";
 import type { AsterExpression } from "@/components/aster/AsterExpressions";
 
 export type AsterAvatarSize = "tiny" | "small" | "medium";
@@ -18,9 +22,7 @@ export function AsterAvatar({
   showShadow?: boolean;
   eventKey?: string | null;
 }) {
-  const accessory = mood === "reading_map" || mood === "teaching";
-  const sparkle = mood === "celebrating" || mood === "happy";
-  const cue = mood === "thinking" ? "…" : mood === "sleepy" || mood === "resting" ? "z" : null;
+  const region = ASTER_EXPRESSION_REGIONS[mood] ?? ASTER_EXPRESSION_REGIONS.neutral;
 
   return (
     <span
@@ -32,47 +34,10 @@ export function AsterAvatar({
         showShadow ? "rr-aster-avatar-shadowed" : ""
       ].join(" ")}
       key={eventKey ?? `${size}-${mood}`}
+      style={getAsterRegionStyle(region)}
       aria-hidden="true"
     >
-      {sparkle ? <span className="rr-aster-sparkles">✦</span> : null}
-      {cue ? <span className="rr-aster-cue">{cue}</span> : null}
-      <span className="rr-aster-shell-glow" />
-      <span className="rr-aster-head">
-        <span className="rr-aster-panel rr-aster-panel-top" />
-        <span className="rr-aster-panel rr-aster-panel-left" />
-        <span className="rr-aster-panel rr-aster-panel-right" />
-        <span className="rr-aster-ear rr-aster-ear-left">
-          <span />
-        </span>
-        <span className="rr-aster-ear rr-aster-ear-right">
-          <span />
-        </span>
-        <span className="rr-aster-face">
-          <span className="rr-aster-visor-gloss" />
-          <span className="rr-aster-eye rr-aster-eye-left" />
-          <span className="rr-aster-eye rr-aster-eye-right" />
-        </span>
-      </span>
-      <span className="rr-aster-body">
-        <span className="rr-aster-torso-panel" />
-        <span className="rr-aster-arm rr-aster-arm-left">
-          <span className="rr-aster-hand" />
-        </span>
-        <span className="rr-aster-arm rr-aster-arm-right">
-          <span className="rr-aster-hand" />
-        </span>
-        <span className="rr-aster-core">
-          <span />
-        </span>
-        <span className="rr-aster-foot rr-aster-foot-left" />
-        <span className="rr-aster-foot rr-aster-foot-right" />
-      </span>
-      {accessory ? (
-        <span className={`rr-aster-accessory rr-aster-accessory-${mood}`}>
-          <span />
-        </span>
-      ) : null}
-      {showShadow ? <span className="rr-aster-shadow" /> : null}
+      <span className="rr-aster-canonical-sprite" />
     </span>
   );
 }
