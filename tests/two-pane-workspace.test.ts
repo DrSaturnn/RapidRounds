@@ -29,6 +29,17 @@ describe("continuous educational workspace", () => {
     assert.match(styles, /\.rr-standard-workspace-root \.rr-clinical-patient-pane,\s*\n\s*\.rr-standard-workspace-root \.rr-clinical-reasoning-pane[\s\S]*overflow-y: auto/);
   });
 
+  it("renders the standard pre-answer vignette as unannotated recognition clue lines", () => {
+    const practicePanel = readFileSync("components/PracticePanel.tsx", "utf8");
+    const styles = readFileSync("app/globals.css", "utf8");
+
+    assert.match(practicePanel, /isExplanationState \? \(/);
+    assert.match(practicePanel, /<AnnotatedClinicalPrompt prompt=\{clinicalPrompt\} findings=\{visibleVignetteFindings\} \/>/);
+    assert.match(practicePanel, /<PreAnswerRecognitionChallenge\s+stem=\{clinicalPrompt\}/);
+    assert.match(practicePanel, /getRecognitionQuestionPrompt\(decisionQuestion\)/);
+    assert.match(styles, /\.rr-recognition-clues[\s\S]*gap: clamp\(0\.8rem, 1\.6vw, 1\.25rem\)/);
+  });
+
   it("lays out repair, pattern teaching, and next challenge as one continuous workspace", () => {
     const tutorMode = readFileSync("components/TutorMode.tsx", "utf8");
     const styles = readFileSync("app/globals.css", "utf8");

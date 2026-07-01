@@ -106,4 +106,18 @@ describe("foundational Rapid Round mode", () => {
     assert.match(css, /\.rr-patient-workspace,\s*\n\s*\.rr-reasoning-workspace[\s\S]*overflow-y: auto/);
     assert.match(css, /@media \(max-width: 1023px\)[\s\S]*\.rr-reasoning-workspace-empty[\s\S]*display: none/);
   });
+
+  it("renders pre-answer foundational prompts as recognition challenges without exposing the full schema", () => {
+    const panel = readFileSync("components/PracticePanel.tsx", "utf8");
+    const css = readFileSync("app/globals.css", "utf8");
+    const renderBranch = panel.match(/if \(isFoundationalRapidRound && foundationalItem[\s\S]*?if \(skin === "warm-notebook"\)/)?.[0] ?? "";
+
+    assert.match(renderBranch, /Recognition Challenge/);
+    assert.match(renderBranch, /getBroadClinicalPattern\(question\.foundationalRapidRound\.schemaName\)/);
+    assert.doesNotMatch(renderBranch, /<p className="rr-section-header">Schema<\/p>/);
+    assert.doesNotMatch(renderBranch, /<h1>\{question\.foundationalRapidRound\.schemaName\}<\/h1>/);
+    assert.match(renderBranch, /<PreAnswerRecognitionChallenge/);
+    assert.match(css, /\.rr-recognition-clue-line[\s\S]*font-size: clamp\(1\.45rem, 3\.1vw, 2\.35rem\)/);
+    assert.match(css, /\.rr-recognition-question[\s\S]*border-top: 1px solid var\(--rr-soft-line\)/);
+  });
 });

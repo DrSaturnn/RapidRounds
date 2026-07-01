@@ -1175,6 +1175,8 @@ export function PracticePanel() {
     const isEducationalMode = foundationalTeachingOpen && !result;
     const showFoundationalResult = Boolean(foundationalAnswerTeaching);
     const hasFoundationalReasoning = isEducationalMode || showFoundationalResult;
+    const recognitionPattern = getBroadClinicalPattern(question.foundationalRapidRound.schemaName);
+    const foundationalQuestionPrompt = getRecognitionQuestionPrompt(question.answerPrompt ?? decisionQuestion);
 
     return (
       <div className="practice-focus rr-practice-shell rr-foundational-shell min-h-screen" data-theme={skin}>
@@ -1212,17 +1214,28 @@ export function PracticePanel() {
             <div className="rr-card rr-card-paper rr-foundational-challenge rr-foundational-patient-card">
               <div className="rr-foundational-header">
                 <div>
-                  <p className="rr-section-header">Schema</p>
-                  <h1>{question.foundationalRapidRound.schemaName}</h1>
+                  <p className="rr-section-header">Recognition Challenge</p>
+                  {recognitionPattern ? (
+                    <>
+                      <p className="rr-recognition-kicker">Clinical Pattern</p>
+                      <h1>{recognitionPattern}</h1>
+                    </>
+                  ) : null}
                 </div>
                 <span className="rr-badge rr-badge-learning">{question.foundationalRapidRound.taskLabel}</span>
               </div>
 
               <div className="rr-foundational-patient-task">
-                <div className="rr-foundational-prompt">
-                  <p>{question.stem}</p>
-                  <p>{question.answerPrompt ?? decisionQuestion}</p>
-                </div>
+                {showFoundationalResult ? (
+                  <div className="rr-foundational-prompt">
+                    <p>{question.stem}</p>
+                  </div>
+                ) : (
+                  <PreAnswerRecognitionChallenge
+                    stem={question.stem}
+                    question={foundationalQuestionPrompt}
+                  />
+                )}
 
                 {!showFoundationalResult ? (
                   <>
@@ -1480,15 +1493,24 @@ export function PracticePanel() {
                 <p className="rr-meta">{learningGoal}</p>
               </div>
               <section className={`rr-card rr-question-card rr-vignette-card rr-card-paper rr-moleskine-left-page space-y-5 px-5 py-5 motion-safe:animate-[fadeIn_180ms_var(--rr-ease-standard)] sm:px-7 ${isExplanationState ? "rr-question-card-compact" : "sm:py-7"}`}>
-                <div className="space-y-4">
-                  <div className="flex flex-wrap items-center gap-2">
-                    <span className="rr-badge rr-badge-learning">{isExplanationState ? "Explanation" : "Question"}</span>
-                    <span className="rr-meta">Think through the vignette first.</span>
-                  </div>
-                  <AnnotatedClinicalPrompt prompt={clinicalPrompt} findings={visibleVignetteFindings} />
-                  <p className="rr-decision-question">
-                    {decisionQuestion}
-                  </p>
+              <div className="space-y-4">
+                <div className="flex flex-wrap items-center gap-2">
+                  <span className="rr-badge rr-badge-learning">{isExplanationState ? "Explanation" : "Question"}</span>
+                  <span className="rr-meta">Think through the vignette first.</span>
+                </div>
+                  {isExplanationState ? (
+                    <>
+                      <AnnotatedClinicalPrompt prompt={clinicalPrompt} findings={visibleVignetteFindings} />
+                      <p className="rr-decision-question">
+                        {decisionQuestion}
+                      </p>
+                    </>
+                  ) : (
+                    <PreAnswerRecognitionChallenge
+                      stem={clinicalPrompt}
+                      question={getRecognitionQuestionPrompt(decisionQuestion)}
+                    />
+                  )}
                 </div>
 
                 {result ? (
@@ -2037,6 +2059,85 @@ function getFindingRoleLabel(role: VignetteFindingAnnotation["role"]) {
     case "neutral":
       return "Neutral";
   }
+}
+
+function getBroadClinicalPattern(schemaName: string | null | undefined) {
+  if (!schemaName) {
+    return null;
+  }
+
+  const normalized = schemaName.trim().replace(/\s+/g, " ");
+  if (!normalized) {
+    return null;
+  }
+
+  const boundaryMatch = normalized.match(/^(.+?)\s+(?:with|without|after|before|due to|secondary to)\s+/i);
+  return boundaryMatch?.[1]?.trim() || normalized;
+}
+
+function getRecognitionQuestionPrompt(prompt: string | null | undefined) {
+  const normalized = (prompt ?? "").trim();
+  if (/diagnosis/i.test(normalized)) {
+    return "Which diagnosis best fits this clinical pattern?";
+  }
+  if (/management|next best step|appropriate/i.test(normalized)) {
+    return "What is the best next decision for this clinical pattern?";
+  }
+  if (/contraindicated|avoid/i.test(normalized)) {
+    return "What should be avoided in this clinical pattern?";
+  }
+  return normalized || "What decision best fits this clinical pattern?";
+}
+
+function splitClinicalClueLines(stem: string) {
+  const normalized = stem.trim().replace(/\s+/g, " ");
+  if (!normalized) {
+    return [];
+  }
+
+  const sentenceLines = normalized
+    .split(/(?<=[.!?])\s+/)
+    .map((line) => line.replace(/[.!?]+$/g, "").trim())
+    .filter(Boolean);
+
+  if (sentenceLines.length > 1) {
+    return sentenceLines;
+  }
+
+  return normalized
+    .split(/\s*(?:;|\n|, and | and )\s*/i)
+    .map((line) => line.replace(/[.!?]+$/g, "").trim())
+    .filter(Boolean);
+}
+
+function PreAnswerRecognitionChallenge({
+  stem,
+  question
+}: {
+  stem: string;
+  question: string;
+}) {
+  const clueLines = splitClinicalClueLines(stem);
+
+  return (
+    <div className="rr-recognition-challenge" aria-label="Recognition challenge">
+      <div className="rr-recognition-clues">
+        {clueLines.length > 0 ? (
+          clueLines.map((line, index) => (
+            <p key={`${line}-${index}`} className="rr-recognition-clue-line">
+              {line}
+            </p>
+          ))
+        ) : (
+          <p className="rr-recognition-clue-line">{stem}</p>
+        )}
+      </div>
+      <div className="rr-recognition-question">
+        <p className="rr-section-header">Question</p>
+        <p>{question}</p>
+      </div>
+    </div>
+  );
 }
 
 function getOrderedPromptFindings(prompt: string, findings: VignetteFindingAnnotation[]) {
