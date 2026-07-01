@@ -37,16 +37,20 @@ Aster MUST feel:
 
 ## Production Asset Authority
 
-The approved Aster sheet at `public/aster/canonical-aster-sheet.png` is the
-production character asset. It is not inspiration, concept art, or a mood board.
+The approved file `design-system/aster/production/neutral.png` is Aster v1.0.
+It is the single source of truth for the character. It is not inspiration,
+concept art, a mood board, or an example.
 
-Runtime Aster components MUST render from this approved asset or from
-approved derivative crops/sprites of this asset. Hand-drawn CSS/vector fallbacks
-MAY exist only as emergency loading fallbacks and MUST NOT become the primary
-visual implementation.
+Runtime Aster components MUST render `public/aster/production/neutral.png` or
+future approved production derivatives listed in
+`design-system/aster/production/asset_manifest.json`.
 
-If a rendered Aster does not look like the same character in the approved sheet,
-the implementation is wrong.
+The runtime MUST NOT reconstruct Aster with CSS, crop him from documentation
+sheets, use documentation sheets as sprite atlases, or use AI-generated runtime
+variations.
+
+If a rendered Aster does not look like the same character in `neutral.png`, the
+implementation is wrong.
 
 ## Canonical Visual Identity
 

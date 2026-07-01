@@ -1,9 +1,6 @@
 "use client";
 
-import {
-  ASTER_EXPRESSION_REGIONS,
-  getAsterRegionStyle
-} from "@/components/aster/AsterAssets";
+import { getAsterProductionAsset } from "@/components/aster/AsterAssets";
 import type { AsterExpression } from "@/components/aster/AsterExpressions";
 
 export type AsterAvatarSize = "tiny" | "small" | "medium";
@@ -22,7 +19,7 @@ export function AsterAvatar({
   showShadow?: boolean;
   eventKey?: string | null;
 }) {
-  const region = ASTER_EXPRESSION_REGIONS[mood] ?? ASTER_EXPRESSION_REGIONS.neutral;
+  const asset = getAsterProductionAsset(mood);
 
   return (
     <span
@@ -34,10 +31,14 @@ export function AsterAvatar({
         showShadow ? "rr-aster-avatar-shadowed" : ""
       ].join(" ")}
       key={eventKey ?? `${size}-${mood}`}
-      style={getAsterRegionStyle(region)}
       aria-hidden="true"
     >
-      <span className="rr-aster-canonical-sprite" />
+      <img
+        className="rr-aster-production-image"
+        src={asset.src}
+        alt=""
+        draggable={false}
+      />
     </span>
   );
 }
