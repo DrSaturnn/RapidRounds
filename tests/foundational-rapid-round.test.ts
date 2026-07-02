@@ -122,6 +122,25 @@ describe("foundational Rapid Round mode", () => {
     assert.match(css, /\.rr-recognition-question[\s\S]*border-top: 1px solid var\(--rr-soft-line\)/);
   });
 
+  it("keeps the Phase 2E composite recognition screen feature-flagged and pre-answer only", () => {
+    const panel = readFileSync("components/PracticePanel.tsx", "utf8");
+    const css = readFileSync("app/globals.css", "utf8");
+    const renderBranch = panel.match(/if \(isFoundationalRapidRound && foundationalItem[\s\S]*?if \(skin === "warm-notebook"\)/)?.[0] ?? "";
+
+    assert.match(panel, /NEXT_PUBLIC_RR_RECOGNITION_CHALLENGE_COMPOSITES/);
+    assert.match(panel, /PatientWorkspace/);
+    assert.match(panel, /AsterPresence/);
+    assert.match(panel, /TextInput/);
+    assert.match(panel, /UIButton/);
+    assert.match(panel, /Icon/);
+    assert.match(renderBranch, /RECOGNITION_CHALLENGE_COMPOSITES_ENABLED && !hasFoundationalReasoning/);
+    assert.match(renderBranch, /getPreAnswerClinicalFindings\(question\.stem\)/);
+    assert.match(renderBranch, /Reasoning stays hidden until you commit/);
+    assert.doesNotMatch(renderBranch, /useRecognitionCompositePreAnswer[\s\S]*FoundationalAnswerMode[\s\S]*PatientWorkspace/);
+    assert.match(css, /\.rr-recognition-composite-desktop/);
+    assert.match(css, /@media \(max-width: 1023px\)[\s\S]*\.rr-recognition-composite-desktop[\s\S]*display: none/);
+  });
+
   it("uses schema language instead of punitive answer labels after submission", () => {
     const panel = readFileSync("components/PracticePanel.tsx", "utf8");
     const css = readFileSync("app/globals.css", "utf8");

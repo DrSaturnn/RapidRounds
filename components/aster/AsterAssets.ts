@@ -6,6 +6,7 @@ export type AsterRuntimeAsset = {
   approved: boolean;
 };
 
+export const ASTER_V1_GLB_ASSET = "/assets/aster/aster_v1.glb";
 export const ASTER_V1_NEUTRAL_ASSET = "/aster/runtime/neutral.png";
 export const ASTER_UNAPPROVED_EXPRESSION_FALLBACK = "neutral";
 

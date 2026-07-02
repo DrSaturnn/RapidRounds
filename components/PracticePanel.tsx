@@ -2,12 +2,14 @@
 
 import { CSSProperties, FormEvent, KeyboardEvent, ReactNode, RefObject, forwardRef, useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { Button } from "@/components/Button";
+import { AsterPresence, PatientWorkspace } from "@/components/clinical";
 import { EmptyState } from "@/components/EmptyState";
 import { AsterAvatar, moodFromAsterAnimation } from "@/components/aster/Aster";
 import { AsterOverworldMap } from "@/components/AsterOverworldMap";
 import { MoleskinePracticeRenderer } from "@/components/moleskine/MoleskinePracticeRenderer";
 import { QuestionMeta } from "@/components/QuestionMeta";
 import { TutorMode } from "@/components/TutorMode";
+import { Button as UIButton, Icon, TextInput } from "@/components/ui";
 import {
   applyAsterEvent,
   createAsterCompanionState,
@@ -30,6 +32,7 @@ import { getClinicalPromptText, getDecisionQuestionText } from "@/lib/decision-q
 import { LOCAL_DEMO_USER_ID, getLearnerProgressStore } from "@/lib/learner-progress-store";
 import { SUBJECTS } from "@/lib/subject-seeds";
 import type { AsterCompanionState, AsterEvent } from "@/lib/aster-companion";
+import type { ClinicalFinding } from "@/components/clinical";
 import type { FoundationalQuestionAttemptState, FoundationalRapidRoundAnswerTeaching, FoundationalRapidRoundTeaching, VignetteFindingAnnotation } from "@/types/practice";
 
 type PracticeTool = "notes" | null;
@@ -39,6 +42,9 @@ type SettingsAnchor = "top" | "rail" | null;
 const requiredSubjects = SUBJECTS;
 
 const SKIN_STORAGE_KEY = "rapidrounds.practiceSkin.v2";
+const RECOGNITION_CHALLENGE_COMPOSITES_ENABLED =
+  process.env.NEXT_PUBLIC_RR_RECOGNITION_CHALLENGE_COMPOSITES === "1" ||
+  process.env.NEXT_PUBLIC_RR_RECOGNITION_CHALLENGE_COMPOSITES === "true";
 const practiceSkins: Array<{ value: PracticeSkin; label: string; description: string }> = [
   {
     value: "modern-academic",
@@ -213,6 +219,22 @@ export function PracticePanel() {
   const [asterState, setAsterState] = useState<AsterCompanionState | null>(null);
   const [asterEventKey, setAsterEventKey] = useState<string | null>(null);
   const lastAsterAnswerEventRef = useRef<string | null>(null);
+  const setResponsiveAnswerInputRef = useCallback((node: HTMLInputElement | null) => {
+    if (!node) {
+      return;
+    }
+
+    const answerViewport = node.dataset.rrAnswerViewport;
+    if (!answerViewport || typeof window === "undefined") {
+      answerInputRef.current = node;
+      return;
+    }
+
+    const isDesktop = window.matchMedia("(min-width: 1024px)").matches;
+    if ((isDesktop && answerViewport === "desktop") || (!isDesktop && answerViewport === "mobile")) {
+      answerInputRef.current = node;
+    }
+  }, []);
   const toolIcons = getToolIcons(skin);
   const foundationalItem = question?.foundationalRapidRound
     ? getFoundationalRapidRoundItem(question.id)
@@ -1180,6 +1202,9 @@ export function PracticePanel() {
     const foundationalFindings = foundationalAnswerTeaching
       ? getFoundationalRecognitionFindings(question.stem, foundationalAnswerTeaching)
       : [];
+    const preAnswerCompositeFindings = getPreAnswerClinicalFindings(question.stem);
+    const useRecognitionCompositePreAnswer =
+      RECOGNITION_CHALLENGE_COMPOSITES_ENABLED && !hasFoundationalReasoning;
 
     return (
       <div className="practice-focus rr-practice-shell rr-foundational-shell min-h-screen" data-theme={skin}>
@@ -1213,6 +1238,125 @@ export function PracticePanel() {
         </header>
 
         <main className="rr-foundational-main">
+          {useRecognitionCompositePreAnswer ? (
+            <div className="rr-recognition-composite-desktop">
+              <PatientWorkspace
+                className="rr-recognition-composite-patient"
+                clinicalPattern={recognitionPattern}
+                findings={preAnswerCompositeFindings}
+                prompt={foundationalQuestionPrompt}
+                title="Recognition Challenge"
+                answerSlot={
+                  <form onSubmit={onSubmit} className="rr-recognition-composite-answer">
+                    <TextInput
+                      ref={setResponsiveAnswerInputRef}
+                      id="foundational-answer-composite"
+                      data-rr-answer-viewport="desktop"
+                      value={answer}
+                      onChange={(event) => setAnswer(event.target.value)}
+                      onKeyDown={onAnswerKeyDown}
+                      placeholder="Type your answer"
+                      name={`rr-foundational-${question.id}`}
+                      autoComplete="off"
+                      autoCorrect="off"
+                      autoCapitalize="off"
+                      spellCheck={false}
+                      label="Answer"
+                      hideLabel
+                      autoFocus
+                    />
+                    <UIButton type="submit" variant="primary" size="lg" loading={isSubmitting}>
+                      {isSubmitting ? "Checking" : "Submit"}
+                    </UIButton>
+                  </form>
+                }
+                footerSlot={
+                  clinicalCuePrompt || foundationalReminder || error ? (
+                    <div className="rr-recognition-composite-status">
+                      {clinicalCuePrompt ? <p role="status">{clinicalCuePrompt}</p> : null}
+                      {foundationalReminder ? <p role="status">{foundationalReminder}</p> : null}
+                      {error ? <p>{error}</p> : null}
+                    </div>
+                  ) : null
+                }
+              />
+              <AsterPresence
+                className="rr-recognition-composite-aster"
+                mood="neutral"
+                size="medium"
+                status="Submit your answer"
+                description="Aster will walk you through the expert reasoning."
+                actionSlot={
+                  <span className="rr-recognition-composite-aster-note">
+                    <Icon size="sm">✦</Icon>
+                    Reasoning stays hidden until you commit.
+                  </span>
+                }
+              />
+            </div>
+          ) : null}
+
+          {useRecognitionCompositePreAnswer ? (
+            <div className="rr-recognition-composite-mobile">
+              <section className="rr-foundational-panel-shell rr-patient-workspace" aria-label="Patient workspace">
+                <div className="rr-card rr-card-paper rr-foundational-challenge rr-foundational-patient-card">
+                  <div className="rr-foundational-header">
+                    <div>
+                      <p className="rr-section-header">Recognition Challenge</p>
+                      {recognitionPattern ? (
+                        <>
+                          <p className="rr-recognition-kicker">Clinical Pattern</p>
+                          <h1>{recognitionPattern}</h1>
+                        </>
+                      ) : null}
+                    </div>
+                    <span className="rr-badge rr-badge-learning">{question.foundationalRapidRound.taskLabel}</span>
+                  </div>
+
+                  <div className="rr-foundational-patient-task">
+                    <RecognitionChallenge
+                      stem={question.stem}
+                      question={foundationalQuestionPrompt}
+                    />
+                    <form onSubmit={onSubmit} className="rr-foundational-answer">
+                      <label className="sr-only" htmlFor="foundational-answer-mobile">Answer</label>
+                      <input
+                        ref={setResponsiveAnswerInputRef}
+                        id="foundational-answer-mobile"
+                        data-rr-answer-viewport="mobile"
+                        value={answer}
+                        onChange={(event) => setAnswer(event.target.value)}
+                        onKeyDown={onAnswerKeyDown}
+                        placeholder="Type your answer"
+                        name={`rr-foundational-${question.id}`}
+                        autoComplete="off"
+                        autoCorrect="off"
+                        autoCapitalize="off"
+                        spellCheck={false}
+                        className="rr-input"
+                        autoFocus
+                      />
+                      <Button type="submit" disabled={isSubmitting}>
+                        {isSubmitting ? "Checking" : "Submit"}
+                      </Button>
+                    </form>
+                    <div className="rr-foundational-tools">
+                      <button type="button" className="rr-tool-button" onClick={handleFoundationalTeachMe}>
+                        <span aria-hidden="true">{toolIcons.teach}</span>
+                        {teachMeMode === "retrieval_reminder" ? "Teach Me ✓" : "Teach Me"}
+                      </button>
+                      <span className="rr-meta">T opens Teach Me</span>
+                    </div>
+                    {clinicalCuePrompt ? <p className="rr-clinical-cue-prompt" role="status">{clinicalCuePrompt}</p> : null}
+                    {foundationalReminder ? <p className="rr-foundational-reminder" role="status">{foundationalReminder}</p> : null}
+                    {error ? <p className="text-sm text-rr-muted">{error}</p> : null}
+                  </div>
+                </div>
+              </section>
+            </div>
+          ) : null}
+
+          {!useRecognitionCompositePreAnswer ? (
           <section className="rr-foundational-panel-shell rr-patient-workspace" aria-label="Patient workspace">
             <div className="rr-card rr-card-paper rr-foundational-challenge rr-foundational-patient-card">
               <div className="rr-foundational-header">
@@ -1292,24 +1436,27 @@ export function PracticePanel() {
               </div>
             </div>
           </section>
+          ) : null}
 
-          <section
-            className={`rr-card rr-card-paper rr-reasoning-workspace${hasFoundationalReasoning ? "" : " rr-reasoning-workspace-empty"}`}
-            aria-label="Clinical reasoning workspace"
-          >
-            {!hasFoundationalReasoning ? <ReasoningWorkspacePlaceholder /> : null}
-            {isEducationalMode && !showFoundationalResult ? (
-              <FoundationalTeachingMode teaching={foundationalTeaching} onNext={() => void loadQuestion()} />
-            ) : null}
+          {!useRecognitionCompositePreAnswer ? (
+            <section
+              className={`rr-card rr-card-paper rr-reasoning-workspace${hasFoundationalReasoning ? "" : " rr-reasoning-workspace-empty"}`}
+              aria-label="Clinical reasoning workspace"
+            >
+              {!hasFoundationalReasoning ? <ReasoningWorkspacePlaceholder /> : null}
+              {isEducationalMode && !showFoundationalResult ? (
+                <FoundationalTeachingMode teaching={foundationalTeaching} onNext={() => void loadQuestion()} />
+              ) : null}
 
-            {foundationalAnswerTeaching ? (
-              <FoundationalAnswerMode
-                teaching={foundationalAnswerTeaching}
-                learnerAnswer={answer}
-                onNext={() => void loadQuestion()}
-              />
-            ) : null}
-          </section>
+              {foundationalAnswerTeaching ? (
+                <FoundationalAnswerMode
+                  teaching={foundationalAnswerTeaching}
+                  learnerAnswer={answer}
+                  onNext={() => void loadQuestion()}
+                />
+              ) : null}
+            </section>
+          ) : null}
         </main>
         {renderAsterOverlay()}
       </div>
@@ -2132,6 +2279,14 @@ function splitClinicalClueLines(stem: string) {
     .split(/\s*(?:;|\n|, and | and )\s*/i)
     .map((line) => line.replace(/[.!?]+$/g, "").trim())
     .filter(Boolean);
+}
+
+function getPreAnswerClinicalFindings(stem: string): ClinicalFinding[] {
+  return splitClinicalClueLines(stem).map((line, index) => ({
+    id: `recognition-clue-${index}`,
+    text: line,
+    icon: <span>{index + 1}</span>
+  }));
 }
 
 function getFindingForClueLine(line: string, findings: VignetteFindingAnnotation[]) {

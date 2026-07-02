@@ -1,10 +1,28 @@
 "use client";
 
-import { getAsterRuntimeAsset } from "@/components/aster/AsterAssets";
+import dynamic from "next/dynamic";
+
+import { AsterAvatarFallback } from "@/components/aster/AsterAvatarFallback";
 import type { AsterExpression } from "@/components/aster/AsterExpressions";
 
 export type AsterAvatarSize = "tiny" | "small" | "medium";
 export type AsterAvatarMood = AsterExpression;
+
+export type AsterAvatarProps = {
+  size?: AsterAvatarSize;
+  mood?: AsterAvatarMood;
+  animated?: boolean;
+  showShadow?: boolean;
+  eventKey?: string | null;
+};
+
+const LazyAsterAvatar3D = dynamic(
+  () => import("@/components/aster/AsterAvatar3D").then((module) => module.AsterAvatar3D),
+  {
+    ssr: false,
+    loading: () => <AsterAvatarFallback size="small" mood="neutral" animated showShadow />,
+  }
+);
 
 export function AsterAvatar({
   size = "small",
@@ -12,34 +30,15 @@ export function AsterAvatar({
   animated = true,
   showShadow = true,
   eventKey
-}: {
-  size?: AsterAvatarSize;
-  mood?: AsterAvatarMood;
-  animated?: boolean;
-  showShadow?: boolean;
-  eventKey?: string | null;
-}) {
-  const asset = getAsterRuntimeAsset(mood);
-
+}: AsterAvatarProps) {
   return (
-    <span
-      className={[
-        "rr-aster-avatar",
-        `rr-aster-avatar-${size}`,
-        `rr-aster-mood-${mood}`,
-        animated ? "rr-aster-avatar-animated" : "rr-aster-avatar-still",
-        showShadow ? "rr-aster-avatar-shadowed" : ""
-      ].join(" ")}
+    <LazyAsterAvatar3D
       key={eventKey ?? `${size}-${mood}`}
-      aria-hidden="true"
-    >
-      <img
-        className="rr-aster-runtime-image"
-        src={asset.src}
-        alt=""
-        draggable={false}
-      />
-    </span>
+      size={size}
+      mood={mood}
+      animated={animated}
+      showShadow={showShadow}
+    />
   );
 }
 

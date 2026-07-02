@@ -2,7 +2,9 @@
 
 Use these components for every in-app Aster rendering.
 
-- `Aster.tsx`: canonical avatar component.
+- `Aster.tsx`: canonical public avatar wrapper.
+- `AsterAvatar3D.tsx`: canonical runtime GLB renderer.
+- `AsterAvatarFallback.tsx`: approved PNG fallback for loading/failure states.
 - `AsterAssets.ts`: approved runtime asset registry.
 - `AsterIcon.tsx`: compact launcher/icon composition.
 - `AsterSprite.tsx`: tiny overworld marker.
@@ -12,10 +14,12 @@ Use these components for every in-app Aster rendering.
 
 Do not create independent Aster implementations in feature components.
 
-The runtime avatar renders from `public/aster/runtime/neutral.png`.
-Component code may scale and lightly animate the approved image, but it must not
-redesign the character, crop from documentation sheets, or reconstruct Aster with
-CSS geometry.
+The runtime avatar renders the canonical GLB at
+`public/assets/aster/aster_v1.glb` through React Three Fiber. The approved PNG at
+`public/aster/runtime/neutral.png` is retained only as the Suspense loading and
+GLB failure fallback. Component code may frame, light, and lightly idle-animate
+the approved model, but it must not redesign the character, crop from
+documentation sheets, or reconstruct Aster with CSS geometry.
 
 Pending expression moods must fall back to the approved neutral asset until a
 matching approved runtime PNG exists.

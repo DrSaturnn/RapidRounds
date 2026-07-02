@@ -117,25 +117,43 @@ describe("Aster companion for foundational Rapid Round", () => {
 
   test("uses a reusable Aster avatar with mood, size, and shadow variants", () => {
     const source = readFileSync("components/aster/Aster.tsx", "utf8");
+    const renderer = readFileSync("components/aster/AsterAvatar3D.tsx", "utf8");
+    const fallback = readFileSync("components/aster/AsterAvatarFallback.tsx", "utf8");
     const assets = readFileSync("components/aster/AsterAssets.ts", "utf8");
     const adapter = readFileSync("components/AsterAvatar.tsx", "utf8");
     const css = readFileSync("app/globals.css", "utf8");
+    const glbAsset = readFileSync("public/assets/aster/aster_v1.glb");
 
     assert.match(source, /export function AsterAvatar/);
     assert.match(source, /size = "small"/);
     assert.match(source, /mood = "neutral"/);
     assert.match(source, /showShadow = true/);
-    assert.match(source, /getAsterRuntimeAsset/);
-    assert.match(source, /rr-aster-runtime-image/);
+    assert.match(source, /AsterAvatar3D/);
+    assert.match(source, /dynamic\(/);
+    assert.match(renderer, /@react-three\/fiber/);
+    assert.match(renderer, /@react-three\/drei/);
+    assert.match(renderer, /Canvas/);
+    assert.match(renderer, /useGLTF\(ASTER_V1_GLB_ASSET\)/);
+    assert.match(renderer, /ambientLight/);
+    assert.match(renderer, /directionalLight/);
+    assert.match(renderer, /useFrame/);
+    assert.match(renderer, /AsterModelErrorBoundary/);
+    assert.match(renderer, /prefers-reduced-motion: reduce/);
+    assert.match(fallback, /getAsterRuntimeAsset/);
+    assert.match(fallback, /rr-aster-runtime-image/);
+    assert.match(assets, /ASTER_V1_GLB_ASSET/);
+    assert.match(assets, /\/assets\/aster\/aster_v1\.glb/);
     assert.match(assets, /ASTER_V1_NEUTRAL_ASSET/);
     assert.match(assets, /\/aster\/runtime\/neutral\.png/);
     assert.match(assets, /ASTER_UNAPPROVED_EXPRESSION_FALLBACK/);
+    assert.ok(glbAsset.length > 1024, "canonical Aster GLB should exist as a real runtime asset");
     assert.doesNotMatch(source, /mouth/i);
     assert.doesNotMatch(source, /rr-aster-head/);
     assert.doesNotMatch(source, /rr-aster-eye/);
     assert.doesNotMatch(source, /backgroundPosition/i);
     assert.match(adapter, /components\/aster\/Aster/);
     assert.match(css, /\.rr-aster-runtime-image/);
+    assert.match(css, /\.rr-aster-runtime-canvas/);
     assert.doesNotMatch(css, /\.rr-aster-head/);
     assert.doesNotMatch(css, /\.rr-aster-eye/);
     assert.doesNotMatch(css, /--rr-aster-sheet/);
