@@ -12,7 +12,8 @@ describe("visual clinical reasoning renderer", () => {
     assert.match(tutorMode, /semanticLinks/);
     assert.match(tutorMode, /intendedDiscriminatorPair/);
     assert.match(tutorMode, /Clinical Resolution/);
-    assert.match(tutorMode, /Next-time rule/);
+    assert.match(tutorMode, /Commit To Memory/);
+    assert.match(tutorMode, /Why This Appears On Boards/);
     assert.doesNotMatch(tutorMode, /semanticLinks\s*=\s*\[/);
   });
 
@@ -28,14 +29,31 @@ describe("visual clinical reasoning renderer", () => {
     const tutorMode = readFileSync("components/TutorMode.tsx", "utf8");
 
     assert.match(tutorMode, /rr-dominant-pivot/);
-    assert.match(tutorMode, /Pivot/);
+    assert.match(tutorMode, /Today&apos;s Pivot/);
+    assert.match(tutorMode, /Why It Matters/);
     assert.match(tutorMode, /teaching\.pivotClue/);
     assert.doesNotMatch(tutorMode, /<p className="rr-meta">Expert reasoning<\/p>/);
+  });
+
+  it("uses non-punitive schema comparison language", () => {
+    const tutorMode = readFileSync("components/TutorMode.tsx", "utf8");
+
+    assert.match(tutorMode, /Recognize This Pattern/);
+    assert.match(tutorMode, /Your Activated Schema/);
+    assert.match(tutorMode, /Expert Schema/);
+    assert.match(tutorMode, /Discriminator Table/);
+    assert.doesNotMatch(tutorMode, /Wrong Answer/);
+    assert.doesNotMatch(tutorMode, /Correct Answer/);
   });
 
   it("styles the schema-first teaching pathway", () => {
     const css = readFileSync("app/globals.css", "utf8");
 
+    assert.match(css, /--rr-role-pattern/);
+    assert.match(css, /--rr-role-pivot/);
+    assert.match(css, /--rr-role-learner-schema/);
+    assert.match(css, /--rr-role-expert-schema/);
+    assert.match(css, /--rr-role-discriminator/);
     assert.match(css, /rr-schema-arrow-chain/);
     assert.match(css, /rr-dominant-pivot/);
     assert.match(css, /rr-semantic-bridge/);

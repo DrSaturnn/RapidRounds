@@ -33,11 +33,12 @@ describe("continuous educational workspace", () => {
     const practicePanel = readFileSync("components/PracticePanel.tsx", "utf8");
     const styles = readFileSync("app/globals.css", "utf8");
 
-    assert.match(practicePanel, /isExplanationState \? \(/);
-    assert.match(practicePanel, /<AnnotatedClinicalPrompt prompt=\{clinicalPrompt\} findings=\{visibleVignetteFindings\} \/>/);
-    assert.match(practicePanel, /<PreAnswerRecognitionChallenge\s+stem=\{clinicalPrompt\}/);
-    assert.match(practicePanel, /getRecognitionQuestionPrompt\(decisionQuestion\)/);
-    assert.match(styles, /\.rr-recognition-clues[\s\S]*gap: clamp\(0\.8rem, 1\.6vw, 1\.25rem\)/);
+    assert.match(practicePanel, /result \? \(/);
+    assert.match(practicePanel, /<RecognitionChallenge\s+stem=\{clinicalPrompt\}\s+question=\{getRecognitionQuestionPrompt\(\)\}/);
+    assert.match(practicePanel, /findings=\{visibleVignetteFindings\}[\s\S]*annotated/);
+    assert.match(practicePanel, /function getRecognitionQuestionPrompt\(\)[\s\S]*Which diagnosis best fits this clinical pattern\?/);
+    assert.match(styles, /\.rr-recognition-clues[\s\S]*gap: clamp\(0\.55rem, 1vw, 0\.85rem\)/);
+    assert.match(styles, /\.rr-recognition-clue-line[\s\S]*font-size: clamp\(1\.02rem, 1\.6vw, 1\.28rem\)/);
   });
 
   it("lays out repair, pattern teaching, and next challenge as one continuous workspace", () => {

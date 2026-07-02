@@ -405,32 +405,81 @@ function PostAnswerTeachingModel({ tutor }: { tutor: TutorContent }) {
   const teaching = tutor.postAnswerTeaching;
   const learnerLabel = teaching.learnerAnswer || "your answer";
   const intro = teaching.isCorrect
-    ? "Correct. You recognized the schema:"
-    : `Not quite. You put ${learnerLabel}. The typical schema for ${learnerLabel} is:`;
+    ? "You activated the expert schema."
+    : `You activated ${learnerLabel}. Compare that branch with the expert schema.`;
 
   return (
     <div className="rr-post-answer-model" aria-label="Post-answer teaching model">
-      <section className="rr-schema-activation">
+      <section className="rr-reasoning-stage rr-reasoning-stage-pattern">
+        <p className="rr-section-header">Recognize This Pattern</p>
         <p className="rr-schema-intro">{intro}</p>
-        <SchemaArrowChain steps={teaching.learnerAnswerSchema} />
+        <div className="rr-schema-comparison-cards">
+          <SchemaCard
+            title="Your Activated Schema"
+            tone="learner"
+            steps={teaching.learnerAnswerSchema}
+          />
+          <SchemaCard
+            title="Expert Schema"
+            tone="expert"
+            steps={teaching.correctSchema}
+          />
+        </div>
       </section>
-      <section className="rr-dominant-pivot" aria-label="Pivot clue">
-        <span>Pivot</span>
-        <strong>{teaching.pivotClue}</strong>
+
+      <section className="rr-reasoning-stage rr-reasoning-stage-pivot">
+        <section className="rr-dominant-pivot" aria-label="Pivot clue">
+          <span>Today&apos;s Pivot</span>
+          <strong>{teaching.pivotClue}</strong>
+        </section>
+        <section className="rr-why-it-matters" aria-label="Why it matters">
+          <span>Why It Matters</span>
+          <SemanticBridge links={teaching.semanticLinks} />
+        </section>
       </section>
-      <SemanticBridge links={teaching.semanticLinks} />
+
       {teaching.intendedDiscriminatorPair ? (
-        <DecisionBoundaryTable pair={teaching.intendedDiscriminatorPair} />
+        <section className="rr-reasoning-stage rr-reasoning-stage-comparison">
+          <p className="rr-section-header">Discriminator Table</p>
+          <DecisionBoundaryTable pair={teaching.intendedDiscriminatorPair} />
+        </section>
       ) : null}
-      <section className="rr-clinical-resolution" aria-label="Clinical resolution">
-        <span>Clinical Resolution</span>
-        <strong>{teaching.clinicalResolution}</strong>
-      </section>
-      <section className="rr-next-time-rule" aria-label="Next-time rule">
-        <span>Next-time rule</span>
-        <p>{teaching.nextTimeRule}</p>
+
+      <section className="rr-reasoning-stage rr-reasoning-stage-reinforcement">
+        <p className="rr-section-header">Knowledge Reinforcement</p>
+        <section className="rr-clinical-resolution" aria-label="Clinical resolution">
+          <span>Clinical Resolution</span>
+          <strong>{teaching.clinicalResolution}</strong>
+        </section>
+        <section className="rr-next-time-rule" aria-label="Commit to memory">
+          <span>Commit To Memory</span>
+          <p>{teaching.nextTimeRule}</p>
+        </section>
+        {teaching.teachingPearl ? (
+          <section className="rr-boards-context" aria-label="Why this appears on boards">
+            <span>Why This Appears On Boards</span>
+            <p>{teaching.teachingPearl}</p>
+          </section>
+        ) : null}
       </section>
     </div>
+  );
+}
+
+function SchemaCard({
+  title,
+  tone,
+  steps
+}: {
+  title: string;
+  tone: "learner" | "expert";
+  steps: string[];
+}) {
+  return (
+    <section className={`rr-schema-card rr-schema-card-${tone}`}>
+      <p>{title}</p>
+      <SchemaArrowChain steps={steps} />
+    </section>
   );
 }
 
@@ -476,8 +525,8 @@ function DecisionBoundaryTable({ pair }: { pair: NonNullable<TutorContent["postA
           <thead>
             <tr>
               <th>Field</th>
-              <th>{pair.conceptA}</th>
-              <th>{pair.conceptB}</th>
+              <th className="rr-table-expert-schema">Expert Schema: {pair.conceptA}</th>
+              <th className="rr-table-learner-schema">Your Activated Schema: {pair.conceptB}</th>
             </tr>
           </thead>
           <tbody>
@@ -487,13 +536,13 @@ function DecisionBoundaryTable({ pair }: { pair: NonNullable<TutorContent["postA
               <td><SchemaArrowChain steps={pair.schemaB} /></td>
             </tr>
             <tr>
-              <td className="font-medium">What the pivot supports</td>
+              <td className="font-medium rr-table-pivot-row">What the pivot supports</td>
               <td>{pair.pivotSupports}</td>
-              <td>Not supported by the pivot here.</td>
+              <td>Not expected from this pivot.</td>
             </tr>
             <tr>
               <td className="font-medium">Alternative would need</td>
-              <td>The current pivot instead.</td>
+              <td>Present in this clinical pattern.</td>
               <td>{pair.alternativeWouldNeed}</td>
             </tr>
           </tbody>

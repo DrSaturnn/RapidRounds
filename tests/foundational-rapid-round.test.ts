@@ -116,8 +116,21 @@ describe("foundational Rapid Round mode", () => {
     assert.match(renderBranch, /getBroadClinicalPattern\(question\.foundationalRapidRound\.schemaName\)/);
     assert.doesNotMatch(renderBranch, /<p className="rr-section-header">Schema<\/p>/);
     assert.doesNotMatch(renderBranch, /<h1>\{question\.foundationalRapidRound\.schemaName\}<\/h1>/);
-    assert.match(renderBranch, /<PreAnswerRecognitionChallenge/);
-    assert.match(css, /\.rr-recognition-clue-line[\s\S]*font-size: clamp\(1\.45rem, 3\.1vw, 2\.35rem\)/);
+    assert.match(renderBranch, /<RecognitionChallenge/);
+    assert.match(panel, /Which diagnosis best fits this clinical pattern/);
+    assert.match(css, /\.rr-recognition-clue-line[\s\S]*font-size: clamp\(1\.02rem, 1\.6vw, 1\.28rem\)/);
     assert.match(css, /\.rr-recognition-question[\s\S]*border-top: 1px solid var\(--rr-soft-line\)/);
+  });
+
+  it("uses schema language instead of punitive answer labels after submission", () => {
+    const panel = readFileSync("components/PracticePanel.tsx", "utf8");
+    const css = readFileSync("app/globals.css", "utf8");
+
+    assert.match(panel, /Your Activated Schema/);
+    assert.match(panel, /Expert Schema/);
+    assert.doesNotMatch(panel, /<span>Your answer<\/span>/);
+    assert.doesNotMatch(panel, /<span>Correct answer<\/span>/);
+    assert.match(css, /--rr-role-learner-schema/);
+    assert.match(css, /--rr-role-expert-schema/);
   });
 });

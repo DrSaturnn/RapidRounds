@@ -5,11 +5,11 @@ import { describe, it } from "node:test";
 describe("decision repair information hierarchy", () => {
   it("renders learner schema before pivot, bridge, discriminator, and resolution", () => {
     const tutorMode = readFileSync("components/TutorMode.tsx", "utf8");
-    const headingIndex = tutorMode.indexOf("Build the pattern");
-    const schemaIndex = tutorMode.indexOf("<SchemaArrowChain", headingIndex);
-    const pivotIndex = tutorMode.indexOf("rr-dominant-pivot", headingIndex);
+    const headingIndex = tutorMode.indexOf("function PostAnswerTeachingModel");
+    const schemaIndex = tutorMode.indexOf("Recognize This Pattern", headingIndex);
+    const pivotIndex = tutorMode.indexOf("Today&apos;s Pivot", headingIndex);
     const bridgeIndex = tutorMode.indexOf("<SemanticBridge", headingIndex);
-    const tableIndex = tutorMode.indexOf("<DecisionBoundaryTable", headingIndex);
+    const tableIndex = tutorMode.indexOf("Discriminator Table", headingIndex);
     const resolutionIndex = tutorMode.indexOf("Clinical Resolution", headingIndex);
 
     assert.ok(headingIndex > -1);
@@ -25,7 +25,7 @@ describe("decision repair information hierarchy", () => {
 
     assert.match(tutorMode, /Clinical Resolution/);
     assert.match(tutorMode, /clinicalResolution/);
-    assert.match(tutorMode, /Next-time rule/);
+    assert.match(tutorMode, /Commit To Memory/);
     assert.match(tutorMode, /border-t border-rr-soft-line pt-3/);
     assert.doesNotMatch(tutorMode, /rr-card rr-card-section space-y-3">\s*<p className="text-sm font-medium leading-6">\{tutor\.reinforcement\.question\}/);
   });

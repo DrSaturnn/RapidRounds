@@ -1176,7 +1176,10 @@ export function PracticePanel() {
     const showFoundationalResult = Boolean(foundationalAnswerTeaching);
     const hasFoundationalReasoning = isEducationalMode || showFoundationalResult;
     const recognitionPattern = getBroadClinicalPattern(question.foundationalRapidRound.schemaName);
-    const foundationalQuestionPrompt = getRecognitionQuestionPrompt(question.answerPrompt ?? decisionQuestion);
+    const foundationalQuestionPrompt = getRecognitionQuestionPrompt();
+    const foundationalFindings = foundationalAnswerTeaching
+      ? getFoundationalRecognitionFindings(question.stem, foundationalAnswerTeaching)
+      : [];
 
     return (
       <div className="practice-focus rr-practice-shell rr-foundational-shell min-h-screen" data-theme={skin}>
@@ -1227,11 +1230,14 @@ export function PracticePanel() {
 
               <div className="rr-foundational-patient-task">
                 {showFoundationalResult ? (
-                  <div className="rr-foundational-prompt">
-                    <p>{question.stem}</p>
-                  </div>
+                  <RecognitionChallenge
+                    stem={question.stem}
+                    question={foundationalQuestionPrompt}
+                    findings={foundationalFindings}
+                    annotated
+                  />
                 ) : (
-                  <PreAnswerRecognitionChallenge
+                  <RecognitionChallenge
                     stem={question.stem}
                     question={foundationalQuestionPrompt}
                   />
@@ -1273,8 +1279,14 @@ export function PracticePanel() {
                   </>
                 ) : (
                   <div className="rr-foundational-learner-answer" aria-label="Learner answer">
-                    <span>Your answer</span>
-                    <strong>{answer}</strong>
+                    <span>Your Activated Schema</span>
+                    <strong>{answer || "Not named"}</strong>
+                    {foundationalAnswerTeaching ? (
+                      <>
+                        <span>Expert Schema</span>
+                        <strong>{foundationalAnswerTeaching.diagnosis}</strong>
+                      </>
+                    ) : null}
                   </div>
                 )}
               </div>
@@ -1285,6 +1297,7 @@ export function PracticePanel() {
             className={`rr-card rr-card-paper rr-reasoning-workspace${hasFoundationalReasoning ? "" : " rr-reasoning-workspace-empty"}`}
             aria-label="Clinical reasoning workspace"
           >
+            {!hasFoundationalReasoning ? <ReasoningWorkspacePlaceholder /> : null}
             {isEducationalMode && !showFoundationalResult ? (
               <FoundationalTeachingMode teaching={foundationalTeaching} onNext={() => void loadQuestion()} />
             ) : null}
@@ -1495,28 +1508,32 @@ export function PracticePanel() {
               <section className={`rr-card rr-question-card rr-vignette-card rr-card-paper rr-moleskine-left-page space-y-5 px-5 py-5 motion-safe:animate-[fadeIn_180ms_var(--rr-ease-standard)] sm:px-7 ${isExplanationState ? "rr-question-card-compact" : "sm:py-7"}`}>
               <div className="space-y-4">
                 <div className="flex flex-wrap items-center gap-2">
-                  <span className="rr-badge rr-badge-learning">{isExplanationState ? "Explanation" : "Question"}</span>
+                  <span className="rr-badge rr-badge-learning">{result ? "Explanation" : "Question"}</span>
                   <span className="rr-meta">Think through the vignette first.</span>
                 </div>
-                  {isExplanationState ? (
+                  {result ? (
                     <>
-                      <AnnotatedClinicalPrompt prompt={clinicalPrompt} findings={visibleVignetteFindings} />
-                      <p className="rr-decision-question">
-                        {decisionQuestion}
-                      </p>
+                      <RecognitionChallenge
+                        stem={clinicalPrompt}
+                        question={getRecognitionQuestionPrompt()}
+                        findings={visibleVignetteFindings}
+                        annotated
+                      />
                     </>
                   ) : (
-                    <PreAnswerRecognitionChallenge
+                    <RecognitionChallenge
                       stem={clinicalPrompt}
-                      question={getRecognitionQuestionPrompt(decisionQuestion)}
+                      question={getRecognitionQuestionPrompt()}
                     />
                   )}
                 </div>
 
                 {result ? (
                   <div className="rr-foundational-learner-answer" aria-label="Learner answer">
-                    <span>Your answer</span>
-                    <strong>{answer}</strong>
+                    <span>Your Activated Schema</span>
+                    <strong>{answer || "Not named"}</strong>
+                    <span>Expert Schema</span>
+                    <strong>{result.correctAnswer}</strong>
                   </div>
                 ) : (
                   <form onSubmit={onSubmit} className="rr-answer-dock space-y-4">
@@ -1576,10 +1593,18 @@ export function PracticePanel() {
               className={`rr-reasoning-workspace rr-clinical-reasoning-pane${(isExplanationState && tutor) || result?.isCorrect ? "" : " rr-reasoning-workspace-empty"}`}
               aria-label="Clinical reasoning workspace"
             >
+              {!((isExplanationState && tutor) || result?.isCorrect) ? <ReasoningWorkspacePlaceholder /> : null}
               {mode === "rapid" && result?.isCorrect ? (
-                <div className="rr-correct-inline text-sm leading-6 motion-safe:animate-[fadeIn_180ms_var(--rr-ease-standard)]">
-                  <span className="font-semibold text-rr-correct">Correct.</span>
-                  <span className="ml-3 text-rr-muted">{result.boardPearl}</span>
+                <div className="rr-reasoning-stage rr-reasoning-stage-reinforcement motion-safe:animate-[fadeIn_180ms_var(--rr-ease-standard)]">
+                  <p className="rr-section-header">Knowledge Reinforcement</p>
+                  <section className="rr-clinical-resolution" aria-label="Clinical resolution">
+                    <span>Expert Schema</span>
+                    <strong>{result.correctAnswer}</strong>
+                  </section>
+                  <section className="rr-next-time-rule" aria-label="Commit to memory">
+                    <span>Commit To Memory</span>
+                    <p>{result.boardPearl}</p>
+                  </section>
                 </div>
               ) : null}
 
@@ -2061,6 +2086,15 @@ function getFindingRoleLabel(role: VignetteFindingAnnotation["role"]) {
   }
 }
 
+function ReasoningWorkspacePlaceholder() {
+  return (
+    <div className="rr-reasoning-placeholder" aria-label="Reasoning workspace placeholder">
+      <p>Submit your answer</p>
+      <span>Aster will walk you through the expert reasoning.</span>
+    </div>
+  );
+}
+
 function getBroadClinicalPattern(schemaName: string | null | undefined) {
   if (!schemaName) {
     return null;
@@ -2075,18 +2109,8 @@ function getBroadClinicalPattern(schemaName: string | null | undefined) {
   return boundaryMatch?.[1]?.trim() || normalized;
 }
 
-function getRecognitionQuestionPrompt(prompt: string | null | undefined) {
-  const normalized = (prompt ?? "").trim();
-  if (/diagnosis/i.test(normalized)) {
-    return "Which diagnosis best fits this clinical pattern?";
-  }
-  if (/management|next best step|appropriate/i.test(normalized)) {
-    return "What is the best next decision for this clinical pattern?";
-  }
-  if (/contraindicated|avoid/i.test(normalized)) {
-    return "What should be avoided in this clinical pattern?";
-  }
-  return normalized || "What decision best fits this clinical pattern?";
+function getRecognitionQuestionPrompt() {
+  return "Which diagnosis best fits this clinical pattern?";
 }
 
 function splitClinicalClueLines(stem: string) {
@@ -2110,12 +2134,41 @@ function splitClinicalClueLines(stem: string) {
     .filter(Boolean);
 }
 
-function PreAnswerRecognitionChallenge({
+function getFindingForClueLine(line: string, findings: VignetteFindingAnnotation[]) {
+  const normalizedLine = line.toLowerCase();
+  return getOrderedPromptFindings(line, findings).find(({ finding }) =>
+    normalizedLine.includes(finding.text.trim().toLowerCase())
+  )?.finding;
+}
+
+function getFoundationalRecognitionFindings(
+  stem: string,
+  teaching: FoundationalRapidRoundAnswerTeaching
+): VignetteFindingAnnotation[] {
+  const pivot = teaching.todaysDiscriminator.trim();
+  if (!pivot || !stem.toLowerCase().includes(pivot.toLowerCase())) {
+    return [];
+  }
+
+  return [
+    {
+      text: pivot,
+      role: "pivot_clue",
+      explanation: `${pivot} separates ${teaching.discriminator.correctScript} from ${teaching.discriminator.competingScript}.`
+    }
+  ];
+}
+
+function RecognitionChallenge({
   stem,
-  question
+  question,
+  findings = [],
+  annotated = false
 }: {
   stem: string;
   question: string;
+  findings?: VignetteFindingAnnotation[];
+  annotated?: boolean;
 }) {
   const clueLines = splitClinicalClueLines(stem);
 
@@ -2123,11 +2176,18 @@ function PreAnswerRecognitionChallenge({
     <div className="rr-recognition-challenge" aria-label="Recognition challenge">
       <div className="rr-recognition-clues">
         {clueLines.length > 0 ? (
-          clueLines.map((line, index) => (
-            <p key={`${line}-${index}`} className="rr-recognition-clue-line">
-              {line}
-            </p>
-          ))
+          clueLines.map((line, index) => {
+            const finding = annotated ? getFindingForClueLine(line, findings) : undefined;
+            const roleClass = finding ? ` rr-recognition-clue-line-${finding.role.replace("_", "-")}` : "";
+            return (
+              <p key={`${line}-${index}`} className={`rr-recognition-clue-line${roleClass}`}>
+                <span>{line}</span>
+                {finding ? (
+                  <em>{getFindingRoleLabel(finding.role)}</em>
+                ) : null}
+              </p>
+            );
+          })
         ) : (
           <p className="rr-recognition-clue-line">{stem}</p>
         )}
