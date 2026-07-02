@@ -2,7 +2,7 @@
 
 import { CSSProperties, FormEvent, KeyboardEvent, ReactNode, RefObject, forwardRef, useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { Button } from "@/components/Button";
-import { AsterPresence, PatientWorkspace } from "@/components/clinical";
+import { AsterPresence, PatientWorkspace, ReasoningWorkspace } from "@/components/clinical";
 import { EmptyState } from "@/components/EmptyState";
 import { AsterAvatar, moodFromAsterAnimation } from "@/components/aster/Aster";
 import { AsterOverworldMap } from "@/components/AsterOverworldMap";
@@ -1205,6 +1205,7 @@ export function PracticePanel() {
     const preAnswerCompositeFindings = getPreAnswerClinicalFindings(question.stem);
     const useRecognitionCompositePreAnswer =
       RECOGNITION_CHALLENGE_COMPOSITES_ENABLED && !hasFoundationalReasoning;
+    const useFoundationalComposites = RECOGNITION_CHALLENGE_COMPOSITES_ENABLED;
 
     return (
       <div className="practice-focus rr-practice-shell rr-foundational-shell min-h-screen" data-theme={skin}>
@@ -1240,6 +1241,20 @@ export function PracticePanel() {
         <main className="rr-foundational-main">
           {useRecognitionCompositePreAnswer ? (
             <div className="rr-recognition-composite-desktop">
+              <nav className="rr-recognition-composite-rail" aria-label="Rapid Round controls">
+                <button type="button" className="rr-recognition-rail-button" onClick={handleContinue}>
+                  <span aria-hidden="true">{toolIcons.continue}</span>
+                  <span>Continue</span>
+                </button>
+                <button type="button" className="rr-recognition-rail-button" onClick={handleBack} disabled={!canGoBack}>
+                  <span aria-hidden="true">{toolIcons.back}</span>
+                  <span>Back</span>
+                </button>
+                <button type="button" className="rr-recognition-rail-button" onClick={handleReset}>
+                  <span aria-hidden="true">{toolIcons.reset}</span>
+                  <span>Reset</span>
+                </button>
+              </nav>
               <PatientWorkspace
                 className="rr-recognition-composite-patient"
                 clinicalPattern={recognitionPattern}
@@ -1280,19 +1295,24 @@ export function PracticePanel() {
                   ) : null
                 }
               />
-              <AsterPresence
-                className="rr-recognition-composite-aster"
-                mood="neutral"
-                size="medium"
-                status="Submit your answer"
-                description="Aster will walk you through the expert reasoning."
-                actionSlot={
-                  <span className="rr-recognition-composite-aster-note">
-                    <Icon size="sm">✦</Icon>
-                    Reasoning stays hidden until you commit.
-                  </span>
-                }
-              />
+              <ReasoningWorkspace
+                className="rr-recognition-composite-reasoning rr-reasoning-workspace-empty"
+                title="Reasoning Workspace"
+              >
+                <AsterPresence
+                  className="rr-recognition-composite-aster"
+                  mood="neutral"
+                  size="medium"
+                  status="Submit your answer"
+                  description="Aster will walk you through the expert reasoning."
+                  actionSlot={
+                    <span className="rr-recognition-composite-aster-note">
+                      <Icon size="sm">✦</Icon>
+                      Reasoning stays hidden until you commit.
+                    </span>
+                  }
+                />
+              </ReasoningWorkspace>
             </div>
           ) : null}
 
@@ -1439,23 +1459,43 @@ export function PracticePanel() {
           ) : null}
 
           {!useRecognitionCompositePreAnswer ? (
-            <section
-              className={`rr-card rr-card-paper rr-reasoning-workspace${hasFoundationalReasoning ? "" : " rr-reasoning-workspace-empty"}`}
-              aria-label="Clinical reasoning workspace"
-            >
-              {!hasFoundationalReasoning ? <ReasoningWorkspacePlaceholder /> : null}
-              {isEducationalMode && !showFoundationalResult ? (
-                <FoundationalTeachingMode teaching={foundationalTeaching} onNext={() => void loadQuestion()} />
-              ) : null}
+            useFoundationalComposites ? (
+              <ReasoningWorkspace
+                className={`rr-card-paper rr-reasoning-workspace${hasFoundationalReasoning ? "" : " rr-reasoning-workspace-empty"}`}
+                title="Clinical Reasoning"
+              >
+                {!hasFoundationalReasoning ? <ReasoningWorkspacePlaceholder /> : null}
+                {isEducationalMode && !showFoundationalResult ? (
+                  <FoundationalTeachingMode teaching={foundationalTeaching} onNext={() => void loadQuestion()} />
+                ) : null}
 
-              {foundationalAnswerTeaching ? (
-                <FoundationalAnswerMode
-                  teaching={foundationalAnswerTeaching}
-                  learnerAnswer={answer}
-                  onNext={() => void loadQuestion()}
-                />
-              ) : null}
-            </section>
+                {foundationalAnswerTeaching ? (
+                  <FoundationalAnswerMode
+                    teaching={foundationalAnswerTeaching}
+                    learnerAnswer={answer}
+                    onNext={() => void loadQuestion()}
+                  />
+                ) : null}
+              </ReasoningWorkspace>
+            ) : (
+              <section
+                className={`rr-card rr-card-paper rr-reasoning-workspace${hasFoundationalReasoning ? "" : " rr-reasoning-workspace-empty"}`}
+                aria-label="Clinical reasoning workspace"
+              >
+                {!hasFoundationalReasoning ? <ReasoningWorkspacePlaceholder /> : null}
+                {isEducationalMode && !showFoundationalResult ? (
+                  <FoundationalTeachingMode teaching={foundationalTeaching} onNext={() => void loadQuestion()} />
+                ) : null}
+
+                {foundationalAnswerTeaching ? (
+                  <FoundationalAnswerMode
+                    teaching={foundationalAnswerTeaching}
+                    learnerAnswer={answer}
+                    onNext={() => void loadQuestion()}
+                  />
+                ) : null}
+              </section>
+            )
           ) : null}
         </main>
         {renderAsterOverlay()}

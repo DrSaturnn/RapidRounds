@@ -6024,10 +6024,12 @@ body:has(.practice-focus) .app-main {
   .rr-recognition-composite-desktop {
     display: grid;
     grid-column: 1 / -1;
-    grid-template-columns: minmax(0, 1fr) minmax(18rem, 24rem);
-    gap: clamp(var(--rr-space-20), 2vw, var(--rr-space-32));
-    align-items: start;
-    width: min(100%, 1280px);
+    grid-template-columns: minmax(var(--rr-space-64), 0.16fr) minmax(0, 1.35fr) minmax(20rem, 0.92fr);
+    gap: clamp(var(--rr-space-16), 1.6vw, var(--rr-space-32));
+    align-items: stretch;
+    width: min(100%, 1560px);
+    min-block-size: 0;
+    block-size: 100%;
     margin-inline: auto;
   }
 
@@ -6036,8 +6038,63 @@ body:has(.practice-focus) .app-main {
   grid-column: 1 / -1;
 }
 
+  .rr-recognition-composite-rail {
+    display: grid;
+    align-content: start;
+    gap: var(--rr-space-12);
+    min-block-size: 0;
+    border: var(--rr-border-soft);
+    border-radius: var(--rr-radius-token-lg);
+    padding: var(--rr-space-12);
+    background: var(--rr-glass-fill-card);
+    box-shadow: var(--rr-elevation-1);
+    backdrop-filter: blur(var(--rr-glass-blur-card));
+  }
+
+  .rr-recognition-rail-button {
+    display: grid;
+    justify-items: center;
+    gap: var(--rr-space-4);
+    min-block-size: var(--rr-space-64);
+    border: var(--rr-border-soft);
+    border-radius: var(--rr-radius-token-md);
+    padding: var(--rr-space-8);
+    background: var(--rr-glass-fill-soft);
+    color: var(--rr-text-secondary);
+    font-family: var(--rr-font-sans);
+    font-size: var(--rr-type-caption-size);
+    font-weight: var(--rr-type-body-strong-weight);
+    line-height: var(--rr-type-caption-line-height);
+    transition:
+      background-color var(--rr-motion-fast) var(--rr-ease-standard),
+      border-color var(--rr-motion-fast) var(--rr-ease-standard),
+      color var(--rr-motion-fast) var(--rr-ease-standard),
+      transform var(--rr-motion-fast) var(--rr-ease-standard);
+  }
+
+  .rr-recognition-rail-button:hover:not(:disabled) {
+    border-color: var(--rr-color-border-strong);
+    background: var(--rr-surface-card);
+    color: var(--rr-text-primary-canonical);
+    transform: translateY(-1px);
+  }
+
+  .rr-recognition-rail-button:disabled {
+    cursor: not-allowed;
+    opacity: var(--rr-state-disabled-opacity);
+  }
+
+  .rr-recognition-rail-button span[aria-hidden="true"] {
+    color: var(--rr-accent);
+    font-size: var(--rr-type-title-size);
+    line-height: 1;
+  }
+
   .rr-recognition-composite-patient {
-    min-block-size: auto;
+    min-block-size: 0;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    scrollbar-gutter: stable;
   }
 
   .rr-recognition-composite-answer {
@@ -6061,9 +6118,16 @@ body:has(.practice-focus) .app-main {
     margin: var(--rr-space-0);
   }
 
+  .rr-recognition-composite-reasoning {
+    min-block-size: 0;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    scrollbar-gutter: stable;
+  }
+
   .rr-recognition-composite-aster {
-    position: sticky;
-    inset-block-start: var(--rr-space-24);
+    align-self: center;
+    max-inline-size: 100%;
   }
 
   .rr-recognition-composite-aster-note {
